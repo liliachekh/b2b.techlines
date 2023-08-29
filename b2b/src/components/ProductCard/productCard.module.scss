@@ -1,0 +1,368 @@
+$color-light: #f7fbfa;
+$color-dark: #202025;
+$color-grey: #5d5d5d;
+
+.productCard {
+  padding: .63rem;
+  border: 2px solid $color-dark;
+  border-radius: 15px;
+  color: $color-dark;
+  box-shadow: 1px 5px 15px rgba(0, 0, 0, .4);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: .63rem;
+  transition: box-shadow .3s;
+
+  &.productRow {
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+      box-shadow: none;
+
+      &:not(:last-child) {
+        margin-bottom: -2px;
+      }
+    }
+  }
+
+  &__mainLink {
+    display: inline-block;
+    box-sizing: border-box;
+    margin: -.63rem -.63rem auto -.63rem;
+
+    .productRow & {
+      @media (min-width: 768px) {
+        display: flex;
+        align-items: center;
+        width: 290px;
+        max-height: 120px;
+        margin: -.63rem 0 -.63rem -.63rem;
+        overflow: hidden;
+      }
+    }
+
+    &>span {
+      overflow: hidden;
+
+      .productRow & {
+        @media (min-width: 768px) {
+          flex: 1 0 70px;
+          max-width: 70px;
+          padding: 0 5px;
+        }
+      }
+    }
+  }
+
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  &:hover {
+    box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.7);
+  }
+
+  &__name {
+    padding: 0 .63rem;
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+
+    .productRow & {
+      @media (min-width: 768px) {
+        padding: .63rem;
+      }
+    }
+
+    @media (min-width: 420px) {
+      font-size: 1.1rem;
+      line-height: 1.7rem;
+    }
+  }
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    &>*:not(:last-child):after {
+      position: absolute;
+      content: '';
+      width: 3px;
+      height: 3px;
+      background: $color-dark;
+      top: 50%;
+      right: -0.5rem;
+      transform: translate(50%, -50%);
+      border-radius: 50%;
+    }
+  }
+
+  .productRow &__links {
+    @media (min-width: 768px) {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: .5rem;
+      margin-right: auto;
+      width: 120px;
+
+      &>*:not(:last-child):after {
+        display: none;
+      }
+    }
+
+  }
+
+  &__link {
+    position: relative;
+    font-size: 1rem;
+    transition: color .3s;
+
+    @media (min-width: 420px) {
+      font-size: .8rem;
+    }
+
+    &::first-letter {
+      text-transform: uppercase;
+    }
+
+    &:hover {
+      color: $color-grey;
+    }
+  }
+
+  &__purchase {
+    .productRow & {
+      @media (min-width: 768px) {
+        flex: 1 0 40%;
+      }
+    }
+  }
+}
+
+.purchase {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: .63rem;
+
+  .productRow & {
+    @media (min-width: 768px) {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      ;
+      justify-content: center;
+    }
+
+    @media (min-width: 1024px) {
+      grid-template-columns: 1fr 1fr 2fr 2fr;
+    }
+  }
+
+  &__price {
+    font-size: 1.1rem;
+    font-weight: 400;
+
+    .productRow & {
+      text-align: center;
+    }
+
+    @media (min-width: 420px) {
+      font-weight: 300;
+    }
+
+    &_total {
+      flex: initial;
+      width: 100%;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+
+      .productRow & {
+        @media (min-width: 768px) {
+          flex: initial;
+        }
+      }
+
+      @media (min-width: 420px) {
+        font-size: 1.1rem;
+      }
+    }
+
+  }
+
+  &__amount {
+    margin-left: auto;
+  }
+
+  .productRow &__amount {
+    @media (min-width: 768px) {
+      width: 100%;
+    }
+  }
+
+  &__addToCart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .63rem;
+    position: relative;
+    padding: 7px 30px;
+    transition: .3s;
+    border: 2px solid #202025;
+    border-radius: 50px;
+    background-color: #202025;
+    color: #f7fbfa;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    overflow: hidden;
+    z-index: 1;
+
+    .productRow & {
+      @media (min-width: 768px) {
+        max-width: max-content;
+        justify-self: center;
+      }
+    }
+
+    @media (min-width: 420px) {
+      font-size: 1rem;
+    }
+
+    &:has(> svg) {
+      padding: 7px 10px;
+    }
+
+    & svg {
+      width: 15px;
+      height: 15px;
+
+      .productRow & {
+        @media (min-width: 768px) {
+          width: initial;
+          height: initial;
+        }
+      }
+
+      &>path {
+        transition: stroke .3s;
+      }
+    }
+
+    &:hover>svg>path {
+      stroke: #202025;
+    }
+
+    &::after {
+      position: absolute;
+      top: 100%;
+      left: -20%;
+      width: 150%;
+      height: 50%;
+      transition: all .3s;
+      border-radius: 50%;
+      content: '';
+      z-index: -1;
+    }
+
+    &::before {
+      position: absolute;
+      top: -5%;
+      left: -5%;
+      width: 150%;
+      height: 150%;
+      content: '';
+      z-index: -1;
+    }
+
+    &::after {
+      background-color: #f7fbfa;
+      z-index: -1;
+    }
+
+    &:hover {
+      color: #202025;
+    }
+
+    &:hover {
+      &::after {
+        top: -50%;
+        width: 150%;
+        height: 200%;
+      }
+    }
+  }
+}
+
+.amount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .63rem;
+
+  &__btn {
+    position: relative;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    background: $color-dark;
+    cursor: pointer;
+    transition: background-color .3s;
+
+    @media (min-width: 420px) {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+
+    &:hover {
+      background: $color-grey;
+    }
+
+    &_decrease::after,
+    &_increase::before,
+    &_increase::after {
+      position: absolute;
+      content: '';
+      left: 50%;
+      top: 50%;
+      width: 60%;
+      height: 2px;
+      background: $color-light;
+      transform: translate(-50%, -50%);
+    }
+
+    &_decrease::after,
+    &_increase::before,
+    &_increase::after {
+      top: 50%;
+    }
+
+    &_increase::before {
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+
+    &_decrease:disabled {
+      opacity: .5;
+    }
+  }
+
+  &__input {
+    width: 90px;
+    font-size: 1.2rem;
+    text-align: center;
+    border: 2px solid $color-grey;
+    border-radius: 5px;
+    box-sizing: border-box;
+
+    @media (min-width: 420px) {
+      width: 60px;
+      font-size: 1rem;
+    }
+  }
+}
