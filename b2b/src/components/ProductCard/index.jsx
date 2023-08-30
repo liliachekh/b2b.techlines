@@ -1,17 +1,41 @@
 // import PropTypes from 'prop-types';
 import styles from './productCard.module.scss';
-// import { buyNowHandler, isInCart} from '../../utils';
-// import { useDispatch, useSelector } from 'react-redux';
+// import { isInCart} from '../../utils';
 import { Link } from 'react-router-dom';
-// import { Verified } from '../Icons/verified';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useState } from 'react';
-import { Cart } from '../icons';
+import { Arrow, Cart } from '../icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { useAddToCartMutation, useDeleteFromCartMutation } from '../../store/api';
 // import { AdminProductCard } from '../AdminProductCard';
 
 function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, color, productUrl, brand, memory, itemNo, displayTable }) {
   const [amount, setAmount] = useState(1);
+  const dispatch = useDispatch();
+
+  const cart = useSelector(state => state.cart.products);
+
+  const [addToCart, {isError}] = useAddToCartMutation();
+
+  async function handleAddToCart() {
+    await addToCart(_id).unwrap();
+    // try {
+    //   dispatch(addToCart({ _id, amount }))
+    //   // dispatch(setModalType('buy'))
+    // } catch (error) {
+    //   // dispatch(setErrorAction(error.message));
+    // }
+  }
+
+  // =========================================================
+  // =========================================================
+  const [deleteFromCart] = useDeleteFromCartMutation();
+  async function handleDeleteFromCart(params) {
+    await deleteFromCart(_id).unwrap();
+  }
+  // =========================================================
+  // =========================================================
 
   function handleAmountChange(e) {
     if (e.target.value > 0 && e.target.value <= quantity) setAmount(e.target.value);
@@ -76,10 +100,21 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
         <div className={`${styles.purchase__price} ${styles.purchase__price_total}`}>
           {(currentPrice * amount).toFixed(2)} €
         </div>
-        <button type='button' className={styles.purchase__addToCart}>
-          Add to cart
-          <Cart color={'#f7fbfa'} strokeWidth={'2'} />
-        </button>
+        {!cart.find((product) => product.id === _id)
+          ? <button
+            type='button'
+            className={styles.purchase__addToCart}
+            onClick={() => handleAddToCart(dispatch, _id, amount)}>
+            Add to cart
+            <Cart color={'#f7fbfa'} strokeWidth={'2'} />
+          </button>
+          : <button
+            type='button'
+            className={`${styles.purchase__addToCart} ${styles.purchase__addToCart_added}`}
+            onClick={() => handleAddToCart(dispatch, _id, amount)}>
+            Go to cart
+            <Arrow fill={'#f7fbfa'} width={24} height={24} />
+          </button>}
       </div>
     </div>
   );

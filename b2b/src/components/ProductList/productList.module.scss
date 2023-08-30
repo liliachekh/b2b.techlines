@@ -9,6 +9,7 @@ $color-grey: #5d5d5d;
     padding: 0 15px;
     margin: 0 auto;
     max-width: 1470px;
+    box-sizing: border-box;
   }
 
   &__wrapper {
@@ -127,7 +128,7 @@ $color-grey: #5d5d5d;
       display: grid;
       grid-template-columns: repeat(auto-fill, 246px);
       gap: 2rem 1rem;
-      justify-content: space-around;
+      justify-content: space-between;
     }
   }
 }

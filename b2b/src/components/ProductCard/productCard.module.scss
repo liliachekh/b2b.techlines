@@ -224,6 +224,18 @@ $color-grey: #5d5d5d;
     overflow: hidden;
     z-index: 1;
 
+    &_added {
+      background-color: $color-grey;
+
+      svg {
+        transform: rotate(180deg);
+      }
+
+      &:hover>svg>path {
+        fill: #202025;
+      }
+    }
+
     .productRow & {
       @media (min-width: 768px) {
         max-width: max-content;
@@ -251,7 +263,7 @@ $color-grey: #5d5d5d;
       }
 
       &>path {
-        transition: stroke .3s;
+        transition: stroke .3s, fill .3s;
       }
     }
 

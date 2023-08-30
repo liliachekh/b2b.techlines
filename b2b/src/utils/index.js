@@ -1,3 +1,5 @@
+// import { addToCart } from "../store/cartSlice";
+
 export const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };

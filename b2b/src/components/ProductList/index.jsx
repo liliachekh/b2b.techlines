@@ -1,10 +1,11 @@
 import { useRef, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
+import PropTypes from 'prop-types';
+import styles from './productList.module.scss';
 import ProductCard from '../ProductCard';
 import PerPageBtn from '../PerPageBtn';
 import SortByBtn from '../SortByBtn';
 import { IconCardList, IconTableList } from '../icons';
-import styles from './productList.module.scss';
-import { useMediaQuery } from 'react-responsive';
 import Pagination from '../Pagination';
 
 function ProductList({ products, productsQuantity }) {
@@ -68,3 +69,8 @@ function ProductList({ products, productsQuantity }) {
 }
 
 export default ProductList;
+
+ProductList.propTypes = {
+  products: PropTypes.array,
+  productsQuantity: PropTypes.number,
+}
