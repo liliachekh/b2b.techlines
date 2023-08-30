@@ -5,13 +5,13 @@ import ProductList from "../../components/ProductList";
 import { fetchData } from "../../utils";
 import useQueryString from "../../hooks";
 import { baseUrl } from "../../utils/vars";
-import { useGetProductsQuery } from "../../store/api";
+import { useGetAllProductsQuery } from "../../store/api/products.api";
 
 export function Home() {
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
   const { perPage } = useQueryString();
 
-  const { data = [], isLoading } = useGetProductsQuery(window.location.search ? window.location.search : `?perPage=${perPage}`);
+  const { data: products = [], isLoading } = useGetAllProductsQuery(window.location.search ? window.location.search : `?perPage=${perPage}`);
   
   // const getProducts = useCallback(async () => {
   //   const data = await fetchData(`${baseUrl}products/filter${window.location.search ? window.location.search : `?perPage=${perPage}`}`);
@@ -28,7 +28,7 @@ export function Home() {
   return (
     <>
       <Header />
-      <ProductList {...data} />
+      <ProductList {...products} />
     </>
   )
 }

@@ -1,22 +1,22 @@
 // import PropTypes from 'prop-types';
 import styles from './productCard.module.scss';
-// import { isInCart} from '../../utils';
 import { Link } from 'react-router-dom';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useState } from 'react';
 import { Arrow, Cart } from '../icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { useAddToCartMutation, useDeleteFromCartMutation } from '../../store/api';
+import { useDispatch } from 'react-redux';
+import { useAddToCartMutation, useDeleteFromCartMutation, useGetCartQuery } from '../../store/api/cart.api';
 // import { AdminProductCard } from '../AdminProductCard';
 
 function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, color, productUrl, brand, memory, itemNo, displayTable }) {
   const [amount, setAmount] = useState(1);
   const dispatch = useDispatch();
 
-  const cart = useSelector(state => state.cart.products);
+  const { data: cart } = useGetCartQuery();
+  const inCart = cart?.products.find(({ product }) => product._id === _id);
 
-  const [addToCart, {isError}] = useAddToCartMutation();
+  const [addToCart, { isError }] = useAddToCartMutation();
 
   async function handleAddToCart() {
     await addToCart(_id).unwrap();
@@ -100,7 +100,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
         <div className={`${styles.purchase__price} ${styles.purchase__price_total}`}>
           {(currentPrice * amount).toFixed(2)} €
         </div>
-        {!cart.find((product) => product.id === _id)
+        {!inCart
           ? <button
             type='button'
             className={styles.purchase__addToCart}
@@ -111,7 +111,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
           : <button
             type='button'
             className={`${styles.purchase__addToCart} ${styles.purchase__addToCart_added}`}
-            onClick={() => handleAddToCart(dispatch, _id, amount)}>
+            onClick={() => handleAddToCart(_id, amount)}>
             Go to cart
             <Arrow fill={'#f7fbfa'} width={24} height={24} />
           </button>}
