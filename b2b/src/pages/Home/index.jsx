@@ -5,6 +5,7 @@ import ProductList from "../../components/ProductList";
 import { fetchData } from "../../utils";
 import useQueryString from "../../hooks";
 import { baseUrl } from "../../utils/vars";
+import Filter from "../../components/Filter";
 
 export function Home() {
   const [products, setProducts] = useState([]);
@@ -23,6 +24,7 @@ export function Home() {
   return (
     <>
       <Header />
+      <Filter/>
       <ProductList {...products} />
     </>
   )
