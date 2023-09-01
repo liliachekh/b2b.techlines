@@ -8,7 +8,7 @@ import { fetchData } from "../../utils";
 function Filter() {
 
     // const dispatch = useDispatch();
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(null);
     const [filters, setFilters] = useState({
         categoriesFilters: [],
         brandFilters: []
@@ -18,8 +18,8 @@ function Filter() {
         brand: []
     });
 
-    const toggleDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen);
+    const toggleDropdown = (type) => {
+        setIsDropdownOpen(isDropdownOpen === type ? null : type); // Если список уже открыт, то закрыть его, иначе открыть выбранный
       };
 
       const getFiltersByType = useCallback(async (type) => {
@@ -63,27 +63,21 @@ function Filter() {
         <div className={styles.filter}>
             <div className={styles.filter__container}>
                 <div className={styles.filter__nav}>
-                    <button className={styles.filter__navBtnFilter}>
-                        <FilterIcon />
-                        <span className={styles.filter__title}>Filter</span>
+                    <button className={`${styles.filter__navBtnFilter + ' ' + styles.btnEffect}`}>
+                        {/* <FilterIcon /> */}
+                        <span className={styles.filter__title}>Filters</span>
                     </button>
-                    {/* <div className={styles.filter__navBtnFilterProduct}>
-                        <SortByBtn label='Product' type='name' />
-                    </div>
-                    <div className={styles.filter__navBtnFilterCost}>
-                        <SortByBtn label='Cost' type='currentPrice'/>
-                    </div> */}
                     <div className={styles.filter__navTitle}>
                         <FilterIcon />
-                        <span className={styles.filter__title}>Filter</span>
+                        <span className={styles.filter__title}>Filters</span>
                     </div>
                     <div className={styles.filter__navContent}>
                         <div className={styles.filter__dropdown}>
                             <h4 className={styles.filter__dropdownTitle}>Categories</h4>
-                            <button type="button" className={styles.filter__dropdownBtn} onClick={toggleDropdown}>
+                            <button type="button" className={styles.filter__dropdownBtn} onClick={() => toggleDropdown('categories')}>
                                 <span className={styles.filter__dropdownBtnText}>{selectedFilters.categories.length > 0 ? `Selected ${selectedFilters.categories.length} items` : 'Select'}</span>
                             </button>
-                            <ul className={styles.filter__dropdownList}>
+                            <ul className={`${styles.filter__dropdownList} ${isDropdownOpen === 'categories' && styles.open}`}>
                                 {filters?.categoriesFilters?.map((category) => (
                                     <li key={category._id} className={styles.filter__dropdownItem}>
                                     <label htmlFor={category._id}>
@@ -96,10 +90,10 @@ function Filter() {
                         </div>
                         <div className={styles.filter__dropdown}>
                             <h4 className={styles.filter__dropdownTitle}>Brand</h4>
-                            <button type="button" className={styles.filter__dropdownBtn} onClick={toggleDropdown}>
+                            <button type="button" className={styles.filter__dropdownBtn} onClick={() => toggleDropdown('brand')}> 
                                 <span className={styles.filter__dropdownBtnText}>{selectedFilters.brand.length > 0 ? `Selected ${selectedFilters.brand.length} items` : 'Select'}</span>
                             </button>
-                            <ul className={styles.filter__dropdownList}>
+                            <ul className={`${styles.filter__dropdownList} ${isDropdownOpen === 'brand' && styles.open}`}>
                                 {filters?.brandFilters?.map((brand) => (
                                     <li key={brand._id} className={styles.filter__dropdownItem}>
                                     <label htmlFor={brand._id}>
