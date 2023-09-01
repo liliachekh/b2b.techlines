@@ -1,5 +1,6 @@
 import style from "./ResetPassword.module.scss";
 import ForgotPassword from "../../components/ForgotPassword";
+import { Link } from "react-router-dom";
 
 export function ResetPassword() {
 
@@ -7,9 +8,11 @@ export function ResetPassword() {
         <div className={style.resetForm}>
             <div className={style.resetForm__container}>
                 <main className={style.resetForm__main}>
+                    <Link to="/login">
                     <div className={style.resetForm__logo}>
                         <img src="/images/tech.png" alt="techlines logo" />
                     </div>
+                    </Link>
                     <div className={style.resetForm__wrapper}>
                         <ForgotPassword
                         //   callback={onSubmitHandler} 
