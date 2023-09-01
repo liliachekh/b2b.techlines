@@ -3,7 +3,7 @@ import styles from './productCard.module.scss';
 import { Link } from 'react-router-dom';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Arrow, Cart } from '../icons';
 import { useDeleteFromCartMutation, useGetCartQuery } from '../../store/api/cart.api';
 import { useAddToCart } from '../../hooks';
@@ -11,11 +11,11 @@ import { useAddToCart } from '../../hooks';
 function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, color, productUrl, brand, memory, itemNo, displayTable }) {
   const { data: cart } = useGetCartQuery();
   const handleAddToCart = useAddToCart();
-  
+
+  const [amount, setAmount] = useState(1);
+
   const inCart = cart?.products.find(({ product }) => product._id === _id);
 
-  const [amount, setAmount] = useState(inCart ? inCart.cartQuantity : 1);
-  
   // =========================================================
   // =========================================================
   const [deleteFromCart] = useDeleteFromCartMutation();
@@ -26,20 +26,29 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
   // =========================================================
 
   function handleAmountChange(e) {
-    if (e.target.value > 0 && e.target.value <= quantity) setAmount(e.target.value);
+    if (e.target.value > 0 && e.target.value <= quantity) {
+      handleAddToCart(_id, e.target.value);
+      // setAmount(e.target.value);
+    }
   }
 
   async function increase(plus) {
     try {
       if (plus && quantity > amount) {
-        setAmount(Number(amount) + 1)
+        handleAddToCart(_id, Number(amount) + 1);
+        // setAmount(Number(amount) + 1)
       } else if (!plus) {
-        setAmount(Number(amount) - 1)
+        handleAddToCart(_id, Number(amount) - 1);
+        // setAmount(Number(amount) - 1)
       }
     } catch (error) {
       console.log(error);
     }
   }
+
+  useEffect(() => {
+    setAmount(inCart?.cartQuantity || 1);
+  }, [inCart])
 
   return (
     <div className={`${styles.productCard} ${displayTable ? styles.productRow : ''}`}>
@@ -95,7 +104,6 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
           : <Link
             to='/cart'
             className={`${styles.purchase__addToCart} ${styles.purchase__addToCart_added}`}>
-            {/* onClick={() => handleAddToCart(_id, amount)}> */}
             Go to cart
             <Arrow fill={'#f7fbfa'} width={24} height={24} />
           </Link>}
