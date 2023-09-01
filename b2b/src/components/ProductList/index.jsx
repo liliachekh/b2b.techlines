@@ -12,8 +12,8 @@ function ProductList({ products, productsQuantity }) {
   const [displayTable, setDisplayTable] = useState(false);
   const ref = useRef(null);
 
-  const isMobile = useMediaQuery({ query: '(max-width: 480px)' });
-
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+  console.log(products);
   return (
     <div ref={ref} className={`${styles.productList} ${displayTable ? styles.productTable : ''}`}>
       <div className={styles.productList__container}>
