@@ -21,6 +21,8 @@ export function ResetPassword() {
                 </main>
                 <footer className={style.resetForm__footer}>
                     <p>2023 © Techline Distribution. All rights reserved.</p>
+                    <p>Developed by <Link to="https://othersite.net/" target="blank">OTHERSITE STUDIO</Link></p>
+
                 </footer>
             </div>
         </div>

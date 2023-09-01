@@ -2,6 +2,8 @@ import FormikForm from "../../components/FormikForm";
 import { logInFormFields } from "./logInFormFields";
 import { validationSchemaLogin } from "../../validation";
 import style from "./LoginForm.module.scss";
+import { Link } from "react-router-dom";
+
 
 export function LoginForm() {
 
@@ -43,6 +45,7 @@ export function LoginForm() {
                 </main>
                 <footer className={style.loginForm__footer}>
                     <p>2023 © Techline Distribution. All rights reserved.</p>
+                    <p>Developed by <Link to="https://othersite.net/" target="blank">OTHERSITE STUDIO</Link></p>
                 </footer>
             </div>
         </div>
