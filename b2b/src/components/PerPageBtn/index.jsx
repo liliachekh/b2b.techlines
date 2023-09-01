@@ -1,6 +1,6 @@
 import styles from './perPageBtn.module.scss';
 import { scrollToRef } from '../../utils';
-import useQueryString from '../../hooks';
+import { useQueryString } from '../../hooks';
 
 function PerPageBtn({ newPerPage, scrollTo }) {
   const { sort, perPage, setSearchParams } = useQueryString();

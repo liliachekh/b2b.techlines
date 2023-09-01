@@ -3,8 +3,7 @@ import ProductCard from "../../components/ProductCard";
 import { useGetCartQuery } from "../../store/api/cart.api";
 
 export function Cart() {
-  const { data: cart, isLoading } = useGetCartQuery();
-  console.log(cart?.products);
+  const { data: cart = [], isLoading } = useGetCartQuery();
 
   if (isLoading) return <h1>Loading</h1>
 

@@ -5,29 +5,17 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useState } from 'react';
 import { Arrow, Cart } from '../icons';
-import { useDispatch } from 'react-redux';
-import { useAddToCartMutation, useDeleteFromCartMutation, useGetCartQuery } from '../../store/api/cart.api';
-// import { AdminProductCard } from '../AdminProductCard';
+import { useDeleteFromCartMutation, useGetCartQuery } from '../../store/api/cart.api';
+import { useAddToCart } from '../../hooks';
 
 function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, color, productUrl, brand, memory, itemNo, displayTable }) {
-  const [amount, setAmount] = useState(1);
-  const dispatch = useDispatch();
-
   const { data: cart } = useGetCartQuery();
+  const handleAddToCart = useAddToCart();
+  
   const inCart = cart?.products.find(({ product }) => product._id === _id);
 
-  const [addToCart, { isError }] = useAddToCartMutation();
-
-  async function handleAddToCart() {
-    await addToCart(_id).unwrap();
-    // try {
-    //   dispatch(addToCart({ _id, amount }))
-    //   // dispatch(setModalType('buy'))
-    // } catch (error) {
-    //   // dispatch(setErrorAction(error.message));
-    // }
-  }
-
+  const [amount, setAmount] = useState(inCart ? inCart.cartQuantity : 1);
+  
   // =========================================================
   // =========================================================
   const [deleteFromCart] = useDeleteFromCartMutation();
@@ -44,15 +32,12 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
   async function increase(plus) {
     try {
       if (plus && quantity > amount) {
-        // dispatch(changeQuantity(cart, _id, token, plus));
         setAmount(Number(amount) + 1)
       } else if (!plus) {
-        // dispatch(changeQuantity(cart, _id, token, plus));
         setAmount(Number(amount) - 1)
       }
     } catch (error) {
       console.log(error);
-      // dispatch(setErrorAction(error));
     }
   }
 
@@ -61,7 +46,6 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
       <Link to={`/product/${itemNo}`} className={styles.productCard__mainLink}>
         <LazyLoadImage
           className={styles.productCard__img}
-          // src={'./images/Home.webp'}
           src={imageUrls[0]}
           alt={name}
           effect="blur"
@@ -104,17 +88,17 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
           ? <button
             type='button'
             className={styles.purchase__addToCart}
-            onClick={() => handleAddToCart(dispatch, _id, amount)}>
+            onClick={() => handleAddToCart(_id, amount)}>
             Add to cart
             <Cart color={'#f7fbfa'} strokeWidth={'2'} />
           </button>
-          : <button
-            type='button'
-            className={`${styles.purchase__addToCart} ${styles.purchase__addToCart_added}`}
-            onClick={() => handleAddToCart(_id, amount)}>
+          : <Link
+            to='/cart'
+            className={`${styles.purchase__addToCart} ${styles.purchase__addToCart_added}`}>
+            {/* onClick={() => handleAddToCart(_id, amount)}> */}
             Go to cart
             <Arrow fill={'#f7fbfa'} width={24} height={24} />
-          </button>}
+          </Link>}
       </div>
     </div>
   );

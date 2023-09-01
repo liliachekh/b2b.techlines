@@ -1,6 +1,6 @@
 import { api } from "./api";
 // =====================
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZWY1M2ExMWY5ZDRjMDAxZTYxNDZlZCIsImZpcnN0TmFtZSI6IkFudG9uIiwibGFzdE5hbWUiOiJNeWtoYWlsaWNoZW5rbyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY5MzQxMDQzNiwiZXhwIjoxNjkzNDQ2NDM2fQ.vo7uOXMgA43MaN63WRqlWRVs41-EgNoAuHyWY1beXXI';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZWY1M2ExMWY5ZDRjMDAxZTYxNDZlZCIsImZpcnN0TmFtZSI6IkFudG9uIiwibGFzdE5hbWUiOiJNeWtoYWlsaWNoZW5rbyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY5MzU2OTY2NywiZXhwIjoxNjkzNjA1NjY3fQ.L80qt8l0aVxpVMqLUk1RvVMub3CuPh-ZYgj0DfGaKVo';
 // =====================
 export const cartApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -21,15 +21,16 @@ export const cartApi = api.injectEndpoints({
           ]
           : [{ type: 'Cart', id: 'LIST' }],
     }),
-    addToCart: builder.mutation({
-      query: (id, body) => ({
-        url: `cart/${id}`,
+    setCart: builder.mutation({
+      query: (body) => ({
+        url: `cart`,
+        // url: `cart/${id}`,
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body
+        body: body,
       }),
       invalidatesTags: [{ type: 'Cart', id: 'LIST' }]
     }),
@@ -43,4 +44,4 @@ export const cartApi = api.injectEndpoints({
   })
 })
 
-export const { useGetCartQuery, useAddToCartMutation, useDeleteFromCartMutation } = cartApi;
+export const { useGetCartQuery, useSetCartMutation, useDeleteFromCartMutation } = cartApi;

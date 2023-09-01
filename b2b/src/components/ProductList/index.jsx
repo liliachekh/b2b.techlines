@@ -13,7 +13,7 @@ function ProductList({ products, productsQuantity }) {
   const ref = useRef(null);
 
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
-  console.log(products);
+
   return (
     <div ref={ref} className={`${styles.productList} ${displayTable ? styles.productTable : ''}`}>
       <div className={styles.productList__container}>
@@ -56,12 +56,13 @@ function ProductList({ products, productsQuantity }) {
                 newPerPage={item} />
             ))}
           </div>
-          <div className={styles.productList__btns}>
-            <Pagination
-              scrollTo={ref}
-              productsLength={products?.length}
-              productsQuantity={productsQuantity} />
-          </div>
+          {productsQuantity &&
+            <div className={styles.productList__btns}>
+              <Pagination
+                scrollTo={ref}
+                productsLength={products?.length}
+                productsQuantity={productsQuantity} />
+            </div>}
         </div>
       </div>
     </div>

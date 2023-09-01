@@ -1,6 +1,6 @@
 import styles from './sortByBtn.module.scss';
 import { Arrow } from '../icons/arrow';
-import useQueryString from '../../hooks';
+import { useQueryString } from '../../hooks';
 
 function SortByBtn({ label, type }) {
   const { sort, perPage, setSearchParams } = useQueryString()
