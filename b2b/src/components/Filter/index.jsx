@@ -9,6 +9,7 @@ function Filter() {
 
     // const dispatch = useDispatch();
     const [isDropdownOpen, setIsDropdownOpen] = useState(null);
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [filters, setFilters] = useState({
         categoriesFilters: [],
         brandFilters: []
@@ -17,6 +18,10 @@ function Filter() {
         categories: [],
         brand: []
     });
+
+    const toggleFilter = () => {
+        setIsFilterOpen(!isFilterOpen);
+      };
 
     const toggleDropdown = (type) => {
         setIsDropdownOpen(isDropdownOpen === type ? null : type); // Если список уже открыт, то закрыть его, иначе открыть выбранный
@@ -63,15 +68,14 @@ function Filter() {
         <div className={styles.filter}>
             <div className={styles.filter__container}>
                 <div className={styles.filter__nav}>
-                    <button className={`${styles.filter__navBtnFilter + ' ' + styles.btnEffect}`}>
-                        {/* <FilterIcon /> */}
+                    <button type="button" onClick={toggleFilter} className={`${styles.filter__navBtnFilter + ' ' + styles.btnEffect}`}>
                         <span className={styles.filter__title}>Filters</span>
                     </button>
                     <div className={styles.filter__navTitle}>
                         <FilterIcon />
                         <span className={styles.filter__title}>Filters</span>
                     </div>
-                    <div className={styles.filter__navContent}>
+                    <div className={`${styles.filter__navContent} ${isFilterOpen && styles.open}`}>
                         <div className={styles.filter__dropdown}>
                             <h4 className={styles.filter__dropdownTitle}>Categories</h4>
                             <button type="button" className={styles.filter__dropdownBtn} onClick={() => toggleDropdown('categories')}>

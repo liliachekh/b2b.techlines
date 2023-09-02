@@ -47,7 +47,8 @@
 
 // mobile
 .filter {
-    margin-top: 80px;
+    padding: 80px 0 20px;
+    background-color: #dfe3eb;
     font-family: "Roboto", Sans-Serif;
 
     &__dropdownList {
@@ -74,14 +75,15 @@
         align-items: center;
         justify-content: center;
         position: relative;
-        width: 150px;
-        height: 45px;
+        // width: 150px;
+        // height: 45px;
+        padding: 0.63rem 1rem;
         transition: color .3s, width .3s;
         border: 2px solid #202025;
         border-radius: 4px;
         background: transparent;
         color: #f7fbfa;
-        font-size: 14px;
+        font-size: 16px;
         letter-spacing: .17em;
         text-transform: uppercase;
         cursor: pointer;
@@ -92,5 +94,34 @@
 
     &__navTitle {
         display: none;
+    }
+
+    &__navContent {
+      display: none;
+
+      &.open {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+      }
+    }
+
+    &__dropdown {
+      width: 100%;
+    }
+
+    &__dropdownTitle {
+      font-size: 14px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    &__dropdownBtn {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 15px 5px;
+      border: 1px solid;
+      border-radius: 4px;
     }
 }
