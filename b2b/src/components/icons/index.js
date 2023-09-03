@@ -3,3 +3,4 @@ export * from "./arrow.jsx";
 export * from "./iconCardList.jsx";
 export * from "./iconTableList.jsx";
 export * from "./filterIcon.jsx";
+export * from "./arrowDropdown.jsx";

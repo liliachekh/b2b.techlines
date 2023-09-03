@@ -1,5 +1,5 @@
 import styles from "./filter.module.scss";
-import { FilterIcon } from "../icons";
+import { FilterIcon, ArrowDropdown } from "../icons";
 import { useState, useCallback, useEffect } from "react";
 // import { useDispatch } from 'react-redux';
 import { fetchData } from "../../utils";
@@ -16,7 +16,8 @@ function Filter() {
     });
     const [selectedFilters, setSelectedFilters] = useState({
         categories: [],
-        brand: []
+        brand: [],
+        search: '',
     });
 
     const toggleFilter = () => {
@@ -63,6 +64,11 @@ function Filter() {
         });
     };
 
+    // Фільтр пошуку
+    const handleChange = (e) => {
+        setSelectedFilters({ ...selectedFilters, search: e.target.value })
+      }
+
 
     return (
         <div className={styles.filter}>
@@ -80,6 +86,7 @@ function Filter() {
                             <h4 className={styles.filter__dropdownTitle}>Categories</h4>
                             <button type="button" className={styles.filter__dropdownBtn} onClick={() => toggleDropdown('categories')}>
                                 <span className={styles.filter__dropdownBtnText}>{selectedFilters.categories.length > 0 ? `Selected ${selectedFilters.categories.length} items` : 'Select'}</span>
+                                <ArrowDropdown/>
                             </button>
                             <ul className={`${styles.filter__dropdownList} ${isDropdownOpen === 'categories' && styles.open}`}>
                                 {filters?.categoriesFilters?.map((category) => (
@@ -92,10 +99,15 @@ function Filter() {
                                 ))}
                             </ul>
                         </div>
+                        <div>
+                            <h4 className={styles.filter__dropdownTitle}>Search product</h4>
+                            <input className={styles.filter__search} type="text" id="search" name="search" onChange={handleChange} />
+                        </div>
                         <div className={styles.filter__dropdown}>
                             <h4 className={styles.filter__dropdownTitle}>Brand</h4>
                             <button type="button" className={styles.filter__dropdownBtn} onClick={() => toggleDropdown('brand')}> 
                                 <span className={styles.filter__dropdownBtnText}>{selectedFilters.brand.length > 0 ? `Selected ${selectedFilters.brand.length} items` : 'Select'}</span>
+                                <ArrowDropdown/>
                             </button>
                             <ul className={`${styles.filter__dropdownList} ${isDropdownOpen === 'brand' && styles.open}`}>
                                 {filters?.brandFilters?.map((brand) => (
