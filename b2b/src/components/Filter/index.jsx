@@ -66,7 +66,8 @@ function Filter() {
 
     // Фільтр пошуку
     const handleChange = (e) => {
-        setSelectedFilters({ ...selectedFilters, search: e.target.value })
+        setSelectedFilters({ ...selectedFilters, search: e.target.value });
+        console.log(selectedFilters);
       }
 
 
@@ -82,6 +83,7 @@ function Filter() {
                         <span className={styles.filter__title}>Filters</span>
                     </div>
                     <div className={`${styles.filter__navContent} ${isFilterOpen && styles.open}`}>
+                        <div className={styles.filter__dropdownBlock}>
                         <div className={styles.filter__dropdown}>
                             <h4 className={styles.filter__dropdownTitle}>Categories</h4>
                             <button type="button" className={styles.filter__dropdownBtn} onClick={() => toggleDropdown('categories')}>
@@ -99,9 +101,9 @@ function Filter() {
                                 ))}
                             </ul>
                         </div>
-                        <div>
+                        <div className={styles.filter__search}>
                             <h4 className={styles.filter__dropdownTitle}>Search product</h4>
-                            <input className={styles.filter__search} type="text" id="search" name="search" onChange={handleChange} />
+                            <input type="text" id="search" name="search" onChange={handleChange} />
                         </div>
                         <div className={styles.filter__dropdown}>
                             <h4 className={styles.filter__dropdownTitle}>Brand</h4>
@@ -119,6 +121,11 @@ function Filter() {
                                     </li>
                                 ))}
                             </ul>
+                        </div>
+                        </div>
+                        <div className={styles.filter__navigation}>
+                            <button type="button" className={`${styles.filter__navigationBtn + ' ' + styles.btnEffect}`}>Clear</button>
+                            <button type="submit" className={`${styles.filter__navigationBtn + ' ' + styles.btnEffect}`}>Submit</button>
                         </div>
                     </div>
                 </div>
