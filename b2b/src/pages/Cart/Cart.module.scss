@@ -1,0 +1,35 @@
+.main {
+  padding: 3rem 0;
+
+  &__container {
+    padding: 0 15px;
+    margin: 0 auto;
+    min-width: 320px;
+    max-width: 1470px;
+    box-sizing: border-box;
+  }
+
+  &__title {
+    font-size: 1.3rem;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 60%;
+    gap: 1.5rem;
+  }
+
+  &__aside {
+    flex: 1 0 40%
+  }
+}

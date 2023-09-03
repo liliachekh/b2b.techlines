@@ -1,6 +1,6 @@
 import { api } from "./api";
 // =====================
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZWY1M2ExMWY5ZDRjMDAxZTYxNDZlZCIsImZpcnN0TmFtZSI6IkFudG9uIiwibGFzdE5hbWUiOiJNeWtoYWlsaWNoZW5rbyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY5MzU2OTY2NywiZXhwIjoxNjkzNjA1NjY3fQ.L80qt8l0aVxpVMqLUk1RvVMub3CuPh-ZYgj0DfGaKVo';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZWY1M2ExMWY5ZDRjMDAxZTYxNDZlZCIsImZpcnN0TmFtZSI6IkFudG9uIiwibGFzdE5hbWUiOiJNeWtoYWlsaWNoZW5rbyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY5Mzc1MzYzOCwiZXhwIjoxNjkzNzg5NjM4fQ.ELSJ4mDt-RKZQH2LGbQ0Cq1V5VJKYYyNO_R7zXp2cmc';
 // =====================
 export const cartApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -38,6 +38,10 @@ export const cartApi = api.injectEndpoints({
       query: (id) => ({
         url: `cart/${id}`,
         method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
       }),
       invalidatesTags: [{ type: 'Cart', id: 'LIST' }]
     }),
