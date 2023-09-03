@@ -4,28 +4,29 @@ import { validationSchemaLogin } from "../../validation";
 import style from "./LoginForm.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogInMutation } from "../../store/api/customers.api";
+import { useState } from "react";
 
 export function LoginForm() {
+  const [error, setError] = useState(false);
   const [logIn] = useLogInMutation();
   const navigate = useNavigate();
 
   async function onSubmitHandler(values) {
     try {
-        let response = await logIn(values).unwrap();
-    const token = response.token;
-    
-        localStorage.setItem('token', token);
-        navigate("/")
-    } catch (error) {
-        console.log("Error", error?.data || 'Something went wrong');
+      let response = await logIn(values).unwrap();
+      const token = response.token;
 
+      localStorage.setItem("token", token);
+      navigate("/");
+    } catch (error) {
+      setError(true)
     }
-   
   }
 
   return (
     <div className={style.loginForm}>
       <div className={style.loginForm__container}>
+        {error && <div className={style.loginForm__errorMessage}>We couldn’t find an account matching the email and password you entered.</div>}
         <main className={style.loginForm__main}>
           <div className={style.loginForm__logo}>
             <img
