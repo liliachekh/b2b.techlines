@@ -5,7 +5,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useEffect, useState } from 'react';
 import { Arrow, Cart } from '../icons';
-import { useDeleteFromCartMutation, useGetCartQuery } from '../../store/api/cart.api';
+import { useGetCartQuery } from '../../store/api/cart.api';
 import { useAddToCart } from '../../hooks';
 
 function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, color, productUrl, brand, memory, itemNo, displayTable }) {
@@ -16,15 +16,6 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
 
   const inCart = cart?.products.find(({ product }) => product._id === _id);
 
-  // =========================================================
-  // =========================================================
-  const [deleteFromCart] = useDeleteFromCartMutation();
-  async function handleDeleteFromCart(params) {
-    await deleteFromCart(_id).unwrap();
-  }
-  // =========================================================
-  // =========================================================
-
   function handleAmountChange(e) {
     if (e.target.value > 0 && e.target.value <= quantity) {
       handleAddToCart(_id, e.target.value);
@@ -34,9 +25,9 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
   async function increase(plus) {
     try {
       if (plus && quantity > amount) {
-        handleAddToCart(_id, Number(amount) + 1);
+        setAmount(Number(amount) + 1);
       } else if (!plus) {
-        handleAddToCart(_id, Number(amount) - 1);
+        setAmount(Number(amount) - 1);
       }
     } catch (error) {
       console.log(error);

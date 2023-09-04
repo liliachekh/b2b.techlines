@@ -1,2 +1,4 @@
-export * from "./Home/index.jsx";
-export * from "./Cart/index.jsx";
+export * from "./Home";
+export * from "./Cart";
+export * from "./LoginForm";
+export * from "./ResetPassword";
