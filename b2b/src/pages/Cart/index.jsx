@@ -13,7 +13,7 @@ export function Cart() {
       <Header />
       <div className={styles.main}>
         <div className={styles.main__container}>
-          <div className={styles.main__title}>My cart</div>
+          <h2 className={styles.main__title}>My cart</h2>
           <div className={styles.main__wrapper}>
             <div className={styles.main__content}>
               {cart?.products?.length > 0 &&
@@ -21,8 +21,17 @@ export function Cart() {
                   <CartItem {...product} displayTable={true} key={product?._id} />
                 ))}
             </div>
-            <div className={styles.main__aside}>
-              
+            <div className={`${styles.main__aside} ${styles.aside}`}>
+              <h3 className={styles.aside__title}>Summary</h3>
+              <p className={styles.aside__text}>Shipping and taxes will be calculated at checkout, where applicateble.</p>
+              <div className={styles.aside__totalPrice}>
+                <span className={styles.aside__totalPrice_title}>Order Total:</span>
+                {cart.products
+                  .map(({ product: { currentPrice }, cartQuantity }) => currentPrice * cartQuantity)
+                  .reduce((prev, next) => prev + next).toFixed(2)
+                  + ' €'}
+              </div>
+              <button className={styles.aside__btn}>Proceed to Checkout</button>
             </div>
           </div>
         </div>

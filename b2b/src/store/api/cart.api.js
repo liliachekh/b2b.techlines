@@ -1,6 +1,6 @@
 import { api } from "./api";
 // =====================
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZWY1M2ExMWY5ZDRjMDAxZTYxNDZlZCIsImZpcnN0TmFtZSI6IkFudG9uIiwibGFzdE5hbWUiOiJNeWtoYWlsaWNoZW5rbyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY5Mzc1MzYzOCwiZXhwIjoxNjkzNzg5NjM4fQ.ELSJ4mDt-RKZQH2LGbQ0Cq1V5VJKYYyNO_R7zXp2cmc';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZWY1M2ExMWY5ZDRjMDAxZTYxNDZlZCIsImZpcnN0TmFtZSI6IkFudG9uIiwibGFzdE5hbWUiOiJNeWtoYWlsaWNoZW5rbyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY5MzgzNjkwNiwiZXhwIjoxNjkzODcyOTA2fQ.pMxvQTv8vqkRlsSYfQUj60FChS1p4PVcwhmSKBgz6ks';
 // =====================
 export const cartApi = api.injectEndpoints({
   endpoints: (builder) => ({

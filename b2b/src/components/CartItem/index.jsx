@@ -66,9 +66,12 @@ function CartItem({ _id, imageUrls, quantity, name, currentPrice, categories, br
         <Link to={`/products/filter?&categories=${categories}`} className={styles.product__link}>
           {categories}
         </Link>
+        <div className={styles.purchase__price}>
+          <span className={styles.purchase__price_title}>Price for one:</span>
+          {currentPrice.toFixed(2)} €
+        </div>
       </div>
       <div className={`${styles.product__purchase} ${styles.purchase}`}>
-        <div className={styles.purchase__price}>{currentPrice.toFixed(2)} €</div>
         <div className={`${styles.purchase__amount} ${styles.amount}`}>
           <button
             type='button'
@@ -87,6 +90,7 @@ function CartItem({ _id, imageUrls, quantity, name, currentPrice, categories, br
             onClick={(e) => increase(true)} />
         </div>
         <div className={`${styles.purchase__price} ${styles.purchase__price_total}`}>
+          <span className={styles.purchase__price_title}>Total amount:</span>
           {(currentPrice * amount).toFixed(2)} €
         </div>
       </div>
