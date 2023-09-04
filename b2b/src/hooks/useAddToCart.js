@@ -1,7 +1,7 @@
 import { useSetCartMutation, useGetCartQuery } from "../store/api/cart.api";
 
 export function useAddToCart() {
-  const [setCart, { isError }] = useSetCartMutation();
+  const [setCart] = useSetCartMutation();
   const { data: cart } = useGetCartQuery();
 
   return async (id, amount) => {

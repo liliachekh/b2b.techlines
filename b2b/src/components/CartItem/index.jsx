@@ -15,14 +15,10 @@ function CartItem({ _id, imageUrls, quantity, name, currentPrice, categories, br
 
   const inCart = cart?.products.find(({ product }) => product._id === _id);
 
-  // =========================================================
-  // =========================================================
   const [deleteFromCart] = useDeleteFromCartMutation();
   async function handleDeleteFromCart(id) {
     await deleteFromCart(id).unwrap();
   }
-  // =========================================================
-  // =========================================================
 
   function handleAmountChange(e) {
     if (e.target.value > 0 && e.target.value <= quantity) {
@@ -66,8 +62,8 @@ function CartItem({ _id, imageUrls, quantity, name, currentPrice, categories, br
         <Link to={`/products/filter?&categories=${categories}`} className={styles.product__link}>
           {categories}
         </Link>
-        <div className={styles.purchase__price}>
-          <span className={styles.purchase__price_title}>Price for one:</span>
+        <div className={styles.product__price}>
+          <span className={styles.product__price_title}>Price for one:</span>
           {currentPrice.toFixed(2)} €
         </div>
       </div>
