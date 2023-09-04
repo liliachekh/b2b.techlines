@@ -86,7 +86,7 @@ function CartItem({ _id, imageUrls, quantity, name, currentPrice, categories, br
             onClick={(e) => increase(true)} />
         </div>
         <div className={`${styles.purchase__price} ${styles.purchase__price_total}`}>
-          <span className={styles.purchase__price_title}>Total amount:</span>
+          {/* <span className={styles.purchase__price_title}>Total amount:</span> */}
           {(currentPrice * amount).toFixed(2)} €
         </div>
       </div>
