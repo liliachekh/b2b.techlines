@@ -12,35 +12,17 @@ body:has(.productDetails) {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    min-width: 360px;
     max-width: 1470px;
     height: 100%;
     margin: 0 auto;
     padding: 0 15px;
-    padding-top: 50px;
     box-sizing: border-box;
-    padding-bottom: 80px;
     border-bottom: 1px solid #dde2e7;
 
     @media (min-width: 768px) {
       flex-direction: row;
-    }
-  }
-}
-
-.related {
-  max-width: 1470px;
-  margin: 0 auto;
-
-  &__container {
-    padding: 0 15px;
-    padding-top: 20px;
-
-    &_title {
-      color: #0c0938;
-      font-weight: 500;
-      font-size: 21px;
-      line-height: 30px;
-      letter-spacing: -.6px;
+      padding-bottom: 40px
     }
   }
 }
