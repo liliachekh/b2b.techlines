@@ -1,7 +1,8 @@
 import styles from './Cart.module.scss';
 import { useGetCartQuery } from "../../store/api/cart.api";
 import Header from "../../components/Header";
-import CartItem from "../../components/CartItem";
+// import CartItem from "../../components/CartItem";
+import ProductCard from '../../components/ProductCard';
 
 export function Cart() {
   const { data: cart = [], isLoading } = useGetCartQuery();
@@ -18,7 +19,8 @@ export function Cart() {
             <div className={styles.main__content}>
               {cart?.products?.length > 0 &&
                 cart?.products?.map(({ product }) => (
-                  <CartItem {...product} key={product?._id} />
+                  <ProductCard {...product} cartItem={true} key={product?._id} />
+                  // <CartItem {...product} key={product?._id} />
                 ))}
             </div>
             <div className={`${styles.main__aside} ${styles.aside}`}>

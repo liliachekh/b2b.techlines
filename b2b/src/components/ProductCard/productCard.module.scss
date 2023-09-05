@@ -155,13 +155,13 @@ $color-grey: #5d5d5d;
   .productRow & {
     @media (min-width: 768px) {
       display: grid;
-      grid-template-columns: 1fr 1.3fr;
+      grid-template-columns: 1fr 1.4fr;
       ;
       justify-content: center;
     }
 
     @media (min-width: 1024px) {
-      grid-template-columns: 1fr 1fr 2fr 2fr;
+      grid-template-columns: 1fr 1fr 2fr 2.1fr;
     }
   }
 
