@@ -18,7 +18,7 @@ export function Cart() {
             <div className={styles.main__content}>
               {cart?.products?.length > 0 &&
                 cart?.products?.map(({ product }) => (
-                  <CartItem {...product} displayTable={true} key={product?._id} />
+                  <CartItem {...product} key={product?._id} />
                 ))}
             </div>
             <div className={`${styles.main__aside} ${styles.aside}`}>

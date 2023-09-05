@@ -10,12 +10,12 @@ import { useAddToCart } from '../../hooks';
 function CartItem({ _id, imageUrls, quantity, name, currentPrice, categories, brand, itemNo, displayTable }) {
   const { data: cart } = useGetCartQuery();
   const handleAddToCart = useAddToCart();
+  const [deleteFromCart] = useDeleteFromCartMutation();
 
   const [amount, setAmount] = useState(1);
 
   const inCart = cart?.products.find(({ product }) => product._id === _id);
 
-  const [deleteFromCart] = useDeleteFromCartMutation();
   async function handleDeleteFromCart(id) {
     await deleteFromCart(id).unwrap();
   }
@@ -86,7 +86,6 @@ function CartItem({ _id, imageUrls, quantity, name, currentPrice, categories, br
             onClick={(e) => increase(true)} />
         </div>
         <div className={`${styles.purchase__price} ${styles.purchase__price_total}`}>
-          {/* <span className={styles.purchase__price_title}>Total amount:</span> */}
           {(currentPrice * amount).toFixed(2)} €
         </div>
       </div>

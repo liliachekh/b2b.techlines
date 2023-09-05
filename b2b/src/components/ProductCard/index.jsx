@@ -5,16 +5,21 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useEffect, useState } from 'react';
 import { Arrow, Cart } from '../icons';
-import { useGetCartQuery } from '../../store/api/cart.api';
+import { useDeleteFromCartMutation, useGetCartQuery } from '../../store/api/cart.api';
 import { useAddToCart } from '../../hooks';
 
-function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, color, productUrl, brand, memory, itemNo, displayTable }) {
+function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, color, productUrl, brand, memory, itemNo, displayTable, cartItem = false }) {
   const { data: cart } = useGetCartQuery();
   const handleAddToCart = useAddToCart();
+  const [deleteFromCart] = useDeleteFromCartMutation();
 
   const [amount, setAmount] = useState(1);
 
   const inCart = cart?.products.find(({ product }) => product._id === _id);
+
+  async function handleDeleteFromCart(id) {
+    await deleteFromCart(id).unwrap();
+  }
 
   function handleAmountChange(e) {
     if (e.target.value > 0 && e.target.value <= quantity) {
@@ -57,18 +62,23 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
           placeholderSrc={'./images/Home.webp'}
           height={255}
           width='100%' />
-        <p className={styles.productCard__name}>{name}</p>
+        {!cartItem && <p className={styles.productCard__name}>{name}</p>}
       </Link>
       <div className={styles.productCard__links}>
+        {cartItem && <Link to={`/product/${itemNo}`} className={styles.product__name}>{name}</Link>}
         <Link to={`/products/filter?&categories=${brand}`} className={styles.productCard__link}>
           {brand}
         </Link>
         <Link to={`/products/filter?&categories=${categories}`} className={styles.productCard__link}>
           {categories}
         </Link>
+        {cartItem && <div className={styles.product__price}>
+          <span className={styles.product__price_title}>Price for one:</span>
+          {currentPrice.toFixed(2)} €
+        </div>}
       </div>
       <div className={`${styles.productCard__purchase} ${styles.purchase}`}>
-        <div className={styles.purchase__price}>{currentPrice.toFixed(2)} €</div>
+        {!cartItem && <div className={styles.purchase__price}>{currentPrice.toFixed(2)} €</div>}
         <div className={`${styles.purchase__amount} ${styles.amount}`}>
           <button
             type='button'
@@ -90,7 +100,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
         <div className={`${styles.purchase__price} ${styles.purchase__price_total}`}>
           {(currentPrice * amount).toFixed(2)} €
         </div>
-        {!inCart
+        {!cartItem && (!inCart
           ? <button
             type='button'
             className={styles.purchase__addToCart}
@@ -103,8 +113,13 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
             className={`${styles.purchase__addToCart} ${styles.purchase__addToCart_added}`}>
             Go to cart
             <Arrow fill={'#f7fbfa'} width={24} height={24} />
-          </Link>}
+          </Link>)}
       </div>
+      {cartItem && <button
+        type='button'
+        className={styles.product__delete}
+        onClick={() => handleDeleteFromCart(_id)}>
+      </button>}
     </div>
   );
 }
