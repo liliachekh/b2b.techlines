@@ -9,7 +9,7 @@ export const customersApi = api.injectEndpoints({
         method: 'POST',
         body: body
       }),
-      invalidatesTags: [{ type: 'Cart', id: 'LIST' }]
+      invalidatesTags: [{ type: 'Customers', id: 'LIST' }]
     })
   })
 })
