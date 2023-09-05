@@ -18,7 +18,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
 
   function handleAmountChange(e) {
     if (e.target.value > 0 && e.target.value <= quantity) {
-      handleAddToCart(_id, e.target.value);
+      inCart ? handleAddToCart(_id, e.target.value) : setAmount(e.target.value);
     }
   }
 
