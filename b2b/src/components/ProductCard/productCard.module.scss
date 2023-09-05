@@ -360,7 +360,8 @@ $color-grey: #5d5d5d;
       transform: translate(-50%, -50%) rotate(90deg);
     }
 
-    &_decrease:disabled {
+    &_decrease:disabled,
+    &_increase:disabled {
       opacity: .5;
     }
   }

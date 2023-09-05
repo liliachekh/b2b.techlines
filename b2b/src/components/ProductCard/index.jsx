@@ -24,10 +24,18 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
 
   async function increase(plus) {
     try {
-      if (plus && quantity > amount) {
-        setAmount(Number(amount) + 1);
-      } else if (!plus) {
-        setAmount(Number(amount) - 1);
+      if (inCart) {
+        if (plus && quantity > amount) {
+          handleAddToCart(_id, Number(amount) + 1);
+        } else if (!plus) {
+          handleAddToCart(_id, Number(amount) - 1);
+        }
+      } else {
+        if (plus && quantity > amount) {
+          setAmount(Number(amount) + 1);
+        } else if (!plus) {
+          setAmount(Number(amount) - 1);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -75,6 +83,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
             onChange={handleAmountChange} />
           <button
             type='button'
+            disabled={amount === quantity}
             className={`${styles.amount__btn} ${styles.amount__btn_increase}`}
             onClick={(e) => increase(true)} />
         </div>
