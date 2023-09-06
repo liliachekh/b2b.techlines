@@ -10,7 +10,7 @@ import { useDeleteFromCartMutation, useGetCartQuery } from '../../store/api/cart
 import { useAddToCart } from '../../hooks';
 
 function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, brand, itemNo, displayTable, cartItem }) {
-  const { data: cart } = useGetCartQuery();
+  const { data: cart = {} } = useGetCartQuery();
   const handleAddToCart = useAddToCart();
   const [deleteFromCart] = useDeleteFromCartMutation();
 
@@ -18,7 +18,8 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
 
   const inCart = cart?.products.find(({ product }) => product._id === _id);
 
-  async function handleDeleteFromCart(id) {
+  async function handleDeleteFromCart(e, id) {
+    e.target.disabled = true;
     await deleteFromCart(id).unwrap();
   }
 
@@ -143,7 +144,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
         <button
           type='button'
           className={cartStyle.productCard__delete}
-          onClick={() => handleDeleteFromCart(_id)}>
+          onClick={(e) => handleDeleteFromCart(e, _id)}>
         </button>}
     </div>
   );

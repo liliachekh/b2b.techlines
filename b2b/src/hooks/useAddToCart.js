@@ -2,7 +2,7 @@ import { useSetCartMutation, useGetCartQuery } from "../store/api/cart.api";
 
 export function useAddToCart() {
   const [setCart] = useSetCartMutation();
-  const { data: cart } = useGetCartQuery();
+  const { data: cart = {} } = useGetCartQuery();
 
   return async (id, amount) => {
     if (cart?.products.length > 0) {

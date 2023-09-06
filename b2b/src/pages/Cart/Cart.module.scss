@@ -36,6 +36,10 @@ $color-grey: #5d5d5d;
     gap: 1.5rem;
   }
 
+  &__empty {
+    font-size: 1.2rem;
+  }
+
   &__aside {
     flex: 1 0 35%
   }
@@ -96,6 +100,11 @@ $color-grey: #5d5d5d;
     cursor: pointer;
     overflow: hidden;
     z-index: 1;
+
+    &:disabled {
+      background: $color-grey;
+      pointer-events: none;
+    }
 
     @media (min-width: 420px) {
       font-size: 1rem;
