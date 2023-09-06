@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import productStyle from './productCard.module.scss';
-import cartStyle from './cartItem.module.scss';
 import { Link } from 'react-router-dom';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
@@ -16,7 +15,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
 
   const [amount, setAmount] = useState(1);
 
-  const inCart = cart?.products.find(({ product }) => product._id === _id);
+  const inCart = cart?.products?.find(({ product }) => product._id === _id);
 
   async function handleDeleteFromCart(e, id) {
     e.target.disabled = true;
@@ -54,12 +53,10 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
   }, [inCart])
 
   return (
-    <div className={!cartItem
-      ? `${productStyle.productCard} ${displayTable ? productStyle.productRow : ''}`
-      : cartStyle.productCard}>
-      <Link to={`/ product / ${itemNo} `} className={!cartItem ? productStyle.productCard__mainLink : cartStyle.productCard__mainLink}>
+    <div className={`${productStyle.productCard} ${displayTable ? productStyle.productRow : ''} ${cartItem ? productStyle.cart : ''}`}>
+      <Link to={`/ product / ${itemNo} `} className={productStyle.productCard__mainLink}>
         <LazyLoadImage
-          className={!cartItem ? productStyle.productCard__img : cartStyle.productCard__img}
+          className={productStyle.productCard__img}
           src={imageUrls[0]}
           alt={name}
           effect="blur"
@@ -71,58 +68,49 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
             {name}
           </p>}
       </Link>
-      <div className={!cartItem ? productStyle.productCard__links : cartStyle.productCard__links}>
+      <div className={`${productStyle.productCard__links} ${cartItem ? productStyle.cart : ''}`}>
         {cartItem &&
-          <Link to={`/ product / ${itemNo} `} className={cartStyle.productCard__name}>
+          <Link to={`/ product / ${itemNo} `} className={productStyle.productCard__name}>
             {name}
           </Link>}
-        <Link to={`/ products / filter ?& categories=${brand} `} className={!cartItem ? productStyle.productCard__link : cartStyle.productCard__link}>
+        <Link to={`/ products / filter ?& categories=${brand} `} className={productStyle.productCard__link}>
           {brand}
         </Link>
-        <Link to={`/ products / filter ?& categories=${categories} `} className={!cartItem ? productStyle.productCard__link : cartStyle.productCard__link}>
+        <Link to={`/ products / filter ?& categories=${categories} `} className={productStyle.productCard__link}>
           {categories}
         </Link>
         {cartItem &&
-          <div className={cartStyle.productCard__price}>
-            <span className={cartStyle.productCard__price_title}>Price for one:</span>
+          <div className={productStyle.productCard__price}>
+            <span className={productStyle.productCard__price_title}>Price for one:</span>
             {currentPrice.toFixed(2)} €
           </div>}
       </div>
-      <div
-        className={!cartItem
-          ? `${productStyle.productCard__purchase} ${productStyle.purchase} `
-          : `${cartStyle.productCard__purchase} ${cartStyle.purchase}`}>
+      <div className={`${productStyle.productCard__purchase} ${productStyle.purchase} ${cartItem ? productStyle.cart : ''}`}>
         {!cartItem &&
           <div className={productStyle.purchase__price}>
             {currentPrice.toFixed(2)} €
           </div>}
-        <div className={!cartItem
-          ? `${productStyle.purchase__amount} ${productStyle.amount} `
-          : `${cartStyle.purchase__amount} ${cartStyle.amount} `}>
+          
+        <div className={`${productStyle.productCard__amount} ${productStyle.amount} ${cartItem ? productStyle.cart : ''}`}>
           <button
             type='button'
             disabled={amount === 1}
-            className={!cartItem
-              ? `${productStyle.amount__btn} ${productStyle.amount__btn_decrease} `
-              : `${cartStyle.amount__btn} ${cartStyle.amount__btn_decrease} `}
+            className={`${productStyle.amount__btn} ${productStyle.amount__btn_decrease} `}
             onClick={amount > 1 ? (e) => increase(false) : null} />
           <input
             name={name}
             type="number"
-            className={!cartItem ? productStyle.amount__input : cartStyle.amount__input}
+            className={productStyle.amount__input}
             value={amount}
             onChange={handleAmountChange} />
           <button
             type='button'
             disabled={amount === quantity}
-            className={!cartItem
-              ? `${productStyle.amount__btn} ${productStyle.amount__btn_increase} `
-              : `${cartStyle.amount__btn} ${cartStyle.amount__btn_increase} `}
+            className={`${productStyle.amount__btn} ${productStyle.amount__btn_increase} `}
             onClick={(e) => increase(true)} />
         </div>
-        <div className={!cartItem
-          ? `${productStyle.purchase__price} ${productStyle.purchase__price_total} `
-          : `${cartStyle.purchase__price} ${cartStyle.purchase__price_total} `}>
+
+        <div className={`${productStyle.purchase__price} ${productStyle.purchase__price_total} `}>
           {(currentPrice * amount).toFixed(2)} €
         </div>
         {!cartItem && (!inCart
@@ -143,7 +131,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
       {cartItem &&
         <button
           type='button'
-          className={cartStyle.productCard__delete}
+          className={productStyle.productCard__delete}
           onClick={(e) => handleDeleteFromCart(e, _id)}>
         </button>}
     </div>
