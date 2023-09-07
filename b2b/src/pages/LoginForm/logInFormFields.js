@@ -14,5 +14,9 @@ export const logInFormFields = [
       name: "password",
       type: "password",
       placeholder: "Enter your password",
+    },
+    {
+      tagType: 'custom',
+      title : 'Log In'
     }
-  ];
+  ]
