@@ -100,6 +100,10 @@
     gap: 30px;
     margin-top: 30px;
 
+    @media (min-width: 1024px) {
+      flex-wrap: nowrap;
+    }
+
     &__price {
       text-align: start;
 
@@ -135,7 +139,14 @@
       text-align: center;
       cursor: pointer;
       overflow: hidden;
+      box-sizing: border-box;
       z-index: 1;
+
+      @media (min-width: 1024px) {
+        padding: 0;
+        width: 250px;
+        height: 50px;
+      }
 
       &_added {
         background-color: #5d5d5d;
