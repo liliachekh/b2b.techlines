@@ -10,6 +10,8 @@ function Filter() {
     // const dispatch = useDispatch();
     const [isDropdownOpen, setIsDropdownOpen] = useState(null);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [queryString, setQueryString] = useState('');
+    const [products, setProducts] = useState(null);
     const [filters, setFilters] = useState({
         categoriesFilters: [],
         brandFilters: []
@@ -26,9 +28,11 @@ function Filter() {
 
     const toggleDropdown = (type) => {
         setIsDropdownOpen(isDropdownOpen === type ? null : type); // Если список уже открыт, то закрыть его, иначе открыть выбранный
+        console.log(selectedFilters);
+        console.log(products);
       };
 
-      const getFiltersByType = useCallback(async (type) => {
+    const getFiltersByType = useCallback(async (type) => {
         try {
         const data = await fetchData(`https://storage.techlines.es/api/filters/${type}`);
         setFilters(prevFilters => ({
@@ -41,10 +45,31 @@ function Filter() {
         }
     }, []);
 
-    useEffect(() => {
-        getFiltersByType('categories');
-        getFiltersByType('brand');
-    }, [getFiltersByType]);
+    // рендер всіх товарів
+    const renderProducts = useCallback(async () => {
+        try {
+          // Запит до API
+          const data = await fetchData(`https://storage.techlines.es/api/products/filter`);
+          setProducts(data);
+        } catch (error) {
+            console.log(error);
+        //   dispatch(setErrorAction(error.message));
+        }
+    }, []);
+
+    // Функція для відображення товарів згідно обраних фільтрів
+    const applyFilters = useCallback(async () => {
+        try {
+        // Оновлення URL з актуальними параметрами фільтрації
+        // navigate(`/discover?${queryString}`);
+        // Запит до API з використанням queryString для фільтрації товарів
+        const data = await fetchData(`https://storage.techlines.es/api/products/filter?${queryString}`);
+        setProducts(data);
+        } catch (error) {
+        // dispatch(setErrorAction(error.message));
+        console.log(error);
+        }
+    });
 
     // Код фільтру по чекбоксам
     const valueChange = (event) => {
@@ -67,8 +92,45 @@ function Filter() {
     // Фільтр пошуку
     const handleChange = (e) => {
         setSelectedFilters({ ...selectedFilters, search: e.target.value });
+    }
+
+    useEffect(() => {
+        getFiltersByType('categories');
+        getFiltersByType('brand');
+        renderProducts();
+    }, [getFiltersByType, renderProducts]);
+
+    useEffect(() => {
+        let newQueryString = '';
+    
+        if (selectedFilters.categories.length > 0) {
+            const categoriesString = selectedFilters.categories.join(',');
+            newQueryString += `&categories=${categoriesString}`;
+        }
+    
+        if (selectedFilters.brand.length > 0) {
+          const brandString = selectedFilters.brand.join(',');
+          newQueryString += `&brand=${brandString}`;
+        }
+
+        if (selectedFilters.search !== '') {
+          newQueryString += `&name=${selectedFilters.search}`;
+        }
+    
+        setQueryString(newQueryString);
+      }, [selectedFilters]);
+
+    // Очистити всі фільтри
+    const clearAllFilters = () => {
+        setSelectedFilters({
+        ...selectedFilters,
+        categories: [],
+        brand: [],
+        search: '',
+        });
+        renderProducts();
         console.log(selectedFilters);
-      }
+    };
 
 
     return (
@@ -124,8 +186,8 @@ function Filter() {
                         </div>
                         </div>
                         <div className={styles.filter__navigation}>
-                            <button type="button" className={`${styles.filter__navigationBtn + ' ' + styles.btnEffect}`}>Clear</button>
-                            <button type="submit" className={`${styles.filter__navigationBtn + ' ' + styles.btnEffect}`}>Submit</button>
+                            <button type="button" className={`${styles.filter__navigationBtn + ' ' + styles.btnEffect}`} onClick={clearAllFilters}>Clear</button>
+                            <button type="submit" className={`${styles.filter__navigationBtn + ' ' + styles.btnEffect}`} onClick={applyFilters}>Submit</button>
                         </div>
                     </div>
                 </div>
