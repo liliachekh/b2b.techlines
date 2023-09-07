@@ -1,9 +1,10 @@
-import { configureStore, combineReducers  } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+// import cartReducer from './cartSlice';
 import { api } from './api/api';
 
 const rootReducer = combineReducers({
   [api.reducerPath]: api.reducer,
-  
+  // cart: cartReducer,
 });
 
 const store = configureStore({
