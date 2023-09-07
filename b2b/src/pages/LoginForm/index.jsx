@@ -35,12 +35,12 @@ export function LoginForm() {
             />
           </div>
           <div className={style.loginForm__wrapper}>
+            <h2 className={style.loginForm__title}>Log In</h2>
             <FormikForm
               initialValues={{
                 loginOrEmail: "",
                 password: "",
               }}
-              useLoginFormStyles={true}
               validationSchema={validationSchemaLogin}
               fields={logInFormFields}
               callback={onSubmitHandler}

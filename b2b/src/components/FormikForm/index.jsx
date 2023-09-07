@@ -2,7 +2,6 @@ import style from "./form.module.scss";
 import { Form, Formik } from "formik";
 import Input from "../Input";
 import InputMasked from "../InputMasked";
-import LoginFormAdditional from "../LoginFormAdditional/ index";
 
 export default function FormikForm({
   initialValues,
@@ -10,7 +9,6 @@ export default function FormikForm({
   fields,
   callback,
   submitBtn,
-  useLoginFormStyles,
 }) {
   return (
     <Formik
@@ -21,15 +19,6 @@ export default function FormikForm({
         setSubmitting(false);
       }}>
       <Form className={style.form}>
-        {fields?.map((field) => {
-          if (field.title) {
-            return (
-              <h2 className={style.loginForm__title} key={"title"}>{field.title}</h2>
-            );
-          }
-          return null;
-        })}
-
         {fields?.map((field) => {
           if (field.tagType === "masked") {
             return (
@@ -52,9 +41,9 @@ export default function FormikForm({
                 errorClass={style.form__error}
               />
             );
-          } else {
-            return <LoginFormAdditional key={"logIn"} />;
           }
+          if (field.tagType === "custom") return field.content()
+          else return <></>
         })}
         <button
           text="Checkout"

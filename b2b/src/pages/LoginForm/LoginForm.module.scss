@@ -1,78 +1,84 @@
-
 .loginForm {
+  min-height: 100vh;
+  background: url('../../../public/images/background-auth.webp') 50%/cover no-repeat;
+  font-family: "Roboto", Sans-Serif;
+
+  &__container {
+    box-sizing: border-box;
     min-height: 100vh;
-    background: url('../../../public/images/background-auth.webp') 50%/cover no-repeat;
-    font-family: "Roboto", Sans-Serif;
+    margin: 0 auto;
+    max-width: 1470px;
+    gap: 10px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
 
-    &__container {
-        box-sizing: border-box;
-        min-height: 100vh;
-        margin: 0 auto;
-        max-width: 1470px;
-        gap: 10px;
-        padding: 15px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-    }
-    
-    &__errorMessage {
-        background-color: #f92e3e;
-        color: #fff;
-        text-align: center;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 20px;
-        left: 0;
-        padding: 13px 0;
-        position: absolute;
-        top: 0;
-        width: 100%;
-        box-sizing: border-box;
+  &__errorMessage {
+    background-color: #f92e3e;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    left: 0;
+    padding: 13px 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    box-sizing: border-box;
 
-        @media (min-width: 768px) {
-          padding: 13px 20px;
-          font-size: 16px;
-        }
+    @media (min-width: 768px) {
+      padding: 13px 20px;
+      font-size: 16px;
     }
-    &__main {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-        margin-top: 30px;
-    }
+  }
 
-    &__logo {
-        margin: 0 auto;
-    }
+  &__main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 30px;
+  }
 
-    &__logo img {
-        width: 100px;
-    }
+  &__logo {
+    margin: 0 auto;
+  }
 
-    &__wrapper {
-        box-sizing: border-box;
-        margin: 0 auto;
-        max-width: 25rem;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px 0 rgba(19,26,38,.06);
-        padding: 15px;
-        z-index: 1;
-    }
+  &__logo img {
+    width: 100px;
+  }
 
-    &__footer {
-        text-align: center;
-        font-size: 13px;
-        color: #CDD1DA;
-    }
+  &__wrapper {
+    box-sizing: border-box;
+    margin: 0 auto;
+    max-width: 25rem;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px 0 rgba(19, 26, 38, .06);
+    padding: 15px;
+    z-index: 1;
+  }
+
+  &__title {
+    text-align: center;
+    font-size: 21px;
+    margin-bottom: 20px;
+  }
+
+  &__footer {
+    text-align: center;
+    font-size: 13px;
+    color: #CDD1DA;
+  }
 }
 
 @media (min-width: 768px) {
-    .loginForm {
+  .loginForm {
 
-        &__wrapper {
-            padding: 25px;
-        }
+    &__wrapper {
+      padding: 25px;
     }
+  }
 }
