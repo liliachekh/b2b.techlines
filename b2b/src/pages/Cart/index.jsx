@@ -4,9 +4,11 @@ import Header from "../../components/Header";
 import ProductCard from '../../components/ProductCard';
 
 export function Cart() {
-  const { data: cart = {}, isLoading } = useGetCartQuery();
+  const { data: cart = {}, error, isLoading } = useGetCartQuery();
 
   if (isLoading) return <h1>Loading</h1>
+
+  if (error?.originalStatus === 401) return <h1>You are unauthorized</h1>
 
   return (
     <>
