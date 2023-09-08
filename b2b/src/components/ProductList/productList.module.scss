@@ -128,7 +128,7 @@ $color-grey: #5d5d5d;
       display: grid;
       grid-template-columns: repeat(auto-fill, 246px);
       gap: 2rem 1rem;
-      justify-content: space-between;
+      justify-content: space-around;
     }
   }
 }

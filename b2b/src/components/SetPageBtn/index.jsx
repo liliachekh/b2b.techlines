@@ -1,6 +1,6 @@
 import styles from './setPageBtn.module.scss';
 import { scrollToRef } from '../../utils';
-import useQueryString from '../../hooks';
+import { useQueryString } from '../../hooks';
 
 function SetPageBtn({ scrollTo, productsLength, label, direction }) {
   const { sort, perPage, page, setSearchParams } = useQueryString();

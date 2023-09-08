@@ -1,11 +1,11 @@
 import styles from './pagination.module.scss';
 import SetPageBtn from "../SetPageBtn";
 import { Arrow } from "../icons";
-import useQueryString from '../../hooks';
+import { useQueryString } from '../../hooks';
 
 function Pagination({ scrollTo, productsLength, productsQuantity }) {
-  const {perPage, page} = useQueryString();
-  
+  const { perPage, page } = useQueryString();
+
   const startItem = productsQuantity - productsLength + 1;
   const lastItem = page * productsLength;
 
