@@ -4,7 +4,6 @@ const token = localStorage.getItem('token');
 
 export const customersApi = api.injectEndpoints({
   endpoints: (builder) => ({
-
     logIn: builder.mutation({
       query: (body) => ({
         url: 'customers/login',
