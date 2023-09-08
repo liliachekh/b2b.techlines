@@ -1,6 +1,6 @@
 import { api } from "./api";
 // =====================
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZWY1M2ExMWY5ZDRjMDAxZTYxNDZlZCIsImZpcnN0TmFtZSI6IkFudG9uIiwibGFzdE5hbWUiOiJNeWtoYWlsaWNoZW5rbyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY5NDAzMTI3NywiZXhwIjoxNjk0MDY3Mjc3fQ.ZHayOKeCxHMWzXTwXNvPy11_H1phG-i5hMTGBRFYZWg';
+const token = localStorage.getItem('token');
 // =====================
 export const cartApi = api.injectEndpoints({
   endpoints: (builder) => ({
