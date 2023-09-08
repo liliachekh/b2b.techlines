@@ -5,6 +5,7 @@ import ProductDetails from '../../components/ProductDetails';
 import { baseUrl } from '../../utils/vars';
 import { useCallback } from 'react';
 import { fetchData } from '../../utils';
+import Loader from '../../components/Loader';
 
 export function Product() {
   const { productId } = useParams();
@@ -21,11 +22,14 @@ export function Product() {
 
   return (
     <div id='main'>
-      {product &&
+      {product ? (
         <div className={style.productDetails}>
           <div className={style.productDetails__container}>
             <ProductDetails {...product} />
           </div>
-        </div>}
+        </div>
+        ) : (
+          <Loader />
+        )}
     </div>)
 }
