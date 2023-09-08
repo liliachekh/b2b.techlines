@@ -1,7 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { Home } from "../pages";
-import { Product } from "../pages/Product";
-import { Home, LoginForm, ResetPassword, Cart } from "../pages";
+import { Home, LoginForm, ResetPassword, Cart, Product } from "../pages";
 
 export default function Router() {
   return (
