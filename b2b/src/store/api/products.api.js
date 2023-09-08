@@ -13,7 +13,8 @@ export const productsApi = api.injectEndpoints({
           : [{ type: 'Products', id: 'LIST' }],
     }),
     getProduct: builder.query({
-      query: (itemNo) => `products/${itemNo}`,
+      query: (productUrl) => `products/${productUrl}`,
+      providesTags: (result, error, id) => [{ type: 'Product', id }],
     }),
   })
 })

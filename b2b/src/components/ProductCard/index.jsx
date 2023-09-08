@@ -8,7 +8,7 @@ import { Arrow, Cart } from '../icons';
 import { useDeleteFromCartMutation, useGetCartQuery } from '../../store/api/cart.api';
 import { useAddToCart } from '../../hooks';
 
-function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, brand, itemNo, displayTable, cartItem }) {
+function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, brand, itemNo, productUrl, displayTable, cartItem }) {
   const { data: cart = {} } = useGetCartQuery();
   const handleAddToCart = useAddToCart();
   const [deleteFromCart] = useDeleteFromCartMutation();
@@ -54,7 +54,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
 
   return (
     <div className={`${productStyle.productCard} ${displayTable ? productStyle.productRow : ''} ${cartItem ? productStyle.cart : ''}`}>
-      <Link to={`/ product / ${itemNo} `} className={productStyle.productCard__mainLink}>
+      <Link to={`/${productUrl}`} className={productStyle.productCard__mainLink}>
         <LazyLoadImage
           className={productStyle.productCard__img}
           src={imageUrls[0]}
