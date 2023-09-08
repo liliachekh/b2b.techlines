@@ -1,9 +1,9 @@
 import styles from './setPageBtn.module.scss';
 import { scrollToRef } from '../../utils';
-import useQueryString from '../../hooks';
+import { useQueryString } from '../../hooks';
 
 function SetPageBtn({ scrollTo, productsLength, label, direction }) {
-  const { sort, perPage, page, setSearchParams } = useQueryString();
+  const { search, sort, perPage, page, setSearchParams } = useQueryString();
 
   const disabled = direction && productsLength < perPage;
 
@@ -12,9 +12,13 @@ function SetPageBtn({ scrollTo, productsLength, label, direction }) {
     const newPage = direction ? Number(page || 1) + 1 : Number(page || 1) - 1;
     if (newPage === 0) return;
 
-    sort
-      ? setSearchParams({ sort, perPage, startPage: newPage })
-      : setSearchParams({ perPage, startPage: newPage })
+    let query = { perPage, startPage: newPage };
+
+    if (sort) query = { sort, ...query };
+    if (search) query = { search, ...query };
+
+    setSearchParams(query);
+
     scrollToRef(scrollTo);
   }
 
