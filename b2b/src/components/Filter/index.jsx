@@ -114,7 +114,7 @@ function Filter() {
         }
 
         if (selectedFilters.search !== '') {
-          newQueryString += `&name=${selectedFilters.search}`;
+          newQueryString += `&prod=${selectedFilters.search}`;
         }
     
         setQueryString(newQueryString);
@@ -165,7 +165,7 @@ function Filter() {
                         </div>
                         <div className={styles.filter__search}>
                             <h4 className={styles.filter__dropdownTitle}>Search product</h4>
-                            <input type="text" id="search" name="search" onChange={handleChange} />
+                            <input type="text" id="search" name="search" onChange={handleChange} value={selectedFilters.search}/>
                         </div>
                         <div className={styles.filter__dropdown}>
                             <h4 className={styles.filter__dropdownTitle}>Brand</h4>
