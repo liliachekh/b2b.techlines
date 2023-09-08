@@ -31,7 +31,7 @@ export function Profile() {
               </Link>
               <button className={styles.aside__link}
                 onClick={() => {
-                  navigate("/");
+                  navigate("/login");
                   localStorage.removeItem('token')
                 }}>
                 Logout
