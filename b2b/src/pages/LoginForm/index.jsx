@@ -30,7 +30,7 @@ export function LoginForm() {
         <main className={style.loginForm__main}>
           <div className={style.loginForm__logo}>
             <img
-              src="/images/tech.png"
+              src="/images/Tech.png"
               alt="techlines logo"
             />
           </div>
