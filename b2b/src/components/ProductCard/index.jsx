@@ -54,7 +54,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
 
   return (
     <div className={`${productStyle.productCard} ${displayTable ? productStyle.productRow : ''} ${cartItem ? productStyle.cart : ''}`}>
-      <Link to={`/ product / ${itemNo} `} className={productStyle.productCard__mainLink}>
+      <Link to={`/product/${itemNo}`} className={productStyle.productCard__mainLink}>
         <LazyLoadImage
           className={productStyle.productCard__img}
           src={imageUrls[0]}

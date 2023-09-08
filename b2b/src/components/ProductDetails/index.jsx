@@ -1,33 +1,49 @@
 import styles from './productDetails.module.scss';
 import { Cart } from '../icons/cart';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProductsSlider from '../ProductSlider';
-import { useDispatch, useSelector } from 'react-redux';
 import { Arrow } from '../icons';
+import { useGetCartQuery } from '../../store/api/cart.api';
+import { useAddToCart } from '../../hooks';
+import { Link } from 'react-router-dom';
 
-export default function ProductDetails({ _id, name, currentPrice, brand, itemNo, quantity, imageUrls, categories, theme, details }) {
+export default function ProductDetails({ _id, name, currentPrice, brand, itemNo, quantity, imageUrls, cartItem }) {
+  const { data: cart = {} } = useGetCartQuery();
+  const handleAddToCart = useAddToCart();
+
   const [amount, setAmount] = useState(1);
-  const dispatch = useDispatch();
-  const cart = useSelector(state => state.cart.products);
+
+  const inCart = cart?.products?.find(({ product }) => product._id === _id);
 
   function handleAmountChange(e) {
-    if (e.target.value > 0 && e.target.value <= quantity) setAmount(e.target.value);
+    if (e.target.value > 0 && e.target.value <= quantity) {
+      inCart ? handleAddToCart(_id, e.target.value) : setAmount(e.target.value);
+    }
   }
 
   async function increase(plus) {
     try {
-      if (plus && quantity > amount) {
-        // dispatch(changeQuantity(cart, _id, token, plus));
-        setAmount(Number(amount) + 1)
-      } else if (!plus) {
-        // dispatch(changeQuantity(cart, _id, token, plus));
-        setAmount(Number(amount) - 1)
+      if (inCart) {
+        if (plus && quantity > amount) {
+          handleAddToCart(_id, Number(amount) + 1);
+        } else if (!plus) {
+          handleAddToCart(_id, Number(amount) - 1);
+        }
+      } else {
+        if (plus && quantity > amount) {
+          setAmount(Number(amount) + 1);
+        } else if (!plus) {
+          setAmount(Number(amount) - 1);
+        }
       }
     } catch (error) {
       console.log(error);
-      // dispatch(setErrorAction(error));
     }
   }
+
+  useEffect(() => {
+    setAmount(inCart?.cartQuantity || 1);
+  }, [inCart])
 
   return (
     <>
@@ -68,23 +84,21 @@ export default function ProductDetails({ _id, name, currentPrice, brand, itemNo,
             <p className={styles.purchase__price_text}>Total amount:</p>
             <p className={styles.purchase__price_total}>{(currentPrice * amount).toFixed(2)} €</p>
         </div>
-          {!cart.find((product) => product.id === _id)
+          {!cartItem && (!inCart
           ? <button
             type='button'
             className={styles.purchase__addToCart}
-            // onClick={() => handleAddToCart(dispatch, _id, amount)}
+            onClick={() => handleAddToCart(_id, amount)}
             >
             Add to cart
             <Cart color={'#f7fbfa'} strokeWidth={'2'} />
           </button>
-          : <button
-            type='button'
-            className={`${styles.purchase__addToCart} ${styles.purchase__addToCart_added}`}
-            // onClick={() => handleAddToCart(dispatch, _id, amount)}
-            >
+          : <Link 
+            to='/cart'
+            className={`${styles.purchase__addToCart} ${styles.purchase__addToCart_added}`}>
             Go to cart
             <Arrow fill={'#f7fbfa'} width={24} height={24} />
-          </button>}
+          </Link>)}
         </div>
       </div>
     </>
