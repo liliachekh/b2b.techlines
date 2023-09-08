@@ -1,0 +1,194 @@
+$color-light: #f7fbfa;
+$color-dark: #202025;
+$color-grey: #5d5d5d;
+
+.main {
+  padding: 4.5rem 0;
+
+  &__container {
+    padding: 0 15px;
+    margin: 0 auto;
+    min-width: 320px;
+    max-width: 1470px;
+    box-sizing: border-box;
+  }
+
+  &__title {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 60%;
+    gap: 1.5rem;
+  }
+
+  &__aside {
+    width: 100%;
+
+    @media (min-width: 768px) {
+      flex: 1 0 25%;
+    }
+  }
+}
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+  margin: 0 auto;
+  border: 2px solid $color-dark;
+  border-radius: 15px;
+  box-shadow: 1px 5px 15px rgba(0, 0, 0, .4);
+  box-sizing: border-box;
+  overflow: hidden;
+
+  &__link {
+    position: relative;
+    padding: .5rem 0;
+    font-size: 1.3rem;
+    line-height: 1.3rem;
+    text-align: left;
+    cursor: pointer;
+
+    &::before {
+      position: absolute;
+      content: '';
+      right: calc(-100% - 3rem);
+      top: 0;
+      width: calc(100% + 2rem);
+      height: 100%;
+      background: linear-gradient(to right, #ffffffe9 0%, #BDBDBD 100%);
+      transition: right .3s;
+      z-index: -1;
+    }
+
+    &:hover {
+      &::before {
+        right: -1rem;
+      }
+    }
+
+    &_active {
+      position: relative;
+      font-weight: 700;
+
+      &::after {
+        position: absolute;
+        content: '';
+        right: -1rem;
+        top: 0;
+        width: .6rem;
+        height: 100%;
+        border-radius: 100% 0 0 100%;
+        background: #000;
+        transition: right .3s;
+      }
+
+      &::before {
+        right: -1rem
+      }
+    }
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .63rem;
+    position: relative;
+    padding: 7px 30px;
+    transition: .3s;
+    border: 2px solid #202025;
+    border-radius: 50px;
+    background-color: #202025;
+    color: #f7fbfa;
+    text-align: center;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    overflow: hidden;
+    z-index: 1;
+    max-width: max-content;
+
+    &:disabled {
+      background: $color-grey;
+      pointer-events: none;
+    }
+
+    @media (min-width: 420px) {
+      font-size: 1rem;
+    }
+
+    &:has(> svg) {
+      padding: 7px 10px;
+    }
+
+    & svg {
+      width: 15px;
+      height: 15px;
+
+      &>path {
+        transition: stroke .3s, fill .3s;
+      }
+    }
+
+    &:hover>svg>path {
+      stroke: #202025;
+    }
+
+    &::after {
+      position: absolute;
+      top: 100%;
+      left: -20%;
+      width: 150%;
+      height: 50%;
+      transition: all .3s;
+      border-radius: 50%;
+      content: '';
+      z-index: -1;
+    }
+
+    &::before {
+      position: absolute;
+      top: -5%;
+      left: -5%;
+      width: 150%;
+      height: 150%;
+      content: '';
+      z-index: -1;
+    }
+
+    &::after {
+      background-color: #f7fbfa;
+      z-index: -1;
+    }
+
+    &:hover {
+      color: #202025;
+    }
+
+    &:hover {
+      &::after {
+        top: -50%;
+        width: 150%;
+        height: 200%;
+      }
+    }
+  }
+}
