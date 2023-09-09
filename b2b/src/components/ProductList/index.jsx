@@ -1,17 +1,18 @@
 import { useRef, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
+import PropTypes from 'prop-types';
+import styles from './productList.module.scss';
 import ProductCard from '../ProductCard';
 import PerPageBtn from '../PerPageBtn';
 import SortByBtn from '../SortByBtn';
 import { IconCardList, IconTableList } from '../icons';
-import styles from './productList.module.scss';
-import { useMediaQuery } from 'react-responsive';
 import Pagination from '../Pagination';
 
 function ProductList({ products, productsQuantity }) {
   const [displayTable, setDisplayTable] = useState(false);
   const ref = useRef(null);
 
-  const isMobile = useMediaQuery({ query: '(max-width: 480px)' });
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
   return (
     <div ref={ref} className={`${styles.productList} ${displayTable ? styles.productTable : ''}`}>
@@ -55,12 +56,13 @@ function ProductList({ products, productsQuantity }) {
                 newPerPage={item} />
             ))}
           </div>
-          <div className={styles.productList__btns}>
-            <Pagination
-              scrollTo={ref}
-              productsLength={products?.length}
-              productsQuantity={productsQuantity} />
-          </div>
+          {productsQuantity &&
+            <div className={styles.productList__btns}>
+              <Pagination
+                scrollTo={ref}
+                productsLength={products?.length}
+                productsQuantity={productsQuantity} />
+            </div>}
         </div>
       </div>
     </div>
@@ -68,3 +70,8 @@ function ProductList({ products, productsQuantity }) {
 }
 
 export default ProductList;
+
+ProductList.propTypes = {
+  products: PropTypes.array,
+  productsQuantity: PropTypes.number,
+}
