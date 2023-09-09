@@ -14,8 +14,8 @@ export default function FormikForm({
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={async (values, { setSubmitting }) => {
-        callback(values);
+      onSubmit={async (values, { setSubmitting, resetForm }) => {
+        callback(values, resetForm);
         setSubmitting(false);
       }}>
       <Form className={style.form}>

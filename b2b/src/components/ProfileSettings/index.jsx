@@ -14,12 +14,13 @@ export function ProfileSettings() {
     changeAccount(values);
   }
 
-  async function onSubmitPasswordHandler({ curPassword, password, confPassword }) {
+  async function onSubmitPasswordHandler({ curPassword, password, confPassword }, resetForm) {
     if (password === confPassword)
       changePassword({
         "password": curPassword,
         "newPassword": password
       })
+    resetForm();
   }
 
   if (isLoading) return <Loader />
