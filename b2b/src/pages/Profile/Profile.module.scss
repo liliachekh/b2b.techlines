@@ -33,14 +33,25 @@ $color-grey: #5d5d5d;
     display: flex;
     flex-direction: column;
     flex: 1 0 60%;
-    gap: 1.5rem;
+    gap: 4rem;
+    // width: 100%;
+    padding: 1rem;
+    margin: 0 auto;
+    border: 2px solid $color-dark;
+    border-radius: 15px;
+    box-shadow: 1px 5px 15px rgba(0, 0, 0, .4);
+    box-sizing: border-box;
+
+    @media (min-width: 768px) {
+      padding: 1.5rem;
+    }
   }
 
   &__aside {
     width: 100%;
 
     @media (min-width: 768px) {
-      flex: 1 0 25%;
+      flex: 0 0 250px;
     }
   }
 }
@@ -92,10 +103,9 @@ $color-grey: #5d5d5d;
         content: '';
         right: -1rem;
         top: 0;
-        width: .6rem;
         height: 100%;
-        border-radius: 100% 0 0 100%;
-        background: #000;
+        border-radius: 43px 0 0 43px;
+        border-right: 4px solid $color-dark;
         transition: right .3s;
       }
 

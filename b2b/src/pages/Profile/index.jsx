@@ -1,16 +1,10 @@
 import styles from './Profile.module.scss';
 import Header from "../../components/Header";
-import { useGetCustomerQuery } from '../../store/api/customers.api';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 export function Profile() {
-  const { data: customer = {}, error, isLoading } = useGetCustomerQuery();
   const navigate = useNavigate();
 
-  if (isLoading) return <h1>Loading</h1>
-
-  if (error?.originalStatus === 401) return <h1>You are unauthorized</h1>
-  console.log(customer);
   return (
     <>
       <Header />

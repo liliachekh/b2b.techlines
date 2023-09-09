@@ -1,6 +1,5 @@
 import { api } from "./api";
-
-const token = localStorage.getItem('token');
+import { headers } from "../../utils/vars";
 
 export const customersApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -16,13 +15,28 @@ export const customersApi = api.injectEndpoints({
       query: () => ({
         url: 'customers/customer',
         method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
+        headers: headers(),
       }),
+    }),
+    changeAccount: builder.mutation({
+      query: (body) => ({
+        url: 'customers/',
+        method: 'PUT',
+        headers: headers(),
+        body: body
+      }),
+      invalidatesTags: [{ type: 'Customers', id: 'LIST' }]
+    }),
+    changePassword: builder.mutation({
+      query: (body) => ({
+        url: 'customers/password',
+        method: 'PUT',
+        headers: headers(),
+        body: body
+      }),
+      invalidatesTags: [{ type: 'Customers', id: 'LIST' }]
     }),
   })
 })
 
-export const { useLogInMutation, useGetCustomerQuery } = customersApi;
+export const { useLogInMutation, useGetCustomerQuery, useChangeAccountMutation, useChangePasswordMutation } = customersApi;

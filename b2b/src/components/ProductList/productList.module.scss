@@ -15,15 +15,20 @@ $color-grey: #5d5d5d;
   &__wrapper {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
+    gap: 1rem;
+    margin: 2rem 0;
+    
+    @media (min-width: 560px) {
+      justify-content: space-between;
+    }
   }
 
   &__btns {
     display: flex;
     align-items: center;
     gap: .5rem;
-    margin: 2rem 0;
   }
 
   &__controlTitle {
@@ -51,10 +56,6 @@ $color-grey: #5d5d5d;
     @media (min-width: 420px) {
       font-size: 1rem;
     }
-
-    // &:has(> svg) {
-    //   padding: 7px 10px;
-    // }
 
     & svg {
       width: 15px;
@@ -124,9 +125,9 @@ $color-grey: #5d5d5d;
       }
     }
 
-    @media (min-width: 420px) {
+    @media (min-width: 516px) {
       display: grid;
-      grid-template-columns: repeat(auto-fill, 246px);
+      grid-template-columns: repeat(auto-fill, 235px);
       gap: 2rem 1rem;
       justify-content: space-around;
     }
