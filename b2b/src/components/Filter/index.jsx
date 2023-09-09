@@ -3,15 +3,15 @@ import { FilterIcon, ArrowDropdown } from "../icons";
 import { useState, useCallback, useEffect } from "react";
 // import { useDispatch } from 'react-redux';
 import { fetchData } from "../../utils";
-// import SortByBtn from '../SortByBtn';
+import { useQueryString } from '../../hooks';
 
 function Filter() {
 
     // const dispatch = useDispatch();
     const [isDropdownOpen, setIsDropdownOpen] = useState(null);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const [queryString, setQueryString] = useState('');
-    const [products, setProducts] = useState(null);
+    // const [queryString, setQueryString] = useState('');
+    // const [products, setProducts] = useState(null);
     const [filters, setFilters] = useState({
         categoriesFilters: [],
         brandFilters: []
@@ -21,6 +21,7 @@ function Filter() {
         brand: [],
         search: '',
     });
+    const { setSearchParams } = useQueryString();
 
     const toggleFilter = () => {
         setIsFilterOpen(!isFilterOpen);
@@ -29,7 +30,7 @@ function Filter() {
     const toggleDropdown = (type) => {
         setIsDropdownOpen(isDropdownOpen === type ? null : type); // Если список уже открыт, то закрыть его, иначе открыть выбранный
         console.log(selectedFilters);
-        console.log(products);
+        // console.log(products);
       };
 
     const getFiltersByType = useCallback(async (type) => {
@@ -46,30 +47,48 @@ function Filter() {
     }, []);
 
     // рендер всіх товарів
-    const renderProducts = useCallback(async () => {
-        try {
-          // Запит до API
-          const data = await fetchData(`https://storage.techlines.es/api/products/filter`);
-          setProducts(data);
-        } catch (error) {
-            console.log(error);
-        //   dispatch(setErrorAction(error.message));
-        }
-    }, []);
+    // const renderProducts = useCallback(async () => {
+    //     try {
+    //       // Запит до API
+    //       const data = await fetchData(`https://storage.techlines.es/api/products/filter`);
+    //       setProducts(data);
+    //     } catch (error) {
+    //         console.log(error);
+    //     //   dispatch(setErrorAction(error.message));
+    //     }
+    // }, []);
 
     // Функція для відображення товарів згідно обраних фільтрів
-    const applyFilters = useCallback(async () => {
-        try {
-        // Оновлення URL з актуальними параметрами фільтрації
-        // navigate(`/discover?${queryString}`);
-        // Запит до API з використанням queryString для фільтрації товарів
-        const data = await fetchData(`https://storage.techlines.es/api/products/filter?${queryString}`);
-        setProducts(data);
-        } catch (error) {
-        // dispatch(setErrorAction(error.message));
-        console.log(error);
+    // const applyFilters = useCallback(async () => {
+    //     try {
+    //     // Оновлення URL з актуальними параметрами фільтрації
+    //     // navigate(`/discover?${queryString}`);
+    //     // Запит до API з використанням queryString для фільтрації товарів
+    //     const data = await fetchData(`https://storage.techlines.es/api/products/filter?${queryString}`);
+    //     setProducts(data);
+    //     } catch (error) {
+    //     // dispatch(setErrorAction(error.message));
+    //     console.log(error);
+    //     }
+    // });
+    async function applyFilters() {
+
+        const updatedSearchParams = new URLSearchParams();
+
+        if (selectedFilters.categories.length > 0) {
+            updatedSearchParams.set('categories', selectedFilters.categories.join(','));
         }
-    });
+
+        if (selectedFilters.brand.length > 0) {
+            updatedSearchParams.set('brand', selectedFilters.brand.join(','));
+        }
+
+        if (selectedFilters.search !== '') {
+            updatedSearchParams.set('search', selectedFilters.search);
+        }
+
+        setSearchParams(updatedSearchParams);
+    }
 
     // Код фільтру по чекбоксам
     const valueChange = (event) => {
@@ -97,28 +116,28 @@ function Filter() {
     useEffect(() => {
         getFiltersByType('categories');
         getFiltersByType('brand');
-        renderProducts();
-    }, [getFiltersByType, renderProducts]);
+        // renderProducts();
+    }, [getFiltersByType]);
 
-    useEffect(() => {
-        let newQueryString = '';
+    // useEffect(() => {
+    //     let newQueryString = '';
     
-        if (selectedFilters.categories.length > 0) {
-            const categoriesString = selectedFilters.categories.join(',');
-            newQueryString += `&categories=${categoriesString}`;
-        }
+    //     if (selectedFilters.categories.length > 0) {
+    //         const categoriesString = selectedFilters.categories.join(',');
+    //         newQueryString += `&categories=${categoriesString}`;
+    //     }
     
-        if (selectedFilters.brand.length > 0) {
-          const brandString = selectedFilters.brand.join(',');
-          newQueryString += `&brand=${brandString}`;
-        }
+    //     if (selectedFilters.brand.length > 0) {
+    //       const brandString = selectedFilters.brand.join(',');
+    //       newQueryString += `&brand=${brandString}`;
+    //     }
 
-        if (selectedFilters.search !== '') {
-          newQueryString += `&prod=${selectedFilters.search}`;
-        }
+    //     if (selectedFilters.search !== '') {
+    //       newQueryString += `&prod=${selectedFilters.search}`;
+    //     }
     
-        setQueryString(newQueryString);
-      }, [selectedFilters]);
+    //     setQueryString(newQueryString);
+    //   }, [selectedFilters]);
 
     // Очистити всі фільтри
     const clearAllFilters = () => {
@@ -128,7 +147,8 @@ function Filter() {
         brand: [],
         search: '',
         });
-        renderProducts();
+        setSearchParams({});
+        // renderProducts();
         console.log(selectedFilters);
     };
 

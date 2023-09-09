@@ -7,6 +7,8 @@ export function useQueryString() {
   const sort = searchParams.get('sort');
   const perPage = searchParams.get('perPage') || 25;
   const page = searchParams.get('startPage') || 1;
+  const categories = searchParams.get('categories');
+  const brand = searchParams.get('brand');
 
-  return { search, sort, perPage, page, setSearchParams }
+  return { categories, brand, search, sort, perPage, page, setSearchParams }
 }
