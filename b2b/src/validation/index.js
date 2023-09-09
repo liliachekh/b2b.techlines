@@ -30,7 +30,7 @@ export const validationSchemaAccount = Yup.object({
   telephone: Yup.string()
     .matches(/^\+\d{2}\d{10}$/, "Invalid phone number format")
     .required("Required Field!"),
-})
+});
 
 export const validationSchemaPassword = Yup.object({
   curPassword: Yup.string()
@@ -50,5 +50,6 @@ export const validationSchemaPassword = Yup.object({
     .max(30, 'Can be no more than 30 characters')
     .matches(/^[a-zA-Z0-9]+$/, 'Must be a-z A-Z 0-9')
     .trim()
+    .oneOf([Yup.ref('password'), null], 'New and confirm passwords must match')
     .required("Required Field!"),
-})
+});

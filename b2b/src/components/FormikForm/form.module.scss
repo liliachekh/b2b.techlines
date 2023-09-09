@@ -45,12 +45,6 @@
       border: transparent;
       box-shadow: 0 5px 10px 8px rgba(255, 0, 0, .05);
     }
-
-    &:has(+label>.form__error) {
-      outline: 2px solid red;
-      border: transparent;
-      box-shadow: 0 5px 10px 8px rgba(255, 0, 0, .05);
-    }
   }
 
   &__submit {

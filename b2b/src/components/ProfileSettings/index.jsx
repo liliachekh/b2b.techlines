@@ -4,30 +4,45 @@ import { accountFields, passwordFields } from './profileFields';
 import FormikForm from '../FormikForm';
 import { validationSchemaAccount, validationSchemaPassword } from '../../validation';
 import Loader from "../../components/Loader";
+import { useEffect, useRef } from 'react';
 
 export function ProfileSettings() {
   const { data: customer = {}, isLoading } = useGetCustomerQuery();
-  const [changePassword, {data}] = useChangePasswordMutation();
+  const [changePassword, { data }] = useChangePasswordMutation();
   const [changeAccount] = useChangeAccountMutation();
+
+  const errorRef = useRef();
 
   async function onSubmitAccountHandler(values) {
     changeAccount(values);
   }
 
   async function onSubmitPasswordHandler({ curPassword, password, confPassword }, resetForm) {
-    if (password === confPassword)
+    if (password === confPassword) {
       changePassword({
         "password": curPassword,
         "newPassword": password
       })
-    resetForm();
+      resetForm();
+    } else {
+      
+    }
   }
+
+  useEffect(() => {
+    if (errorRef) {
+      const timer = setTimeout(() => {
+        delete data?.password;
+        clearTimeout(timer);
+      }, 2000);
+    }
+  }, [data?.password])
 
   if (isLoading) return <Loader />
 
   return (
     <>
-      {data?.password && <div className={styles.error}>{data?.password}</div>}
+      {data?.password && <div ref={errorRef} className={styles.error}>{data?.password}</div>}
       <div className={styles.content}>
         <h3 className={styles.content__title}>Account settings</h3>
         <FormikForm

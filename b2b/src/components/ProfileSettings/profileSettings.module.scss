@@ -49,6 +49,11 @@ $color-grey-transparent: hsla(0, 0%, 36%, 0.441);
       box-shadow: 0 1px 5px $color-grey-transparent;
     }
 
+    div {
+
+      font-size: .8rem;
+    }
+
     button {
       box-shadow: 0 1px 5px $color-grey-transparent;
     }
@@ -57,30 +62,38 @@ $color-grey-transparent: hsla(0, 0%, 36%, 0.441);
       display: grid;
       gap: 1rem;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      grid-template-rows: repeat(4, auto);
+      grid-template-rows: repeat(3, auto);
 
       label {
+        position: relative;
         grid-row-start: 1;
         grid-row-end: 1;
         margin-bottom: 0;
+
+        &:has(>div)+input {
+          outline: 2px solid red;
+          border: transparent;
+          box-shadow: 0 5px 10px 8px rgba(255, 0, 0, .05);
+        }
       }
 
       input {
         grid-row-start: 2;
         grid-row-end: 3;
-        margin-bottom: 0;
+        margin-bottom: 1.5rem;
         font-size: .8rem;
       }
 
       div {
-        grid-row-start: 3;
-        grid-row-end: 4;
+        position: absolute;
+        top: 90px;
         margin-bottom: 0;
+        font-size: .8rem;
       }
 
       button {
-        grid-row-start: 4;
-        grid-row-end: 5;
+        grid-row-start: 3;
+        grid-row-end: 4;
         grid-column-start: 1;
         grid-column-end: 2;
         margin: 0;
