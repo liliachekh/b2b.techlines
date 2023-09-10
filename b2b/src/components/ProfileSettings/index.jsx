@@ -4,45 +4,52 @@ import { accountFields, passwordFields } from './profileFields';
 import FormikForm from '../FormikForm';
 import { validationSchemaAccount, validationSchemaPassword } from '../../validation';
 import Loader from "../../components/Loader";
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 export function ProfileSettings() {
   const { data: customer = {}, isLoading } = useGetCustomerQuery();
-  const [changePassword, { data }] = useChangePasswordMutation();
+  const [changePassword] = useChangePasswordMutation();
   const [changeAccount] = useChangeAccountMutation();
 
-  const errorRef = useRef();
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   async function onSubmitAccountHandler(values) {
-    changeAccount(values);
+    const { data } = await changeAccount(values);
+    data?._id && setSuccess(true);
   }
 
-  async function onSubmitPasswordHandler({ curPassword, password, confPassword }, resetForm) {
-    if (password === confPassword) {
-      changePassword({
-        "password": curPassword,
-        "newPassword": password
-      })
-      resetForm();
+  async function onSubmitPasswordHandler({ curPassword, password }, resetForm) {
+    const { data } = await changePassword({
+      "password": curPassword,
+      "newPassword": password
+    })
+    if (data?.password) {
+      setError(data.password);
     } else {
-      
-    }
+      setSuccess(true);
+      resetForm();
+    };
   }
 
   useEffect(() => {
-    if (errorRef) {
+    if (error || success) {
       const timer = setTimeout(() => {
-        delete data?.password;
+        setError(null);
+        setSuccess(null);
         clearTimeout(timer);
-      }, 2000);
+      }, 2500);
     }
-  }, [data?.password])
+  }, [error, success])
 
   if (isLoading) return <Loader />
 
   return (
     <>
-      {data?.password && <div ref={errorRef} className={styles.error}>{data?.password}</div>}
+      {error &&
+        <div className={styles.error}>You enter wrong current password</div>}
+      {success &&
+        <div className={styles.success}>Your data updated successfully</div>}
       <div className={styles.content}>
         <h3 className={styles.content__title}>Account settings</h3>
         <FormikForm

@@ -1,16 +1,19 @@
+$color-accent: #f92e3e;
 $color-light: #f7fbfa;
 $color-dark: #202025;
 $color-grey: #5d5d5d;
+$color-grey-light: #e3e3e3;
 $color-grey-transparent: hsla(0, 0%, 36%, 0.441);
 
-.error {
+.error,
+.success {
   left: 0;
   padding: 1rem 0;
   position: absolute;
   top: 0;
   width: 100%;
   box-sizing: border-box;
-  background-color: #f92e3e;
+  background-color: $color-accent;
   color: $color-light;
   text-align: center;
   font-size: 1rem;
@@ -20,21 +23,16 @@ $color-grey-transparent: hsla(0, 0%, 36%, 0.441);
 
   @media (min-width: 768px) {
     padding: 13px 20px;
-    font-size: 16px;
+    font-size: 1rem;
   }
+}
+
+.success {
+  background-color: $color-grey;
 }
 
 .content {
   position: relative;
-
-  &:not(:last-child)::after {
-    position: absolute;
-    content: '';
-    bottom: -2rem;
-    width: 100%;
-    height: 2px;
-    background: $color-grey-transparent;
-  }
 
   &__title {
     font-size: 1.2rem;
@@ -42,20 +40,23 @@ $color-grey-transparent: hsla(0, 0%, 36%, 0.441);
   }
 
   form {
+    padding: 1rem;
     max-width: 100%;
+    background-color: $color-grey-light;
+    border-radius: 1rem;
+    box-shadow: 0px 1px 5px $color-grey;
 
     input {
       margin-bottom: 1rem;
-      box-shadow: 0 1px 5px $color-grey-transparent;
+      box-shadow: 0 1px 5px $color-grey-light;
     }
 
     div {
-
       font-size: .8rem;
     }
 
     button {
-      box-shadow: 0 1px 5px $color-grey-transparent;
+      z-index: 1;
     }
 
     @media (min-width: 1024px) {
@@ -71,7 +72,7 @@ $color-grey-transparent: hsla(0, 0%, 36%, 0.441);
         margin-bottom: 0;
 
         &:has(>div)+input {
-          outline: 2px solid red;
+          outline: 2px solid $color-accent;
           border: transparent;
           box-shadow: 0 5px 10px 8px rgba(255, 0, 0, .05);
         }
@@ -80,7 +81,6 @@ $color-grey-transparent: hsla(0, 0%, 36%, 0.441);
       input {
         grid-row-start: 2;
         grid-row-end: 3;
-        margin-bottom: 1.5rem;
         font-size: .8rem;
       }
 

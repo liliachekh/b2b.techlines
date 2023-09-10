@@ -23,7 +23,7 @@ export function Profile() {
                 className={`${styles.aside__link} ${window.location.pathname === '/profile/orders' ? styles.aside__link_active : ''}`}>
                 My orders
               </Link>
-              <button className={styles.aside__link}
+              <button className={`${styles.aside__link} ${styles.aside__link_logout}`}
                 onClick={() => {
                   navigate("/login");
                   localStorage.removeItem('token')
