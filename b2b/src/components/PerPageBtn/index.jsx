@@ -4,7 +4,7 @@ import { useQueryString } from '../../hooks';
 
 function PerPageBtn({ newPerPage, scrollTo }) {
   const { params, setSearchParams } = useQueryString();
-  const perPage = params['perPage'];
+  const perPage = params.perPage;
 
   const activeBtn = (Number(perPage) === newPerPage );
 
