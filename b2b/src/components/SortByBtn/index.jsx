@@ -1,9 +1,10 @@
 import styles from './sortByBtn.module.scss';
 import { Arrow } from '../icons/arrow';
-import { useQueryString } from '../../hooks';
+import { useSearchParams } from "react-router-dom";
 
 function SortByBtn({ label, type }) {
-  const { search, sort, perPage, setSearchParams } = useQueryString()
+  const [searchParams, setSearchParams] = useSearchParams();
+  const sort = searchParams.get('sort');
 
   async function clickHandler() {
     let newSort = '';
@@ -14,11 +15,9 @@ function SortByBtn({ label, type }) {
     } else {
       newSort = type
     }
-
-    let query = { perPage, startPage: 1 };
-
-    if (newSort) query = { sort: newSort, ...query };
-    if (search) query = { search, ...query };
+    
+    let query = { ...searchParams, startPage: 1 };
+    if (newSort) query = { ...searchParams, sort: newSort, startPage: 1 };
 
     setSearchParams(query);
   }

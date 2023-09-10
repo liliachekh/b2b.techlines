@@ -1,10 +1,12 @@
 import styles from './pagination.module.scss';
 import SetPageBtn from "../SetPageBtn";
 import { Arrow } from "../icons";
-import { useQueryString } from '../../hooks';
+import { useSearchParams } from "react-router-dom";
 
 function Pagination({ scrollTo, productsLength, productsQuantity }) {
-  const { perPage, page } = useQueryString();
+  const [searchParams] = useSearchParams();
+  const perPage = searchParams.get('perPage') || 25;
+  const page = searchParams.get('startPage');
 
   const startItem = productsQuantity - productsLength + 1;
   const lastItem = page * productsLength;

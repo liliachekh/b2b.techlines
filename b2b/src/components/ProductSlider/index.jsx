@@ -4,7 +4,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Thumbs, FreeMode } from 'swiper/modules';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 export default function ProductsSlider({imageUrls}){
   const [thumbsSwiper, setThumbsSwiper] = useState(null);

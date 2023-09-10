@@ -3,7 +3,7 @@ import { FilterIcon, ArrowDropdown } from "../icons";
 import { useState, useCallback, useEffect } from "react";
 // import { useDispatch } from 'react-redux';
 import { fetchData } from "../../utils";
-import { useQueryString } from '../../hooks';
+import { useSearchParams } from "react-router-dom";
 
 function Filter() {
 
@@ -21,7 +21,7 @@ function Filter() {
         brand: [],
         search: '',
     });
-    const { setSearchParams } = useQueryString();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const toggleFilter = () => {
         setIsFilterOpen(!isFilterOpen);

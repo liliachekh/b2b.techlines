@@ -1,9 +1,11 @@
 import styles from './setPageBtn.module.scss';
 import { scrollToRef } from '../../utils';
-import { useQueryString } from '../../hooks';
+import { useSearchParams } from "react-router-dom";
 
 function SetPageBtn({ scrollTo, productsLength, label, direction }) {
-  const { search, sort, perPage, page, setSearchParams } = useQueryString();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const perPage = searchParams.get('perPage') || 25;
+  const page = searchParams.get('startPage');
 
   const disabled = direction && productsLength < perPage;
 
@@ -12,10 +14,7 @@ function SetPageBtn({ scrollTo, productsLength, label, direction }) {
     const newPage = direction ? Number(page || 1) + 1 : Number(page || 1) - 1;
     if (newPage === 0) return;
 
-    let query = { perPage, startPage: newPage };
-
-    if (sort) query = { sort, ...query };
-    if (search) query = { search, ...query };
+    const query = { ...searchParams, perPage, startPage: newPage };
 
     setSearchParams(query);
 
