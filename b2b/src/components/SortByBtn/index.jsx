@@ -3,7 +3,7 @@ import { Arrow } from '../icons/arrow';
 import { useQueryString } from '../../hooks';
 
 function SortByBtn({ label, type }) {
-  const { sort, perPage, setSearchParams } = useQueryString()
+  const { search, sort, perPage, setSearchParams } = useQueryString()
 
   async function clickHandler() {
     let newSort = '';
@@ -15,9 +15,12 @@ function SortByBtn({ label, type }) {
       newSort = type
     }
 
-    newSort
-      ? setSearchParams({ sort: newSort, perPage, startPage: 1 })
-      : setSearchParams({ perPage, startPage: 1 })
+    let query = { perPage, startPage: 1 };
+
+    if (newSort) query = { sort: newSort, ...query };
+    if (search) query = { search, ...query };
+
+    setSearchParams(query);
   }
 
   return (
