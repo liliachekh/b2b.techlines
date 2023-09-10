@@ -3,17 +3,14 @@ import { scrollToRef } from '../../utils';
 import { useQueryString } from '../../hooks';
 
 function PerPageBtn({ newPerPage, scrollTo }) {
-  const { search, sort, perPage, setSearchParams } = useQueryString();
+  const { params, setSearchParams } = useQueryString();
+  const perPage = params['perPage'];
 
-  const activeBtn = (Number(perPage) === newPerPage || (!perPage && newPerPage === 10));
+  const activeBtn = (Number(perPage) === newPerPage );
 
   async function clickHandler() {
     if (!activeBtn) {
-      let query = { perPage: newPerPage, startPage: 1 };
-
-      if (sort) query = { sort, ...query };
-      if (search) query = { search, ...query };
-
+      const query = { ...params, perPage: newPerPage, startPage: 1 };
       setSearchParams(query);
     }
     scrollToRef(scrollTo);
