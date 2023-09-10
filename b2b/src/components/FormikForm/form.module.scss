@@ -6,10 +6,17 @@
   box-sizing: border-box;
 
   &__label {
+    position: relative;
     display: inline-block;
     width: 100%;
     margin-bottom: .5rem;
     font-size: 0.9rem;
+
+    &:has(>.form__error)+.form__input {
+      outline: 2px solid red;
+      border: transparent;
+      box-shadow: 0 5px 10px 8px rgba(255, 0, 0, .05);
+    }
   }
 
   &__input {
@@ -115,7 +122,14 @@
   }
 
   &__error {
+    font-size: .8rem;
     color: red;
+
+    @media (min-width: 1024px) {
+      position: absolute;
+      top: 85px;
+      margin-bottom: 0;
+    }
   }
 }
 

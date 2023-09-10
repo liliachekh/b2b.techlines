@@ -51,10 +51,6 @@ $color-grey-transparent: hsla(0, 0%, 36%, 0.441);
       box-shadow: 0 1px 5px $color-grey-light;
     }
 
-    div {
-      font-size: .8rem;
-    }
-
     button {
       z-index: 1;
     }
@@ -70,12 +66,6 @@ $color-grey-transparent: hsla(0, 0%, 36%, 0.441);
         grid-row-start: 1;
         grid-row-end: 1;
         margin-bottom: 0;
-
-        &:has(>div)+input {
-          outline: 2px solid $color-accent;
-          border: transparent;
-          box-shadow: 0 5px 10px 8px rgba(255, 0, 0, .05);
-        }
       }
 
       input {
@@ -85,10 +75,7 @@ $color-grey-transparent: hsla(0, 0%, 36%, 0.441);
       }
 
       div {
-        position: absolute;
         top: 90px;
-        margin-bottom: 0;
-        font-size: .8rem;
       }
 
       button {
