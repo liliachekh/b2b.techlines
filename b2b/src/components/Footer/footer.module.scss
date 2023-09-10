@@ -29,6 +29,10 @@
       align-items: center;
       justify-content: center;
 
+      &_link:hover {
+        color: #fff;
+      }
+
       @media (min-width: 620px) {
         align-items: start;
       }
@@ -45,11 +49,16 @@
         color: #CDD1DA;
         justify-content: center;
         align-items: center;
+
+        &_link:hover {
+          color: #fff;
+        }
     }
   
     &__devinfo {
       font-size: 14px;
       color: #CDD1DA;
+      padding-left: 3px;
     }
   }
   
