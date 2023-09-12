@@ -3,7 +3,7 @@ import { FilterIcon, ArrowDropdown } from "../icons";
 import { useState, useCallback, useEffect } from "react";
 // import { useDispatch } from 'react-redux';
 import { fetchData } from "../../utils";
-import { useSearchParams } from "react-router-dom";
+import { useQueryString } from '../../hooks';
 
 function Filter() {
 
@@ -21,7 +21,7 @@ function Filter() {
         brand: [],
         search: '',
     });
-    const [searchParams, setSearchParams] = useSearchParams();
+    const { params, setSearchParams } = useQueryString();
 
     const toggleFilter = () => {
         setIsFilterOpen(!isFilterOpen);
@@ -29,13 +29,12 @@ function Filter() {
 
     const toggleDropdown = (type) => {
         setIsDropdownOpen(isDropdownOpen === type ? null : type); // Если список уже открыт, то закрыть его, иначе открыть выбранный
-        console.log(selectedFilters);
-        // console.log(products);
+        // console.log(selectedFilters);
       };
 
     const getFiltersByType = useCallback(async (type) => {
         try {
-        const data = await fetchData(`https://storage.techlines.es/api/filters/${type}`);
+        const data = await fetchData(`http://localhost:4000/api/filters/${type}`);
         setFilters(prevFilters => ({
             ...prevFilters,
             [`${type}Filters`]: data
@@ -71,24 +70,110 @@ function Filter() {
     //     console.log(error);
     //     }
     // });
-    async function applyFilters() {
 
-        const updatedSearchParams = new URLSearchParams();
+    // 1 варіант по айді
+    // async function applyFilters(e) {
+    //     e.preventDefault();
 
-        if (selectedFilters.categories.length > 0) {
-            updatedSearchParams.set('categories', selectedFilters.categories.join(','));
+    //     const form = e.target;
+    //     const search = form.search.value;
+    //     // const categories = form.categories.checked;
+    //     // const brand = form.brand.checked;
+    //     let query = { ...params, startPage: 1 };
+
+    //     if (search.length > 0) {
+    //         query = {...params, search: search}
+    //     } else {
+    //         delete query['search'];
+    //     }
+
+    //     const selectedCategories = filters.categoriesFilters
+    //     .filter(category => form[category._id].checked)
+    //     .map(category => category.name);
+
+    //     if (selectedCategories.length > 0) {
+    //         query = { ...query, categories: selectedCategories.join(',') };
+    //     } else {
+    //         delete query['categories'];
+    //     }
+
+    //     const selectedBrands = filters.brandFilters
+    //         .filter(brand => form[brand._id].checked)
+    //         .map(brand => brand.name);
+
+    //     if (selectedBrands.length > 0) {
+    //         query = { ...query, brand: selectedBrands.join(',') };
+    //     } else {
+    //         delete query['brand'];
+    //     }
+
+    //     setSearchParams(query);
+    // }
+
+    // 2 варіант по атрибуту
+    async function applyFilters(e) {
+        e.preventDefault();
+    
+        const form = e.target;
+        const search = form.search.value;
+    
+        const selectedCategories = [];
+        form.querySelectorAll('input[data-filter-type="categories"]:checked').forEach(checkbox => {
+            selectedCategories.push(checkbox.name);
+        });
+    
+        const selectedBrands = [];
+        form.querySelectorAll('input[data-filter-type="brand"]:checked').forEach(checkbox => {
+            selectedBrands.push(checkbox.name);
+        });
+        
+        let query = { ...params, startPage: 1 };
+
+        if (search.length > 0) {
+            query = { ...query, search: search };
+        } else {
+            delete query['search'];
         }
 
-        if (selectedFilters.brand.length > 0) {
-            updatedSearchParams.set('brand', selectedFilters.brand.join(','));
+        if (selectedCategories.length > 0) {
+            query = { ...query, categories: selectedCategories.join(',') };
+        } else {
+        delete query['categories'];
         }
 
-        if (selectedFilters.search !== '') {
-            updatedSearchParams.set('search', selectedFilters.search);
+        if (selectedBrands.length > 0) {
+            query = { ...query, brand: selectedBrands.join(',') };
+        } else {
+        delete query['brand'];
         }
 
-        setSearchParams(updatedSearchParams);
+        setSearchParams(query);
     }
+
+    // Получить параметры из строки запроса
+// const queryParams = new URLSearchParams(window.location.search);
+// const categoriesParam = queryParams.get('categories');
+// const brandParam = queryParams.get('brand');
+
+// useEffect(() => {
+//     const selectedCategories = categoriesParam ? categoriesParam.split(',') : [];
+//     const selectedBrands = brandParam ? brandParam.split(',') : [];
+
+//     const updatedCategoriesFilters = filters.categoriesFilters.map(category => ({
+//         ...category,
+//         checked: selectedCategories.includes(category.name),
+//     }));
+
+//     const updatedBrandFilters = filters.brandFilters.map(brand => ({
+//         ...brand,
+//         checked: selectedBrands.includes(brand.name),
+//     }));
+
+//     setFilters({
+//         categoriesFilters: updatedCategoriesFilters,
+//         brandFilters: updatedBrandFilters,
+//     });
+// }, []);
 
     // Код фільтру по чекбоксам
     const valueChange = (event) => {
@@ -97,6 +182,7 @@ function Filter() {
 
         setSelectedFilters((prevSelectedFilters) => {
         const updatedFilters = { ...prevSelectedFilters };
+        console.log(updatedFilters);
 
         if (checked) {
             updatedFilters[filterType] = [...updatedFilters[filterType], name];
@@ -164,7 +250,7 @@ function Filter() {
                         <FilterIcon />
                         <span className={styles.filter__title}>Filters</span>
                     </div>
-                    <div className={`${styles.filter__navContent} ${isFilterOpen && styles.open}`}>
+                    <form className={`${styles.filter__navContent} ${isFilterOpen && styles.open}`} onSubmit={applyFilters}>
                         <div className={styles.filter__dropdownBlock}>
                         <div className={styles.filter__dropdown}>
                             <h4 className={styles.filter__dropdownTitle}>Categories</h4>
@@ -207,9 +293,9 @@ function Filter() {
                         </div>
                         <div className={styles.filter__navigation}>
                             <button type="button" className={`${styles.filter__navigationBtn + ' ' + styles.btnEffect}`} onClick={clearAllFilters}>Clear</button>
-                            <button type="submit" className={`${styles.filter__navigationBtn + ' ' + styles.btnEffect}`} onClick={applyFilters}>Submit</button>
+                            <button type="submit" className={`${styles.filter__navigationBtn + ' ' + styles.btnEffect}`} >Submit</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
