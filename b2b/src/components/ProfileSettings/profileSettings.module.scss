@@ -57,7 +57,13 @@ $color-grey-transparent: hsla(0, 0%, 36%, 0.441);
     }
 
     button {
+      color: $color-dark;
+      border-color: $color-dark;
       z-index: 1;
+
+      &::after {
+        background: $color-dark;
+      }
     }
 
     @media (min-width: 1024px) {

@@ -1,12 +1,13 @@
 import styles from './profileOrders.module.scss';
 import { useGetOrdersQuery } from '../../store/api/order.api';
 import ProductCard from '../ProductCard';
+import Loader from '../Loader';
 
 export function ProfileOrders() {
   const { data: orders = [], isLoading: isLoadingOrders } = useGetOrdersQuery();
   // const { data: orders = [], error: errorOrders, isLoading: isLoadingOrders } = useGetOrdersQuery();
 
-  if (isLoadingOrders) return <h1>Loading</h1>
+  if (isLoadingOrders) return <Loader />
 
   return (
     <>

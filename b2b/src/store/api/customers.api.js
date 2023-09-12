@@ -11,6 +11,13 @@ export const customersApi = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Customers', id: 'LIST' }]
     }),
+    logOut: builder.mutation({
+      query: () => ({
+        url: 'customers/logout',
+        method: 'GET',
+      }),
+      invalidatesTags: [{ type: 'Customers', id: 'LIST' }]
+    }),
     getCustomer: builder.query({
       query: () => ({
         url: 'customers/customer',
@@ -39,4 +46,4 @@ export const customersApi = api.injectEndpoints({
   })
 })
 
-export const { useLogInMutation, useGetCustomerQuery, useChangeAccountMutation, useChangePasswordMutation } = customersApi;
+export const { useLogInMutation, useLogOutMutation, useGetCustomerQuery, useChangeAccountMutation, useChangePasswordMutation } = customersApi;

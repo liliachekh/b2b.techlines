@@ -6,13 +6,15 @@ import BackToTop from "../../components/BackToTop"
 import Loader from "../../components/Loader";
 import Filter from "../../components/Filter";
 import { useQueryString } from '../../hooks';
+import { useLocation } from "react-router-dom";
 
 export function Home() {
+  const { search } = useLocation();
   const { params } = useQueryString();
   const perPage = params.perPage;
   const page = params.startPage;
 
-  const { data: products = [], isLoading } = useGetAllProductsQuery(window.location.search ? window.location.search : `?startPage=${page}&perPage=${perPage}`);
+  const { data: products = [], isLoading } = useGetAllProductsQuery(search ? search : `?startPage=${page}&perPage=${perPage}`);
 
   if (isLoading) return <Loader/>
 
