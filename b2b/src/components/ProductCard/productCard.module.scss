@@ -4,22 +4,26 @@ $color-grey: #5d5d5d;
 
 .productCard {
   position: relative;
-  padding: .63rem;
-  border: 2px solid $color-dark;
-  border-radius: 1rem;
-  color: $color-dark;
-  box-shadow: 1px 5px 15px rgba(0, 0, 0, .4);
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: .63rem;
+  padding: .63rem;
+  border: 2px solid $color-dark;
+  border-radius: 1rem;
+  background-color: $color-light;
+  color: $color-dark;
+  box-shadow: 1px 5px 15px rgba(0, 0, 0, .4);
+  overflow: hidden;
   transition: box-shadow .3s;
 
-  &.cart {
+  &.cart,
+  &.order {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     justify-content: space-between;
     padding: 1rem;
+    background: $color-light;
+    border: none;
     overflow: initial;
 
     @media (min-width: 450px) {
@@ -47,6 +51,12 @@ $color-grey: #5d5d5d;
     }
   }
 
+  &.order {
+    @media (min-width: 768px) {
+      box-shadow: 1px 5px 15px rgba(0, 0, 0, 0.4);
+    }
+  }
+
   &__mainLink {
     display: inline-block;
     box-sizing: border-box;
@@ -63,17 +73,31 @@ $color-grey: #5d5d5d;
       }
     }
 
-    .cart & {
+    .cart &,
+    .order & {
       grid-area: 1 / 1 / 2 / 2;
       justify-self: center;
       max-width: 100%;
+      margin: 0;
 
       @media (min-width: 450px) {
         grid-area: 1 / 1 / 3 / 3;
         display: flex;
         align-items: center;
         height: initial;
-        margin: -.63rem 0 -.63rem -.63rem;
+        // margin: -.63rem 0 -.63rem -.63rem;
+        overflow: hidden;
+      }
+    }
+
+    .order & {
+      grid-area: 1 / 1 / 2 / 2;
+
+      @media (min-width: 450px) {
+        grid-area: 1 / 1 / 3 / 3;
+        display: flex;
+        align-items: center;
+        height: initial;
         overflow: hidden;
       }
     }
@@ -90,7 +114,8 @@ $color-grey: #5d5d5d;
         }
       }
 
-      .cart & {
+      .cart &,
+      .order & {
         padding: initial;
         max-height: 100px;
       }
@@ -118,7 +143,8 @@ $color-grey: #5d5d5d;
       }
     }
 
-    .cart & {
+    .cart &,
+    .order & {
       padding: initial;
       width: 100%;
       font-size: 1.1rem;
@@ -147,12 +173,29 @@ $color-grey: #5d5d5d;
       transform: translate(50%, -50%);
       border-radius: 50%;
 
-      .cart & {
+      .cart &,
+      .order & {
         display: none;
       }
     }
 
-    .cart & {
+    .productRow & {
+      @media (min-width: 768px) {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem .5rem;
+        margin-right: auto;
+        width: 120px;
+
+        &>*:not(:last-child):after {
+          display: none;
+        }
+      }
+    }
+
+    .cart &,
+    .order & {
       grid-area: 1/2/2/4;
       align-items: flex-start;
       gap: .63rem;
@@ -160,23 +203,22 @@ $color-grey: #5d5d5d;
       @media (min-width: 450px) {
         grid-area: 1 / 3 / 2 / 6;
       }
+
+      @media (min-width: 768px) {
+        width: 100%;
+      }
     }
-  }
 
-  .productRow &__links {
-    @media (min-width: 768px) {
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem .5rem;
-      margin-right: auto;
-      width: 120px;
-
-      &>*:not(:last-child):after {
-        display: none;
+    .order & {
+      @media (min-width: 768px) {
+        flex-direction: row;
+        justify-content: flex-start;
       }
     }
   }
+
+
+  // order &__links
 
   &__link {
     position: relative;
@@ -192,6 +234,15 @@ $color-grey: #5d5d5d;
 
       @media (min-width: 420px) {
         font-size: initial;
+      }
+    }
+
+    .order & {
+      align-self: flex-end;
+
+      @media (min-width: 768px) {
+        align-self: flex-end;
+        // font-size: initial;
       }
     }
 
@@ -211,7 +262,16 @@ $color-grey: #5d5d5d;
       }
     }
 
-    .cart & {
+    .cart &,
+    .order & {
+      grid-area: 2 / 1 / 3 / 4;
+
+      @media (min-width: 450px) {
+        grid-area: 2 / 3 / 3 / 6;
+      }
+    }
+
+    .order & {
       grid-area: 2 / 1 / 3 / 4;
 
       @media (min-width: 450px) {
@@ -222,13 +282,21 @@ $color-grey: #5d5d5d;
 
   &__price {
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-end;
     gap: .2rem;
     font-size: 1rem;
 
-    .cart & {
+    .cart &,
+    .order & {
       align-self: flex-end;
     }
+
+    // .order & {
+    //   @media (min-width: 768px) {
+    //     align-self: flex-start;
+    //   }
+    // }
 
     &_title {
       font-size: .8rem;
@@ -286,7 +354,8 @@ $color-grey: #5d5d5d;
   justify-content: center;
   gap: .63rem;
 
-  .cart & {
+  .cart &,
+  .order & {
     justify-content: space-evenly;
 
     @media (min-width: 450px) {
@@ -310,11 +379,17 @@ $color-grey: #5d5d5d;
     }
   }
 
+  .order & {
+    display: flex;
+    justify-content: flex-start;
+  }
+
   &__price {
     font-size: 1.1rem;
     font-weight: 400;
 
-    .cart & {
+    .cart &,
+    .order & {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -327,7 +402,6 @@ $color-grey: #5d5d5d;
 
     @media (min-width: 420px) {
       font-weight: 300;
-      // font-weight: 300;
     }
 
     &_title {
@@ -343,15 +417,24 @@ $color-grey: #5d5d5d;
       font-weight: 700;
 
       .productRow &,
-      .cart & {
+      .cart &,
+      .order & {
         @media (min-width: 768px) {
           flex: initial;
         }
       }
 
-      .cart & {
+      .cart &,
+      .order & {
         width: initial;
+      }
 
+      .order & {
+        width: initial;
+        font-size: 1rem;
+      }
+
+      .cart & {
         @media (min-width: 420px) {
           font-size: 1.5rem;
         }
@@ -495,7 +578,8 @@ $color-grey: #5d5d5d;
     cursor: pointer;
     transition: background-color .3s;
 
-    .cart & {
+    .cart &,
+    .order & {
       width: 1.5rem;
       height: 1.5rem;
     }
@@ -503,11 +587,6 @@ $color-grey: #5d5d5d;
     @media (min-width: 420px) {
       width: 1.2rem;
       height: 1.2rem;
-
-      .cat & {
-        width: initial;
-        height: initial;
-      }
     }
 
     &:hover {
@@ -551,18 +630,13 @@ $color-grey: #5d5d5d;
     border-radius: 5px;
     box-sizing: border-box;
 
-    .cat & {
+    .cart & {
       width: 70px;
     }
 
     @media (min-width: 420px) {
       width: 60px;
       font-size: 1rem;
-
-      .cat & {
-        width: initial;
-        font-size: initial;
-      }
     }
   }
 }

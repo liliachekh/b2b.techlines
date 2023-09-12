@@ -31,7 +31,7 @@ export function Profile() {
                 Logout
               </button>
             </div>
-            <div className={styles.main__content}>
+            <div className={`${styles.main__content} ${window.location.pathname === '/profile' ? styles.main__content_account : ''}`}>
               <Outlet />
             </div>
           </div>

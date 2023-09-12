@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { Home, LoginForm, ResetPassword, Cart, Profile, Product } from "../pages";
 import { ProfileSettings } from "../components/ProfileSettings";
-import { Orders } from "../components/Orders";
+import { ProfileOrders } from "../components/ProfileOrders";
 
 export default function Router() {
   return (
@@ -13,7 +13,7 @@ export default function Router() {
       <Route path="/cart" element={<Cart />}></Route>
       <Route path="/profile" element={<Profile />}>
         <Route index element={<ProfileSettings />} />
-        <Route path="/profile/orders" element={<Orders />} />
+        <Route path="/profile/orders" element={<ProfileOrders />} />
       </Route>
     </Routes>
   );

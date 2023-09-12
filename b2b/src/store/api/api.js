@@ -3,7 +3,7 @@ import { baseUrl } from '../../utils/vars'
 
 export const api = createApi({
   reducerPath: 'api',
-  tagTypes: ['Products', 'Product', 'Cart', 'Customers'],
+  tagTypes: ['Products', 'Product', 'Cart', 'Customers', 'Orders', 'Filters'],
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: () => ({}),
 })
