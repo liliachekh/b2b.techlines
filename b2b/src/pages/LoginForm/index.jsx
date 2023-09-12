@@ -13,10 +13,8 @@ export function LoginForm() {
 
   async function onSubmitHandler(values) {
     try {
-      let response = await logIn(values).unwrap();
-      const token = response.token;
-
-      localStorage.setItem("token", token);
+      await logIn(values).unwrap();
+     
       navigate("/");
     } catch (error) {
       setError(true)

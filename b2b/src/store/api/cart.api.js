@@ -1,6 +1,6 @@
 import { api } from "./api";
 // =====================
-const token = localStorage.getItem('token');
+// const token = localStorage.getItem('token');
 // =====================
 export const cartApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -8,10 +8,10 @@ export const cartApi = api.injectEndpoints({
       query: () => ({
         url: `cart/`,
         method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        //   'Content-Type': 'application/json',
+        // },
       }),
       providesTags: (result) =>
         result
@@ -19,17 +19,18 @@ export const cartApi = api.injectEndpoints({
             ...result.products.map(({ id }) => ({ type: 'Cart', id })),
             { type: 'Cart', id: 'LIST' },
           ]
-          : [{ type: 'Cart', id: 'LIST' }],
+          : 
+          [{ type: 'Cart', id: 'LIST' }],
     }),
     setCart: builder.mutation({
       query: (body) => ({
         url: `cart`,
         // url: `cart/${id}`,
         method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        //   'Content-Type': 'application/json',
+        // },
         body: body,
       }),
       invalidatesTags: [{ type: 'Cart', id: 'LIST' }]
@@ -38,10 +39,10 @@ export const cartApi = api.injectEndpoints({
       query: (id) => ({
         url: `cart/${id}`,
         method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        //   'Content-Type': 'application/json',
+        // },
       }),
       invalidatesTags: [{ type: 'Cart', id: 'LIST' }]
     }),

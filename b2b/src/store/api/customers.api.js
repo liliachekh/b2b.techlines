@@ -1,6 +1,6 @@
 import { api } from "./api";
 
-const token = localStorage.getItem('token');
+// const token = localStorage.getItem('token');
 
 export const customersApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -16,13 +16,19 @@ export const customersApi = api.injectEndpoints({
       query: () => ({
         url: 'customers/customer',
         method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        //   'Content-Type': 'application/json',
+        // },
       }),
     }),
+    getLoggedIn: builder.query({
+      query:() => ({
+        url: 'customers/loggedIn',
+        method: 'GET',
+    })
   })
+}),
 })
 
-export const { useLogInMutation, useGetCustomerQuery } = customersApi;
+export const { useLogInMutation, useGetCustomerQuery, useGetLoggedInQuery } = customersApi

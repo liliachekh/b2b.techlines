@@ -2,17 +2,22 @@ import styles from './Profile.module.scss';
 import Header from "../../components/Header";
 import { useGetCustomerQuery } from '../../store/api/customers.api';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
+import Loader from '../../components/Loader';
 
 export function Profile() {
   const { data: customer = {}, error, isLoading } = useGetCustomerQuery();
   const navigate = useNavigate();
+  const { loggedIn } = useContext(AuthContext);
+  
+  if (isLoading) return <Loader/>
 
-  if (isLoading) return <h1>Loading</h1>
-
-  if (error?.originalStatus === 401) return <h1>You are unauthorized</h1>
+  // if (error?.originalStatus === 401) return <h1>You are unauthorized</h1>
   console.log(customer);
   return (
     <>
+    {loggedIn === false && navigate("/login")}
       <Header />
       <div className={styles.main}>
         <div className={styles.main__container}>
