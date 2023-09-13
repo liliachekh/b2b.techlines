@@ -2,26 +2,29 @@ import FormikForm from "../../components/FormikForm";
 import { logInFormFields } from "./logInFormFields";
 import { validationSchemaLogin } from "../../validation";
 import style from "./LoginForm.module.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useLogInMutation } from "../../store/api/customers.api";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import AuthContext from "../../context/AuthContext";
 
 export function LoginForm() {
   const [error, setError] = useState(false);
   const [logIn] = useLogInMutation();
   const navigate = useNavigate();
+  const { loggedIn } = useContext(AuthContext);
 
   async function onSubmitHandler(values) {
     try {
-      let response = await logIn(values).unwrap();
-      const token = response.token;
-
-      localStorage.setItem("token", token);
-      navigate("/");
+      const res = await logIn(values);
+      if (typeof res === 'object') {
+        navigate("/");
+      }
     } catch (error) {
       setError(true)
     }
   }
+
+  if (loggedIn === true) return <Navigate to="/" />
 
   return (
     <div className={style.loginForm}>
@@ -30,7 +33,7 @@ export function LoginForm() {
         <main className={style.loginForm__main}>
           <div className={style.loginForm__logo}>
             <img
-              src="/images/tech.png"
+              src="/images/Tech.png"
               alt="techlines logo"
             />
           </div>

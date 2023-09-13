@@ -1,12 +1,16 @@
 import styles from './Profile.module.scss';
 import Header from "../../components/Header";
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useLogOutMutation } from '../../store/api/customers.api';
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
 
 export function Profile() {
-  // const navigate = useNavigate();
+  const { loggedIn } = useContext(AuthContext);
   const [logOut] = useLogOutMutation();
   const { pathname } = useLocation();
+
+  if (loggedIn === false) return <Navigate to="/login" />
 
   return (
     <>

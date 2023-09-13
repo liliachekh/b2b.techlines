@@ -2,16 +2,21 @@ import styles from './Cart.module.scss';
 import { useGetCartQuery } from "../../store/api/cart.api";
 import Header from "../../components/Header";
 import ProductCard from '../../components/ProductCard';
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
+import { Navigate } from "react-router-dom";
+import Loader from '../../components/Loader';
 
 export function Cart() {
-  const { data: cart = {}, error, isLoading } = useGetCartQuery();
+  const { data: cart = {}, isLoading } = useGetCartQuery();
+  const { loggedIn } = useContext(AuthContext);
 
-  if (isLoading) return <h1>Loading</h1>
-
-  if (error?.originalStatus === 401) return <h1>You are unauthorized</h1>
+  if (isLoading) return <Loader/>
 
   return (
-    <>
+    loggedIn === false
+    ? <Navigate to="/login" />
+    :(<>
       <Header />
       <div className={styles.main}>
         <div className={styles.main__container}>
@@ -39,6 +44,6 @@ export function Cart() {
           </div>
         </div>
       </div>
-    </>
+    </>)
   )
 }

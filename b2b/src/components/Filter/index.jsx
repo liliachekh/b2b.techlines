@@ -21,7 +21,7 @@ function Filter() {
         brand: [],
         search: '',
     });
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [setSearchParams] = useSearchParams();
 
     const toggleFilter = () => {
         setIsFilterOpen(!isFilterOpen);

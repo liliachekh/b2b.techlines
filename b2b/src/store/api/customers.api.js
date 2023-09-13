@@ -1,5 +1,5 @@
 import { api } from "./api";
-import { headers } from "../../utils/vars";
+
 
 export const customersApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -22,14 +22,12 @@ export const customersApi = api.injectEndpoints({
       query: () => ({
         url: 'customers/customer',
         method: 'GET',
-        headers: headers(),
       }),
     }),
     changeAccount: builder.mutation({
       query: (body) => ({
         url: 'customers/',
         method: 'PUT',
-        headers: headers(),
         body: body
       }),
       invalidatesTags: [{ type: 'Customers', id: 'LIST' }]
@@ -38,12 +36,17 @@ export const customersApi = api.injectEndpoints({
       query: (body) => ({
         url: 'customers/password',
         method: 'PUT',
-        headers: headers(),
         body: body
       }),
       invalidatesTags: [{ type: 'Customers', id: 'LIST' }]
     }),
+    getLoggedIn: builder.query({
+      query: () => ({
+        url: 'customers/loggedIn',
+        method: 'GET',
+      })
+    })
   })
 })
 
-export const { useLogInMutation, useLogOutMutation, useGetCustomerQuery, useChangeAccountMutation, useChangePasswordMutation } = customersApi;
+export const { useLogInMutation, useLogOutMutation, useGetCustomerQuery, useChangeAccountMutation, useChangePasswordMutation, useGetLoggedInQuery } = customersApi;
