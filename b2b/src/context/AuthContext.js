@@ -1,14 +1,12 @@
 import { createContext, useCallback, useEffect, useState } from "react";
-// import { useGetLoggedInQuery } from "../store/api/customers.api";
 import { baseUrl } from "../utils/vars";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 function AuthContextProvider(props) {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(undefined);
   const navigate = useNavigate()
-  // const { data} = useGetLoggedInQuery();
   const { pathname } = useLocation();
 
   const LogIn = useCallback(async () => {
@@ -20,12 +18,13 @@ function AuthContextProvider(props) {
     } else {
       setLoggedIn(res);
     }
-  }, [navigate])
+
+  }, [navigate, pathname])
 
   useEffect(() => {
     LogIn();
-  }, [LogIn]);
-
+  }, [LogIn, loggedIn]);
+  console.log(loggedIn)
   return (
     <AuthContext.Provider value={{ loggedIn }}>
       {props.children}
