@@ -6,6 +6,7 @@ const AuthContext = createContext();
 
 function AuthContextProvider(props) {
   const [loggedIn, setLoggedIn] = useState(undefined);
+  // const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate()
   const { pathname } = useLocation();
 

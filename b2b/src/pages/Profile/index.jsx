@@ -9,6 +9,11 @@ export function Profile() {
   const [logOut] = useLogOutMutation();
   const { pathname } = useLocation();
 
+  async function handleLogOut() {
+    await logOut();
+    window.location.reload()
+  }
+
   if (loggedIn === false) return <Navigate to="/login" />
 
   return (
@@ -28,11 +33,7 @@ export function Profile() {
               My orders
             </Link>
             <button className={`${styles.aside__link} ${styles.aside__link_logout}`}
-              onClick={() => {
-                logOut();
-                // navigate("/login");
-                // localStorage.removeItem('token')
-              }}>
+              onClick={handleLogOut}>
               Logout
             </button>
           </div>

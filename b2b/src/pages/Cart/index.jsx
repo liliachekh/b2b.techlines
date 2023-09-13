@@ -13,6 +13,8 @@ export function Cart() {
 
   if (isLoading) return <Loader/>
 
+  if (loggedIn === false) return <Navigate to="/login" />
+
   return (
     loggedIn === false
     ? <Navigate to="/login" />
