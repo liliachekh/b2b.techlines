@@ -1,0 +1,27 @@
+.cartAmount {
+    display: none;
+  
+    &.activeMob,
+    &.activeDesk {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 5px;
+      right: 0;
+      min-width: 20px;
+      height: 20px;
+      padding-right: 4px;
+      padding-left: 5px;
+      transform: translate(46%, -48%);
+      border-radius: 50px;
+      background-color: #202025;
+      color: #fff;
+      font-size: 10px;
+    }
+  
+    &.activeDesk {
+      padding-left: 4px;
+      transform: translate(48%, -50%);
+    }
+}

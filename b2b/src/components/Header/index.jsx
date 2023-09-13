@@ -1,75 +1,104 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { useMediaQuery } from 'react-responsive'
-import PropTypes from 'prop-types';
 import style from "./header.module.scss"
 import { scrollToTop } from "../../utils";
-import { navData } from "./navData";
-import MobiNav from "../MobiNav"
-import HeaderLink from "../HeaderLink";
+import menuData from "../MenuLink/menuData";
+import MenuLink from "../MenuLink";
+import MobilNav from "../MobiNav";
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [prevScrollPos, setPrevScrollPos] = useState(0);
-
-  const isMobile = useMediaQuery({
-    query: '(max-width: 768px)'
-  })
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
   useEffect(() => {
     function handleScroll() {
-      const currentScrollPos = window.scrollY;
-      setScrolled(prevScrollPos < currentScrollPos)
-      setPrevScrollPos(currentScrollPos);
+      if (window.scrollY > 0) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
     }
 
-    !isOpen && window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [prevScrollPos, scrolled, isOpen]);
+    window.addEventListener('scroll', handleScroll);
+  }, []);
 
   function toggleBurgerMenu() {
     setIsOpen(!isOpen);
   }
 
+  const isDesktop = useMediaQuery({ minWidth: 993 });
+
+  useEffect(() => {
+    if (!isDesktop && isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [isDesktop, isOpen]);
+
+  const location = useLocation();
+
+  const isActive = (path) => {
+    if (isLogin) {
+      return location.pathname === path;
+    }
+    return false;
+  };
+
+  // useEffect(() => {
+  //   if (isToken) {
+  //     setIsLogin(true);
+  //  } else {
+  //     setIsLogin(false);
+  //  }
+  // }, [isToken])
+
   return (
-    <header className={`${style.header} ${scrolled && isMobile && style.scrolled}`}>
-      <div className={style.wrapper}>
-        <div className={style.container}>
-          <div className={style.section}>
-            <Link to="/" onClick={scrollToTop}>
-              <div className={style.logo}>
-                <img src="/images/tech.png" alt="techlines logo" />
-              </div>
-            </Link>
-          </div>
-          <div className={style.nav__container}>
-            <nav className={style.nav}>
-              <ul className={style.list}>
-                {navData.map(({ refName, text }) => (
-                  <HeaderLink
-                    className={style.listItem}
-                    key={refName}
-                    text={text} />
-                ))}
+    <>
+      <header className={style.header}>
+        <div className={`${style.header__wrapper} ${scrolled && style.header__scrolled}`}>
+          <div className={style.header__container}>
+            <div className={style.header__section}>
+              <Link to="/" onClick={scrollToTop}>
+                <div className={style.logo}>
+                  <img src="/images/tech.png" alt="techlines logo" />
+                </div>
+              </Link>
+            </div>
+            <nav className={`${style.nav} ${isOpen && style.active}`}>
+              <ul className={style.nav__list}>
+                {menuData.map(({type, page, text, icon, classHover}) => (
+                  (isLogin && type !== 'login') || (!isLogin && type !== 'account') ? (
+                    <MenuLink
+                      key={type}
+                      classItem={style.nav__item}
+                      classHover={style[classHover]}
+                      page={page}
+                      isActive={isActive(page)}
+                      classActive={style.activeLink}
+                      closeBurgerMenu={() => toggleBurgerMenu()}
+                      text={text}
+                      isDesktop={isDesktop}
+                      isLogin={isLogin}
+                      icon={icon}
+                  />
+                  ) : null
+                  ))}
               </ul>
             </nav>
-            <Link to="/b2b/login">
-              <span className={style.nav_login}>Login</span>
-            </Link>
+            <>
+              <MobilNav
+                isLogin={isLogin}
+                isActive={isActive}
+                isOpen={isOpen}
+                toggleBurgerMenu={() => toggleBurgerMenu()}
+              />
+            </>
           </div>
-          <MobiNav
-            isOpen={isOpen}
-            toggleBurgerMenu={toggleBurgerMenu} />
         </div>
-      </div>
-    </header>
-  )
-}
-
-Header.propTypes = {
-  refList: PropTypes.object,
-  inViewList: PropTypes.object,
-}
+      </header>
+    </>
+  );
+};
