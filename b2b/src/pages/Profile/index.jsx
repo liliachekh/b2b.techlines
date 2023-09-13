@@ -7,7 +7,7 @@ import AuthContext from "../../context/AuthContext";
 import Loader from '../../components/Loader';
 
 export function Profile() {
-  const { data: customer = {}, error, isLoading } = useGetCustomerQuery();
+  const { data: customer = {}, isLoading } = useGetCustomerQuery();
   const navigate = useNavigate();
   const { loggedIn } = useContext(AuthContext);
   
@@ -37,7 +37,7 @@ export function Profile() {
               <button className={styles.aside__link}
                 onClick={() => {
                   navigate("/login");
-                  localStorage.removeItem('token')
+                  
                 }}>
                 Logout
               </button>
