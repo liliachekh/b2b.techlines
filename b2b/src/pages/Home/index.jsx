@@ -5,6 +5,7 @@ import { useQueryString } from "../../hooks";
 import { useGetAllProductsQuery } from "../../store/api/products.api";
 import BackToTop from "../../components/BackToTop"
 import Loader from "../../components/Loader";
+import Footer from "../../components/Footer";
 export function Home() {
   const { perPage } = useQueryString();
 
@@ -17,6 +18,7 @@ export function Home() {
       <Header />
       <ProductList {...products} />
       <BackToTop/>
+      <Footer />
     </>
   )
 }
