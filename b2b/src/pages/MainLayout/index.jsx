@@ -4,6 +4,7 @@ import BackToTop from "../../components/BackToTop"
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import { Navigate, Outlet } from "react-router-dom";
+import Footer from "../../components/Footer";
 
 export function MainLayout() {
   const { loggedIn } = useContext(AuthContext);
@@ -15,6 +16,7 @@ export function MainLayout() {
       <Header />
       <Outlet />
       <BackToTop />
+      <Footer />
     </>
   )
 }

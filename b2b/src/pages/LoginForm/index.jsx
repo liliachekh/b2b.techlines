@@ -8,25 +8,19 @@ import { useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 
 export function LoginForm() {
-  // const [error, setError] = useState(false);
-  const [logIn, { error }] = useLogInMutation();
+  const [error, setError] = useState(false);
+  const [logIn] = useLogInMutation();
   const navigate = useNavigate();
   const { loggedIn } = useContext(AuthContext);
 
   async function onSubmitHandler(values) {
-    await logIn(values);
-    navigate("/");
+    try {
+      await logIn(values).unwrap();
+      navigate("/");
+    } catch (error) {
+      setError(true)
+    }
   }
-  // async function onSubmitHandler(values) {
-  //   try {
-  //     const res = await logIn(values);
-  //     if (typeof res === 'object') {
-  //       navigate("/");
-  //     }
-  //   } catch (error) {
-  //     setError(true)
-  //   }
-  // }
 
   if (loggedIn === true) return <Navigate to="/" />
 
