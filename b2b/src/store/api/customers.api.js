@@ -1,6 +1,5 @@
 import { api } from "./api";
 
-const token = localStorage.getItem('token');
 
 export const customersApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -12,17 +11,42 @@ export const customersApi = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Customers', id: 'LIST' }]
     }),
+    logOut: builder.mutation({
+      query: () => ({
+        url: 'customers/logout',
+        method: 'GET',
+      }),
+      invalidatesTags: [{ type: 'Customers', id: 'LIST' }]
+    }),
     getCustomer: builder.query({
       query: () => ({
         url: 'customers/customer',
         method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
       }),
     }),
+    changeAccount: builder.mutation({
+      query: (body) => ({
+        url: 'customers/',
+        method: 'PUT',
+        body: body
+      }),
+      invalidatesTags: [{ type: 'Customers', id: 'LIST' }]
+    }),
+    changePassword: builder.mutation({
+      query: (body) => ({
+        url: 'customers/password',
+        method: 'PUT',
+        body: body
+      }),
+      invalidatesTags: [{ type: 'Customers', id: 'LIST' }]
+    }),
+    getLoggedIn: builder.query({
+      query: () => ({
+        url: 'customers/loggedIn',
+        method: 'GET',
+      })
+    })
   })
 })
 
-export const { useLogInMutation, useGetCustomerQuery } = customersApi;
+export const { useLogInMutation, useLogOutMutation, useGetCustomerQuery, useChangeAccountMutation, useChangePasswordMutation, useGetLoggedInQuery } = customersApi;

@@ -1,24 +1,30 @@
 // import style from "./Home.module.scss"
-import Header from "../../components/Header";
 import ProductList from "../../components/ProductList";
-import { useQueryString } from "../../hooks";
 import { useGetAllProductsQuery } from "../../store/api/products.api";
-import BackToTop from "../../components/BackToTop"
 import Loader from "../../components/Loader";
-import Footer from "../../components/Footer";
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
+import { Navigate } from "react-router-dom";
+import Filter from "../../components/Filter";
+import { useQueryString } from '../../hooks';
+import { useLocation } from "react-router-dom";
+
 export function Home() {
-  const { perPage } = useQueryString();
+  const { loggedIn } = useContext(AuthContext);
+  const { search } = useLocation();
+  const { params } = useQueryString();
+  const perPage = params.perPage;
+  const page = params.startPage;
 
-  const { data: products = [], isLoading } = useGetAllProductsQuery(window.location.search ? window.location.search : `?perPage=${perPage}`);
+  const { data: products = [], isLoading } = useGetAllProductsQuery(search ? search : `?startPage=${page}&perPage=${perPage}`);
 
-  if (isLoading) return <Loader/>
+  if (isLoading) return <Loader />
+  if (loggedIn === false) return <Navigate to="/login" />
 
   return (
     <>
-      <Header />
+      <Filter />
       <ProductList {...products} />
-      <BackToTop/>
-      <Footer />
     </>
   )
 }
