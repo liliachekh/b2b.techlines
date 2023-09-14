@@ -1,6 +1,7 @@
 import { createContext, useCallback, useEffect, useState } from "react";
 import { baseUrl } from "../utils/vars";
 import { useLocation, useNavigate } from "react-router-dom";
+// import { useGetLoggedInQuery } from "../store/api/customers.api";
 
 const AuthContext = createContext();
 
@@ -16,16 +17,24 @@ function AuthContextProvider(props) {
 
     if (!res && pathname !== '/password-reset') {
       navigate("/login")
+      setLoggedIn(false);
     } else {
       setLoggedIn(res);
     }
-
   }, [navigate, pathname])
 
   useEffect(() => {
     LogIn();
-  }, [LogIn, loggedIn]);
-  console.log(loggedIn)
+  }, [LogIn]);
+
+  // const [loggedIn, setLoggedIn] = useState(undefined);
+
+  // const { data } = useGetLoggedInQuery();
+
+  // useEffect(() => {
+  //   setLoggedIn(data);
+  // }, [data]);
+
   return (
     <AuthContext.Provider value={{ loggedIn }}>
       {props.children}

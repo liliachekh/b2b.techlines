@@ -1,4 +1,4 @@
-// import style from "./Home.module.scss"
+// import styles from "./MainLayout.module.scss"
 import Header from "../../components/Header";
 import BackToTop from "../../components/BackToTop"
 import { useContext } from "react";
