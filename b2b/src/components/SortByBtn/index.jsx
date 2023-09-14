@@ -3,32 +3,35 @@ import { Arrow } from '../icons/arrow';
 import { useQueryString } from '../../hooks';
 
 function SortByBtn({ label, type }) {
-  const { search, sort, perPage, setSearchParams } = useQueryString()
+  const { params, setSearchParams } = useQueryString();
 
   async function clickHandler() {
     let newSort = '';
-    if (sort === type) {
+    if (params['sort'] === type) {
       newSort = `-${type}`
-    } else if (sort === `-${type}`) {
+    } else if (params['sort'] === `-${type}`) {
       newSort = ''
     } else {
       newSort = type
     }
 
-    let query = { perPage, startPage: 1 };
-
-    if (newSort) query = { sort: newSort, ...query };
-    if (search) query = { search, ...query };
+    let query = { ...params, startPage: 1 };
+    
+    if (newSort) {
+      query = { ...params, sort: newSort, startPage: 1 }
+    } else {
+      delete query['sort']
+    }
 
     setSearchParams(query);
   }
 
   return (
     <button
-      className={`${styles.btn} ${sort === type ? styles.arrowUp : styles.arrowDown}`}
+      className={`${styles.btn} ${params['sort'] === type ? styles.arrowUp : styles.arrowDown}`}
       type='button'
       onClick={clickHandler}>
-      {label}{sort?.includes(type) && <Arrow fill={'#f7fbfa'} />}
+      {label}{params['sort']?.includes(type) && <Arrow fill={'#f7fbfa'} />}
     </button>
   )
 }
