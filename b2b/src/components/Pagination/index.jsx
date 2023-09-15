@@ -4,7 +4,9 @@ import { Arrow } from "../icons";
 import { useQueryString } from '../../hooks';
 
 function Pagination({ scrollTo, productsLength, productsQuantity }) {
-  const { perPage, page } = useQueryString();
+  const { params } = useQueryString();
+  const perPage = params.perPage
+  const page = params.startPage
 
   const startItem = productsQuantity - productsLength + 1;
   const lastItem = page * productsLength;

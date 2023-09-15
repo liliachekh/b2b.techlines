@@ -4,12 +4,10 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Thumbs, FreeMode } from 'swiper/modules';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 export default function ProductsSlider({imageUrls}){
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  // const navigationPrevRef = useRef(null);
-  // const navigationNextRef = useRef(null);
   
   return (
     <div className='swiper-container'>
@@ -17,14 +15,6 @@ export default function ProductsSlider({imageUrls}){
       modules={[FreeMode, Navigation, Thumbs]}
       spaceBetween={0}
       navigation={true}
-      // navigation={{
-      //   prevEl: navigationPrevRef.current,
-      //   nextEl: navigationNextRef.current,
-      // }}
-      // onBeforeInit={(swiper) => {
-      //   swiper.navigation.nextEl = navigationNextRef.current;
-      //   swiper.navigation.prevEl = navigationPrevRef.current;
-      // }}
       grabCursor={true}
       loop={true}
       thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
@@ -36,10 +26,6 @@ export default function ProductsSlider({imageUrls}){
         </SwiperSlide>
       ))}
     </Swiper>
-    {/* <div className='btn-container'>
-      <button ref={navigationNextRef}>Next</button>
-      <button ref={navigationPrevRef}>Prev</button>
-    </div> */}
     <Swiper
       onSwiper={setThumbsSwiper}
       freeMode={true}
