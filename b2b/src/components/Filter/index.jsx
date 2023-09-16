@@ -1,19 +1,20 @@
 import styles from "./filter.module.scss";
 import { FilterIcon, ArrowDropdown } from "../icons";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useQueryString } from '../../hooks';
 import { useGetFiltersQuery } from "../../store/api/filter.api";
 
 function Filter() {
   const { data: filtersBD = [] } = useGetFiltersQuery();
-  const { params: initialParams, setSearchParams } = useQueryString();
-  const [params, setParams] = useState(initialParams);
+  const { params, setSearchParams } = useQueryString();
+
 
   // console.log(filtersBD);
   // console.log(params);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const toggleFilter = () => {
     setIsFilterOpen(!isFilterOpen);
@@ -23,30 +24,62 @@ function Filter() {
     setIsDropdownOpen(isDropdownOpen === type ? null : type);
   };
 
-  const handleCheckbox = (key, value) => {
-    const updatedParams = { ...params };
-
-    if (updatedParams[key]?.includes(value)) {
-      updatedParams[key] = updatedParams[key].split(',').filter(a => a !== value).join(',');
-    } else {
-      updatedParams[key] = (updatedParams[key] || '') + (updatedParams[key] ? ',' : '') + value;
+  const handleDocumentClick = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsDropdownOpen('');
     }
-
-    setParams({ ...updatedParams });
   };
+
+  useEffect(() => {
+    document.addEventListener('click', handleDocumentClick);
+    return () => {
+      document.removeEventListener('click', handleDocumentClick);
+    };
+  }, []);
+
+  function handleCheckbox(key, value) {
+    if (params[key]?.includes(value)) {
+      const oldParam = params[key].split(',').filter(a => a !== value).join(',');
+
+      if (oldParam?.length > 0) {
+        setSearchParams({ ...params, [key]: oldParam, startPage: 1 })
+      } else {
+        const newParams = { ...params };
+        delete newParams[key];
+        setSearchParams({ ...newParams, startPage: 1 })
+      }
+    } else {
+      const oldParam = params[key] ? params[key] + ',' : '';
+      setSearchParams({ ...params, [key]: oldParam + value, startPage: 1 })
+    }
+  }
+
+  // const debounce = (fn, delay) => {
+  //   let timeoutID;
+
+  //   return function (...args) {
+  //     if (timeoutID) {
+  //       clearTimeout(timeoutID);
+  //     }
+
+  //     timeoutID = setTimeout(() => {
+  //       fn(...args);
+  //     }, delay);
+  //   };
+  // };
 
   const handleSearch = (e) => {
-    setParams({ ...params, search: e.target.value });
-  };
+    if (e.target.value) {
+      setSearchParams({ ...params, search: e.target.value, startPage: 1 });
+    } else {
+      const newParams = { ...params };
+      delete newParams.search;
+      setSearchParams({ ...newParams, startPage: 1 })
+    }
+  }
 
   const clearAllFilters = () => {
     setSearchParams({});
-    setParams({});
-  };
-
-  const applyFilters = (e) => {
-    e.preventDefault();
-    setSearchParams({ ...params, startPage: 1 });
   };
 
   return (
@@ -60,10 +93,9 @@ function Filter() {
             <FilterIcon />
             <span className={styles.filter__title}>Filters</span>
           </div>
-          <form
-            className={`${styles.filter__navContent} ${isFilterOpen && styles.open}`}
-            onSubmit={applyFilters}>
-            <div className={styles.filter__dropdownBlock}>
+          <div
+            className={`${styles.filter__navContent} ${isFilterOpen && styles.open}`}>
+            <div className={styles.filter__dropdownBlock} ref={dropdownRef}>
               <div className={styles.filter__dropdown}>
                 <h4 className={styles.filter__dropdownTitle}>Categories</h4>
                 <button
@@ -113,7 +145,7 @@ function Filter() {
                   onClick={() => toggleDropdown('brand')}>
                   <span
                     className={styles.filter__dropdownBtnText}>
-                    {params?.categories && params.categories.split(',').length > 0 ? `Selected ${params.brand.split(',').length} items` : 'Select'}
+                    {params?.brand && params.brand.split(',').length > 0 ? `Selected ${params.brand.split(',').length} items` : 'Select'}
                   </span>
                   <ArrowDropdown />
                 </button>
@@ -145,13 +177,13 @@ function Filter() {
                 onClick={clearAllFilters}>
                 Clear
               </button>
-              <button
+              {/* <button
                 type="submit"
                 className={`${styles.filter__navigationBtn + ' ' + styles.btnEffect}`}>
                 Submit
-              </button>
+              </button> */}
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>

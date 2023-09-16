@@ -312,6 +312,13 @@
       align-items: flex-end;
       gap: 150px;
 
+      &.open {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 150px;
+      }
     }
 
     &__dropdownBlock {
