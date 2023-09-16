@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { Home, LoginForm, ResetPassword, Cart, Profile, Product } from "../pages";
+import { Home, LoginForm, ResetPassword, Cart, Profile, Product, NotFound } from "../pages";
 import { ProfileSettings } from "../components/ProfileSettings";
 import { ProfileOrders } from "../components/ProfileOrders";
 import { MainLayout } from "../pages/MainLayout";
@@ -18,6 +18,7 @@ export default function Router() {
       </Route>
       <Route path="/login" element={<LoginForm />} />
       <Route path="/password-reset" element={<ResetPassword />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

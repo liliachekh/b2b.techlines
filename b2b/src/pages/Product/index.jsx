@@ -13,7 +13,7 @@ export function Product() {
 
   if (isLoading) return <Loader />
 
-  if (error?.status === 400) return <h3>Page 404</h3>;
+  if (error?.status === 400) return <Navigate to='/not-found' />;
   
   if (loggedIn === false) return <Navigate to="/login" />
 
