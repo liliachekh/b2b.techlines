@@ -10,12 +10,12 @@ function MobilNav(props) {
     <>
       <div className={style.mobilNav}>
          {!isLogin ? (
-         <NavLink to='/authorization' className={style.mobilNav__login}>
-           <LogIn width={30} height={30} color={'#202025'} strokeWidth={isActive('/authorization') ? '2.2' : '1.5'} />
+         <NavLink to='/login' className={style.mobilNav__login}>
+           <LogIn width={30} height={30} color={'#202025'} strokeWidth={isActive('/login') ? '2.2' : '1.5'} />
          </NavLink>
          ) : (
          <NavLink to='/account' className={style.mobilNav__account} >
-           <Account width={30} height={30} color={'#202025'} strokeWidth={isActive('/account') ? '2.2' : '1.5'} />
+           <Account width={30} height={30} color={'#202025'} strokeWidth={isActive('/profile') ? '2.2' : '1.5'} />
          </NavLink>
          )}
          <NavLink to='/cart' className={style.mobilNav__basket}>

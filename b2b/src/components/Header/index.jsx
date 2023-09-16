@@ -70,7 +70,7 @@ export default function Header() {
             <nav className={`${style.nav} ${isOpen && style.active}`}>
               <ul className={style.nav__list}>
                 {menuData.map(({type, page, text, icon, classHover}) => (
-                  (isLogin && type !== 'login') || (!isLogin && type !== 'account') ? (
+                  (isLogin && type !== 'login') || (!isLogin && type !== 'profile') ? (
                     <MenuLink
                       key={type}
                       classItem={style.nav__item}

@@ -4,7 +4,7 @@ import { Account, Basket, LogIn } from "../icons";
 const menuData = [
   {
     type: 'Shop',
-    page: '/shop',
+    page: '/',
     text: 'Shop',
     classHover: 'storeHover'
   },
@@ -16,29 +16,29 @@ const menuData = [
   },
   {
     type: 'FreshStock',
-    page: '/freshStock',
+    page: '/freshstock',
     text: 'Fresh Stock',
     classHover: 'stockHover'
   },
   {
     type: 'Myorders',
-    page: '/myorders',
+    page: '/profile/orders',
     text: 'My orders',
     classHover: 'myorders'
   },
   {
     type: 'login',
-    page: '/authorization',
+    page: '/login',
     text: 'Log In',
     icon(width, height, color, strokeWidth) {return <LogIn width={width} height={height} color={color} strokeWidth={strokeWidth}/>},
     classHover: 'loginHover'
    },
   {
-    type: 'account',
-    page: '/account',
-    text: 'Account',
+    type: 'profile',
+    page: '/profile',
+    text: 'Profile',
     icon(width, height, color, strokeWidth) {return <Account width={width} height={height} color={color} strokeWidth={strokeWidth}/>},
-    classHover: 'accountHover'
+    classHover: 'profileHover'
   },
   {
     type: 'basket',
