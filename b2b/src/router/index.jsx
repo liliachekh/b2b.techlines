@@ -3,6 +3,9 @@ import { Home, LoginForm, ResetPassword, Cart, Profile, Product } from "../pages
 import { ProfileSettings } from "../components/ProfileSettings";
 import { ProfileOrders } from "../components/ProfileOrders";
 import { MainLayout } from "../pages/MainLayout";
+import { AboutUs } from "../pages/AboutUs";
+import { Contacts } from "../pages/Contacts";
+import { PaymentAndDelivery } from "../pages/PaymentAndDelivery";
 
 export default function Router() {
   return (
@@ -15,6 +18,9 @@ export default function Router() {
           <Route index element={<ProfileSettings />} />
           <Route path="/profile/orders" element={<ProfileOrders />} />
         </Route>
+        <Route path="/about-us" element={<AboutUs/>}/>
+        <Route path="contacts" element={<Contacts/>}/>
+        <Route path="payment-and-delivery" element={<PaymentAndDelivery/>}/>
       </Route>
       <Route path="/login" element={<LoginForm />} />
       <Route path="/password-reset" element={<ResetPassword />} />
