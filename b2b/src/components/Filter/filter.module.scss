@@ -1,4 +1,4 @@
-  .btnEffect {
+.btnEffect {
     &::before {
       position: absolute;
       top: -5%;
@@ -187,7 +187,6 @@
         // justify-content: space-between;
         align-items: flex-end;
         gap: 1rem;
-
       }
 
       &__dropdownBlock {

@@ -41,10 +41,19 @@ function ProductList({ products, productsQuantity }) {
           </div>
           <div className={styles.productList__list}>
             {products?.length > 0
-              ? products?.map((product) => (
+              ?
+              products?.map((product) => (
                 <ProductCard {...product} displayTable={displayTable} key={product?._id} />
               ))
-              : <div>No Results Found</div>}
+              :
+              <div className={`${styles.productList__empty} ${styles.empty}`}>
+                <h4 className={styles.empty__title}>No Results Found</h4>
+                <h5 className={styles.empty__subtitle}>Search Tips:</h5>
+                <ul className={styles.empty__searchTips}>
+                  <li className={styles.empty__tip}>Try checking your spelling</li>
+                  <li className={styles.empty__tip}>Use another search term</li>
+                </ul>
+              </div>}
           </div>
           <div className={styles.productList__wrapper}>
             <div className={styles.productList__btns}>

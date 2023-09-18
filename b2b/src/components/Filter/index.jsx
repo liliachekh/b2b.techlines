@@ -42,10 +42,6 @@ function Filter() {
     search();
   }, [search])
 
-  useEffect(() => {
-    setSearchValue(params.search || '');
-  }, [setSearchValue])
-
   const clearAllFilters = () => {
     setSearchParams({});
     setSearchValue('');
