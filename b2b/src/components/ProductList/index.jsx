@@ -40,10 +40,11 @@ function ProductList({ products, productsQuantity }) {
               </div>}
           </div>
           <div className={styles.productList__list}>
-            {products?.length > 0 &&
-              products?.map((product) => (
+            {products?.length > 0
+              ? products?.map((product) => (
                 <ProductCard {...product} displayTable={displayTable} key={product?._id} />
-              ))}
+              ))
+              : <div>No Results Found</div>}
           </div>
           <div className={styles.productList__wrapper}>
             <div className={styles.productList__btns}>
@@ -57,7 +58,7 @@ function ProductList({ products, productsQuantity }) {
                   newPerPage={item} />
               ))}
             </div>
-            {productsQuantity &&
+            {productsQuantity > 0 &&
               <div className={styles.productList__btns}>
                 <Pagination
                   scrollTo={ref}

@@ -9,7 +9,7 @@ body {
   font-family: 'Roboto', Sans-Serif;
   font-size: 10px;
   overflow-x: auto;
-  overflow-y: scroll;
+  // overflow-y: scroll;
 }
 
 button {
@@ -29,9 +29,17 @@ section {
 
 h2,
 h3,
-p {
+h4,
+p,
+input {
   margin: 0;
   padding: 0;
+}
+
+ol,
+ul,
+menu {
+  list-style: none;
 }
 
 a {
@@ -53,6 +61,7 @@ input[type=number] {
 ::-webkit-scrollbar {
   width: 12px;
   height: 100%;
+  border-radius: 10px;
   background: $color-grey-light;
 }
 
@@ -65,30 +74,10 @@ input[type=number] {
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: $color-dark;
-  transition: background-color .3s;
   box-shadow: inset 0 0 7px $color-grey;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: $color-grey;
   box-shadow: inset 0 0 7px $color-dark;
-}
-
-::-webkit-scrollbar-button:vertical:decrement,
-::-webkit-scrollbar-button:vertical:increment {
-  width: 10px;
-  height: 15px;
-  border-style: solid;
-  border-radius: 50%;
-  transform: rotate(0deg);
-}
-
-::-webkit-scrollbar-button:vertical:decrement {
-  border-width: 0 5px 14px 5px;
-  border-color: transparent transparent $color-dark transparent;
-}
-
-::-webkit-scrollbar-button:vertical:increment {
-  border-width: 14px 5px 0 5px;
-  border-color: $color-dark transparent transparent transparent;
 }
