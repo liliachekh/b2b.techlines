@@ -8,7 +8,7 @@ import { Arrow, Cart } from '../icons';
 import { useDeleteFromCartMutation, useGetCartQuery } from '../../store/api/cart.api';
 import { useAddToCart } from '../../hooks';
 
-function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, brand, itemNo, productUrl, displayTable, cartItem }) {
+function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, brand, itemNo, productUrl, displayTable, cartItem, orderQuantity }) {
   const { data: cart = {} } = useGetCartQuery();
   const handleAddToCart = useAddToCart();
   const [deleteFromCart] = useDeleteFromCartMutation();
@@ -53,88 +53,98 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
   }, [inCart])
 
   return (
-    <div className={`${productStyle.productCard} ${displayTable ? productStyle.productRow : ''} ${cartItem ? productStyle.cart : ''}`}>
+    <div className={`${productStyle.productCard} ${displayTable ? productStyle.productRow : ''} ${cartItem ? productStyle.cart : ''} ${orderQuantity ? productStyle.order : ''}`}>
       <Link to={`/${productUrl}`} className={productStyle.productCard__mainLink}>
         <LazyLoadImage
           className={productStyle.productCard__img}
+          // src={'/images/iphone12_black.jpeg'}
           src={imageUrls[0]}
           alt={name}
           effect="blur"
-          placeholderSrc={'./images/Home.webp'}
+          placeholderSrc={'/images/background-auth.webp'}
           height={255}
           width='100%' />
-        {!cartItem &&
+        {!cartItem && !orderQuantity &&
           <p className={productStyle.productCard__name}>
             {name}
           </p>}
       </Link>
-      <div className={`${productStyle.productCard__links} ${cartItem ? productStyle.cart : ''}`}>
-        {cartItem &&
-          <Link to={`/ product / ${itemNo} `} className={productStyle.productCard__name}>
+
+      <div className={productStyle.productCard__links}>
+        {(cartItem || orderQuantity) &&
+          <Link to={`/product/${itemNo}`} className={productStyle.productCard__name}>
             {name}
           </Link>}
-        <Link to={`/ products / filter ?& categories=${brand} `} className={productStyle.productCard__link}>
+        <Link to={`/products/filter?&categories=${brand}`} className={productStyle.productCard__link}>
           {brand}
         </Link>
-        <Link to={`/ products / filter ?& categories=${categories} `} className={productStyle.productCard__link}>
+        <Link to={`/products/filter?&categories=${categories}`} className={productStyle.productCard__link}>
           {categories}
         </Link>
-        {cartItem &&
+        {(cartItem || orderQuantity) &&
           <div className={productStyle.productCard__price}>
             <span className={productStyle.productCard__price_title}>Price for one:</span>
             {currentPrice.toFixed(2)} €
           </div>}
       </div>
-      <div className={`${productStyle.productCard__purchase} ${productStyle.purchase} ${cartItem ? productStyle.cart : ''}`}>
-        {!cartItem &&
-          <div className={productStyle.purchase__price}>
-            {currentPrice.toFixed(2)} €
-          </div>}
-          
-        <div className={`${productStyle.productCard__amount} ${productStyle.amount} ${cartItem ? productStyle.cart : ''}`}>
-          <button
-            type='button'
-            disabled={amount === 1}
-            className={`${productStyle.amount__btn} ${productStyle.amount__btn_decrease} `}
-            onClick={amount > 1 ? (e) => increase(false) : null} />
-          <input
-            name={name}
-            type="number"
-            className={productStyle.amount__input}
-            value={amount}
-            onChange={handleAmountChange} />
-          <button
-            type='button'
-            disabled={amount === quantity}
-            className={`${productStyle.amount__btn} ${productStyle.amount__btn_increase} `}
-            onClick={(e) => increase(true)} />
-        </div>
 
-        <div className={`${productStyle.purchase__price} ${productStyle.purchase__price_total} `}>
-          {(currentPrice * amount).toFixed(2)} €
-        </div>
-        {!cartItem && (!inCart
-          ? <button
-            type='button'
-            className={productStyle.purchase__addToCart}
-            onClick={() => handleAddToCart(_id, amount)}>
-            Add to cart
-            <Cart color={'#f7fbfa'} width={20} height={20} strokeWidth={'2'} />
-          </button>
-          : <Link
-            to='/cart'
-            className={`${productStyle.purchase__addToCart} ${productStyle.purchase__addToCart_added} `}>
-            Go to cart
-            <Arrow fill={'#f7fbfa'} width={20} height={20} />
-          </Link>)}
-      </div>
+      {!orderQuantity ? (
+        <div className={`${productStyle.productCard__purchase} ${productStyle.purchase}`}>
+          {!cartItem &&
+            <div className={productStyle.purchase__price}>
+              {currentPrice.toFixed(2)} €
+            </div>}
+          <div className={`${productStyle.productCard__amount} ${productStyle.amount}`}>
+            <button
+              type='button'
+              disabled={amount === 1}
+              className={`${productStyle.amount__btn} ${productStyle.amount__btn_decrease} `}
+              onClick={amount > 1 ? (e) => increase(false) : null} />
+            <input
+              name={name}
+              type="number"
+              className={productStyle.amount__input}
+              value={amount}
+              onChange={handleAmountChange} />
+            <button
+              type='button'
+              disabled={amount === quantity}
+              className={`${productStyle.amount__btn} ${productStyle.amount__btn_increase} `}
+              onClick={(e) => increase(true)} />
+          </div>
+          <div className={`${productStyle.purchase__price} ${productStyle.purchase__price_total} `}>
+            {(currentPrice * amount).toFixed(2)} €
+          </div>
+          {!cartItem && (!inCart
+            ? <button
+              type='button'
+              className={productStyle.purchase__addToCart}
+              onClick={() => handleAddToCart(_id, amount)}>
+              Add to cart
+              <Cart color={'#f7fbfa'} width={20} height={20} strokeWidth={'2'} />
+            </button>
+            : <Link
+              to='/cart'
+              className={`${productStyle.purchase__addToCart} ${productStyle.purchase__addToCart_added} `}>
+              Go to cart
+              <Arrow fill={'#f7fbfa'} width={20} height={20} />
+            </Link>)}
+        </div>)
+        : (
+          <div className={`${productStyle.productCard__purchase} ${productStyle.purchase}`}>
+            <div>Quantity: {orderQuantity} pc`s</div>
+            <div className={`${productStyle.purchase__price} ${productStyle.purchase__price_total} `}>
+              Price: {(currentPrice * amount).toFixed(2)} €
+            </div>
+          </div>)
+      }
       {cartItem &&
         <button
           type='button'
           className={productStyle.productCard__delete}
           onClick={(e) => handleDeleteFromCart(e, _id)}>
         </button>}
-    </div>
+    </div >
   );
 }
 

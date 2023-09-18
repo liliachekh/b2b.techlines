@@ -9,12 +9,8 @@ export function useQueryString() {
 
   const perPage = searchParams.get('perPage') || 25;
   const startPage = searchParams.get('startPage') || 1;
-  const categories = searchParams.get('categories') || '';
-  const brand = searchParams.get('brand') || '';
-  const search = searchParams.get('search') || '';
 
-
-  params = { ...params, perPage, startPage, categories, brand, search }
+  params = { ...params, perPage, startPage }
 
   return { params, setSearchParams }
 }

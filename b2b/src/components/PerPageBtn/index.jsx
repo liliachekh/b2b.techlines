@@ -1,17 +1,16 @@
 import styles from './perPageBtn.module.scss';
 import { scrollToRef } from '../../utils';
-import { useSearchParams } from "react-router-dom";
+import { useQueryString } from '../../hooks';
 
 function PerPageBtn({ newPerPage, scrollTo }) {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const perPage = searchParams.get('perPage') || 25;
+  const { params, setSearchParams } = useQueryString();
+  const perPage = params.perPage;
 
   const activeBtn = (Number(perPage) === newPerPage );
 
   async function clickHandler() {
     if (!activeBtn) {
-      const query = { ...searchParams, perPage: newPerPage, startPage: 1 };
-
+      const query = { ...params, perPage: newPerPage, startPage: 1 };
       setSearchParams(query);
     }
     scrollToRef(scrollTo);

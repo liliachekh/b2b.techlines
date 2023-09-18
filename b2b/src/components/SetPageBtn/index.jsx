@@ -1,26 +1,24 @@
 import styles from './setPageBtn.module.scss';
 import { scrollToRef } from '../../utils';
-import { useSearchParams } from "react-router-dom";
+import { useQueryString } from '../../hooks';
 
 function SetPageBtn({ scrollTo, productsLength, label, direction }) {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const perPage = searchParams.get('perPage') || 25;
-  const page = searchParams.get('startPage');
+  const { params, setSearchParams } = useQueryString();
+  const page = params.startPage;
 
-  const disabled = direction && productsLength < perPage;
+  const disabled = direction && productsLength < params.perPage;
 
   async function clickHandler() {
     if (disabled) return;
     const newPage = direction ? Number(page || 1) + 1 : Number(page || 1) - 1;
     if (newPage === 0) return;
 
-    const query = { ...searchParams, perPage, startPage: newPage };
+    const query = { ...params, startPage: newPage };
 
     setSearchParams(query);
 
     scrollToRef(scrollTo);
   }
-
   return (
     <button
       className={`${styles.btn} ${disabled || ((Number(page) === 1 || !page) && !direction) ? styles.btn_disabled : ''} ${direction ? styles.rotate : ''}`}
