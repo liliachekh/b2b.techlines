@@ -72,7 +72,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
 
       <div className={productStyle.productCard__links}>
         {(cartItem || orderQuantity) &&
-          <Link to={`/product/${itemNo}`} className={productStyle.productCard__name}>
+          <Link to={`/${productUrl}`} className={productStyle.productCard__name}>
             {name}
           </Link>}
         <Link to={`/products/filter?&categories=${brand}`} className={productStyle.productCard__link}>
