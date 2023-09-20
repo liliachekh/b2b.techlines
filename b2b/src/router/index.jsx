@@ -5,7 +5,8 @@ import { ProfileOrders } from "../components/ProfileOrders";
 import { MainLayout } from "../pages/MainLayout";
 import { AboutUs } from "../pages/AboutUs";
 import { Contacts } from "../pages/Contacts";
-import { PaymentAndDelivery } from "../pages/PaymentAndDelivery";
+import { Delivery } from "../pages/Delivery";
+import { PrivacyPolicy } from "../pages/PrivacyPolicy";
 
 export default function Router() {
   return (
@@ -19,8 +20,9 @@ export default function Router() {
           <Route path="/profile/orders" element={<ProfileOrders />} />
         </Route>
         <Route path="/about-us" element={<AboutUs/>}/>
-        <Route path="contacts" element={<Contacts/>}/>
-        <Route path="payment-and-delivery" element={<PaymentAndDelivery/>}/>
+        <Route path="/contacts" element={<Contacts/>}/>
+        <Route path="/delivery" element={<Delivery/>}/>
+        <Route path="/policy" element={<PrivacyPolicy/>}/>
       </Route>
       <Route path="/login" element={<LoginForm />} />
       <Route path="/password-reset" element={<ResetPassword />} />

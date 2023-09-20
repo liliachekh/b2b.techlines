@@ -13,7 +13,7 @@ export default function Footer() {
             <Link to='/about-us' className={style.footer__links_link}>About us</Link>
             <Link to='/contacts' className={style.footer__links_link}>Contacts</Link>
             <Link to='/policy' className={style.footer__links_link}>Privacy policy</Link>
-            <Link to='/payment-and-delivery' className={style.footer__links_link}>Payment and delivery</Link>
+            <Link to='/delivery' className={style.footer__links_link}>Delivery</Link>
         </div>
       </div>
     </footer>
