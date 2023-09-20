@@ -55,10 +55,30 @@ body:has(.aboutUs) {
       top: 0;
     }
   }
+  &__subtitle {
+    margin-bottom: 10px;
+    font-size: 16px;
+    text-align: center;
+    // display: contents;
+    line-height: 120%;
 
+    @media (min-width: 500px) {
+      font-size: 20px;
+      }
+  
+    @media (min-width: 768px) {
+      font-size: 24px;
+      }
+  }
   &__paragraph {
     margin-bottom: 20px;
     text-indent: 1em;
     padding: 0 15px;
+  }
+
+  &__list {
+    list-style: inside;
+    text-indent: 1em;
+    margin-bottom: 15px;
   }
 }
