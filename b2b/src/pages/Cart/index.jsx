@@ -3,7 +3,7 @@ import { useGetCartQuery } from "../../store/api/cart.api";
 import ProductCard from '../../components/ProductCard';
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Loader from '../../components/Loader';
 
 export function Cart() {
@@ -34,7 +34,7 @@ export function Cart() {
                     .map(({ product: { currentPrice }, cartQuantity }) => currentPrice * cartQuantity)
                     .reduce((prev, next) => prev + next).toFixed(2) + ' €'}
                 </div>
-                <button disabled={!cart?.products?.length} className={styles.aside__btn}>Proceed to Checkout</button>
+                <Link to='/order' disabled={!cart?.products?.length} className={styles.aside__btn}>Proceed to Checkout</Link>
               </div>
             </>
             : <p className={styles.cart__empty}>Your shopping cart is empty</p>}
