@@ -1,9 +1,9 @@
-html:has(.privacyPolicy),
-body:has(.privacyPolicy) {
+html:has(.termsAndConditions),
+body:has(.termsAndConditions) {
   height: 100%;
 }
 
-.privacyPolicy {
+.termsAndConditions {
   height: 100%;
   font-family: 'Roboto', sans-serif;
   background: linear-gradient(45deg, rgb(227, 227, 227), rgb(247, 251, 250) 60%);
@@ -68,6 +68,7 @@ body:has(.privacyPolicy) {
     flex-direction: column;
     gap: 15px;
     list-style-position: inside;
+    margin-bottom: 10px;
   }
 
   &__listItem {
@@ -82,6 +83,11 @@ body:has(.privacyPolicy) {
     @media (min-width: 768px) {
       font-size: 25px;
     }
+  }
+
+  &__sublist {
+    list-style: inside;
+    text-indent: 1em;
   }
 
   &__subtitle {
@@ -105,31 +111,4 @@ body:has(.privacyPolicy) {
     padding: 0 15px;
     text-align: justify;
   }
-
-  table {
-    border-collapse: collapse;
-    font-size: 11px; 
-
-    @media (min-width: 500px) {
-      font-size: 12px;
-      }
-    @media (min-width: 768px) {
-      font-size: 19px;
-      }
-  }
-
-  td, th {
-    vertical-align: top;
-    border: 1px solid #000;
-    padding: 1px;
-
-    @media (min-width: 500px) {
-      padding: 2px;
-      }
-
-    @media (min-width: 768px) {
-          padding: 3px;
-      }
-  }
-  
 }
