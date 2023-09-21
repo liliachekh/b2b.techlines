@@ -8,6 +8,7 @@ import { Contacts } from "../pages/Contacts";
 import { Delivery } from "../pages/Delivery";
 import { PrivacyPolicy } from "../pages/PrivacyPolicy";
 import { TermsAndConditions } from "../pages/TermsAndConditions";
+import { CookiePolicy } from "../pages/CookiePolicy";
 
 export default function Router() {
   return (
@@ -23,7 +24,8 @@ export default function Router() {
         <Route path="/about-us" element={<AboutUs/>}/>
         <Route path="/contacts" element={<Contacts/>}/>
         <Route path="/delivery" element={<Delivery/>}/>
-        <Route path="/policy" element={<PrivacyPolicy/>}/>
+        <Route path="/privacy-policy" element={<PrivacyPolicy/>}/>
+        <Route path="/cookie-policy" element={<CookiePolicy/>}/>
         <Route path="/terms-and-conditions" element={<TermsAndConditions/>}/>
       </Route>
       <Route path="/login" element={<LoginForm />} />
