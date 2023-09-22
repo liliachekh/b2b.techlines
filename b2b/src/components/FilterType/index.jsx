@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useQueryString } from "../../hooks";
 import { ArrowDropdown } from "../icons";
+import { AnimatePresence, motion } from "framer-motion";
 import styles from "./filterType.module.scss";
+import { animateFromTop } from "../../animation";
 
 export function FilterType({ type, items }) {
   const { params, setSearchParams } = useQueryString();
@@ -54,21 +56,24 @@ export function FilterType({ type, items }) {
         </span>
         <ArrowDropdown />
       </button>
-      <ul className={`${styles.dropdown__list} ${isDropdownOpen === type && styles.open}`}>
-        {items?.map(({ name, type }) => (
-          <li key={name} className={styles.dropdown__item}>
-            <label htmlFor={name}>
-              <input
-                type="checkbox"
-                id={name}
-                name={type}
-                value={name}
-                onChange={() => handleCheckbox(type, name)}
-                checked={params[type]?.includes(name) ? true : false} />
-              {name}
-            </label>
-          </li>))}
-      </ul>
+      <AnimatePresence>
+        {isDropdownOpen === type && <motion.ul className={`${styles.dropdown__list}`}
+          {...animateFromTop}>
+          {items?.map(({ name, type }) => (
+            <li key={name} className={styles.dropdown__item}>
+              <label htmlFor={name}>
+                <input
+                  type="checkbox"
+                  id={name}
+                  name={type}
+                  value={name}
+                  onChange={() => handleCheckbox(type, name)}
+                  checked={params[type]?.includes(name) ? true : false} />
+                {name}
+              </label>
+            </li>))}
+        </motion.ul>}
+      </AnimatePresence>
     </div>
   )
 }
