@@ -40,7 +40,7 @@ body:has(.cookiePolicy) {
     font-size: 12px;
     line-height: 125%;
     padding: 20px 0;
-    width: -webkit-fill-available;
+    width: 100%;
 
     @media (min-width: 500px) {
       font-size: 14px;
