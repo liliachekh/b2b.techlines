@@ -14,13 +14,15 @@ export function Product() {
   if (isLoading) return <Loader />
 
   if (error?.status === 400) return <h3>Page 404</h3>;
-
+  
   if (loggedIn === false) return <Navigate to="/login" />
 
   return (
-    <div className={style.productDetails}>
-      <div className={style.productDetails__container}>
-        <ProductDetails {...product} />
+    <div id='main'>
+      <div className={style.productDetails}>
+        <div className={style.productDetails__container}>
+          <ProductDetails {...product} />
+        </div>
       </div>
     </div>
   )

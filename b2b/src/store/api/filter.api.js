@@ -1,4 +1,5 @@
 import { api } from "./api";
+import { headers } from "../../utils/vars";
 
 export const filterApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -6,6 +7,7 @@ export const filterApi = api.injectEndpoints({
       query: () => ({
         url: `filters/`,
         method: 'GET',
+        headers: headers(),
       }),
       providesTags: (result) =>
         result

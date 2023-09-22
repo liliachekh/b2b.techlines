@@ -5,23 +5,47 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useEffect, useState } from 'react';
 import { Arrow, Cart } from '../icons';
-import { useDeleteFromCartMutation } from '../../store/api/cart.api';
-import { useAddToCart, useAmountChange, useInCart, useIncrease } from '../../hooks';
+import { useDeleteFromCartMutation, useGetCartQuery } from '../../store/api/cart.api';
+import { useAddToCart } from '../../hooks';
 
 function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, brand, itemNo, productUrl, displayTable, cartItem, orderQuantity }) {
+  const { data: cart = {} } = useGetCartQuery();
   const handleAddToCart = useAddToCart();
   const [deleteFromCart] = useDeleteFromCartMutation();
-  
-  const [amount, setAmount] = useState(1);
-  
-  const increase = useIncrease(_id, quantity, amount, setAmount);
-  const handleAmountChange = useAmountChange(_id, quantity, setAmount);
 
-  const inCart = useInCart(_id);
+  const [amount, setAmount] = useState(1);
+
+  const inCart = cart?.products?.find(({ product }) => product._id === _id);
 
   async function handleDeleteFromCart(e, id) {
     e.target.disabled = true;
     await deleteFromCart(id).unwrap();
+  }
+
+  function handleAmountChange(e) {
+    if (e.target.value > 0 && e.target.value <= quantity) {
+      inCart ? handleAddToCart(_id, e.target.value) : setAmount(e.target.value);
+    }
+  }
+
+  async function increase(plus) {
+    try {
+      if (inCart) {
+        if (plus && quantity > amount) {
+          handleAddToCart(_id, Number(amount) + 1);
+        } else if (!plus) {
+          handleAddToCart(_id, Number(amount) - 1);
+        }
+      } else {
+        if (plus && quantity > amount) {
+          setAmount(Number(amount) + 1);
+        } else if (!plus) {
+          setAmount(Number(amount) - 1);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {
@@ -48,7 +72,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
 
       <div className={productStyle.productCard__links}>
         {(cartItem || orderQuantity) &&
-          <Link to={`/${productUrl}`} className={productStyle.productCard__name}>
+          <Link to={`/product/${itemNo}`} className={productStyle.productCard__name}>
             {name}
           </Link>}
         <Link to={`/products/filter?&categories=${brand}`} className={productStyle.productCard__link}>
