@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { Home, LoginForm, ResetPassword, Cart, Profile, Product } from "../pages";
+import { Home, LoginForm, ResetPassword, Cart, Profile, Product, Order } from "../pages";
 import { ProfileSettings } from "../components/ProfileSettings";
 import { ProfileOrders } from "../components/ProfileOrders";
 import { MainLayout } from "../pages/MainLayout";
@@ -17,6 +17,7 @@ export default function Router() {
         <Route index element={<Home />} />
         <Route path="/:productId" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/order" element={<Order />} />
         <Route path="/profile" element={<Profile />}>
           <Route index element={<ProfileSettings />} />
           <Route path="/profile/orders" element={<ProfileOrders />} />
