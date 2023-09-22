@@ -9,18 +9,18 @@ const menuData = [
     text: 'Shop',
     classHover: 'storeHover'
   },
-  {
-    type: 'outlet',
-    page: '/outlet',
-    text: 'Outlet',
-    classHover: 'outletHover'
-  },
-  {
-    type: 'FreshStock',
-    page: '/freshstock',
-    text: 'Fresh Stock',
-    classHover: 'stockHover'
-  },
+  // {
+  //   type: 'outlet',
+  //   page: '/outlet',
+  //   text: 'Outlet',
+  //   classHover: 'outletHover'
+  // },
+  // {
+  //   type: 'FreshStock',
+  //   page: '/freshstock',
+  //   text: 'Fresh Stock',
+  //   classHover: 'stockHover'
+  // },
   {
     type: 'Myorders',
     page: '/profile/orders',

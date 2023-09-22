@@ -26,7 +26,7 @@ a {
   z-index: 20;
 
   &__wrapper {
-    padding: 10px 0;
+    // padding: 10px 0;
     transition: all .4s ease-out;
     background-color: rgb(247, 251, 250);
   }
@@ -106,7 +106,8 @@ a {
   }
 
   @media (min-width: 993px) {
-    flex: 0 1 60%;
+    // flex: 0 1 60%;
+    flex: 0 1 30%;
     position: static;
     height: auto;
     transform: translateY(0);
@@ -154,6 +155,7 @@ a {
     box-sizing: border-box;
 
     @media (min-width: 993px) {
+      position: relative;
       align-self: center;
       width: auto;
       padding: 0;
@@ -202,10 +204,10 @@ a {
   &__item:not(:last-child):not(:nth-last-child(2)) a {
     @media (min-width: 993px) {
       position: relative;
-      padding: 5px 8px;
+      padding: 27px 8px;
       transition: all .4s ease 0s;
-      border: 2px solid transparent;
-      border-radius: 6px;
+      border-bottom: 3px solid transparent;
+      // border-radius: 6px;
       overflow: hidden;
 
       &.activeLink {
@@ -215,28 +217,28 @@ a {
         }
       }
 
-      &:hover {
-        transition: border-color .4s ease-in-out;
-        border-color: #202025;
-      }
+      // &:hover {
+      //   transition: border-color .4s ease-in-out;
+      //   border-color: #202025;
+      // }
 
-      &:hover::before {
-        position: absolute;
-        top: -2px;
-        right: -2px;
-        bottom: -2px;
-        left: -2px;
-        transition: opacity .4s ease-in-out;
-        border: 2px solid #202025;
-        border-radius: 6px;
-        content: '';
-        opacity: 0;
-      }
+      // &:hover::before {
+      //   position: absolute;
+      //   top: -2px;
+      //   right: -2px;
+      //   bottom: -2px;
+      //   left: -2px;
+      //   transition: opacity .4s ease-in-out;
+      //   border: 2px solid #202025;
+      //   border-radius: 6px;
+      //   content: '';
+      //   opacity: 0;
+      // }
 
-      &:hover::before {
-        transition-delay: .2s;
-        opacity: 1;
-      }
+      // &:hover::before {
+      //   transition-delay: .2s;
+      //   opacity: 1;
+      // }
     }
   }
 }
