@@ -17,11 +17,11 @@ export function Profile() {
   if (loggedIn === false) return <Navigate to="/login" />
 
   return (
-    <div className={styles.main}>
-      <div className={styles.main__container}>
-        <h2 className={styles.main__title}>My profile</h2>
-        <div className={styles.main__wrapper}>
-          <div className={`${styles.main__aside} ${styles.aside}`}>
+    <div className={styles.profile}>
+      <div className={styles.profile__container}>
+        <h2 className={styles.profile__title}>My profile</h2>
+        <div className={styles.profile__wrapper}>
+          <div className={`${styles.profile__aside} ${styles.aside}`}>
             <Link
               to='/profile'
               className={`${styles.aside__link} ${pathname === '/profile' ? styles.aside__link_active : ''}`}>
@@ -37,7 +37,7 @@ export function Profile() {
               Logout
             </button>
           </div>
-          <div className={`${styles.main__content} ${window.location.pathname === '/profile' ? styles.main__content_account : ''}`}>
+          <div className={`${styles.profile__content} ${window.location.pathname === '/profile' ? styles.profile__content_account : ''}`}>
             <Outlet />
           </div>
         </div>
