@@ -2,7 +2,6 @@ import style from "./aboutUs.module.scss";
 
 export function AboutUs() {
   return (
-    <div id="main">
       <section className={style.aboutUs}>
         <div className={style.aboutUs__container}>
           <h1 className={style.aboutUs__title}>About us</h1>
@@ -29,6 +28,5 @@ export function AboutUs() {
           </div>
         </div>
       </section>
-    </div>
   );
 }

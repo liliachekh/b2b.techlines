@@ -3,7 +3,6 @@ import {cookiePolicyData} from "./cookiePolicyData.jsx";
 
 export function CookiePolicy() {
   return (
-    <div id="main">
       <section className={style.cookiePolicy}>
         <div className={style.cookiePolicy__container}>
           <h1 className={style.cookiePolicy__title}>Cookie Policy</h1>
@@ -33,6 +32,5 @@ export function CookiePolicy() {
           </div>
         </div>
       </section>
-    </div>
   );
 }

@@ -3,7 +3,6 @@ import style from "./delivery.module.scss";
 
 export function Delivery() {
   return (
-    <div id="main">
       <section className={style.delivery}>
         <div className={style.delivery__container}>
           <h1 className={style.delivery__title}>SHIPPING COSTS</h1>
@@ -15,6 +14,5 @@ export function Delivery() {
           </div>
         </div>
       </section>
-    </div>
   );
 }

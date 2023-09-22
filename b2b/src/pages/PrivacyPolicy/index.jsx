@@ -3,7 +3,6 @@ import {privacyPolicyData} from "./privacyPolicyData.jsx";
 
 export function PrivacyPolicy() {
   return (
-    <div id="main">
       <section className={style.privacyPolicy}>
         <div className={style.privacyPolicy__container}>
           <h1 className={style.privacyPolicy__title}>Privacy Policy</h1>
@@ -19,6 +18,5 @@ export function PrivacyPolicy() {
           </div>
         </div>
       </section>
-    </div>
   );
 }

@@ -3,7 +3,6 @@ import { contacts } from "./contactsFields"
 
 export function Contacts () {
   return (
-    <div id="main">
       <section className={style.contacts}>
       <div className={style.contacts__container}>
         <h1 className={style.contacts__title}>Contacts</h1>
@@ -17,7 +16,5 @@ export function Contacts () {
         </div>
       </div>
       </section>
-    </div>
-
   )
 }

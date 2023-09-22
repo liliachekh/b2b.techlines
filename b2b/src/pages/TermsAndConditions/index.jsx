@@ -3,7 +3,6 @@ import {termsAndConditionsData} from "./termsAndConditionsData.jsx";
 
 export function TermsAndConditions() {
   return (
-    <div id="main">
       <section className={style.termsAndConditions}>
         <div className={style.termsAndConditions__container}>
           <h1 className={style.termsAndConditions__title}>Terms and Conditions</h1>
@@ -19,6 +18,5 @@ export function TermsAndConditions() {
           </div>
         </div>
       </section>
-    </div>
   );
 }
