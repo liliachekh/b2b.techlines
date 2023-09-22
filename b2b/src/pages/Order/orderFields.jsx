@@ -89,4 +89,11 @@ export const shippingFields = [
     format: "+############",
     mask: "#",
   },
+  {
+    tagType: 'regular',
+    label: "Remember",
+    id: "save",
+    name: "save",
+    type: "checkbox",
+  },
 ]

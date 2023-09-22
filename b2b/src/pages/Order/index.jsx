@@ -63,6 +63,7 @@ export function Order() {
                 lastName: '',
                 email: '',
                 telephone: '',
+                save: false,
               }}
               validationSchema={validationSchemaOrderShipping}
               fields={shippingFields}
