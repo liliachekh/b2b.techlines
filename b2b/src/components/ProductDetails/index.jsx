@@ -3,25 +3,50 @@ import { Cart } from '../icons/cart';
 import { useEffect, useState } from 'react';
 import ProductsSlider from '../ProductSlider';
 import { Arrow } from '../icons';
-import { useAddToCart, useAmountChange, useInCart, useIncrease } from '../../hooks';
+import { useGetCartQuery } from '../../store/api/cart.api';
+import { useAddToCart } from '../../hooks';
 import { Link } from 'react-router-dom';
 
 export default function ProductDetails({ _id, name, currentPrice, brand, itemNo, quantity, imageUrls, cartItem }) {
+  const { data: cart = {} } = useGetCartQuery();
   const handleAddToCart = useAddToCart();
 
   const [amount, setAmount] = useState(1);
 
-  const increase = useIncrease(_id, quantity, amount, setAmount);
-  const handleAmountChange = useAmountChange(_id, quantity, setAmount);
+  const inCart = cart?.products?.find(({ product }) => product._id === _id);
 
-  const inCart = useInCart(_id);
+  function handleAmountChange(e) {
+    if (e.target.value > 0 && e.target.value <= quantity) {
+      inCart ? handleAddToCart(_id, e.target.value) : setAmount(e.target.value);
+    }
+  }
+
+  async function increase(plus) {
+    try {
+      if (inCart) {
+        if (plus && quantity > amount) {
+          handleAddToCart(_id, Number(amount) + 1);
+        } else if (!plus) {
+          handleAddToCart(_id, Number(amount) - 1);
+        }
+      } else {
+        if (plus && quantity > amount) {
+          setAmount(Number(amount) + 1);
+        } else if (!plus) {
+          setAmount(Number(amount) - 1);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
     setAmount(inCart?.cartQuantity || 1);
   }, [inCart])
 
   return (
-    <div className={styles.wrapper}>
+    <>
       <div className={styles.sliderContainer}>
         <ProductsSlider imageUrls={imageUrls} />
       </div>
@@ -76,6 +101,6 @@ export default function ProductDetails({ _id, name, currentPrice, brand, itemNo,
           </Link>)}
         </div>
       </div>
-    </div>
+    </>
   );
 }

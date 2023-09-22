@@ -14,9 +14,7 @@ export function MainLayout() {
   return (
     <>
       <Header />
-      <div id='main'>
-        <Outlet />
-      </div>
+      <Outlet />
       <BackToTop />
       <Footer />
     </>
