@@ -38,7 +38,7 @@ const menuData = [
     type: 'profile',
     page: '/profile',
     text: 'Profile',
-    icon(width, height, color, strokeWidth) {return <Account width={width} height={height} color={color} strokeWidth={strokeWidth}/>},
+    icon(width, height, color, strokeWidth) {return <Account width={width} height={height} color={color} strokeWidth={strokeWidth} />},
     classHover: 'profileHover'
   },
   {
