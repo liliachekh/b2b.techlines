@@ -142,7 +142,7 @@ a {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: space-evenly;
     margin-top: 100px;
     list-style: none;
     padding: 0;
@@ -155,7 +155,7 @@ a {
     @media (min-width: 769px) {
       flex: 0 1 100%;
       flex-direction: row;
-      justify-content: space-between;
+      // justify-content: space-evenly;
       margin: 0;
     }
   }
@@ -203,6 +203,14 @@ a {
     &.accountHover:hover path {
       stroke-width: 2.2px;
     }
+
+    &.logoutHover path {
+      transition: all .4s ease 0s;
+    }
+
+    &.logoutHover:hover path {
+      stroke-width: 2.2px;
+    }
   }
 
   &__item a {
@@ -246,7 +254,8 @@ a {
   }
 
   &__item:last-child a,
-  &__item:nth-last-child(2) a{
+  &__item:nth-last-child(2) a,
+  &__item:nth-last-child(3) a{
     @media (min-width: 769px) {
       padding: 20px 0px;
     }
