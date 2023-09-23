@@ -28,7 +28,7 @@ export default function Header() {
     setIsOpen(!isOpen);
   }
 
-  const isDesktop = useMediaQuery({ minWidth: 993 });
+  const isDesktop = useMediaQuery({ minWidth: 769 });
 
   useEffect(() => {
     if (!isDesktop && isOpen) {
@@ -59,10 +59,10 @@ export default function Header() {
     <>
       <header className={style.header}>
         <div className={`${style.header__wrapper} ${scrolled && style.header__scrolled}`}>
-          <div className={style.header__container}>
+          <div className={`${style.header__container} ${scrolled && style.header__container_scrolled}`}>
             <div className={style.header__section}>
               <Link to="/" onClick={scrollToTop}>
-                <div className={style.logo}>
+                <div className={`${style.logo} ${scrolled && style.logo__scrolled}`}>
                   <img src="/images/tech.png" alt="techlines logo" />
                 </div>
               </Link>
@@ -73,7 +73,7 @@ export default function Header() {
                   (isLogin && type !== 'login') || (!isLogin && type !== 'profile') ? (
                     <MenuLink
                       key={type}
-                      classItem={style.nav__item}
+                      classItem={`${style.nav__item} ${scrolled && style.nav__item_scrolled}`}
                       classHover={style[classHover]}
                       page={page}
                       isActive={isActive(page)}
