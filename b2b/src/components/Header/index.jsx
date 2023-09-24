@@ -6,11 +6,14 @@ import { scrollToTop } from "../../utils";
 import menuData from "../MenuLink/menuData";
 import MenuLink from "../MenuLink";
 import MobilNav from "../MobiNav";
+import { useLogOutMutation } from '../../store/api/customers.api';
+
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
+  const [logOut] = useLogOutMutation();
 
   useEffect(() => {
     function handleScroll() {
@@ -47,13 +50,10 @@ export default function Header() {
     return false;
   };
 
-  // useEffect(() => {
-  //   if (isToken) {
-  //     setIsLogin(true);
-  //  } else {
-  //     setIsLogin(false);
-  //  }
-  // }, [isToken])
+  async function handleLogOut() {
+    await logOut();
+    window.location.reload()
+  }
 
   return (
     <>
@@ -63,7 +63,7 @@ export default function Header() {
             <div className={style.header__section}>
               <Link to="/" onClick={scrollToTop}>
                 <div className={`${style.logo} ${scrolled && style.logo__scrolled}`}>
-                  <img src="/images/tech.png" alt="techlines logo" />
+                  <img src="/images/Tech.png" alt="techlines logo" />
                 </div>
               </Link>
             </div>
@@ -83,6 +83,8 @@ export default function Header() {
                       isDesktop={isDesktop}
                       isLogin={isLogin}
                       icon={icon}
+                      onClick={handleLogOut}
+                      type={type}
                   />
                   ) : null
                   ))}

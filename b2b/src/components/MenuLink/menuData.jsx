@@ -1,6 +1,6 @@
 // import { CartAmount } from '../CartAmount';
 import { CartAmount } from "../CartAmount";
-import { Account, Basket, LogIn } from "../icons";
+import { Account, Basket, LogIn, Logout } from "../icons";
 
 const menuData = [
   {
@@ -40,6 +40,13 @@ const menuData = [
     text: 'Profile',
     icon(width, height, color, strokeWidth) {return <Account width={width} height={height} color={color} strokeWidth={strokeWidth} />},
     classHover: 'profileHover'
+  },
+  {
+    type: 'logout',
+    page: '/login',
+    text: 'Logout',
+    icon(width, height, color, strokeWidth) {return <Logout width={width} height={height} color={color} strokeWidth={strokeWidth} />},
+    classHover: 'logoutHover',
   },
   {
     type: 'basket',
