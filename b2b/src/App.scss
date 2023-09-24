@@ -1,4 +1,6 @@
 body {
+  padding: 0;
+  margin: 0;
   font-family: 'Roboto', Sans-Serif;
   font-size: 10px;
   overflow-x: auto;
@@ -39,5 +41,6 @@ input::-webkit-inner-spin-button {
 }
 
 input[type=number] {
+  appearance: textfield;
   -moz-appearance: textfield;
 }

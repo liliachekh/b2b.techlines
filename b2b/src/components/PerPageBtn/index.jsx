@@ -1,17 +1,17 @@
 import styles from './perPageBtn.module.scss';
 import { scrollToRef } from '../../utils';
-import useQueryString from '../../hooks';
+import { useQueryString } from '../../hooks';
 
 function PerPageBtn({ newPerPage, scrollTo }) {
-  const { sort, perPage, setSearchParams } = useQueryString();
+  const { params, setSearchParams } = useQueryString();
+  const perPage = params.perPage;
 
-  const activeBtn = (Number(perPage) === newPerPage || (!perPage && newPerPage === 10));
+  const activeBtn = (Number(perPage) === newPerPage );
 
   async function clickHandler() {
     if (!activeBtn) {
-      sort
-        ? setSearchParams({ sort, perPage: newPerPage, startPage: 1 })
-        : setSearchParams({ perPage: newPerPage, startPage: 1 })
+      const query = { ...params, perPage: newPerPage, startPage: 1 };
+      setSearchParams(query);
     }
     scrollToRef(scrollTo);
   }

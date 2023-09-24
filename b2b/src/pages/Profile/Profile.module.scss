@@ -1,0 +1,137 @@
+$color-light: #f7fbfa;
+$color-dark: #202025;
+$color-grey: #5d5d5d;
+$color-grey-light: #e3e3e3;
+
+.main {
+  padding: 4.5rem 0;
+
+  &__container {
+    padding: 0 15px;
+    margin: 0 auto;
+    min-width: 320px;
+    max-width: 1470px;
+    box-sizing: border-box;
+  }
+
+  &__title {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 60%;
+    gap: 4rem;
+    // padding: 1.5rem 1rem;
+    margin: 0 auto;
+    // border: 2px solid $color-dark;
+    // border-radius: 1rem;
+    // box-shadow: 1px 5px 15px rgba(0, 0, 0, .4);
+    box-sizing: border-box;
+
+    // @media (min-width: 768px) {
+    //   padding: 1.5rem;
+    // }
+
+    &_account {
+      padding: 1.5rem 1rem;
+      border-radius: 1rem;
+      background: $color-grey-light;
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.7);
+
+      @media (min-width: 768px) {
+        padding: 1.5rem;
+      }
+    }
+  }
+
+  &__aside {
+    width: 100%;
+
+    @media (min-width: 768px) {
+      flex: 0 0 250px;
+    }
+  }
+}
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  margin: 0 auto;
+  // border: 2px solid $color-dark;
+  // background-color: $color-light;
+  border-radius: 1rem;
+  box-shadow: 1px 5px 15px rgba(0, 0, 0, .4);
+  box-sizing: border-box;
+  overflow: hidden;
+
+  &__link {
+    position: relative;
+    padding: .5rem 0;
+    font-size: 1.3rem;
+    line-height: 1.3rem;
+    text-align: left;
+    cursor: pointer;
+
+    &::before {
+      position: absolute;
+      content: '';
+      right: calc(-100% - 3rem);
+      top: 0;
+      width: calc(100% + 2rem);
+      height: 100%;
+      background: linear-gradient(to right, #ffffffe9 0%, #BDBDBD 100%);
+      transition: right .3s;
+      z-index: -1;
+    }
+
+    &_logout {
+      transition: color .3s;
+
+      &:hover {
+        color: #f92e3e;
+      }
+    }
+
+    &:hover {
+      &::before {
+        right: -1rem;
+      }
+    }
+
+    &_active {
+      position: relative;
+      font-weight: 700;
+
+      &::after {
+        position: absolute;
+        content: '';
+        right: -1rem;
+        top: 0;
+        height: 100%;
+        border-radius: 43px 0 0 43px;
+        border-right: 4px solid $color-dark;
+        transition: right .3s;
+      }
+
+      &::before {
+        right: -1rem
+      }
+    }
+  }
+}

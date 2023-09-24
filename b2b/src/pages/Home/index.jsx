@@ -1,28 +1,29 @@
 // import style from "./Home.module.scss"
-import { useCallback, useEffect, useState } from "react";
-import Header from "../../components/Header";
 import ProductList from "../../components/ProductList";
-import { fetchData } from "../../utils";
-import useQueryString from "../../hooks";
-import { baseUrl } from "../../utils/vars";
+import { useGetAllProductsQuery } from "../../store/api/products.api";
+import Loader from "../../components/Loader";
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
+import { Navigate } from "react-router-dom";
+import Filter from "../../components/Filter";
+import { useQueryString } from '../../hooks';
+import { useLocation } from "react-router-dom";
 
 export function Home() {
-  const [products, setProducts] = useState([]);
-  const { perPage } = useQueryString();
+  const { loggedIn } = useContext(AuthContext);
+  const { search } = useLocation();
+  const { params } = useQueryString();
+  const perPage = params.perPage;
+  const page = params.startPage;
 
-  const getProducts = useCallback(async () => {
-    const data = await fetchData(`${baseUrl}products/filter${window.location.search ? window.location.search : `?perPage=${perPage}`}`);
-    setProducts(data);
-  }, [perPage])
+  const { data: products = [], isLoading } = useGetAllProductsQuery(search ? search : `?startPage=${page}&perPage=${perPage}`);
 
-  useEffect(() => {
-    getProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getProducts, window.location.search])
+  if (isLoading) return <Loader />
+  if (loggedIn === false) return <Navigate to="/login" />
 
   return (
     <>
-      <Header />
+      <Filter />
       <ProductList {...products} />
     </>
   )
