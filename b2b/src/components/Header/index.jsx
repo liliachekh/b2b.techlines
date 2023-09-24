@@ -63,7 +63,7 @@ export default function Header() {
             <div className={style.header__section}>
               <Link to="/" onClick={scrollToTop}>
                 <div className={`${style.logo} ${scrolled && style.logo__scrolled}`}>
-                  <img src="/images/tech.png" alt="techlines logo" />
+                  <img src="/images/Tech.png" alt="techlines logo" />
                 </div>
               </Link>
             </div>
