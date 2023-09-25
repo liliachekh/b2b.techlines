@@ -1,6 +1,6 @@
 // import { CartAmount } from '../CartAmount';
 import { CartAmount } from "../CartAmount";
-import { Account, Basket, LogIn, Logout } from "../icons";
+import { Account, Basket, LogIn } from "../icons";
 
 const menuData = [
   {
@@ -9,18 +9,18 @@ const menuData = [
     text: 'Shop',
     classHover: 'storeHover'
   },
-  // {
-  //   type: 'outlet',
-  //   page: '/outlet',
-  //   text: 'Outlet',
-  //   classHover: 'outletHover'
-  // },
-  // {
-  //   type: 'FreshStock',
-  //   page: '/freshstock',
-  //   text: 'Fresh Stock',
-  //   classHover: 'stockHover'
-  // },
+  {
+    type: 'outlet',
+    page: '/outlet',
+    text: 'Outlet',
+    classHover: 'outletHover'
+  },
+  {
+    type: 'FreshStock',
+    page: '/freshstock',
+    text: 'Fresh Stock',
+    classHover: 'stockHover'
+  },
   {
     type: 'Myorders',
     page: '/profile/orders',
@@ -38,15 +38,8 @@ const menuData = [
     type: 'profile',
     page: '/profile',
     text: 'Profile',
-    icon(width, height, color, strokeWidth) {return <Account width={width} height={height} color={color} strokeWidth={strokeWidth} />},
+    icon(width, height, color, strokeWidth) {return <Account width={width} height={height} color={color} strokeWidth={strokeWidth}/>},
     classHover: 'profileHover'
-  },
-  {
-    type: 'logout',
-    page: '/login',
-    text: 'Logout',
-    icon(width, height, color, strokeWidth) {return <Logout width={width} height={height} color={color} strokeWidth={strokeWidth} />},
-    classHover: 'logoutHover',
   },
   {
     type: 'basket',

@@ -10,4 +10,3 @@ export * from "./account.jsx";
 export * from "./basket.jsx";
 export * from "./login.jsx";
 export * from "./arrow-right.jsx";
-export * from "./logout.jsx"
