@@ -55,10 +55,10 @@ export const animateBackToTop = {
   exit: { opacity: 0, transition: { duration: 0.6 } }
 };
 
-export const animateLangSelect = {
+export const animateFromTop = {
   initial: { opacity: 0, y: -10 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-  exit: { opacity: 0, y: -10, transition: { duration: 0.3 } }
+  animate: { opacity: 1, y: 0, transition: { duration: 0.2 } },
+  exit: { opacity: 0, y: -10, transition: { duration: 0.2 } }
 };
 
 export const animateMobileMenu = {

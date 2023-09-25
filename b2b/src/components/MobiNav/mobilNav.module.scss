@@ -1,0 +1,130 @@
+.mobilNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+
+  @media (min-width: 481px) {
+    gap: 40px;
+  }
+
+  @media (min-width: 993px) {
+    display: none;
+  }
+
+  &__login,
+  &__account,
+  &__basket {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  &__search {
+    background-color: transparent;
+  }
+
+  &__search path,
+  &__login path,
+  &__account path,
+  &__basket path {
+    transition: all .4s ease 0s;
+  }
+
+  &__search:hover path {
+    stroke-width: 2.2px;
+  }
+
+  &__login:hover path {
+    stroke-width: 2.2px;
+  }
+
+  &__account:hover path {
+    stroke-width: 2.2px;
+  }
+
+  &__basket:hover path {
+    stroke-width: 2.2px;
+  }
+
+  &__basket {
+    position: relative;
+  }
+
+  &__burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    cursor: pointer;
+    gap: 6px;
+
+    &:hover::after,
+    &:hover::before {
+      transform: scale(1.1);
+    }
+
+    &::after,
+    &::before {
+      position: relative;
+      width: 100%;
+      height: 3px;
+      transition: all .4s ease 0s;
+      border-radius: 5px;
+      background-color: #202025;
+      content: '';
+    }
+
+    &::after {
+      width: 75%;
+      margin-right: auto;
+    }
+
+    &.active {
+      z-index: 26;
+
+      &::before,
+      &::after {
+        background-color: #f7fbfa;
+      }
+
+      &::before {
+        top: 25%;
+        transform: rotate(-45deg) translate(0, -50%);
+      }
+
+      &::after {
+        bottom: 20%;
+        width: 100%;
+        transform: rotate(45deg) translate(0, 50%);
+      }
+    }
+  }
+}
+
+.cartAmount {
+  display: none;
+
+  &.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 20px;
+    height: 20px;
+    padding-right: 4px;
+    padding-left: 5px;
+    transform: translate(56%, -30%);
+    border-radius: 50px;
+    background-color: #202025;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 400;
+  }
+}
