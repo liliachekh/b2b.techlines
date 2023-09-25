@@ -5,7 +5,7 @@ import AuthContext from "../../context/AuthContext";
 import { Link, Navigate } from "react-router-dom";
 import Loader from '../../components/Loader';
 import FormikForm from '../../components/FormikForm';
-import { useGetCustomerQuery } from '../../store/api/customers.api';
+import { useChangeAccountMutation, useGetCustomerQuery } from '../../store/api/customers.api';
 import { shippingFields } from './orderFields';
 import { validationSchemaOrderShipping } from '../../validation';
 
@@ -13,9 +13,30 @@ export function Order() {
   const { loggedIn } = useContext(AuthContext);
   const { data: customer = {}, isLoading: customerLoading } = useGetCustomerQuery();
   const { data: cart = {}, isLoading: cartLoading } = useGetCartQuery();
+  const [changeAccount] = useChangeAccountMutation();
+
+  const initialValues = {
+    countryName: '',
+    index: '',
+    region: '',
+    city: '',
+    street: '',
+    house: '',
+    apartment: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    telephone: '',
+    save: false,
+  };
 
   function onSubmitShipping(values) {
-    console.log(values);
+    if (values?.save) {
+      const addressesArr = customer?.addresses || [];
+      const addresses = [...addressesArr, values];
+      changeAccount({ addresses });
+    }
+    console.log('values: ', values);
   }
 
   if (cartLoading || customerLoading) return <Loader />
@@ -30,6 +51,7 @@ export function Order() {
         <h2 className={styles.order__title}>My order</h2>
         <div className={styles.order__wrapper}>
           <div className={`${styles.order__aside} ${styles.aside}`}>
+            <h3 className={styles.aside__title}>Order List:</h3>
             {cart?.products?.map(({ product, cartQuantity }) => (
               <div className={styles.aside__item} key={product.name}>
                 <p className={`${styles.aside__text} ${styles.aside__text_name}`}>
@@ -44,27 +66,17 @@ export function Order() {
                 <p className={styles.aside__text}>
                   Total Price: <span className={styles.aside__text_amount}>{Number(product.currentPrice) * Number(cartQuantity)}</span> €
                 </p>
-              </div>))}
+              </div>
+            ))}
             {/* <ProductCard {...product} cartItem={true} key={product?._id} /></>))} */}
             <Link to='/cart' className={styles.aside__btn}>Back to cart</Link>
           </div>
           <div className={styles.order__form}>
             <h3 className={styles.order__subtitle}>Shipping form</h3>
+            {/* {customer?.addresses &&
+              <AddressSelector onSelect={setSavedAddress} />} */}
             <FormikForm
-              initialValues={{
-                countryName: '',
-                index: '',
-                region: '',
-                city: '',
-                street: '',
-                house: '',
-                apartment: '',
-                firstName: '',
-                lastName: '',
-                email: '',
-                telephone: '',
-                save: false,
-              }}
+              initialValues={initialValues}
               validationSchema={validationSchemaOrderShipping}
               fields={shippingFields}
               callback={onSubmitShipping}

@@ -89,13 +89,13 @@ export const validationSchemaOrderShipping = Yup.object({
   firstName: Yup.string()
     .min(2, 'Must contain at least 2 letters')
     .max(25, 'Can be no more than 25 characters')
-    .matches(/^[a-zA-Zа-яА-Я]+( [a-zA-Zа-яА-Яіїє']+)*$/, 'Must be a-z A-Z а-я А-Я with optional space between words')
+    .matches(/^[a-zA-Zа-яА-ЯіїєІЇЄ]+( [a-zA-Zа-яА-ЯіїєІЇЄ']+)*$/, 'Must be a-z A-Z а-я А-Я with optional space between words')
     .trim()
     .required("Required Field!"),
   lastName: Yup.string()
     .min(2, 'Must contain at least 2 letters')
     .max(25, 'Can be no more than 25 characters')
-    .matches(/^[a-zA-Zа-яА-Я]+( [a-zA-Zа-яА-Яіїє']+)*$/, 'Must be a-z A-Z а-я А-Я with optional space between words')
+    .matches(/^[a-zA-Zа-яА-ЯіїєІЇЄ]+( [a-zA-Zа-яА-ЯіїєІЇЄ']+)*$/, 'Must be a-z A-Z а-я А-Я with optional space between words')
     .trim()
     .required("Required Field!"),
   email: Yup.string()

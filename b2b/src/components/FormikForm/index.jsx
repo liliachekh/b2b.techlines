@@ -18,40 +18,41 @@ export default function FormikForm({
         callback(values, resetForm);
         setSubmitting(false);
       }}>
-      <Form className={style.form}>
-        {fields?.map((field) => {
-          if (field.tagType === "masked") {
-            return (
-              <InputMasked
-                key={field.name}
-                {...field}
-                labelClass={style.form__label}
-                inputClass={style.form__input}
-                errorClass={style.form__error}
-              />
-            );
-          }
-          if (field.tagType === "regular") {
-            return (
-              <Input
-                key={field.name}
-                {...field}
-                labelClass={style.form__label}
-                inputClass={style.form__input}
-                errorClass={style.form__error}
-              />
-            );
-          }
-          if (field.tagType === "custom") return field.content()
-          else return <></>
-        })}
-        <button
-          text="Checkout"
-          className={style.form__submit}
-          type="submit">
-          {submitBtn}
-        </button>
-      </Form>
+      {({ setFieldValue }) => (
+        <Form className={style.form}>
+          {fields?.map((field) => {
+            if (field.tagType === "masked") {
+              return (
+                <InputMasked
+                  key={field.name}
+                  {...field}
+                  labelClass={style.form__label}
+                  inputClass={style.form__input}
+                  errorClass={style.form__error}
+                />
+              );
+            }
+            if (field.tagType === "regular") {
+              return (
+                <Input
+                  key={field.name}
+                  {...field}
+                  labelClass={style.form__label}
+                  inputClass={style.form__input}
+                  errorClass={style.form__error}
+                />
+              );
+            }
+            if (field.tagType === "custom") return field.content(setFieldValue)
+            else return <></>
+          })}
+          <button
+            text="Checkout"
+            className={style.form__submit}
+            type="submit">
+            {submitBtn}
+          </button>
+        </Form>)}
     </Formik>
   );
 }
