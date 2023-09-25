@@ -111,5 +111,10 @@ $color-grey-light: #e3e3e3;
     font-size: .8rem;
     text-align: left;
     cursor: pointer;
+    transition: color .3s;
+
+    &:hover {
+      color: #f92e3e !important;
+    }
   }
 }
