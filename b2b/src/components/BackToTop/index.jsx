@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { BackToTopIcon } from "../icons";
 import style from "./backToTop.module.scss";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
-import { animateBackToTop } from "../animation";
+import { animateBackToTop } from "../../animation";
 import { scrollToTop } from "../../utils";
 
 export default function BackToTop() {

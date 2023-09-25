@@ -1,44 +1,31 @@
-import { navData } from "../Header/navData"
-import HeaderLink from "../HeaderLink"
-import style from "./mobiNav.module.scss"
-import PropTypes from 'prop-types';
-import { AnimatePresence, motion } from "framer-motion";
-import { animateMobileMenu } from "../../animation";
+import { NavLink } from 'react-router-dom';
+import { Basket, LogIn, Account } from '../icons';
+// import { CartAmount } from '../CartAmount';
+import style from './mobilNav.module.scss';
+import { CartAmount } from '../CartAmount';
 
-export default function MobiNav({ isOpen, toggleBurgerMenu }) {
+function MobilNav(props) {
+  const { isLogin, isActive, isOpen, toggleBurgerMenu } = props;
 
   return (
-    <div className={style.mobilNav}>
-      <button
-        type="button"
-        className={`${style.burgerBtn} ${isOpen ? style.active : ''}`}
-        onClick={toggleBurgerMenu}>
-        <span className={`${style.burgerBtn__lines} ${isOpen ? style.active : ''}`}></span>
-      </button>
-      <AnimatePresence>
-        {isOpen &&
-          <motion.div
-            className={`${style.wrapper}`}
-            {...animateMobileMenu}>
-            <ul className={style.list}>
-              {navData.map(({ refName, text }) => (
-                <HeaderLink
-                  className={style.listItem}
-                  key={refName}
-                  // refTarget={refList[refName]}
-                  toggleBurgerMenu={toggleBurgerMenu}
-                  text={text} />
-              ))}
-            </ul>
-          </motion.div>}
-      </AnimatePresence>
-    </div>
-  )
+    <>
+      <div className={style.mobilNav}>
+         {!isLogin ? (
+         <NavLink to='/login' className={style.mobilNav__login}>
+           <LogIn width={30} height={30} color={'#202025'} strokeWidth={isActive('/login') ? '2.2' : '1.5'} />
+         </NavLink>
+         ) : (
+         <NavLink to='/profile' className={style.mobilNav__account} >
+           <Account width={30} height={30} color={'#202025'} strokeWidth={isActive('/profile') ? '2.2' : '1.5'} />
+         </NavLink>
+         )}
+         <NavLink to='/cart' className={style.mobilNav__basket}>
+           <Basket width={30} height={30} color={'#202025'} strokeWidth={isActive('/cart') ? '2.2' : '1.5'} /> <CartAmount /> 
+         </NavLink>
+        <button type="button" className={`${style.mobilNav__burger} ${isOpen ? style.active : ''}`} onClick={toggleBurgerMenu}> </button>
+      </div>
+    </>
+  );
 }
 
-MobiNav.propTypes = {
-  isOpen: PropTypes.bool,
-  toggleBurgerMenu: PropTypes.func,
-  inViewList: PropTypes.object,
-  refList: PropTypes.object,
-}
+export default MobilNav;
