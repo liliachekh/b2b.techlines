@@ -16,7 +16,8 @@ export function useAddToCart() {
 
       if (newCart.every(({ product }) => product !== id)) newCart.push({ product: id, cartQuantity: amount });
 
-      await setCart({ products: newCart }).unwrap();
+      const res = await setCart({ products: newCart }).unwrap();
+      console.log(res)
     } else {
       await setCart({ products: { product: id, cartQuantity: amount } }).unwrap();
     }

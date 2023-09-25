@@ -124,7 +124,7 @@ $color-grey: #5d5d5d;
     }
 
     &>span {
-      mix-blend-mode: multiply;
+      mix-blend-mode: darken;
       // padding: 5px 0;
       overflow: hidden;
 
