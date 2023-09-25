@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { useMediaQuery } from 'react-responsive'
-import PropTypes from 'prop-types';
 import style from "./header.module.scss"
 import { scrollToTop } from "../../utils";
 import menuData from "../MenuLink/menuData";
@@ -11,7 +10,6 @@ import { useLogOutMutation } from '../../store/api/customers.api';
 
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
@@ -19,16 +17,15 @@ export default function Header() {
 
   useEffect(() => {
     function handleScroll() {
-      const currentScrollPos = window.scrollY;
-      setScrolled(prevScrollPos < currentScrollPos)
-      setPrevScrollPos(currentScrollPos);
+      if (window.scrollY > 0) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
     }
 
-    !isOpen && window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [prevScrollPos, scrolled, isOpen]);
+    window.addEventListener('scroll', handleScroll);
+  }, []);
 
   function toggleBurgerMenu() {
     setIsOpen(!isOpen);
@@ -93,20 +90,17 @@ export default function Header() {
                   ))}
               </ul>
             </nav>
-            <Link to="/b2b/login">
-              <span className={style.nav_login}>Login</span>
-            </Link>
+            <>
+              <MobilNav
+                isLogin={isLogin}
+                isActive={isActive}
+                isOpen={isOpen}
+                toggleBurgerMenu={() => toggleBurgerMenu()}
+              />
+            </>
           </div>
-          <MobiNav
-            isOpen={isOpen}
-            toggleBurgerMenu={toggleBurgerMenu} />
         </div>
-      </div>
-    </header>
-  )
-}
-
-Header.propTypes = {
-  refList: PropTypes.object,
-  inViewList: PropTypes.object,
-}
+      </header>
+    </>
+  );
+};
