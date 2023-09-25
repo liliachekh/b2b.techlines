@@ -2,10 +2,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: transform 0.3s ease;
 }
 
 .logo>img {
   width: 70px;
+}
+
+.logo__scrolled {
+  transform: scale(0.8);
 }
 
 a {
@@ -26,9 +31,11 @@ a {
   z-index: 20;
 
   &__wrapper {
-    padding: 10px 0;
+    // padding: 10px 0;
     transition: all .4s ease-out;
-    background-color: rgb(247, 251, 250);
+    // background-color: rgb(247, 251, 250);
+    background-color: #e5e5e5;
+    box-shadow: 0 0 5px #5d5d5d;
   }
 
   &__scrolled {
@@ -44,6 +51,12 @@ a {
     margin: 0 auto;
     padding: 0 15px;
     box-sizing: border-box;
+    height: 76px;
+    transition: height 0.3s ease;
+
+    &_scrolled {
+      height: 60px;
+    }
   }
 
   &__section {
@@ -105,14 +118,19 @@ a {
     flex-direction: row;
   }
 
-  @media (min-width: 993px) {
-    flex: 0 1 60%;
+  @media (min-width: 769px) {
+    // flex: 0 1 60%;
+    flex: 0 1 40%;
     position: static;
     height: auto;
     transform: translateY(0);
     background-color: transparent;
     opacity: 1;
     overflow: inherit;
+  }
+
+  @media (min-width: 993px) {
+    flex: 0 1 30%;
   }
 
   &.active {
@@ -124,20 +142,20 @@ a {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: space-evenly;
     margin-top: 100px;
     list-style: none;
     padding: 0;
 
+    // @media (min-width: 769px) {
+    //   flex: 0 1 100%;
+    //   justify-content: flex-start;
+    // }
+
     @media (min-width: 769px) {
       flex: 0 1 100%;
-      justify-content: flex-start;
-    }
-
-    @media (min-width: 993px) {
-      flex: 0 1 100%;
       flex-direction: row;
-      justify-content: space-between;
+      // justify-content: space-evenly;
       margin: 0;
     }
   }
@@ -153,7 +171,8 @@ a {
     line-height: 133%;
     box-sizing: border-box;
 
-    @media (min-width: 993px) {
+    @media (min-width: 769px) {
+      position: relative;
       align-self: center;
       width: auto;
       padding: 0;
@@ -184,6 +203,14 @@ a {
     &.accountHover:hover path {
       stroke-width: 2.2px;
     }
+
+    &.logoutHover path {
+      transition: all .4s ease 0s;
+    }
+
+    &.logoutHover:hover path {
+      stroke-width: 2.2px;
+    }
   }
 
   &__item a {
@@ -193,23 +220,21 @@ a {
     width: 100%;
     color: #e1e2e2;
 
-    @media (min-width: 993px) {
+    @media (min-width: 769px) {
       display: block;
       color: #202025;
     }
   }
 
-  &__item:not(:last-child):not(:nth-last-child(2)) a {
-    @media (min-width: 993px) {
+  &__item a {
+    @media (min-width: 769px) {
       position: relative;
-      padding: 5px 8px;
+      padding: 31px 8px;
       transition: all .4s ease 0s;
-      border: 2px solid transparent;
-      border-radius: 6px;
-      overflow: hidden;
+      border-bottom: 3px solid transparent;
 
       &.activeLink {
-        @media (min-width: 993px) {
+        @media (min-width: 769px) {
           transition: all 1s ease 0s;
           border-color: #202025;
         }
@@ -249,7 +274,7 @@ a {
 }
 
 .nav__item_scrolled:last-child a,
-.nav__item_scrolled:nth-last-child(2) a ,
+.nav__item_scrolled:nth-last-child(2) a,
 .nav__item_scrolled:nth-last-child(3) a {
   @media (min-width: 769px) {
     padding: 12px 8px;
