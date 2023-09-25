@@ -249,7 +249,7 @@ a {
 }
 
 .nav__item_scrolled:last-child a,
-.nav__item_scrolled:nth-last-child(2) a,
+.nav__item_scrolled:nth-last-child(2) a ,
 .nav__item_scrolled:nth-last-child(3) a {
   @media (min-width: 769px) {
     padding: 12px 8px;
