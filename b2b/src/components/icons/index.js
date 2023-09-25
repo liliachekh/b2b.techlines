@@ -6,4 +6,7 @@ export * from "./passwordReset.jsx";
 export * from "./backToTopIcon.jsx";
 export * from "./filterIcon.jsx";
 export * from "./arrowDropdown.jsx";
-
+export * from "./account.jsx";
+export * from "./basket.jsx";
+export * from "./login.jsx";
+export * from "./arrow-right.jsx";
