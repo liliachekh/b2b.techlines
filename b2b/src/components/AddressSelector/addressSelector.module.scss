@@ -91,10 +91,11 @@ $color-grey-light: #e3e3e3;
     width: 100%;
     max-height: 115px;
     border-radius: 10px;
-    background: $color-dark;
+    background: $color-grey-light;
     color: $color-grey-light;
-    overflow: auto;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.4);
     box-sizing: border-box;
+    overflow: auto;
     z-index: 2;
 
     @media (min-width: 768px) {
@@ -107,14 +108,19 @@ $color-grey-light: #e3e3e3;
 
   &__item {
     position: relative;
-    padding: 5px 0 5px 5px;
+    padding: .44rem;
+    // background: $color-grey !important;
+    // border: none !important;
+    border-radius: 4px;
     font-size: .8rem;
     text-align: left;
+    line-height: 1.5rem;
     cursor: pointer;
-    transition: color .3s;
+    transition: color .3s, background-color .3s;
 
     &:hover {
-      color: #f92e3e !important;
+      background: $color-grey !important;
+      color: $color-light !important;
     }
   }
 }

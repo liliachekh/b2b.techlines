@@ -30,7 +30,7 @@ export function Order() {
     save: false,
   };
 
-  function onSubmitShipping(values) {
+  async function onSubmitShipping(values) {
     if (values?.save) {
       const addressesArr = customer?.addresses || [];
       const addresses = [...addressesArr, values];

@@ -9,9 +9,9 @@ function AddressSelector({ onSelect }) {
   const [IsOpen, setIsOpen] = useState(false);
   const { data: customer = {} } = useGetCustomerQuery();
 
-  const chooseAddress = (i) => {
-    Object.entries(customer?.addresses[i]).forEach(([key,value])=>{
-      onSelect(key, value)
+  async function chooseAddress(i) {
+    Object.entries(customer?.addresses[i]).forEach(([key, value]) => {
+      if (key !== 'save') onSelect(key, value)
     })
     setIsOpen(false)
   }
@@ -36,7 +36,7 @@ function AddressSelector({ onSelect }) {
                 type='button'
                 className={styles.selector__item}
                 onClick={() => chooseAddress(index)}>
-                {`${address?.city} ${address?.street} ${address?.house}${', ' + address?.apartment}`}
+                {`${address?.city} ${address?.street} ${address?.house}${', ' + address?.apartment}${', ' + address?.firstName} ${address?.lastName}${', ' + address?.telephone}`}
               </button>
             ))}
           </motion.div>
