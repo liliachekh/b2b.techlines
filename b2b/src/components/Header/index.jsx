@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useMediaQuery } from 'react-responsive'
 import style from "./header.module.scss"
 import { scrollToTop } from "../../utils";
@@ -10,9 +10,7 @@ import MobilNav from "../MobiNav";
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [isLogin, setIsLogin] = useState(true);
   const isDesktop = useMediaQuery({ minWidth: 768 });
-  const location = useLocation();
 
   useEffect(() => {
     function handleScroll() {
@@ -38,13 +36,6 @@ export default function Header() {
     }
   }, [isDesktop, isOpen]);
 
-  const isActive = (path) => {
-    if (isLogin) {
-      return location.pathname === path;
-    }
-    return false;
-  };
-
   return (
     <header className={style.header}>
       <div className={`${style.header__wrapper} ${scrolled && style.header__scrolled}`}>
@@ -52,30 +43,25 @@ export default function Header() {
           <div className={style.header__section}>
             <Link to="/" onClick={scrollToTop}>
               <div className={`${style.logo} ${scrolled && style.logo__scrolled}`}>
-                <img src="/images/Tech.png" alt="techlines logo" />
+                <img src="/images/Tech.png" alt="techlines" />
               </div>
             </Link>
           </div>
           <nav className={`${style.nav} ${isOpen && style.active}`}>
             <ul className={style.nav__list}>
-              {menuData.map(({ type, page, text, icon }) => (
+              {menuData.map((data) => (
                 <MenuLink
-                  key={type}
-                  classItem={`${style.nav__item}`}
-                  page={page}
-                  isActive={isActive(page)}
+                  key={data.page}
+                  {...data}
+                  classItem={style.nav__item}
                   classActive={style.activeLink}
-                  closeBurgerMenu={() => toggleBurgerMenu()}
-                  text={text}
-                  isDesktop={isDesktop}
-                  icon={icon} />))}
+                  closeBurgerMenu={toggleBurgerMenu}
+                  isDesktop={isDesktop} />))}
             </ul>
           </nav>
           <MobilNav
-            isLogin={isLogin}
-            isActive={isActive}
             isOpen={isOpen}
-            toggleBurgerMenu={() => toggleBurgerMenu()} />
+            toggleBurgerMenu={toggleBurgerMenu} />
         </div>
       </div>
     </header>

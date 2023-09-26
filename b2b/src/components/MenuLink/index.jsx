@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { ArrowRight } from '../icons';
 import { scrollToTop } from '../../utils';
 
-function MenuLink({ classItem, page, isActive, classActive, closeBurgerMenu, text, isDesktop, icon }) {
+function MenuLink({ classItem, page, classActive, closeBurgerMenu, text, isDesktop, icon }) {
+  const location = useLocation();
+  const isActive = location.pathname === page
+
   const handleIconClick = () => {
     scrollToTop();
     if (!isDesktop) {
@@ -19,7 +22,7 @@ function MenuLink({ classItem, page, isActive, classActive, closeBurgerMenu, tex
           ? (isActive ? (icon(35, 35, '#202025', '2.2')) : (icon(35, 35, '#202025', '1.5')))
           : <>
             <span>{text}</span>
-            {!isDesktop ? <ArrowRight /> : null}
+            {!isDesktop && <ArrowRight />}
           </>
         }
       </NavLink>
