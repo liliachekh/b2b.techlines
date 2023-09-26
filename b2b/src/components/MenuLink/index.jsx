@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { ArrowRight } from '../icons';
 
 function MenuLink(props) {
-	const { classItem, classHover, page, isActive, classActive, closeBurgerMenu, text, isDesktop, icon, onClick, type } = props;
+	const { classItem, page, isActive, classActive, closeBurgerMenu, text, isDesktop, icon, onClick, type } = props;
 
 	const handleIconClick = () => {
 		if (type === 'logout' && onClick){
@@ -16,7 +16,7 @@ function MenuLink(props) {
   };
 
 	return (
-		<li className={`${classItem} ${classHover}`}>
+		<li className={`${classItem}`}>
 			<NavLink to={page} className={isActive ? classActive : ''} onClick={handleIconClick}
 			>
 				{icon && isDesktop ?

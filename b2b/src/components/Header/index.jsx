@@ -31,7 +31,7 @@ export default function Header() {
     setIsOpen(!isOpen);
   }
 
-  const isDesktop = useMediaQuery({ minWidth: 769 });
+  const isDesktop = useMediaQuery({ minWidth: 768 });
 
   useEffect(() => {
     if (!isDesktop && isOpen) {
@@ -69,12 +69,11 @@ export default function Header() {
             </div>
             <nav className={`${style.nav} ${isOpen && style.active}`}>
               <ul className={style.nav__list}>
-                {menuData.map(({type, page, text, icon, classHover}) => (
+                {menuData.map(({type, page, text, icon}) => (
                   (isLogin && type !== 'login') || (!isLogin && type !== 'profile') ? (
                     <MenuLink
                       key={type}
-                      classItem={`${style.nav__item} ${scrolled && style.nav__item_scrolled}`}
-                      classHover={style[classHover]}
+                      classItem={`${style.nav__item}`}
                       page={page}
                       isActive={isActive(page)}
                       classActive={style.activeLink}

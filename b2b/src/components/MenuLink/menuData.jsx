@@ -7,7 +7,6 @@ const menuData = [
     type: 'Shop',
     page: '/',
     text: 'Shop',
-    classHover: 'storeHover'
   },
   // {
   //   type: 'outlet',
@@ -25,35 +24,32 @@ const menuData = [
     type: 'Myorders',
     page: '/profile/orders',
     text: 'My orders',
-    classHover: 'myorders'
   },
-  {
-    type: 'login',
-    page: '/login',
-    text: 'Log In',
-    icon(width, height, color, strokeWidth) {return <LogIn width={width} height={height} color={color} strokeWidth={strokeWidth}/>},
-    classHover: 'loginHover'
-   },
+  // {
+  //   type: 'login',
+  //   page: '/login',
+  //   text: 'Log In',
+  //   icon(width, height, color, strokeWidth) {return <LogIn width={width} height={height} color={color} strokeWidth={strokeWidth}/>},
+  //   classHover: 'loginHover'
+  //  },
   {
     type: 'profile',
     page: '/profile',
     text: 'Profile',
     icon(width, height, color, strokeWidth) {return <Account width={width} height={height} color={color} strokeWidth={strokeWidth} />},
-    classHover: 'profileHover'
   },
-  {
-    type: 'logout',
-    page: '/login',
-    text: 'Logout',
-    icon(width, height, color, strokeWidth) {return <Logout width={width} height={height} color={color} strokeWidth={strokeWidth} />},
-    classHover: 'logoutHover',
-  },
+  // {
+  //   type: 'logout',
+  //   page: '/login',
+  //   text: 'Logout',
+  //   icon(width, height, color, strokeWidth) {return <Logout width={width} height={height} color={color} strokeWidth={strokeWidth} />},
+  //   classHover: 'logoutHover',
+  // },
   {
     type: 'basket',
     page: '/cart',
     text: 'Shopping cart',
     icon(width, height, color, strokeWidth) {return <><Basket width={width} height={height} color={color} strokeWidth={strokeWidth} /> <CartAmount /></>},
-    classHover: 'basketHover'
   },
 ];
 
