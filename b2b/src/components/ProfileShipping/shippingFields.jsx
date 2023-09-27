@@ -1,12 +1,4 @@
-import AddressSelector from "../../components/AddressSelector";
-
-export const shippingOrderFields = [
-  {
-    tagType: 'custom',
-    content(fn) {
-      return <AddressSelector onSelect={fn} key="savedAdresses" />
-    }
-  },
+export const shippingFields = [
   {
     tagType: 'regular',
     label: "Country",
@@ -97,11 +89,4 @@ export const shippingOrderFields = [
     format: "+############",
     mask: "#",
   },
-  {
-    tagType: 'regular',
-    label: "Remember",
-    id: "save",
-    name: "save",
-    type: "checkbox",
-  }
 ]

@@ -8,15 +8,16 @@ import { ArrowDropdown } from "../icons";
 function AddressSelector({ onSelect }) {
   const [IsOpen, setIsOpen] = useState(false);
   const { data: customer = {} } = useGetCustomerQuery();
+  const deliveryAddresses = customer?.deliveryAddresses
 
-  async function chooseAddress(i) {
-    Object.entries(customer?.addresses[i]).forEach(([key, value]) => {
+  async function chooseAddress(address) {
+    Object.entries(address).forEach(([key, value]) => {
       if (key !== 'save') onSelect(key, value)
     })
     setIsOpen(false)
   }
 
-  if (!customer?.addresses) return null
+  if (!deliveryAddresses) return null
 
   return (
     <div className={styles.selector}>
@@ -30,12 +31,12 @@ function AddressSelector({ onSelect }) {
       <AnimatePresence>
         {IsOpen && (
           <motion.div className={styles.selector__list} {...animateFromTop}>
-            {customer?.addresses.map((address, index) => (
+            {deliveryAddresses.map((address, index) => (
               <button
-                key={address?.index + address?.apartment}
+                key={Math.random() * 1000}
                 type='button'
                 className={styles.selector__item}
-                onClick={() => chooseAddress(index)}>
+                onClick={() => chooseAddress(address)}>
                 {`${address?.city} ${address?.street} ${address?.house}${', ' + address?.apartment}${', ' + address?.firstName} ${address?.lastName}${', ' + address?.telephone}`}
               </button>
             ))}

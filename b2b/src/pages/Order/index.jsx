@@ -6,8 +6,9 @@ import { Link, Navigate } from "react-router-dom";
 import Loader from '../../components/Loader';
 import FormikForm from '../../components/FormikForm';
 import { useChangeAccountMutation, useGetCustomerQuery } from '../../store/api/customers.api';
-import { shippingFields } from './orderFields';
+import { shippingOrderFields } from './orderFields';
 import { validationSchemaOrderShipping } from '../../validation';
+import { initialValuesShippingForm } from '../../utils/vars';
 
 export function Order() {
   const { loggedIn } = useContext(AuthContext);
@@ -15,26 +16,11 @@ export function Order() {
   const { data: cart = {}, isLoading: cartLoading } = useGetCartQuery();
   const [changeAccount] = useChangeAccountMutation();
 
-  const initialValues = {
-    countryName: '',
-    index: '',
-    region: '',
-    city: '',
-    street: '',
-    house: '',
-    apartment: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    telephone: '',
-    save: false,
-  };
-
   async function onSubmitShipping(values) {
     if (values?.save) {
       const addressesArr = customer?.addresses || [];
       const addresses = [...addressesArr, values];
-      changeAccount({ addresses });
+      await changeAccount({ addresses });
     }
     console.log('values: ', values);
   }
@@ -76,9 +62,9 @@ export function Order() {
             {/* {customer?.addresses &&
               <AddressSelector onSelect={setSavedAddress} />} */}
             <FormikForm
-              initialValues={initialValues}
+              initialValues={initialValuesShippingForm}
               validationSchema={validationSchemaOrderShipping}
-              fields={shippingFields}
+              fields={shippingOrderFields}
               callback={onSubmitShipping}
               submitBtn="Submit" />
           </div>
