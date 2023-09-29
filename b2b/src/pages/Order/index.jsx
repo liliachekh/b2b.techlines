@@ -37,8 +37,8 @@ export function Order() {
         const oldDeliveryAddresses = customer?.deliveryAddresses || [];
 
         if (oldDeliveryAddresses?.every((address) => !areObjectsEqual(address, values))) {
-          const newDeliveryAddresses = [...oldDeliveryAddresses, values];
-          await changeAccount({ newDeliveryAddresses }).unwrap()
+          const deliveryAddresses = [...oldDeliveryAddresses, values];
+          await changeAccount({ deliveryAddresses }).unwrap()
         }
       }
 
@@ -53,9 +53,9 @@ export function Order() {
         deliveryAddress: values,
         paymentInfo,
         status: 'payment required',
-        letterSubject: "Thank you for order! You are welcome!",
-        letterHtml:
-          "<h1>Your order is placed. OrderNo is 023689452.</h1><p>{Other details about order in your HTML}</p>"
+        // letterSubject: "Thank you for order! You are welcome!",
+        // letterHtml:
+        //   "<h1>Your order is placed. OrderNo is 023689452.</h1><p>{Other details about order in your HTML}</p>"
       }).unwrap();
 
 
