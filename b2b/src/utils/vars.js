@@ -14,4 +14,6 @@ export const initialValuesShippingForm = {
   email: '',
   telephone: '',
   save: false,
+  paymentInfo: 'IBAN'
+  // paymentInfo: null
 };

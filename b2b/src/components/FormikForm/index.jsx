@@ -24,7 +24,7 @@ export default function FormikForm({
             if (field.tagType === "masked") {
               return (
                 <InputMasked
-                  key={field.name}
+                  key={field.id}
                   {...field}
                   labelClass={style.form__label}
                   inputClass={style.form__input}
@@ -35,7 +35,7 @@ export default function FormikForm({
             if (field.tagType === "regular") {
               return (
                 <Input
-                  key={field.name}
+                  key={field.id}
                   {...field}
                   labelClass={style.form__label}
                   inputClass={style.form__input}

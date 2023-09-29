@@ -35,17 +35,13 @@ $color-grey-light: #e3e3e3;
     flex-direction: column;
     flex: 1 0 60%;
     gap: 4rem;
-    // padding: 1.5rem 1rem;
     margin: 0 auto;
     max-width: 100%;
-    // border: 2px solid $color-dark;
-    // border-radius: 1rem;
-    // box-shadow: 1px 5px 15px rgba(0, 0, 0, .4);
     box-sizing: border-box;
 
-    // @media (min-width: 768px) {
-    //   padding: 1.5rem;
-    // }
+    &:not(.profile__content_account) {
+      flex-direction: column-reverse;
+    }
 
     &_account {
       padding: 1.5rem 1rem;
@@ -74,8 +70,6 @@ $color-grey-light: #e3e3e3;
   gap: 1rem;
   padding: 1rem;
   margin: 0 auto;
-  // border: 2px solid $color-dark;
-  // background-color: $color-light;
   border-radius: 1rem;
   box-shadow: 1px 5px 15px rgba(0, 0, 0, .4);
   box-sizing: border-box;

@@ -1,4 +1,5 @@
 import AddressSelector from "../../components/AddressSelector";
+// import PaymantSelector from "../../components/PaymantSelector";
 
 export const shippingOrderFields = [
   {
@@ -103,5 +104,33 @@ export const shippingOrderFields = [
     id: "save",
     name: "save",
     type: "checkbox",
-  }
+  },
+  {
+    tagType: 'custom',
+    id: 'divider',
+    content() {
+      return (
+        <div key="divider">
+          <div style={{ height: '2px', background: '#5d5d5d', boxShadow: '1px 5px 10px rgba(0, 0, 0, 0.4)', marginBottom: '2rem' }} />
+          <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>Payment:</h3>
+        </div>
+      )
+    }
+  },
+  {
+    tagType: 'regular',
+    label: "IBAN",
+    id: "IBAN",
+    name: "paymentInfo",
+    type: "radio",
+    value: "IBAN",
+  },
+  {
+    tagType: 'regular',
+    label: "CARD",
+    id: "CARD",
+    name: "paymentInfo",
+    type: "radio",
+    value: "CARD",
+  },
 ]

@@ -1,7 +1,7 @@
 import styles from './profileShipping.module.scss';
 import { useChangeAccountMutation, useGetCustomerQuery } from '../../store/api/customers.api';
 import FormikForm from '../FormikForm';
-import { validationSchemaOrderShipping } from '../../validation';
+import { validationSchemaProfileShipping } from '../../validation';
 import { areObjectsEqual } from '../../utils';
 import Loader from "../Loader";
 import { useEffect, useState } from 'react';
@@ -107,7 +107,7 @@ export function ProfileShipping() {
           </button>
           <FormikForm
             initialValues={initialValues}
-            validationSchema={validationSchemaOrderShipping}
+            validationSchema={validationSchemaProfileShipping}
             fields={shippingFields}
             callback={onSubmitShippingChange}
             submitBtn="Update" />

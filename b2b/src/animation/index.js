@@ -66,3 +66,9 @@ export const animateMobileMenu = {
   animate: { right: 0, transition: { duration: 0.3 } },
   exit: { right: '-60%', transition: { duration: 0.3} }
 };
+
+export const animateModal = {
+  initial: { scale: 0 },
+  animate: { scale: 1, transition: { duration: 0.3 } },
+  exit: { scale: 0, transition: { duration: 0.3} }
+};
