@@ -63,6 +63,10 @@ $color-grey-transparent: hsla(0, 0%, 36%, 0.441);
         }
       }
 
+      div:has(>input) {
+        margin-bottom: 2rem;
+      }
+
       @media (min-width: 1024px) {
         display: grid;
         gap: 1rem;
@@ -76,13 +80,22 @@ $color-grey-transparent: hsla(0, 0%, 36%, 0.441);
           margin-bottom: 0;
         }
 
-        input {
+        input,
+        label+div:has(>input) {
           grid-row-start: 2;
           grid-row-end: 3;
           font-size: .8rem;
         }
 
-        div {
+        label+div>input {
+          margin-bottom: 0;
+        }
+
+        div:has(>input) {
+          margin-bottom: 1rem;
+        }
+
+        div:not(:has(>div)) {
           top: 90px;
         }
 

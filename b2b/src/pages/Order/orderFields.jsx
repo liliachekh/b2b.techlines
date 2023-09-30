@@ -1,5 +1,4 @@
 import AddressSelector from "../../components/AddressSelector";
-// import PaymantSelector from "../../components/PaymantSelector";
 
 export const shippingOrderFields = [
   {
@@ -93,10 +92,8 @@ export const shippingOrderFields = [
     label: "Phone number",
     id: "telephone",
     name: "telephone",
-    type: "text",
-    placeholder: "+############",
-    format: "+############",
-    mask: "#",
+    type: 'tel',
+
   },
   {
     tagType: 'regular',

@@ -19,11 +19,15 @@ export function Order() {
   const { data: customer = {}, isLoading: customerLoading } = useGetCustomerQuery();
   const { data: cart = {}, isLoading: cartLoading } = useGetCartQuery();
   const [changeAccount] = useChangeAccountMutation();
-  const [setOrder, { isLoading: orderLoading}] = useSetOrderMutation();
+  const [setOrder, { isLoading: orderLoading }] = useSetOrderMutation();
   const [deleteCart, { isLoading: cartDeleteing }] = useDeleteCartMutation();
 
   const navigate = useNavigate();
   const [invoice, setInvoice] = useState(null);
+
+  const totalPrice = cart?.products
+    ?.map(({ product: { currentPrice }, cartQuantity }) => currentPrice * cartQuantity)
+    ?.reduce((prev, next) => prev + next)
 
   async function closeInvoice() {
     await deleteCart().unwrap();
@@ -53,9 +57,7 @@ export function Order() {
         deliveryAddress: values,
         paymentInfo,
         status: 'payment required',
-        // letterSubject: "Thank you for order! You are welcome!",
-        // letterHtml:
-        //   "<h1>Your order is placed. OrderNo is 023689452.</h1><p>{Other details about order in your HTML}</p>"
+        deliveryPrice: totalPrice > 2500 ? 0 : 35,
       }).unwrap();
 
 
@@ -116,6 +118,15 @@ export function Order() {
                   </p>
                 </div>
               ))}
+              {totalPrice <= 2500 &&
+                <div className={styles.aside__item}>
+                  <p className={styles.aside__text}>
+                    For orders with a total value of more than €2.500, ALC ZOOM will assume the shipping costs.
+                  </p>
+                  <p className={`${styles.aside__text} ${styles.aside__text_name}`}>
+                    Delivery: <span className={styles.aside__text_amount}>35 €</span>
+                  </p>
+                </div>}
               {/* <ProductCard {...product} cartItem={true} key={product?._id} /></>))} */}
               <Link to='/cart' className={styles.aside__btn}>Back to cart</Link>
             </div>

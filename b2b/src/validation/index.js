@@ -28,7 +28,7 @@ export const validationSchemaAccount = Yup.object({
     .email('Invalid email')
     .required('Required'),
   telephone: Yup.string()
-    .matches(/^\+\d{2}\d{10}$/, "Invalid phone number format")
+    .matches(/^\+\d{11,12}$/, "Invalid phone number format")
     .required("Required Field!"),
 });
 
@@ -78,12 +78,12 @@ export const validationSchemaOrderShipping = Yup.object({
     .max(30, 'Can be no more than 30 characters')
     .required("Required Field!"),
   house: Yup.string()
-    .min(2, 'Must contain at least 2 letters')
+    .min(1, 'Must contain at least 1 letters')
     .max(10, 'Can be no more than 10 characters')
     .trim()
     .required("Required Field!"),
   apartment: Yup.string()
-    .min(2, 'Must contain at least 2 letters')
+    .min(1, 'Must contain at least 1 letters')
     .max(10, 'Can be no more than 10 characters')
     .required("Required Field!"),
   firstName: Yup.string()
@@ -100,7 +100,7 @@ export const validationSchemaOrderShipping = Yup.object({
     .required("Required Field!"),
   email: Yup.string()
     .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Invalid email format')
-    .required('Required'),
+    .required('Required Field!'),
   telephone: Yup.string()
     .matches(/^\+\d{11,12}$/, "Invalid phone number format")
     .required("Required Field!"),
@@ -131,12 +131,12 @@ export const validationSchemaProfileShipping = Yup.object({
     .max(30, 'Can be no more than 30 characters')
     .required("Required Field!"),
   house: Yup.string()
-    .min(2, 'Must contain at least 2 letters')
+    .min(1, 'Must contain at least 1 letters')
     .max(10, 'Can be no more than 10 characters')
     .trim()
     .required("Required Field!"),
   apartment: Yup.string()
-    .min(2, 'Must contain at least 2 letters')
+    .min(1, 'Must contain at least 1 letters')
     .max(10, 'Can be no more than 10 characters')
     .required("Required Field!"),
   firstName: Yup.string()

@@ -166,7 +166,8 @@ $color-accent: #f92e3e;
         }
       }
 
-      input {
+      input,
+      label+div>input {
         margin-bottom: 1rem;
         border: none;
         box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
@@ -178,6 +179,14 @@ $color-accent: #f92e3e;
           z-index: -1;
           opacity: 0;
         }
+      }
+
+      label+div>input {
+        margin-bottom: 0;
+      }
+
+      div:has(>input) {
+        margin-bottom: 2rem;
       }
 
       button {
