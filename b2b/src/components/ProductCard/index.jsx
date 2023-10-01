@@ -7,8 +7,9 @@ import { useEffect, useState } from 'react';
 import { Arrow, Cart } from '../icons';
 import { useDeleteFromCartMutation } from '../../store/api/cart.api';
 import { useAddToCart, useAmountChange, useInCart, useIncrease } from '../../hooks';
+import { AdminProductCard } from '../AdminProductCard';
 
-function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, brand, itemNo, productUrl, displayTable, cartItem, orderQuantity }) {
+function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, brand, itemNo, productUrl, displayTable, cartItem, orderQuantity,buttonText,buttonHandler, deleteButtonHandler, adminCard = false, enabled}) {
   const handleAddToCart = useAddToCart();
   const [deleteFromCart] = useDeleteFromCartMutation();
   
@@ -27,6 +28,21 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
   useEffect(() => {
     setAmount(inCart?.cartQuantity || 1);
   }, [inCart])
+
+  if (adminCard) return (
+    <AdminProductCard
+      product={{
+        _id,
+        imageUrls,
+        currentPrice,
+        itemNo,
+        name,
+        enabled,
+        quantity,
+      }}
+      buttonHandler={() => buttonHandler(itemNo)}
+      deleteButtonHandler={() => deleteButtonHandler(itemNo)} />
+  )
 
   return (
     <div className={`${productStyle.productCard} ${displayTable ? productStyle.productRow : ''} ${cartItem ? productStyle.cart : ''} ${orderQuantity ? productStyle.order : ''}`}>
@@ -98,6 +114,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
               onClick={() => handleAddToCart(_id, amount)}>
               Add to cart
               <Cart color={'#f7fbfa'} width={20} height={20} strokeWidth={'2'} />
+              {buttonText}
             </button>
             : <Link
               to='/cart'

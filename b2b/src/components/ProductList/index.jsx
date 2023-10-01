@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import PropTypes from 'prop-types';
 import styles from './productList.module.scss';
@@ -8,9 +8,12 @@ import SortByBtn from '../SortByBtn';
 import { IconCardList, IconTableList } from '../icons';
 import Pagination from '../Pagination';
 
-function ProductList({ products, productsQuantity }) {
+function ProductList({ products, productsQuantity, customButtonText, adminCard}) {
   const [displayTable, setDisplayTable] = useState(false);
   const ref = useRef(null);
+  useEffect(() => {
+    setDisplayTable(adminCard ? true : false);
+  }, [adminCard]);
 
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
@@ -19,14 +22,15 @@ function ProductList({ products, productsQuantity }) {
       <div className={styles.productList__container}>
         <div className={styles.productList__inner}>
           <div className={styles.productList__wrapper}>
+          {!adminCard &&
             <div className={styles.productList__btns}>
               <div className={styles.productList__controlTitle}>
                 Sort by
               </div>
               <SortByBtn label='Product' type='name' />
               <SortByBtn label='Cost' type='currentPrice' />
-            </div>
-            {!isMobile &&
+            </div>}
+            {!isMobile && !adminCard &&
               <div className={styles.productList__btns}>
                 <div className={styles.productList__controlTitle}>
                   Display Style
@@ -43,7 +47,7 @@ function ProductList({ products, productsQuantity }) {
             {products?.length > 0
               ?
               products?.map((product) => (
-                <ProductCard {...product} displayTable={displayTable} key={product?._id} />
+                <ProductCard {...product} displayTable={displayTable} key={product?._id} buttonText={customButtonText} adminCard={adminCard}/>
               ))
               :
               <div className={`${styles.productList__empty} ${styles.empty}`}>

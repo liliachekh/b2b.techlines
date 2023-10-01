@@ -9,6 +9,7 @@ import { Delivery } from "../pages/Delivery";
 import { PrivacyPolicy } from "../pages/PrivacyPolicy";
 import { TermsAndConditions } from "../pages/TermsAndConditions";
 import { CookiePolicy } from "../pages/CookiePolicy";
+import AdminProducts from "../pages/AdminProducts";
 
 export default function Router() {
   return (
@@ -31,6 +32,7 @@ export default function Router() {
       </Route>
       <Route path="/login" element={<LoginForm />} />
       <Route path="/password-reset" element={<ResetPassword />} />
+      <Route path="/admin" element={<AdminProducts />} />
     </Routes>
   );
 }
