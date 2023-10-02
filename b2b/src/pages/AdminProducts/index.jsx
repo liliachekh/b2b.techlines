@@ -4,6 +4,7 @@ import { useGetAllProductsQuery } from '../../store/api/products.api';
 import style from './adminProducts.module.scss';
 import { useQueryString } from '../../hooks';
 import Loader from '../../components/Loader';
+import AdminHeader from '../../components/AdminHeader';
 export default function AdminProducts(){
   const { search } = useLocation();
   const { params } = useQueryString();
@@ -13,6 +14,7 @@ export default function AdminProducts(){
   const { data: products = [], isLoading } = useGetAllProductsQuery(search ? search : `?startPage=${page}&perPage=${perPage}`);
     return (
         <>
+        <AdminHeader />
         <div className={style.admin}>
         <div className={style.admin__container}>
         {/* {openForm && product

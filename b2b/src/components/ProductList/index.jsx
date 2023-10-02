@@ -43,7 +43,7 @@ function ProductList({ products, productsQuantity, customButtonText, adminCard})
                 </button>
               </div>}
           </div>
-          <div className={styles.productList__list}>
+          <div className={`${adminCard ? styles.productList__admin : styles.productList__list}`}>
             {products?.length > 0
               ?
               products?.map((product) => (

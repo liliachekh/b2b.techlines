@@ -198,3 +198,9 @@ $color-grey-light: #e3e3e3;
     }
   }
 }
+
+.productList__admin {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  row-gap: 1rem;
+}

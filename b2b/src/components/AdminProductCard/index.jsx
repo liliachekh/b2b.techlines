@@ -1,8 +1,11 @@
 import style from "./adminProductCard.module.scss";
 import { Link } from 'react-router-dom';
 import { Delete, Edit, View } from '../icons';
+import { useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
-export function AdminProductCard({ product: { imageUrls, name, currentPrice, _id, itemNo, quantity, enabled }, deleteButtonHandler, buttonHandler }) {
+export function AdminProductCard({ product: { imageUrls, name, currentPrice, productUrl, _id, itemNo, quantity, enabled }, deleteButtonHandler, buttonHandler }) {
+  const isMobile = useMediaQuery({ query: '(max-width: 580px)' });
 
   return (
     <div className={style.card}>
@@ -15,18 +18,28 @@ export function AdminProductCard({ product: { imageUrls, name, currentPrice, _id
       <p className={style.card__prop}>
         {name}
       </p>
-      <p className={style.card__prop}>
+      {isMobile ? (
+        <p className={style.card__prop}>
+          Quantity: {quantity}
+        </p> ) : (
+        <p className={style.card__prop}>
         {quantity}
-      </p>
+        </p>)
+      }
       <p className={style.card__prop}>
         {enabled ? 'Enabled' : 'Disabled'}
       </p>
-      <p className={style.card__prop}>
-        {currentPrice}
-      </p>
+      {isMobile ? (
+        <p className={style.card__prop}>
+          Current price: {currentPrice}$
+        </p> ) : (
+        <p className={style.card__prop}>
+        {currentPrice}$
+        </p>)
+      }
       <div className={style.card__buttons}>
         <Link
-          to={`/product/${itemNo}`}
+          to={`/${productUrl}`}
           className={style.card__btn}
           title="View on website"
           target="_blank">
@@ -47,6 +60,4 @@ export function AdminProductCard({ product: { imageUrls, name, currentPrice, _id
       </div>
     </div>
   )
-
-
 }
