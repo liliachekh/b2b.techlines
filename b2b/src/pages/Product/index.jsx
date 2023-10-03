@@ -13,7 +13,7 @@ export function Product() {
 
   if (isLoading) return <Loader />
 
-  if (error?.status === 400) return <Navigate to='/not-found' />;
+  if (error?.status === 400) return <Navigate to='*' />;
   
   if (loggedIn === false) return <Navigate to="/login" />
 
