@@ -36,5 +36,5 @@ ArrowRight.propTypes = {
 ArrowRight.defaultProps = {
   width: 24,
   height: 24,
-  color: '#686A6C',
+  color: '#f7fbfa',
 };
