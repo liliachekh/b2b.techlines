@@ -3,8 +3,8 @@ $color-dark: #202025;
 $color-grey: #5d5d5d;
 $color-grey-light: #e3e3e3;
 
-.main {
-  padding: 4.5rem 0;
+.profile {
+  padding: 7rem 0 4rem;
 
   &__container {
     padding: 0 15px;
@@ -15,7 +15,7 @@ $color-grey-light: #e3e3e3;
   }
 
   &__title {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     font-size: 1.5rem;
   }
 
@@ -35,16 +35,13 @@ $color-grey-light: #e3e3e3;
     flex-direction: column;
     flex: 1 0 60%;
     gap: 4rem;
-    // padding: 1.5rem 1rem;
     margin: 0 auto;
-    // border: 2px solid $color-dark;
-    // border-radius: 1rem;
-    // box-shadow: 1px 5px 15px rgba(0, 0, 0, .4);
+    max-width: 100%;
     box-sizing: border-box;
 
-    // @media (min-width: 768px) {
-    //   padding: 1.5rem;
-    // }
+    &:not(.profile__content_account) {
+      flex-direction: column-reverse;
+    }
 
     &_account {
       padding: 1.5rem 1rem;
@@ -73,8 +70,6 @@ $color-grey-light: #e3e3e3;
   gap: 1rem;
   padding: 1rem;
   margin: 0 auto;
-  // border: 2px solid $color-dark;
-  // background-color: $color-light;
   border-radius: 1rem;
   box-shadow: 1px 5px 15px rgba(0, 0, 0, .4);
   box-sizing: border-box;

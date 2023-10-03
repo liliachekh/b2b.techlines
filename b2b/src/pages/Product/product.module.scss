@@ -4,25 +4,16 @@ body:has(.productDetails) {
 }
 
 .productDetails {
+  display: flex;
+  align-items: center;
   height: 100%;
-  font-family: 'Roboto', sans-serif;
-
+  
   &__container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-width: 360px;
+    min-width: 320px;
     max-width: 1470px;
-    height: 100%;
-    margin: 0 auto;
-    padding: 0 15px;
+    // padding: 0 15px;
+    padding: 7rem 15px 4rem;
+    // margin: 5rem auto 2rem;
     box-sizing: border-box;
-    border-bottom: 1px solid #dde2e7;
-
-    @media (min-width: 768px) {
-      flex-direction: row;
-      padding-bottom: 40px
-    }
   }
 }

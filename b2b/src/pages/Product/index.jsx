@@ -18,11 +18,9 @@ export function Product() {
   if (loggedIn === false) return <Navigate to="/login" />
 
   return (
-    <div id='main'>
-      <div className={style.productDetails}>
-        <div className={style.productDetails__container}>
-          <ProductDetails {...product} />
-        </div>
+    <div className={style.productDetails}>
+      <div className={style.productDetails__container}>
+        <ProductDetails {...product} />
       </div>
     </div>
   )

@@ -124,7 +124,7 @@ $color-grey: #5d5d5d;
     }
 
     &>span {
-      mix-blend-mode: darken;
+      mix-blend-mode: multiply;
       // padding: 5px 0;
       overflow: hidden;
 
@@ -452,6 +452,10 @@ $color-grey: #5d5d5d;
       justify-content: space-between;
       gap: 1rem;
     }
+  }
+
+  &__quantity {
+    font-size: .8rem;
   }
 
   &__price {

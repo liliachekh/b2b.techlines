@@ -1,70 +1,65 @@
 .product-images-slider {
-    .swiper-slide {
-        padding-top: 100%;
-        overflow: hidden;
-        position: relative;
+  margin-bottom: .63rem;
 
-        img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: inherit;
-            height: 100%;
-            object-fit: contain;
-        }
-    }
+  .swiper-slide {
 
-    .swiper-button-prev {
-        left: 0;
-        color: #dde2e7;
-    }
-    .swiper-button-next {
-        right: 0;
-        color: #dde2e7;
-    }
-}
-
-.product-images-slider {
     img {
-        transform: scale(0.7);
+      width: 100%;
+      height: 100%;
+      max-height: 400px;
+      object-fit: contain;
     }
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    color: #5d5d5d;
+  }
+
+  .swiper-button-prev {
+    left: 0;
+  }
+
+  .swiper-button-next {
+    right: 0;
+  }
 }
 
 .product-images-slider-thumbs {
-    .swiper-slide {
-        cursor: pointer;
-        border: 1px solid transparent;
-        // &-thumb-active {
-        //     border-color: #dde2e7;
-        // }
-    }
+  .swiper-slide {
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
 
-    &-wrapper {
-        width: 100%;
-        padding-top: 100%;
-        overflow: hidden;
-        position: relative;
+  &-wrapper {
+    display: flex;
+    height: 100px;
 
-        img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-        }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
+  }
 }
 
 
 .swiper-container {
-    position: relative;
-    z-index: 10;
+  position: relative;
+  // mix-blend-mode: multiply;
+  mix-blend-mode: darken;
+  z-index: 10;
 }
 
 .btn-container {
-    display: flex;
-    justify-content: space-between;
-    position: absolute;
-    top: 40%;
-    z-index: 20;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 40%;
+  z-index: 20;
+  width: 100%;
+}
+
+.swiper-wrapper {
+  align-items: center;
 }

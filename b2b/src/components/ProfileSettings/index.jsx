@@ -50,7 +50,7 @@ export function ProfileSettings() {
         <div className={styles.error}>You enter wrong current password</div>}
       {success &&
         <div className={styles.success}>Your data updated successfully</div>}
-      <div className={styles.block}>
+      <div className={`${styles.block} ${styles.block_account}`}>
         <h3 className={styles.block__title}>Account settings</h3>
         <FormikForm
           initialValues={{
@@ -63,7 +63,7 @@ export function ProfileSettings() {
           callback={onSubmitAccountHandler}
           submitBtn="Update" />
       </div>
-      <div className={styles.block}>
+      <div className={`${styles.block} ${styles.block_account}`}>
         <h3 className={styles.block__title}>Change password</h3>
         <FormikForm
           initialValues={{

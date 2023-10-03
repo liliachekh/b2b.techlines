@@ -1,0 +1,37 @@
+$color-light: #f7fbfa;
+$color-dark: #202025;
+$color-grey: #5d5d5d;
+$color-grey-light: #e3e3e3;
+$color-accent: #f92e3e;
+
+.cartAmount {
+  display: none;
+
+  &.activeMob,
+  &.activeDesk {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 5px;
+    right: 0;
+    min-width: 20px;
+    height: 20px;
+    padding-right: 4px;
+    padding-left: 5px;
+    transform: translate(46%, -48%);
+    border-radius: 50px;
+    background-color: $color-accent;
+    color: $color-light;
+    font-size: 10px;
+
+    @media (min-width: 768px) {
+      top: 19px;
+    }
+  }
+
+  &.activeDesk {
+    padding-left: 4px;
+    transform: translate(48%, -50%);
+  }
+}
