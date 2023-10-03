@@ -7,17 +7,13 @@ body:has(.productDetails) {
   display: flex;
   align-items: center;
   height: 100%;
-
+  
   &__container {
     min-width: 320px;
     max-width: 1470px;
-    padding: 0 15px;
-    margin: 5rem auto 2rem;
+    // padding: 0 15px;
+    padding: 7rem 15px 4rem;
+    // margin: 5rem auto 2rem;
     box-sizing: border-box;
-
-    @media (min-width: 768px) {
-      // flex-direction: row;
-      // padding-bottom: 40px
-    }
   }
 }

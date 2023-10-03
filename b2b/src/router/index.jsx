@@ -9,6 +9,7 @@ import { Delivery } from "../pages/Delivery";
 import { PrivacyPolicy } from "../pages/PrivacyPolicy";
 import { TermsAndConditions } from "../pages/TermsAndConditions";
 import { CookiePolicy } from "../pages/CookiePolicy";
+import { ProfileShipping } from "../components/ProfileShipping";
 import AdminProducts from "../pages/AdminProducts";
 
 export default function Router() {
@@ -22,6 +23,7 @@ export default function Router() {
         <Route path="/profile" element={<Profile />}>
           <Route index element={<ProfileSettings />} />
           <Route path="/profile/orders" element={<ProfileOrders />} />
+          <Route path="/profile/shipping" element={<ProfileShipping />} />
         </Route>
         <Route path="/about-us" element={<AboutUs/>}/>
         <Route path="/contacts" element={<Contacts/>}/>

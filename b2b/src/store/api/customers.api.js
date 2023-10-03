@@ -9,20 +9,23 @@ export const customersApi = api.injectEndpoints({
         method: 'POST',
         body: body
       }),
-      invalidatesTags: [{ type: 'Customers', id: 'LIST' }]
+      invalidatesTags: ['Customers']
+      // invalidatesTags: [{ type: 'Customers', id: 'LIST' }]
     }),
     logOut: builder.mutation({
       query: () => ({
         url: 'customers/logout',
         method: 'GET',
       }),
-      invalidatesTags: [{ type: 'Customers', id: 'LIST' }]
+      invalidatesTags: ['Customers']
+      // invalidatesTags: [{ type: 'Customers', id: 'LIST' }]
     }),
     getCustomer: builder.query({
       query: () => ({
         url: 'customers/customer',
         method: 'GET',
       }),
+      providesTags: ['Customers'],
     }),
     changeAccount: builder.mutation({
       query: (body) => ({
@@ -30,7 +33,8 @@ export const customersApi = api.injectEndpoints({
         method: 'PUT',
         body: body
       }),
-      invalidatesTags: [{ type: 'Customers', id: 'LIST' }]
+      invalidatesTags: ['Customers']
+      // invalidatesTags: [{ type: 'Customers', id: 'LIST' }]
     }),
     changePassword: builder.mutation({
       query: (body) => ({
@@ -38,7 +42,8 @@ export const customersApi = api.injectEndpoints({
         method: 'PUT',
         body: body
       }),
-      invalidatesTags: [{ type: 'Customers', id: 'LIST' }]
+      invalidatesTags: ['Customers']
+      // invalidatesTags: [{ type: 'Customers', id: 'LIST' }]
     }),
     getLoggedIn: builder.query({
       query: () => ({
