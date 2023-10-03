@@ -215,6 +215,14 @@ a {
         }
       }
     }
+
+    &.logoutHover path {
+      transition: all .4s ease 0s;
+    }
+
+    &.logoutHover:hover path {
+      stroke-width: 2.2px;
+    }
   }
 
   &__item a {
