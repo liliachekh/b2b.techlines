@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types';
 
-export function Account({ width = 24, height = 24, color = '#686A6C', strokeWidth = '1.5' }) {
+export function Account({ width, height, color, strokeWidth }) {
   return (
     <svg
       width={width}
       height={height}
-      viewBox="0 0 18 24"
+      viewBox='0 0 18 24'
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
     >
       <path
         d="M15 17.9167C15 19.1912 12 20.0001 9 20.0001C5.5 20.0001 3 19.1912 3 17.9167C3 16.0578 6 15.0001 9 15.0001C12 15.0001 15 16.2501 15 17.9167Z"

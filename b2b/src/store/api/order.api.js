@@ -15,16 +15,15 @@ export const orderApi = api.injectEndpoints({
           ]
           : [{ type: 'Orders', id: 'LIST' }],
     }),
-    // setOrder: builder.mutation({
-    //   query: (body) => ({
-    //     url: `orders`,
-    //     method: 'POST',
-    //     headers: headers(),
-    //     body: body,
-    //   }),
-    //   invalidatesTags: [{ type: 'Orders', id: 'LIST' }]
-    // }),
+    setOrder: builder.mutation({
+      query: (body) => ({
+        url: `orders`,
+        method: 'POST',
+        body: body,
+      }),
+      invalidatesTags: [{ type: 'Orders', id: 'LIST' }, { type: 'Cart', id: 'LIST' }]
+    }),
   })
 })
 
-export const { useGetOrdersQuery } = orderApi;
+export const { useGetOrdersQuery, useSetOrderMutation } = orderApi;

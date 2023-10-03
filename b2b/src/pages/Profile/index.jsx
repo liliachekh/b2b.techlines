@@ -28,6 +28,11 @@ export function Profile() {
               Account settings
             </Link>
             <Link
+              to='/profile/shipping'
+              className={`${styles.aside__link} ${pathname === '/profile/shipping' ? styles.aside__link_active : ''}`}>
+              Shipping options
+            </Link>
+            <Link
               to='/profile/orders'
               className={`${styles.aside__link} ${pathname === '/profile/orders' ? styles.aside__link_active : ''}`}>
               My orders
@@ -37,7 +42,7 @@ export function Profile() {
               Logout
             </button>
           </div>
-          <div className={`${styles.profile__content} ${window.location.pathname === '/profile' ? styles.profile__content_account : ''}`}>
+          <div className={`${styles.profile__content} ${window.location.pathname !== '/profile/orders' ? styles.profile__content_account : ''}`}>
             <Outlet />
           </div>
         </div>

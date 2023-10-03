@@ -454,6 +454,10 @@ $color-grey: #5d5d5d;
     }
   }
 
+  &__quantity {
+    font-size: .8rem;
+  }
+
   &__price {
     font-size: 1.1rem;
     font-weight: 400;

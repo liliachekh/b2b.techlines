@@ -1,9 +1,10 @@
 import { useField } from 'formik';
-import { PatternFormat } from "react-number-format";
 import { useMediaQuery } from 'react-responsive';
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
 
 const InputMasked = ({ label, ...props }) => {
-  const [field, meta] = useField(props);
+  const [field, meta, helpers] = useField(props);
   const isDesktop = useMediaQuery({ query: '(min-width: 1024px)' });
 
   return (
@@ -19,14 +20,17 @@ const InputMasked = ({ label, ...props }) => {
           </div>
           : null}
       </label>
-      <PatternFormat
-        className={props.inputClass}
-        type={props.type}
+      <PhoneInput
         id={props.id}
-        placeholder={props.placeholder}
-        format={props.format}
-        allowEmptyFormatting mask={props.mask}
-        {...field} />
+        name={props.name}
+        international
+        defaultCountry="ES"
+        countryCallingCodeEditable={false}
+        value={field.value}
+        onChange={(value) => {
+          helpers.setValue(value);
+        }}
+      />
       {meta.touched && meta.error && !isDesktop
         ? <div
           className={props.errorClass}>

@@ -8,27 +8,23 @@ $color-grey-transparent: hsla(0, 0%, 36%, 0.441);
 .error,
 .success {
   left: 0;
-  padding: 1rem 0;
-  position: absolute;
+  padding: 2rem 0;
+  position: fixed;
   top: 0;
   width: 100%;
   box-sizing: border-box;
   background-color: $color-accent;
   color: $color-light;
   text-align: center;
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 500;
   line-height: 1.2rem;
   z-index: 30;
-
-  @media (min-width: 768px) {
-    padding: 13px 20px;
-    font-size: 1rem;
-  }
 }
 
 .success {
-  background-color: $color-grey;
+  background-color: $color-dark;
+  color: $color-light;
 }
 
 .block {
@@ -43,58 +39,73 @@ $color-grey-transparent: hsla(0, 0%, 36%, 0.441);
     margin-bottom: 1.5rem;
   }
 
-  form {
-    // padding: 1rem;
-    max-width: 100%;
-    // background-color: $color-light;
-    // border-radius: 1rem;
-    // box-shadow: 0 3px 15px rgba(0, 0, 0, 0.7);
-
-    input {
-      margin-bottom: 1rem;
-      border: none;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-    }
-
-    button {
-      color: $color-dark;
-      border-color: $color-dark;
-      z-index: 1;
-
-      &::after {
-        background: $color-dark;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      display: grid;
-      gap: 1rem;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      grid-template-rows: repeat(3, auto);
-
-      label {
-        position: relative;
-        grid-row-start: 1;
-        grid-row-end: 1;
-        margin-bottom: 0;
-      }
+  &_account {
+    form {
+      // padding: 1rem;
+      max-width: 100%;
+      // background-color: $color-light;
+      // border-radius: 1rem;
+      // box-shadow: 0 3px 15px rgba(0, 0, 0, 0.7);
 
       input {
-        grid-row-start: 2;
-        grid-row-end: 3;
-        font-size: .8rem;
-      }
-
-      div {
-        top: 90px;
+        margin-bottom: 1rem;
+        border: none;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
       }
 
       button {
-        grid-row-start: 3;
-        grid-row-end: 4;
-        grid-column-start: 1;
-        grid-column-end: 2;
-        margin: 0;
+        color: $color-dark;
+        border-color: $color-dark;
+        z-index: 1;
+
+        &::after {
+          background: $color-dark;
+        }
+      }
+
+      div:has(>input) {
+        margin-bottom: 2rem;
+      }
+
+      @media (min-width: 1024px) {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-template-rows: repeat(3, auto);
+
+        label {
+          position: relative;
+          grid-row-start: 1;
+          grid-row-end: 1;
+          margin-bottom: 0;
+        }
+
+        input,
+        label+div:has(>input) {
+          grid-row-start: 2;
+          grid-row-end: 3;
+          font-size: .8rem;
+        }
+
+        label+div>input {
+          margin-bottom: 0;
+        }
+
+        div:has(>input) {
+          margin-bottom: 1rem;
+        }
+
+        div:not(:has(>div)) {
+          top: 90px;
+        }
+
+        button {
+          grid-row-start: 3;
+          grid-row-end: 4;
+          grid-column-start: 1;
+          grid-column-end: 2;
+          margin: 0;
+        }
       }
     }
   }
