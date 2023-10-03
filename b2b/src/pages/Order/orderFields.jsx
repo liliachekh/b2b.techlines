@@ -20,7 +20,7 @@ export const shippingOrderFields = [
     label: "Index",
     id: "index",
     name: "index",
-    type: "number",
+    type: "text",
     placeholder: "08013"
   },
   {

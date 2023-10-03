@@ -65,8 +65,9 @@ export function Order() {
         setInvoice(true);
       } else {
         await deleteCart().unwrap();
-        window.location.href = 'https://www.google.com.ua/'
       }
+      
+      window.open('http://localhost:4000/invoices/invoice.pdf', '_blank');
     } catch (error) {
       console.log(error);
     }
