@@ -8,8 +8,10 @@ import { Navigate, useNavigate } from "react-router-dom";
 import Filter from "../../components/Filter";
 import { useQueryString } from '../../hooks';
 import { useLocation } from "react-router-dom";
+import { useTitle } from "../../hooks/useTitle";
 
 export function Home() {
+  useTitle('');
   const { loggedIn } = useContext(AuthContext);
   const { search } = useLocation();
   const { params } = useQueryString();

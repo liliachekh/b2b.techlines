@@ -2,8 +2,10 @@ import styles from './profileOrders.module.scss';
 import { useGetOrdersQuery } from '../../store/api/order.api';
 import ProductCard from '../ProductCard';
 import Loader from '../Loader';
+import { useTitle } from '../../hooks/useTitle';
 
 export function ProfileOrders() {
+  useTitle('Profile | Orders');
   const { data: orders = [], isLoading: isLoadingOrders } = useGetOrdersQuery();
 
   if (isLoadingOrders) return <Loader />
