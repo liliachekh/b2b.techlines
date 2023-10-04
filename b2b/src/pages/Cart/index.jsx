@@ -5,8 +5,10 @@ import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import { Link, Navigate } from "react-router-dom";
 import Loader from '../../components/Loader';
+import { useTitle } from '../../hooks/useTitle';
 
 export function Cart() {
+  useTitle('Cart');
   const { data: cart = {}, isLoading } = useGetCartQuery();
   const { loggedIn } = useContext(AuthContext);
 

@@ -13,8 +13,10 @@ import { areObjectsEqual } from '../../utils';
 import { useSetOrderMutation } from '../../store/api/order.api';
 import { AnimatePresence, motion } from 'framer-motion';
 import { animateModal } from '../../animation';
+import { useTitle } from '../../hooks/useTitle';
 
 export function Order() {
+  useTitle('Order');
   const { loggedIn } = useContext(AuthContext);
   const { data: customer = {}, isLoading: customerLoading } = useGetCustomerQuery();
   const { data: cart = {}, isLoading: cartLoading } = useGetCartQuery();

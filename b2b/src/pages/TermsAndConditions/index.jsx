@@ -1,7 +1,10 @@
+import { useTitle } from "../../hooks/useTitle";
 import style from "./termsAndConditions.module.scss";
 import {termsAndConditionsData} from "./termsAndConditionsData.jsx";
 
 export function TermsAndConditions() {
+  useTitle('Terms and Conditions');
+
   return (
       <section className={style.termsAndConditions}>
         <div className={style.termsAndConditions__container}>

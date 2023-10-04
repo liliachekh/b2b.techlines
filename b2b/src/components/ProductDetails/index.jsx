@@ -5,8 +5,11 @@ import ProductsSlider from '../ProductSlider';
 import { Arrow } from '../icons';
 import { useAddToCart, useAmountChange, useInCart, useIncrease } from '../../hooks';
 import { Link } from 'react-router-dom';
+import { useTitle } from '../../hooks/useTitle';
 
 export default function ProductDetails({ _id, name, currentPrice, brand, itemNo, quantity, imageUrls, cartItem }) {
+  useTitle(name);
+
   const handleAddToCart = useAddToCart();
 
   const [amount, setAmount] = useState(1);
