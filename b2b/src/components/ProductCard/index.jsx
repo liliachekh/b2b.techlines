@@ -30,7 +30,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
 
   return (
     <div className={`${productStyle.productCard} ${displayTable ? productStyle.productRow : ''} ${cartItem ? productStyle.cart : ''} ${orderQuantity ? productStyle.order : ''}`}>
-      <Link to={`/${productUrl}`} className={productStyle.productCard__mainLink}>
+      <Link to={`/product/${productUrl}`} className={productStyle.productCard__mainLink}>
         <LazyLoadImage
           className={productStyle.productCard__img}
           // src={'/images/iphone12_black.jpeg'}
@@ -48,7 +48,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
 
       <div className={productStyle.productCard__links}>
         {(cartItem || orderQuantity) &&
-          <Link to={`/${productUrl}`} className={productStyle.productCard__name}>
+          <Link to={`/product/${productUrl}`} className={productStyle.productCard__name}>
             {name}
           </Link>}
         <Link to={`/products/filter?&categories=${brand}`} className={productStyle.productCard__link}>

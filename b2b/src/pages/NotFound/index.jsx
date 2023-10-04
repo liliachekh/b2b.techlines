@@ -14,7 +14,7 @@ export function NotFound() {
           <p className={style.notFound__container_info}>The link might be corrupted.</p>
           <p className={style.notFound__container_subinfo}>or the page may have been removed</p>
           <div className={style.notFound__buttons}>
-            {/* <Link to={location.pathname === "/not-found" ? -2 : -1} className={style.notFound__btn}>
+            <Link to={location.pathname === "/not-found" ? -3 : -1} className={style.notFound__btn}>
               Previous page
             </Link> */}
             <Link to="/" className={style.notFound__btn}>
