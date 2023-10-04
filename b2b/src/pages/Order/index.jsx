@@ -67,7 +67,7 @@ export function Order() {
         await deleteCart().unwrap();
       }
       
-      window.open('http://localhost:4000/invoices/invoice.pdf', '_blank');
+      window.open('https://storage.techlines.es/invoices/invoice.pdf', '_blank');
     } catch (error) {
       console.log(error);
     }
