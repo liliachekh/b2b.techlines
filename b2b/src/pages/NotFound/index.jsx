@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import style from './notFound.module.scss';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 
 export function NotFound() {
-  const location = useLocation();
+  // const location = useLocation();
 
   return (
     <>
@@ -16,7 +16,7 @@ export function NotFound() {
           <div className={style.notFound__buttons}>
             <Link to={location.pathname === "/not-found" ? -3 : -1} className={style.notFound__btn}>
               Previous page
-            </Link>
+            </Link> */}
             <Link to="/" className={style.notFound__btn}>
               Go to home
             </Link>
