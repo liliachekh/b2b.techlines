@@ -13,6 +13,7 @@ import { areObjectsEqual } from '../../utils';
 import { useSetOrderMutation } from '../../store/api/order.api';
 import { AnimatePresence, motion } from 'framer-motion';
 import { animateModal } from '../../animation';
+import { Title } from '../../components/Title';
 
 export function Order() {
   const { loggedIn } = useContext(AuthContext);
@@ -81,6 +82,7 @@ export function Order() {
 
   return (
     <>
+      <Title title='Order' />
       {invoice &&
         <AnimatePresence>
           <motion.div className={styles.invoice} onClick={closeInvoice} role='button' {...animateModal}>

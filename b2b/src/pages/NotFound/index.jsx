@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import style from './notFound.module.scss';
 import { useLocation } from 'react-router-dom';
+import { Title } from '../../components/Title';
 
 export function NotFound() {
   const location = useLocation();
@@ -8,6 +9,7 @@ export function NotFound() {
   return (
     <>
       <div className={style.notFound}>
+        <Title title='Not Found' />
         <div className={style.notFound__container}>
           <h1 className={style.notFound__container_title}>404</h1>
           <h2 className={style.notFound__container_subtitle}>Oops, this page not found!</h2>

@@ -1,9 +1,11 @@
+import { Title } from "../../components/Title"
 import style from "./contacts.module.scss"
 import { contacts } from "./contactsFields"
 
 export function Contacts () {
   return (
       <section className={style.contacts}>
+      <Title title='Contacts' />
       <div className={style.contacts__container}>
         <h1 className={style.contacts__title}>Contacts</h1>
         <div className={style.contacts__info}>

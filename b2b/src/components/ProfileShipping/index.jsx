@@ -7,6 +7,7 @@ import Loader from "../Loader";
 import { useEffect, useState } from 'react';
 import { shippingFields } from './shippingFields';
 import { initialValuesShippingForm } from '../../utils/vars';
+import { Title } from '../Title';
 
 export function ProfileShipping() {
   const { data: customer = {}, isLoading } = useGetCustomerQuery();
@@ -65,6 +66,7 @@ export function ProfileShipping() {
 
   return (
     <>
+      <Title title='Profile | Shipping' />
       {error &&
         <div className={styles.error}>You enter wrong current password</div>}
       {success &&

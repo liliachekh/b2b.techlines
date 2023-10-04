@@ -5,6 +5,7 @@ import ProductsSlider from '../ProductSlider';
 import { Arrow } from '../icons';
 import { useAddToCart, useAmountChange, useInCart, useIncrease } from '../../hooks';
 import { Link } from 'react-router-dom';
+import { Title } from '../Title';
 
 export default function ProductDetails({ _id, name, currentPrice, brand, itemNo, quantity, imageUrls, cartItem }) {
   const handleAddToCart = useAddToCart();
@@ -22,6 +23,7 @@ export default function ProductDetails({ _id, name, currentPrice, brand, itemNo,
 
   return (
     <div className={styles.wrapper}>
+      <Title title={name} />
       <div className={styles.sliderContainer}>
         <ProductsSlider imageUrls={imageUrls} />
       </div>

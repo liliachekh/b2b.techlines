@@ -1,9 +1,11 @@
+import { Title } from "../../components/Title";
 import style from "./cookiePolicy.module.scss";
 import {cookiePolicyData} from "./cookiePolicyData.jsx";
 
 export function CookiePolicy() {
   return (
       <section className={style.cookiePolicy}>
+      <Title title='Cookie Policy' />
         <div className={style.cookiePolicy__container}>
           <h1 className={style.cookiePolicy__title}>Cookie Policy</h1>
           <div className={style.cookiePolicy__text}>

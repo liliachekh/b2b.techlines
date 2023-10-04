@@ -5,6 +5,7 @@ import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import { Link, Navigate } from "react-router-dom";
 import Loader from '../../components/Loader';
+import { Title } from '../../components/Title';
 
 export function Cart() {
   const { data: cart = {}, isLoading } = useGetCartQuery();
@@ -20,6 +21,7 @@ export function Cart() {
 
   return (
     <div className={styles.cart}>
+      <Title title='Cart' />
       <div className={styles.cart__container}>
         <h2 className={styles.cart__title}>My cart</h2>
         <div className={styles.cart__wrapper}>

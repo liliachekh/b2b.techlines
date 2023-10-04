@@ -3,6 +3,7 @@ import { Link, Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useLogOutMutation } from '../../store/api/customers.api';
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
+import { Title } from '../../components/Title';
 
 export function Profile() {
   const { loggedIn } = useContext(AuthContext);
@@ -18,6 +19,7 @@ export function Profile() {
 
   return (
     <div className={styles.profile}>
+      <Title title='Profile' />
       <div className={styles.profile__container}>
         <h2 className={styles.profile__title}>My profile</h2>
         <div className={styles.profile__wrapper}>

@@ -1,9 +1,11 @@
+import { Title } from "../../components/Title";
 import style from "./termsAndConditions.module.scss";
 import {termsAndConditionsData} from "./termsAndConditionsData.jsx";
 
 export function TermsAndConditions() {
   return (
       <section className={style.termsAndConditions}>
+      <Title title='Terms and Conditions' />
         <div className={style.termsAndConditions__container}>
           <h1 className={style.termsAndConditions__title}>Terms and Conditions</h1>
           <div className={style.termsAndConditions__text}>

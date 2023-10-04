@@ -1,11 +1,13 @@
 import style from "./ResetPassword.module.scss";
 import ForgotPassword from "../../components/ForgotPassword";
 import { Link } from "react-router-dom";
+import { Title } from "../../components/Title";
 
 export function ResetPassword() {
 
     return (
         <div className={style.resetForm}>
+        <Title title='Reset Password' />
             <div className={style.resetForm__container}>
                 <main className={style.resetForm__main}>
                     <Link to="/login">

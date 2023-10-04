@@ -1,9 +1,11 @@
 import { DeliveryList } from "../../components/DeliveryList";
+import { Title } from "../../components/Title";
 import style from "./delivery.module.scss";
 
 export function Delivery() {
   return (
       <section className={style.delivery}>
+      <Title title='Delivery' />
         <div className={style.delivery__container}>
           <h1 className={style.delivery__title}>SHIPPING COSTS</h1>
           <div className={style.delivery__text}>

@@ -6,6 +6,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useLogInMutation } from "../../store/api/customers.api";
 import { useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
+import { Title } from "../../components/Title";
 
 export function LoginForm() {
   const [error, setError] = useState(false);
@@ -26,6 +27,7 @@ export function LoginForm() {
 
   return (
     <div className={style.loginForm}>
+      <Title title='Login' />
       <div className={style.loginForm__container}>
         {error && <div className={style.loginForm__errorMessage}>We couldn’t find an account matching the email and password you entered.</div>}
         <main className={style.loginForm__main}>

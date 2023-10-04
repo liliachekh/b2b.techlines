@@ -5,6 +5,7 @@ import FormikForm from '../FormikForm';
 import { validationSchemaAccount, validationSchemaPassword } from '../../validation';
 import Loader from "../../components/Loader";
 import { useEffect, useState } from 'react';
+import { Title } from '../Title';
 
 export function ProfileSettings() {
   const { data: customer = {}, isLoading } = useGetCustomerQuery();
@@ -46,6 +47,7 @@ export function ProfileSettings() {
 
   return (
     <>
+      <Title title='Profile | Settings' />
       {error &&
         <div className={styles.error}>You enter wrong current password</div>}
       {success &&

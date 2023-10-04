@@ -5,6 +5,7 @@ import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import { Navigate, Outlet } from "react-router-dom";
 import Footer from "../../components/Footer";
+import { Title } from "../../components/Title";
 
 export function MainLayout() {
   const { loggedIn } = useContext(AuthContext);
@@ -13,6 +14,7 @@ export function MainLayout() {
 
   return (
     <>
+      <Title />
       <Header />
       <div id='main'>
         <Outlet />

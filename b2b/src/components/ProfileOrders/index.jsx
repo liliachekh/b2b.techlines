@@ -2,6 +2,7 @@ import styles from './profileOrders.module.scss';
 import { useGetOrdersQuery } from '../../store/api/order.api';
 import ProductCard from '../ProductCard';
 import Loader from '../Loader';
+import { Title } from '../Title';
 
 export function ProfileOrders() {
   const { data: orders = [], isLoading: isLoadingOrders } = useGetOrdersQuery();
@@ -10,6 +11,7 @@ export function ProfileOrders() {
 
   return (
     <>
+      <Title title='Profile | Orders' />
       {orders && orders?.map(({ products, orderNo, totalSum, status }) => (
         <div className={styles.order} key={orderNo}>
           {products?.map(({ product, cartQuantity }) => (
