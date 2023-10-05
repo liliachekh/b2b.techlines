@@ -1,4 +1,4 @@
-import { useTitle } from "../../hooks/useTitle";
+import { useTitle } from "../../hooks";
 import style from "./aboutUs.module.scss";
 
 export function AboutUs() {

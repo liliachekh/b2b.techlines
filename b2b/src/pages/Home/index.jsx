@@ -6,9 +6,8 @@ import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import { Navigate, useNavigate } from "react-router-dom";
 import Filter from "../../components/Filter";
-import { useQueryString } from '../../hooks';
+import { useQueryString, useTitle } from '../../hooks';
 import { useLocation } from "react-router-dom";
-import { useTitle } from "../../hooks/useTitle";
 
 export function Home() {
   useTitle('');

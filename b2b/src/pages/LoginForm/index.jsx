@@ -6,7 +6,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useLogInMutation } from "../../store/api/customers.api";
 import { useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
-import { useTitle } from "../../hooks/useTitle";
+import { useTitle } from "../../hooks";
 
 export function LoginForm() {
   useTitle('Login');

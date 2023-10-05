@@ -2,7 +2,7 @@ import styles from './profileOrders.module.scss';
 import { useGetOrdersQuery } from '../../store/api/order.api';
 import ProductCard from '../ProductCard';
 import Loader from '../Loader';
-import { useTitle } from '../../hooks/useTitle';
+import { useTitle } from '../../hooks';
 
 export function ProfileOrders() {
   useTitle('Profile | Orders');

@@ -5,15 +5,16 @@ import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import { Link, Navigate } from "react-router-dom";
 import Loader from '../../components/Loader';
-import { useTitle } from '../../hooks/useTitle';
+import { useTierPrice, useTitle } from '../../hooks';
 
 export function Cart() {
   useTitle('Cart');
+  const tierPrice = useTierPrice();
   const { data: cart = {}, isLoading } = useGetCartQuery();
   const { loggedIn } = useContext(AuthContext);
 
   const totalPrice = cart?.products
-    ?.map(({ product: { currentPrice }, cartQuantity }) => currentPrice * cartQuantity)
+    ?.map(({ product: { currentPrice }, cartQuantity }) => tierPrice(currentPrice) * cartQuantity)
     ?.reduce((prev, next) => prev + next)
 
   if (isLoading) return <Loader />

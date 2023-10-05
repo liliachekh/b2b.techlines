@@ -6,11 +6,12 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useEffect, useState } from 'react';
 import { Arrow, Cart } from '../icons';
 import { useDeleteFromCartMutation } from '../../store/api/cart.api';
-import { useAddToCart, useAmountChange, useInCart, useIncrease } from '../../hooks';
+import { useAddToCart, useAmountChange, useInCart, useIncrease, useTierPrice } from '../../hooks';
 
 function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, brand, itemNo, productUrl, displayTable, cartItem, orderQuantity }) {
   const handleAddToCart = useAddToCart();
   const [deleteFromCart] = useDeleteFromCartMutation();
+  const tierPrice = useTierPrice();
   
   const [amount, setAmount] = useState(1);
   
@@ -60,7 +61,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
         {(cartItem || orderQuantity) &&
           <div className={productStyle.productCard__price}>
             <span className={productStyle.productCard__price_title}>Price for one:</span>
-            {currentPrice.toFixed(2)} €
+            {tierPrice(currentPrice)?.toFixed(2)} €
           </div>}
       </div>
 
@@ -68,7 +69,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
         <div className={`${productStyle.productCard__purchase} ${productStyle.purchase}`}>
           {!cartItem &&
             <div className={productStyle.purchase__price}>
-              {currentPrice.toFixed(2)} €
+              {tierPrice(currentPrice)?.toFixed(2)} €
             </div>}
           <div className={`${productStyle.productCard__amount} ${productStyle.amount}`}>
             <button
@@ -89,7 +90,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
               onClick={(e) => increase(true)} />
           </div>
           <div className={`${productStyle.purchase__price} ${productStyle.purchase__price_total} `}>
-            {(currentPrice * amount).toFixed(2)} €
+            {(tierPrice(currentPrice) * amount)?.toFixed(2)} €
           </div>
           {!cartItem && (!inCart
             ? <button
@@ -110,7 +111,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
           <div className={`${productStyle.productCard__purchase} ${productStyle.purchase}`}>
             <div className={productStyle.purchase__quantity}>Quantity: {orderQuantity} pc`s</div>
             <div className={`${productStyle.purchase__price} ${productStyle.purchase__price_total} `}>
-              Price: {(currentPrice * amount).toFixed(2)} €
+              Price: {(tierPrice(currentPrice) * amount)?.toFixed(2)} €
             </div>
           </div>)
       }
