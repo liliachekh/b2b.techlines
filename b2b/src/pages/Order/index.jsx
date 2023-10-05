@@ -105,6 +105,7 @@ export function Order() {
           <h2 className={styles.order__title}>My order</h2>
           <div className={styles.order__wrapper}>
             <div className={`${styles.order__aside} ${styles.aside}`}>
+              <h3 className={styles.aside__title}>Order Total: <span className={styles.aside__totalPrice}>{totalPrice > 2500 ? totalPrice : totalPrice + 35} €</span></h3>
               <h3 className={styles.aside__title}>Order List:</h3>
               {cart?.products?.map(({ product: { name, currentPrice }, cartQuantity }) => (
                 <div className={styles.aside__item} key={name}>
