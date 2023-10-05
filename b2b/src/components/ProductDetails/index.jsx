@@ -38,7 +38,7 @@ export default function ProductDetails({ _id, name, currentPrice, brand, itemNo,
         </div>
         <div className={styles.product__details}>
           <h3 className={styles.product__details_title}>Price:</h3>
-          <p className={styles.product__details_price}>{tierPrice(currentPrice)?.toFixed(2)} €</p>
+          <p className={styles.product__details_price}>{tierPrice(currentPrice)} €</p>
         </div>
         <div className={styles.purchase}>
         <div className={`${styles.purchase__amount} ${styles.amount}`}>

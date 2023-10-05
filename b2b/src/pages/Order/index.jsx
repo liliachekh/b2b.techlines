@@ -118,7 +118,7 @@ export function Order() {
                     In cart: <span className={styles.aside__text_amount}>{cartQuantity}</span> pc's
                   </p>
                   <p className={styles.aside__text}>
-                    Total Price: <span className={styles.aside__text_amount}>{Number(tierPrice(currentPrice)) * Number(cartQuantity)}</span> €
+                    Total Price: <span className={styles.aside__text_amount}>{(Number(tierPrice(currentPrice)) * Number(cartQuantity)).toFixed(2)}</span> €
                   </p>
                 </div>
               ))}

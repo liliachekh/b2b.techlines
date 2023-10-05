@@ -61,7 +61,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
         {(cartItem || orderQuantity) &&
           <div className={productStyle.productCard__price}>
             <span className={productStyle.productCard__price_title}>Price for one:</span>
-            {tierPrice(currentPrice)?.toFixed(2)} €
+            {tierPrice(currentPrice)} €
           </div>}
       </div>
 
@@ -69,7 +69,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
         <div className={`${productStyle.productCard__purchase} ${productStyle.purchase}`}>
           {!cartItem &&
             <div className={productStyle.purchase__price}>
-              {tierPrice(currentPrice)?.toFixed(2)} €
+              {tierPrice(currentPrice)} €
             </div>}
           <div className={`${productStyle.productCard__amount} ${productStyle.amount}`}>
             <button
@@ -111,7 +111,8 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
           <div className={`${productStyle.productCard__purchase} ${productStyle.purchase}`}>
             <div className={productStyle.purchase__quantity}>Quantity: {orderQuantity} pc`s</div>
             <div className={`${productStyle.purchase__price} ${productStyle.purchase__price_total} `}>
-              Price: {(tierPrice(currentPrice) * amount)?.toFixed(2)} €
+              Price: {(currentPrice * amount)?.toFixed(2)} €
+              {/* Price: {(tierPrice(currentPrice) * amount)?.toFixed(2)} € */}
             </div>
           </div>)
       }
