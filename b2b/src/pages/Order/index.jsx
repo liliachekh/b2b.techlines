@@ -30,7 +30,7 @@ export function Order() {
 
   const totalPrice = cart?.products
     ?.map(({ product: { currentPrice }, cartQuantity }) => tierPrice(currentPrice) * cartQuantity)
-    ?.reduce((prev, next) => prev + next)
+    ?.reduce((prev, next) => prev + next).toFixed(2)
 
   async function closeInvoice() {
     await deleteCart().unwrap();
