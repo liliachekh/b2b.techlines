@@ -1,4 +1,4 @@
-export const forgotPasswordFormField = [
+export const resetPasswordFormFields = [
     {
         tagType: "regular",
         label: "Your registered email address",

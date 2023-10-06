@@ -50,8 +50,16 @@ export const customersApi = api.injectEndpoints({
         url: 'customers/loggedIn',
         method: 'GET',
       })
-    })
+    }),
+    verifyEmail: builder.mutation({
+      query: (body) => ({
+        url: 'customers/email',
+        method: 'POST',
+        body: body
+      }),
+      invalidatesTags: ['Customers']
+    }),
   })
 })
 
-export const { useLogInMutation, useLogOutMutation, useGetCustomerQuery, useChangeAccountMutation, useChangePasswordMutation, useGetLoggedInQuery } = customersApi;
+export const { useLogInMutation, useLogOutMutation, useGetCustomerQuery, useChangeAccountMutation, useChangePasswordMutation, useGetLoggedInQuery, useVerifyEmailMutation } = customersApi;
