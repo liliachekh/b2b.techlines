@@ -26,14 +26,14 @@ function Filter() {
   const search = useCallback(() => {
     if (debouncedValue?.length >= 3) {
       setSearchParams({ ...params, search: debouncedValue, startPage: 1 });
-    } else {
-      if (Object.keys(params).filter((param) => !['perPage', 'startPage'].includes(param)).length > 0) {
-        const newParams = { ...params };
-        delete newParams.search;
-        setSearchParams({ ...newParams, startPage: 1 });
-      } else {
-        setSearchParams({});
-      }
+    // } else {
+    //   if (Object.keys(params).filter((param) => !['perPage', 'startPage'].includes(param)).length > 0) {
+    //     const newParams = { ...params };
+    //     delete newParams.search;
+    //     setSearchParams({ ...newParams, startPage: 1 });
+    //   } else {
+    //     setSearchParams({});
+    //   }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedValue])
