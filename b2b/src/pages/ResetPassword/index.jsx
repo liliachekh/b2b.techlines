@@ -14,7 +14,7 @@ export function ResetPassword() {
     async function onSubmitHandler(values) {
         console.log(values);
         try {
-          await verifyEmail(values).unwrap();
+          await verifyEmail(values);
         } catch (error) {
           setError(true)
           console.log(error);

@@ -53,11 +53,11 @@ export const customersApi = api.injectEndpoints({
     }),
     verifyEmail: builder.mutation({
       query: (body) => ({
-        url: 'customers/email',
+        url: 'password-reset',
         method: 'POST',
         body: body
       }),
-      invalidatesTags: ['Customers']
+      // invalidatesTags: ['Customers']
     }),
   })
 })
