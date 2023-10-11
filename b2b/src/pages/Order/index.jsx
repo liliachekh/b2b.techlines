@@ -28,9 +28,9 @@ export function Order() {
   const navigate = useNavigate();
   const [invoice, setInvoice] = useState(null);
 
-  const totalPrice = cart?.products
+  const totalPrice = Number(cart?.products
     ?.map(({ product: { currentPrice }, cartQuantity }) => tierPrice(currentPrice) * cartQuantity)
-    ?.reduce((prev, next) => prev + next).toFixed(2)
+    ?.reduce((prev, next) => prev + next).toFixed(2))
 
   async function closeInvoice() {
     await deleteCart().unwrap();
