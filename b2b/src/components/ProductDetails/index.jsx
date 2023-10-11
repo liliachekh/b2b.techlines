@@ -3,14 +3,14 @@ import { Cart } from '../icons/cart';
 import { useEffect, useState } from 'react';
 import ProductsSlider from '../ProductSlider';
 import { Arrow } from '../icons';
-import { useAddToCart, useAmountChange, useInCart, useIncrease } from '../../hooks';
+import { useAddToCart, useAmountChange, useInCart, useIncrease, useTierPrice, useTitle } from '../../hooks';
 import { Link } from 'react-router-dom';
-import { useTitle } from '../../hooks/useTitle';
 
 export default function ProductDetails({ _id, name, currentPrice, brand, itemNo, quantity, imageUrls, cartItem }) {
   useTitle(name);
+  const tierPrice = useTierPrice();
 
-  const handleAddToCart = useAddToCart();
+  const [handleAddToCart, isAdditing] = useAddToCart();
 
   const [amount, setAmount] = useState(1);
 
@@ -38,7 +38,7 @@ export default function ProductDetails({ _id, name, currentPrice, brand, itemNo,
         </div>
         <div className={styles.product__details}>
           <h3 className={styles.product__details_title}>Price:</h3>
-          <p className={styles.product__details_price}>{currentPrice} €</p>
+          <p className={styles.product__details_price}>{tierPrice(currentPrice)} €</p>
         </div>
         <div className={styles.purchase}>
         <div className={`${styles.purchase__amount} ${styles.amount}`}>
@@ -60,12 +60,12 @@ export default function ProductDetails({ _id, name, currentPrice, brand, itemNo,
         </div>
         <div className={styles.purchase__price}>
             <p className={styles.purchase__price_text}>Total amount:</p>
-            <p className={styles.purchase__price_total}>{(currentPrice * amount).toFixed(2)} €</p>
+            <p className={styles.purchase__price_total}>{(tierPrice(currentPrice) * amount)?.toFixed(2)} €</p>
         </div>
           {!cartItem && (!inCart
           ? <button
             type='button'
-            className={styles.purchase__addToCart}
+              className={`${styles.purchase__addToCart} ${isAdditing && styles.loading}`}
             onClick={() => handleAddToCart(_id, amount)}
             >
             Add to cart

@@ -5,7 +5,7 @@ import FormikForm from '../FormikForm';
 import { validationSchemaAccount, validationSchemaPassword } from '../../validation';
 import Loader from "../../components/Loader";
 import { useEffect, useState } from 'react';
-import { useTitle } from '../../hooks/useTitle';
+import { useTitle } from '../../hooks';
 
 export function ProfileSettings() {
   useTitle('Profile | Settings');

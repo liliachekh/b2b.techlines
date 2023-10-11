@@ -13,10 +13,11 @@ import { areObjectsEqual } from '../../utils';
 import { useSetOrderMutation } from '../../store/api/order.api';
 import { AnimatePresence, motion } from 'framer-motion';
 import { animateModal } from '../../animation';
-import { useTitle } from '../../hooks/useTitle';
+import { useTierPrice, useTitle } from '../../hooks';
 
 export function Order() {
   useTitle('Order');
+  const tierPrice = useTierPrice();
   const { loggedIn } = useContext(AuthContext);
   const { data: customer = {}, isLoading: customerLoading } = useGetCustomerQuery();
   const { data: cart = {}, isLoading: cartLoading } = useGetCartQuery();
@@ -27,9 +28,9 @@ export function Order() {
   const navigate = useNavigate();
   const [invoice, setInvoice] = useState(null);
 
-  const totalPrice = cart?.products
-    ?.map(({ product: { currentPrice }, cartQuantity }) => currentPrice * cartQuantity)
-    ?.reduce((prev, next) => prev + next)
+  const totalPrice = Number(cart?.products
+    ?.map(({ product: { currentPrice }, cartQuantity }) => tierPrice(currentPrice) * cartQuantity)
+    ?.reduce((prev, next) => prev + next).toFixed(2))
 
   async function closeInvoice() {
     await deleteCart().unwrap();
@@ -104,20 +105,21 @@ export function Order() {
           <h2 className={styles.order__title}>My order</h2>
           <div className={styles.order__wrapper}>
             <div className={`${styles.order__aside} ${styles.aside}`}>
+              <h3 className={styles.aside__title}>Order Total: <span className={styles.aside__totalPrice}>{totalPrice > 2500 ? totalPrice : totalPrice + 35} €</span></h3>
               <h3 className={styles.aside__title}>Order List:</h3>
-              {cart?.products?.map(({ product, cartQuantity }) => (
-                <div className={styles.aside__item} key={product.name}>
+              {cart?.products?.map(({ product: { name, currentPrice }, cartQuantity }) => (
+                <div className={styles.aside__item} key={name}>
                   <p className={`${styles.aside__text} ${styles.aside__text_name}`}>
-                    {product.name}
+                    {name}
                   </p>
                   <p className={styles.aside__text}>
-                    Price for one: <span className={styles.aside__text_amount}>{product.currentPrice}</span> €
+                    Price for one: <span className={styles.aside__text_amount}>{tierPrice(currentPrice)}</span> €
                   </p>
                   <p className={styles.aside__text}>
                     In cart: <span className={styles.aside__text_amount}>{cartQuantity}</span> pc's
                   </p>
                   <p className={styles.aside__text}>
-                    Total Price: <span className={styles.aside__text_amount}>{Number(product.currentPrice) * Number(cartQuantity)}</span> €
+                    Total Price: <span className={styles.aside__text_amount}>{(Number(tierPrice(currentPrice)) * Number(cartQuantity)).toFixed(2)}</span> €
                   </p>
                 </div>
               ))}

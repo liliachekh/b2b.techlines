@@ -1,4 +1,4 @@
-import { useTitle } from "../../hooks/useTitle";
+import { useTitle } from "../../hooks";
 import style from "./termsAndConditions.module.scss";
 import {termsAndConditionsData} from "./termsAndConditionsData.jsx";
 
