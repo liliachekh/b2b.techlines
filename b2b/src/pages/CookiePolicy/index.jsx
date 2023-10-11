@@ -1,4 +1,4 @@
-import { useTitle } from "../../hooks/useTitle";
+import { useTitle } from "../../hooks";
 import style from "./cookiePolicy.module.scss";
 import {cookiePolicyData} from "./cookiePolicyData.jsx";
 

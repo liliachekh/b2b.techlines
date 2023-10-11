@@ -7,7 +7,7 @@ import Loader from "../Loader";
 import { useEffect, useState } from 'react';
 import { shippingFields } from './shippingFields';
 import { initialValuesShippingForm } from '../../utils/vars';
-import { useTitle } from '../../hooks/useTitle';
+import { useTitle } from '../../hooks';
 
 export function ProfileShipping() {
   useTitle('Profile | Shipping');

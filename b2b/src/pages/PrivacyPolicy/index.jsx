@@ -1,4 +1,4 @@
-import { useTitle } from "../../hooks/useTitle";
+import { useTitle } from "../../hooks";
 import style from "./privacyPolicy.module.scss";
 import {privacyPolicyData} from "./privacyPolicyData.jsx";
 

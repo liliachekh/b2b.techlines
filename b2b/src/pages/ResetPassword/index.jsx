@@ -1,7 +1,7 @@
 import style from "./ResetPassword.module.scss";
 import ForgotPassword from "../../components/ForgotPassword";
 import { Link } from "react-router-dom";
-import { useTitle } from "../../hooks/useTitle";
+import { useTitle } from "../../hooks";
 
 export function ResetPassword() {
   useTitle('Reset Password');

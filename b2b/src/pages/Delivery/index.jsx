@@ -1,5 +1,5 @@
 import { DeliveryList } from "../../components/DeliveryList";
-import { useTitle } from "../../hooks/useTitle";
+import { useTitle } from "../../hooks";
 import style from "./delivery.module.scss";
 
 export function Delivery() {

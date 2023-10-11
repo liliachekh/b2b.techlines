@@ -39,12 +39,12 @@ $color-grey-light: #e3e3e3;
   color: $color-dark;
   box-shadow: inset 1px 5px 15px rgba(0, 0, 0, .4);
   box-sizing: border-box;
-  
+
   // @media (min-width: 480px) {
-    //   width: 390px;
-    // }
-    
-    @media (min-width: 768px) {
+  //   width: 390px;
+  // }
+
+  @media (min-width: 768px) {
     // align-self: center;
     // max-width: 500px;
     // min-width: initial;
@@ -298,5 +298,23 @@ $color-grey-light: #e3e3e3;
     border: 2px solid $color-dark;
     outline: none;
     box-sizing: border-box;
+  }
+}
+
+.loading {
+  animation: pressBtn .5s linear infinite;
+}
+
+@keyframes pressBtn {
+  0% {
+    scale: 1;
+  }
+
+  50% {
+    scale: .9;
+  }
+
+  100% {
+    scale: 1;
   }
 }
