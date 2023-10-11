@@ -10,7 +10,7 @@ export default function ProductDetails({ _id, name, currentPrice, brand, itemNo,
   useTitle(name);
   const tierPrice = useTierPrice();
 
-  const handleAddToCart = useAddToCart();
+  const [handleAddToCart, isAdditing] = useAddToCart();
 
   const [amount, setAmount] = useState(1);
 
@@ -65,7 +65,7 @@ export default function ProductDetails({ _id, name, currentPrice, brand, itemNo,
           {!cartItem && (!inCart
           ? <button
             type='button'
-            className={styles.purchase__addToCart}
+              className={`${styles.purchase__addToCart} ${isAdditing && styles.loading}`}
             onClick={() => handleAddToCart(_id, amount)}
             >
             Add to cart
