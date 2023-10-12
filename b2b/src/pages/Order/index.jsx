@@ -14,6 +14,9 @@ import { useSetOrderMutation } from '../../store/api/order.api';
 import { AnimatePresence, motion } from 'framer-motion';
 import { animateModal } from '../../animation';
 import { useTierPrice, useTitle } from '../../hooks';
+import { Helmet } from 'react-helmet-async';
+import { redsysScript } from './redsys';
+import './style.scss';
 
 export function Order() {
   useTitle('Order');
@@ -69,7 +72,7 @@ export function Order() {
       } else {
         await deleteCart().unwrap();
       }
-      
+
       window.open('https://storage.techlines.es/invoices/invoice.pdf', '_blank');
     } catch (error) {
       console.log(error);
@@ -100,6 +103,7 @@ export function Order() {
             </div>
           </motion.div>
         </AnimatePresence>}
+
       <div className={styles.order}>
         <div className={styles.order__container}>
           <h2 className={styles.order__title}>My order</h2>
@@ -143,10 +147,37 @@ export function Order() {
                 fields={shippingOrderFields}
                 callback={onSubmitShipping}
                 submitBtn="Submit" />
+      <div id="card-form" style={{height:'500px'}}/>
+              {/* <div className="cardinfo-card-number">
+                <label className="cardinfo-label" htmlFor="card-number">Numero de tarjeta</label>
+                <div className='input-wrapper' id="card-number"></div>
+              </div>
+              <div className="cardinfo-exp-date">
+                <label className="cardinfo-label" htmlFor="expiration-month">Mes Caducidad (MM)</label>
+                <div className='input-wrapper' id="expiration-month"></div>
+              </div>
+              <div className="cardinfo-exp-date2">
+                <label className="cardinfo-label" htmlFor="expiration-year">Año Caducidad (AA)</label>
+                <div className='input-wrapper' id="expiration-year"></div>
+              </div>
+              <div className="cardinfo-cvv">
+                <label className="cardinfo-label" htmlFor="cvv">CVV</label>
+                <div className='input-wrapper' id="cvv"></div>
+              </div>
+              <div id="boton"></div> */}
+      <form name="datos">
+        <input type="hidden" id="token"></input>
+        <input type="hidden" id="errorCode"></input>
+      </form>
             </div>
           </div>
         </div>
       </div>
+
+      <Helmet>
+        <script>{redsysScript}</script>
+      </Helmet>
+
     </>
   )
 }
