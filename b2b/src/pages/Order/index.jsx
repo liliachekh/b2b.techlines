@@ -4,19 +4,14 @@ import { useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Loader from '../../components/Loader';
-import FormikForm from '../../components/FormikForm';
 import { useChangeAccountMutation, useGetCustomerQuery } from '../../store/api/customers.api';
-import { shippingOrderFields } from './orderFields';
-import { validationSchemaOrderShipping } from '../../validation';
-import { initialValuesShippingForm } from '../../utils/vars';
 import { areObjectsEqual } from '../../utils';
 import { useSetOrderMutation } from '../../store/api/order.api';
 import { AnimatePresence, motion } from 'framer-motion';
 import { animateModal } from '../../animation';
 import { useTierPrice, useTitle } from '../../hooks';
-import { Helmet } from 'react-helmet-async';
-import { redsysScript } from './redsys';
-import './style.scss';
+import { ShippingForm } from '../../components/ShippingForm';
+import { PaymentForm } from '../../components/PaymentForm';
 
 export function Order() {
   useTitle('Order');
@@ -30,6 +25,7 @@ export function Order() {
 
   const navigate = useNavigate();
   const [invoice, setInvoice] = useState(null);
+  const [payment, setPayment] = useState(null);
 
   const totalPrice = Number(cart?.products
     ?.map(({ product: { currentPrice }, cartQuantity }) => tierPrice(currentPrice) * cartQuantity)
@@ -56,7 +52,7 @@ export function Order() {
       delete values?.save;
       delete values?.paymentInfo;
 
-      await setOrder({
+      const { order } = await setOrder({
         customerId: customer._id,
         email: values?.email,
         mobile: values?.telephone,
@@ -66,14 +62,15 @@ export function Order() {
         deliveryPrice: totalPrice > 2500 ? 0 : 35,
       }).unwrap();
 
-
       if (paymentInfo === "IBAN") {
         setInvoice(true);
+        window.open('https://storage.techlines.es/invoices/invoice.pdf', '_blank');
+        // window.open('http://localhost:4000/invoices/invoice.pdf', '_blank');
       } else {
-        await deleteCart().unwrap();
+        setPayment(order);
+        // await deleteCart().unwrap();
       }
 
-      window.open('https://storage.techlines.es/invoices/invoice.pdf', '_blank');
     } catch (error) {
       console.log(error);
     }
@@ -136,48 +133,14 @@ export function Order() {
                     Delivery: <span className={styles.aside__text_amount}>35 €</span>
                   </p>
                 </div>}
-              {/* <ProductCard {...product} cartItem={true} key={product?._id} /></>))} */}
               <Link to='/cart' className={styles.aside__btn}>Back to cart</Link>
             </div>
-            <div className={styles.order__form}>
-              <h3 className={styles.order__subtitle}>Shipping form</h3>
-              <FormikForm
-                initialValues={initialValuesShippingForm}
-                validationSchema={validationSchemaOrderShipping}
-                fields={shippingOrderFields}
-                callback={onSubmitShipping}
-                submitBtn="Submit" />
-      <div id="card-form" style={{height:'500px'}}/>
-              {/* <div className="cardinfo-card-number">
-                <label className="cardinfo-label" htmlFor="card-number">Numero de tarjeta</label>
-                <div className='input-wrapper' id="card-number"></div>
-              </div>
-              <div className="cardinfo-exp-date">
-                <label className="cardinfo-label" htmlFor="expiration-month">Mes Caducidad (MM)</label>
-                <div className='input-wrapper' id="expiration-month"></div>
-              </div>
-              <div className="cardinfo-exp-date2">
-                <label className="cardinfo-label" htmlFor="expiration-year">Año Caducidad (AA)</label>
-                <div className='input-wrapper' id="expiration-year"></div>
-              </div>
-              <div className="cardinfo-cvv">
-                <label className="cardinfo-label" htmlFor="cvv">CVV</label>
-                <div className='input-wrapper' id="cvv"></div>
-              </div>
-              <div id="boton"></div> */}
-      <form name="datos">
-        <input type="hidden" id="token"></input>
-        <input type="hidden" id="errorCode"></input>
-      </form>
-            </div>
+            {!payment
+              ? <ShippingForm onSubmitShipping={onSubmitShipping} />
+              : <PaymentForm orderNo={payment.orderNo} />}
           </div>
         </div>
       </div>
-
-      <Helmet>
-        <script>{redsysScript}</script>
-      </Helmet>
-
     </>
   )
 }

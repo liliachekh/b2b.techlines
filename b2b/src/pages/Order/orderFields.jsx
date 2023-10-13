@@ -109,7 +109,7 @@ export const shippingOrderFields = [
       return (
         <div key="divider">
           <div style={{ height: '2px', background: '#5d5d5d', boxShadow: '1px 5px 10px rgba(0, 0, 0, 0.4)', marginBottom: '2rem' }} />
-          <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>Payment:</h3>
+          <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>Payment type:</h3>
         </div>
       )
     }
