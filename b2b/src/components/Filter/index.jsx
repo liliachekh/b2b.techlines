@@ -22,18 +22,31 @@ function Filter() {
   const handleSearch = (e) => {
     setSearchValue(e.target.value);
   }
+  // мій варіант
+  // const search = useCallback(() => {
+  //   if (debouncedValue?.length >= 3) {
+  //     setSearchParams({ ...params, search: debouncedValue, startPage: 1 });
+  //   } else {
+  //     if (Object.keys(params).filter((param) => param !== 'search').length > 0) {
+  //       const newParams = { ...params };
+  //       delete newParams.search;
+  //       setSearchParams({ ...newParams });
+  //     } else {
+  //       setSearchParams({});
+  //     }
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [debouncedValue])
 
+  // варіант Артема
   const search = useCallback(() => {
     if (debouncedValue?.length >= 3) {
       setSearchParams({ ...params, search: debouncedValue, startPage: 1 });
+    } else if (params.perPage === 25 && params.startPage === 1) {
+      setSearchParams({});
     } else {
-      if (Object.keys(params).filter((param) => param !== 'search').length > 0) {
-        const newParams = { ...params };
-        delete newParams.search;
-        setSearchParams({ ...newParams });
-      } else {
-        setSearchParams({});
-      }
+      delete params.search;
+      setSearchParams({ ...params, startPage: 1 });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedValue])
