@@ -51,7 +51,7 @@ export const customersApi = api.injectEndpoints({
         method: 'GET',
       })
     }),
-    verifyEmail: builder.mutation({
+    requestResetPassword: builder.mutation({
       query: (body) => ({
         url: 'password-reset',
         method: 'POST',
@@ -59,7 +59,14 @@ export const customersApi = api.injectEndpoints({
       }),
       // invalidatesTags: ['Customers']
     }),
+    resetPassword: builder.mutation({
+      query: (body) => ({
+        url: 'password-reset/new-password/:token/:id',
+        method: 'POST',
+        body: body
+      }),
+    })
   })
 })
 
-export const { useLogInMutation, useLogOutMutation, useGetCustomerQuery, useChangeAccountMutation, useChangePasswordMutation, useGetLoggedInQuery, useVerifyEmailMutation } = customersApi;
+export const { useLogInMutation, useLogOutMutation, useGetCustomerQuery, useChangeAccountMutation, useChangePasswordMutation, useGetLoggedInQuery, useRequestResetPasswordMutation, useResetPasswordMutation } = customersApi;

@@ -1,14 +1,44 @@
 import style from "./CreateNewPassword.module.scss";
 import FormikForm from "../../components/FormikForm";
+import { useState, useEffect } from "react";
 import { validationSchemaPassword } from "../../validation";
 import { createNewPasswordFormFields } from "./createNewPasswordFields";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useParams, Navigate, useNavigate } from "react-router-dom";
+// import { useResetPasswordMutation } from "../../store/api/customers.api";
 
 export function CreateNewPassword() {
 
+  const [validUrl, setValidUrl] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [error, setError] = useState("");
+  const param = useParams();
+  const url = `http://localhost:4000/api/password-reset/new-password/${param.token}/${param.id}`;
+
+  useEffect(() => {
+		const verifyUrl = async () => {
+			try {
+				const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        if (response.ok) {
+          setValidUrl(true);
+        } else {
+          setValidUrl(false);
+        }
+      } catch (error) {
+        setValidUrl(false);
+      }
+    };
+    verifyUrl();
+  }, [param, url]);
 
     return (
-        <div className={style.loginForm}>
+      <>
+        {validUrl ? (
+          <div className={style.loginForm}>
           <div className={style.loginForm__container}>
             {/* {error && <div className={style.loginForm__errorMessage}>We couldn’t find an account matching the email and password you entered.</div>} */}
             <main className={style.loginForm__main}>
@@ -27,7 +57,7 @@ export function CreateNewPassword() {
                   }}
                   validationSchema={validationSchemaPassword}
                   fields={createNewPasswordFormFields}
-                //   callback={onSubmitHandler}
+                  // callback={onSubmitHandler}
                   submitBtn="Submit"
                 />
               </div>
@@ -45,5 +75,9 @@ export function CreateNewPassword() {
             </footer>
           </div>
         </div>
+        ) : (
+          <h1>404 Not Found</h1>
+      )}
+      </>
       );
 }

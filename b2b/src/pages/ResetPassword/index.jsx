@@ -4,17 +4,17 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { validationSchemaRegisteredEmail } from "../../validation";
 import { resetPasswordFormFields } from "./resetPasswordFormFields";
-import { useVerifyEmailMutation } from "../../store/api/customers.api";
+import { useRequestResetPasswordMutation } from "../../store/api/customers.api";
 
 export function ResetPassword() {
 
     const [error, setError] = useState(false);
-    const [verifyEmail] = useVerifyEmailMutation();
+    const [requestResetPassword] = useRequestResetPasswordMutation();
 
     async function onSubmitHandler(values) {
         console.log(values);
         try {
-          await verifyEmail(values);
+          await requestResetPassword(values);
         } catch (error) {
           setError(true)
           console.log(error);

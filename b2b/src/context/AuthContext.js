@@ -15,7 +15,7 @@ function AuthContextProvider(props) {
     const data = await fetch(`${baseUrl}customers/loggedIn`, { method: 'GET', credentials: 'include' });
     const res = await data.json();
 
-    if (!res && pathname !== '/password-reset') {
+    if (!res && pathname !== '/password-reset' && pathname !== '/password-reset/new-password') {
       navigate("/login")
       setLoggedIn(false);
     } else {
