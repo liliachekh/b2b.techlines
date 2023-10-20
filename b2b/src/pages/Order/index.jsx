@@ -1,6 +1,6 @@
 import styles from './Order.module.scss';
 import { useDeleteCartMutation, useGetCartQuery } from "../../store/api/cart.api";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Loader from '../../components/Loader';
@@ -20,18 +20,22 @@ export function Order() {
   const { data: customer = {}, isLoading: customerLoading } = useGetCustomerQuery();
   const { data: cart = {}, isLoading: cartLoading } = useGetCartQuery();
   const [changeAccount] = useChangeAccountMutation();
-  const [setOrder, { isLoading: orderLoading }] = useSetOrderMutation();
+  const [placeOrder, { isLoading: orderLoading }] = useSetOrderMutation();
   const [deleteCart, { isLoading: cartDeleteing }] = useDeleteCartMutation();
 
   const navigate = useNavigate();
   const [invoice, setInvoice] = useState(null);
-  const [payment, setPayment] = useState(null);
+  const [order, setOrder] = useState(null);
+  const [token, setToken] = useState(null);
+  const [error, setError] = useState(null);
 
   const totalPrice = Number(cart?.products
     ?.map(({ product: { currentPrice }, cartQuantity }) => tierPrice(currentPrice) * cartQuantity)
-    ?.reduce((prev, next) => prev + next).toFixed(2))
+    ?.reduce((prev, next) => prev + next)
+    .toFixed(2))
 
   async function closeInvoice() {
+    setInvoice(false);
     await deleteCart().unwrap();
     navigate('/');
   }
@@ -52,7 +56,7 @@ export function Order() {
       delete values?.save;
       delete values?.paymentInfo;
 
-      const { order } = await setOrder({
+      const { order } = await placeOrder({
         customerId: customer._id,
         email: values?.email,
         mobile: values?.telephone,
@@ -67,7 +71,7 @@ export function Order() {
         window.open('https://storage.techlines.es/invoices/invoice.pdf', '_blank');
         // window.open('http://localhost:4000/invoices/invoice.pdf', '_blank');
       } else {
-        setPayment(order);
+        setOrder(order);
         // await deleteCart().unwrap();
       }
 
@@ -75,6 +79,10 @@ export function Order() {
       console.log(error);
     }
   }
+
+  useEffect(() => {
+    console.log(token);
+  }, [token, error])
 
   if (cartLoading || customerLoading || orderLoading || cartDeleteing) return <Loader />
 
@@ -135,9 +143,9 @@ export function Order() {
                 </div>}
               <Link to='/cart' className={styles.aside__btn}>Back to cart</Link>
             </div>
-            {!payment
+            {!order
               ? <ShippingForm onSubmitShipping={onSubmitShipping} />
-              : <PaymentForm orderNo={payment.orderNo} />}
+              : <PaymentForm orderNo={order.orderNo} onAuth={setToken}/>}
           </div>
         </div>
       </div>
