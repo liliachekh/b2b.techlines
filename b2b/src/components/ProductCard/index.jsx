@@ -4,12 +4,11 @@ import { Link } from 'react-router-dom';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useEffect, useState } from 'react';
-import { Arrow, Cart } from '../icons';
 import { useDeleteFromCartMutation } from '../../store/api/cart.api';
-import { useAddToCart, useAmountChange, useInCart, useIncrease, useTierPrice } from '../../hooks';
+import { useAmountChange, useInCart, useIncrease, useTierPrice } from '../../hooks';
+import AddToCartBtn from '../AddToCartBtn';
 
-function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, brand, itemNo, productUrl, displayTable, cartItem, orderQuantity }) {
-  const [handleAddToCart, isAdditing] = useAddToCart();
+function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, brand, enabled, productUrl, displayTable, cartItem, orderQuantity }) {
   const [deleteFromCart, { isLoading: isDeleting }] = useDeleteFromCartMutation();
   const tierPrice = useTierPrice();
 
@@ -62,7 +61,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
             type='button'
             disabled={amount === 1}
             className={`${styles.amount__btn} ${styles.amount__btn_decrease} `}
-            onClick={amount > 1 ? (e) => increase(false) : null} />
+            onClick={amount > 1 ? () => increase(false) : null} />
           <input
             name={name}
             type="number"
@@ -73,7 +72,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
             type='button'
             disabled={amount === quantity}
             className={`${styles.amount__btn} ${styles.amount__btn_increase} `}
-            onClick={(e) => increase(true)} />
+            onClick={() => increase(true)} />
         </div>
         <div className={`${styles.purchase__price} ${styles.purchase__price_total} `}>
           {(tierPrice(currentPrice) * amount)?.toFixed(2)} €
@@ -171,22 +170,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
         <div className={`${styles.purchase__price} ${styles.purchase__price_total} `}>
           {(tierPrice(currentPrice) * amount)?.toFixed(2)} €
         </div>
-        {!inCart
-          ?
-          <button
-            type='button'
-            className={`${styles.purchase__addToCart} ${isAdditing && styles.loading}`}
-            onClick={() => handleAddToCart(_id, amount)}>
-            Add to cart
-            <Cart color={'#f7fbfa'} width={20} height={20} strokeWidth={'2'} />
-          </button>
-          :
-          <Link
-            to='/cart'
-            className={`${styles.purchase__addToCart} ${styles.purchase__addToCart_added} `}>
-            Go to cart
-            <Arrow fill={'#f7fbfa'} width={20} height={20} />
-          </Link>}
+        <AddToCartBtn id={_id} enabled={enabled} amount={amount} displayTable={displayTable} />
       </div>
     </div >
   );
@@ -196,20 +180,22 @@ ProductCard.propTypes = {
   _id: PropTypes.string.isRequired,
   imageUrls: PropTypes.arrayOf(PropTypes.string),
   quantity: PropTypes.number,
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
   currentPrice: PropTypes.number,
-  categories: PropTypes.string,
-  brand: PropTypes.string,
-  itemNo: PropTypes.string,
+  categories: PropTypes.string.isRequired,
+  brand: PropTypes.string.isRequired,
   displayTable: PropTypes.bool,
-  cartItem: PropTypes.bool
+  cartItem: PropTypes.bool,
+  orderQuantity: PropTypes.number
 };
 
 ProductCard.defaultProps = {
   imageUrls: [],
   quantity: 0,
   currentPrice: 0,
+  displayTable: false,
   cartItem: false,
+  orderQuantity: 0,
 };
 
 export default ProductCard;
