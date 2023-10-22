@@ -36,7 +36,7 @@ export default function Router() {
       </Route>
       <Route path="/login" element={<LoginForm />} />
       <Route path="/password-reset" element={<ResetPassword />} />
-      <Route path="/password-reset/new-password" element={<CreateNewPassword/>} />
+      <Route path="/password-reset/new-password/:token/:id" element={<CreateNewPassword/>} />
       <Route path="/not-found" element={<NotFound />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

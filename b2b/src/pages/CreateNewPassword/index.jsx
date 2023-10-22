@@ -3,30 +3,34 @@ import FormikForm from "../../components/FormikForm";
 import { useState, useEffect } from "react";
 import { validationSchemaPassword } from "../../validation";
 import { createNewPasswordFormFields } from "./createNewPasswordFields";
-import { Link, useParams, Navigate, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 // import { useResetPasswordMutation } from "../../store/api/customers.api";
 
 export function CreateNewPassword() {
 
   const [validUrl, setValidUrl] = useState(false);
-  const [msg, setMsg] = useState("");
-  const [error, setError] = useState("");
+  // const [msg, setMsg] = useState("");
+  // const [error, setError] = useState("");
+  const navigate = useNavigate();
   const param = useParams();
   const url = `http://localhost:4000/api/password-reset/new-password/${param.token}/${param.id}`;
 
   useEffect(() => {
-		const verifyUrl = async () => {
-			try {
-				const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        if (response.ok) {
-          setValidUrl(true);
-        } else {
-          setValidUrl(false);
+    const verifyUrl = async () => {
+      try {
+        if (param?.token && param?.id) {
+          const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          if (response.ok) {
+            console.log(response);
+            setValidUrl(true);
+          } else {
+            navigate("/not-found");
+          }
         }
       } catch (error) {
         setValidUrl(false);
@@ -34,13 +38,14 @@ export function CreateNewPassword() {
     };
     verifyUrl();
   }, [param, url]);
+  console.log(param.token);
+  console.log(validUrl);
 
     return (
-      <>
-        {validUrl ? (
           <div className={style.loginForm}>
           <div className={style.loginForm__container}>
-            {/* {error && <div className={style.loginForm__errorMessage}>We couldn’t find an account matching the email and password you entered.</div>} */}
+            {validUrl && 
+            <>
             <main className={style.loginForm__main}>
               <div className={style.loginForm__logo}>
                 <img
@@ -72,12 +77,8 @@ export function CreateNewPassword() {
                   OTHERSITE STUDIO
                 </Link>
               </p>
-            </footer>
+            </footer> </>}
           </div>
         </div>
-        ) : (
-          <h1>404 Not Found</h1>
-      )}
-      </>
       );
 }
