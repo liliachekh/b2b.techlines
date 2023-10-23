@@ -38,8 +38,8 @@ export function CreateNewPassword() {
     };
     verifyUrl();
   }, [param, url]);
-  console.log(param.token);
-  console.log(validUrl);
+  // console.log(param.token);
+  // console.log(validUrl);
 
     return (
           <div className={style.loginForm}>

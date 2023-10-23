@@ -1,30 +1,46 @@
 import style from "./ResetPassword.module.scss";
 import ForgotPassword from "../../components/ForgotPassword";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { validationSchemaRegisteredEmail } from "../../validation";
 import { resetPasswordFormFields } from "./resetPasswordFormFields";
 import { useRequestResetPasswordMutation } from "../../store/api/customers.api";
 
 export function ResetPassword() {
-
-    const [error, setError] = useState(false);
+    const [msg, setMsg] = useState(null);
+    const [error, setError] = useState(null);
     const [requestResetPassword] = useRequestResetPasswordMutation();
 
     async function onSubmitHandler(values) {
         console.log(values);
         try {
-          await requestResetPassword(values);
+          const response = await requestResetPassword(values);
+          console.log(response)
+          if (response.data) {
+            setMsg(true);
+          } else {
+            setError(true);
+          }
         } catch (error) {
-          setError(true)
+        //   setError(true)
           console.log(error);
         }
     }
+    useEffect(() => {
+        if (error || msg) {
+          const timer = setTimeout(() => {
+            setError(null);
+            setMsg(null);
+            clearTimeout(timer);
+          }, 2500);
+        }
+      }, [error, msg])
 
     return (
         <div className={style.resetForm}>
             <div className={style.resetForm__container}>
             {error && <div className={style.resetForm__errorMessage}>We couldn’t find an account matching the email you entered.</div>}
+            {msg && <div className={style.resetForm__successMessage}>Password reset link sent to your email account.</div>}
                 <main className={style.resetForm__main}>
                     <Link to="/login">
                     <div className={style.resetForm__logo}>
