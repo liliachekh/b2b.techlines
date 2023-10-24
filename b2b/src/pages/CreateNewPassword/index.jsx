@@ -1,7 +1,7 @@
 import style from "./CreateNewPassword.module.scss";
 import FormikForm from "../../components/FormikForm";
 import { useState, useEffect } from "react";
-import { validationSchemaPassword } from "../../validation";
+import { validationSchemaNewPassword } from "../../validation";
 import { createNewPasswordFormFields } from "./createNewPasswordFields";
 import { Link, useParams, useNavigate } from "react-router-dom";
 // import { useResetPasswordMutation } from "../../store/api/customers.api";
@@ -9,8 +9,9 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 export function CreateNewPassword() {
 
   const [validUrl, setValidUrl] = useState(false);
-  // const [msg, setMsg] = useState("");
-  // const [error, setError] = useState("");
+  const [msg, setMsg] = useState(null);
+  const [error, setError] = useState(null);
+  // const [resetPassword] = useResetPasswordMutation();
   const navigate = useNavigate();
   const param = useParams();
   const url = `http://localhost:4000/api/password-reset/new-password/${param.token}/${param.id}`;
@@ -41,6 +42,29 @@ export function CreateNewPassword() {
   // console.log(param.token);
   // console.log(validUrl);
 
+  async function onSubmitHandler({ password }) {
+    try {
+      console.log(password);
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        body: JSON.stringify({ password: password }),
+        },
+      });
+      if (res.ok) {
+        console.log(res);
+        setMsg(true);
+        // navigate("/login");
+      } else {
+        setError(res.message);
+      }
+    } catch (error) {
+      setError(error);
+    }
+  }
+
+
     return (
           <div className={style.loginForm}>
           <div className={style.loginForm__container}>
@@ -60,9 +84,9 @@ export function CreateNewPassword() {
                     password: "",
                     confPassword: "",
                   }}
-                  validationSchema={validationSchemaPassword}
+                  validationSchema={validationSchemaNewPassword}
                   fields={createNewPasswordFormFields}
-                  // callback={onSubmitHandler}
+                  callback={onSubmitHandler}
                   submitBtn="Submit"
                 />
               </div>
