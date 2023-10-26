@@ -49,8 +49,8 @@ export function CreateNewPassword() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-        body: JSON.stringify({ password: password }),
         },
+        body: JSON.stringify({ password: password }),
       });
       if (res.ok) {
         console.log(res);
@@ -62,6 +62,7 @@ export function CreateNewPassword() {
     } catch (error) {
       setError(error);
     }
+    console.log(msg);
   }
 
 
