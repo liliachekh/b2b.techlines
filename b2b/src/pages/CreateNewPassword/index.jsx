@@ -38,13 +38,10 @@ export function CreateNewPassword() {
       }
     };
     verifyUrl();
-  }, [param, url]);
-  // console.log(param.token);
-  // console.log(validUrl);
+  }, [param, url, navigate]);
 
   async function onSubmitHandler({ password }) {
     try {
-      console.log(password);
       const res = await fetch(url, {
         method: 'POST',
         headers: {
@@ -55,15 +52,29 @@ export function CreateNewPassword() {
       if (res.ok) {
         console.log(res);
         setMsg(true);
-        // navigate("/login");
       } else {
         setError(res.message);
       }
     } catch (error) {
       setError(error);
     }
-    console.log(msg);
   }
+
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError(null);
+        clearTimeout(timer);
+      }, 2500);
+    }
+    if (msg) {
+      const timer = setTimeout(() => {
+        setMsg(null);
+        clearTimeout(timer);
+        navigate("/login");
+      }, 2500);
+    }
+  }, [error, msg, navigate]);
 
 
     return (
@@ -71,6 +82,8 @@ export function CreateNewPassword() {
           <div className={style.loginForm__container}>
             {validUrl && 
             <>
+            {error && <div className={style.loginForm__errorMessage}>Something went wrong, try again.</div>}
+            {msg && <div className={style.loginForm__successMessage}>Your password updated successfully.</div>}
             <main className={style.loginForm__main}>
               <div className={style.loginForm__logo}>
                 <img
