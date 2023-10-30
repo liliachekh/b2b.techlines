@@ -124,7 +124,7 @@ export const shippingOrderFields = [
   },
   {
     tagType: 'regular',
-    label: "CARD",
+    label: "CARD + 1.7%",
     id: "CARD",
     name: "paymentInfo",
     type: "radio",

@@ -1,19 +1,26 @@
 
 
-export const redsysScript = (orderNo) => (`
-      function merchantValidationEjemplo() {
+export const redsysScript = (orderNo, totalPrice) => (`
+function merchantValidationEjemplo() {
   //Insertar validaciones…
   alert("Esto son validaciones propias");
   return true;
 }
+const req = (token) => ({
+  "DS_MERCHANT_AMOUNT": "${totalPrice}",
+  "DS_MERCHANT_CURRENCY": "978",
+  "DS_MERCHANT_IDOPER": token,
+  "DS_MERCHANT_MERCHANTCODE": "999008881",
+  "DS_MERCHANT_ORDER": "${orderNo}",
+  "DS_MERCHANT_TERMINAL": "1",
+  "DS_MERCHANT_TRANSACTIONTYPE": "0"
+})
 
-window.addEventListener("message", function receiveMessage(event) {
+window.addEventListener("message", async function receiveMessage(event) {
   storeIdOper(event, "token", "errorCode", merchantValidationEjemplo);
+  fetch('',)
+  console.log(req(token.value))
 });
-
-function pedido() {
-  return "pedido" + Math.floor((Math.random() * 1000) + 1);
-}
 
 var insiteJSON = {
   "id": "card-form",

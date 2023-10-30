@@ -1,6 +1,6 @@
 import styles from './Order.module.scss';
 import { useDeleteCartMutation, useGetCartQuery } from "../../store/api/cart.api";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Loader from '../../components/Loader';
@@ -9,7 +9,7 @@ import { areObjectsEqual } from '../../utils';
 import { useSetOrderMutation } from '../../store/api/order.api';
 import { AnimatePresence, motion } from 'framer-motion';
 import { animateModal } from '../../animation';
-import { useTierPrice, useTitle } from '../../hooks';
+import { useTierPrice, useTitle, useTotalPrice } from '../../hooks';
 import { ShippingForm } from '../../components/ShippingForm';
 import { PaymentForm } from '../../components/PaymentForm';
 
@@ -26,13 +26,14 @@ export function Order() {
   const navigate = useNavigate();
   const [invoice, setInvoice] = useState(null);
   const [order, setOrder] = useState(null);
-  const [token, setToken] = useState(null);
-  const [error, setError] = useState(null);
+  const [paymentInfo, setPaymentInfo] = useState(null);
 
-  const totalPrice = Number(cart?.products
-    ?.map(({ product: { currentPrice }, cartQuantity }) => tierPrice(currentPrice) * cartQuantity)
-    ?.reduce((prev, next) => prev + next)
-    .toFixed(2))
+  const { totalPrice, totalPriceByCard, deliveryPrice } = useTotalPrice();
+
+  // const totalPrice = Number(cart?.products
+  //   ?.map(({ product: { currentPrice }, cartQuantity }) => tierPrice(currentPrice) * cartQuantity)
+  //   ?.reduce((prev, next) => prev + next)
+  //   .toFixed(2))
 
   async function closeInvoice() {
     setInvoice(false);
@@ -53,6 +54,7 @@ export function Order() {
       }
 
       const paymentInfo = values?.paymentInfo;
+      setPaymentInfo(paymentInfo);
       delete values?.save;
       delete values?.paymentInfo;
 
@@ -63,7 +65,7 @@ export function Order() {
         deliveryAddress: values,
         paymentInfo,
         status: 'payment required',
-        deliveryPrice: totalPrice > 2500 ? 0 : 35,
+        deliveryPrice: deliveryPrice,
       }).unwrap();
 
       if (paymentInfo === "IBAN") {
@@ -79,10 +81,6 @@ export function Order() {
       console.log(error);
     }
   }
-
-  useEffect(() => {
-    console.log(token);
-  }, [token, error])
 
   if (cartLoading || customerLoading || orderLoading || cartDeleteing) return <Loader />
 
@@ -114,7 +112,11 @@ export function Order() {
           <h2 className={styles.order__title}>My order</h2>
           <div className={styles.order__wrapper}>
             <div className={`${styles.order__aside} ${styles.aside}`}>
-              <h3 className={styles.aside__title}>Order Total: <span className={styles.aside__totalPrice}>{totalPrice > 2500 ? totalPrice : totalPrice + 35} €</span></h3>
+              {/* <h3 className={styles.aside__title}>Order Total: <span className={styles.aside__totalPrice}>{totalPrice > 2500 ? totalPrice : totalPrice + 35} €</span></h3> */}
+              <h3 className={styles.aside__title}>
+                {/* Order Total: <span className={styles.aside__totalPrice}>{totalPrice} €</span> */}
+                Order Total: <span className={styles.aside__totalPrice}> {paymentInfo === "CARD" ? totalPriceByCard : totalPrice} €</span>
+              </h3>
               <h3 className={styles.aside__title}>Order List:</h3>
               {cart?.products?.map(({ product: { name, currentPrice }, cartQuantity }) => (
                 <div className={styles.aside__item} key={name}>
@@ -132,7 +134,7 @@ export function Order() {
                   </p>
                 </div>
               ))}
-              {totalPrice <= 2500 &&
+              {deliveryPrice &&
                 <div className={styles.aside__item}>
                   <p className={styles.aside__text}>
                     For orders with a total value of more than €2.500, ALC ZOOM will assume the shipping costs.
@@ -145,7 +147,9 @@ export function Order() {
             </div>
             {!order
               ? <ShippingForm onSubmitShipping={onSubmitShipping} />
-              : <PaymentForm orderNo={order.orderNo} onAuth={setToken}/>}
+              : <PaymentForm
+                orderNo={order.orderNo}
+                totalPrice={paymentInfo === "CARD" ? totalPriceByCard : totalPrice} />}
           </div>
         </div>
       </div>

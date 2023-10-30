@@ -3,56 +3,59 @@ import styles from './paymentForm.module.scss';
 import { redsysScript } from '../../pages/Order/redsys';
 import { useEffect, useRef, useState } from 'react';
 
-export function PaymentForm({ orderNo, onAuth }) {
+export function PaymentForm({ orderNo, totalPrice }) {
   const tokenRef = useRef(null);
   const errorCodeRef = useRef(null);
 
-  const [hiddenInputValue, setHiddenInputValue] = useState('')
+  function merchantValidationEjemplo() {
+    //Insertar validaciones…
+    alert("Esto son validaciones propias");
+    return true;
+  }
+  const req = (token) => ({
+    "DS_MERCHANT_AMOUNT": `"${totalPrice}"`,
+    "DS_MERCHANT_CURRENCY": "978",
+    "DS_MERCHANT_IDOPER": `"${token}"`,
+    "DS_MERCHANT_MERCHANTCODE": "999008881",
+    "DS_MERCHANT_ORDER": "${orderNo}",
+    "DS_MERCHANT_TERMINAL": "1",
+    "DS_MERCHANT_TRANSACTIONTYPE": "0"
+  })
 
-  useEffect(() => {
-  },[])
-  // let previousValue = tokenRef.current.value;
+  window.addEventListener("message", async function receiveMessage(event) {
+    console.log(event)
+    // console.log(req(token.value))
+  });
 
-  // // 1: create `MutationObserver` instance
-  // const observer = new MutationObserver((mutations) => {
-  //   // 2: iterate over `MutationRecord` array
-  //   mutations.forEach(mutation => {
-  //     // 3.1: check if the mutation type and the attribute name match
-  //     // 3.2: check if value changed
-  //     if (
-  //       mutation.type === 'attributes'
-  //       && mutation.attributeName === 'value'
-  //       && tokenRef.current.value !== previousValue
-  //     ) {
-  //       previousValue = tokenRef.current.value;
-  //       // 3.4: trigger `change` event
-  //       tokenRef.current.dispatchEvent(new Event('change'));
-  //     }
-  //   });
-  // });
+  var insiteJSON = {
+    "id": "card-form",
+    "fuc": "999008881",
+    "terminal": "1",
+    "order": orderNo,
+    "estiloInsite": "twoRows",
+    "idioma": "2",
+    "mostrarLogo": "false",
+    "buttonValue": "BUY",
+    "styleButton": "color:#f7fbfa; background-color: #202025;",
+    "styleGroup": "background-color: red;",
+    "styleBox": "border-radius: .3rem; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4)",
+  }
 
-  // 4: observe changes on `hiddenInput`
-  // observer.observe(tokenRef.current, { attributes: true });
-  const handleInputChange = (e) => {
-    const newValue = e.target.value;
-    setHiddenInputValue(newValue);
-    console.log(newValue);
-  };
+  // getInSiteFormJSON(insiteJSON);
+
   return (
     <div className={styles.form}>
       <Helmet>
-        <script>{redsysScript(orderNo)}</script>
+        <script>{redsysScript(orderNo, totalPrice)}</script>
       </Helmet>
       <h3 className={styles.form__title}>Payment form</h3>
       <div id="card-form" style={{ height: '400px' }} />
+
       <form name="datos" onChange={(e)=>console.log(e)}>
-        <input ref={tokenRef} type="hidden" id="token" value={hiddenInputValue} onInput={(e) => { console.log("React:onChange"); }}></input>
-        {/* <input ref={tokenRef} type="hidden" id="token" value={hiddenInputValue} onChange={handleInputChange}></input> */}
-        {/* <input ref={tokenRef} type="hidden" id="token" value={value}></input> */}
-        {/* <input ref={tokenRef} type="hidden" id="token" value={value} onChange={(e) => onAuth(e.target.value)}></input> */}
+        <input ref={tokenRef} type="hidden" id="token"></input>
         <input ref={errorCodeRef} type="hidden" id="errorCode"></input>
       </form>
-      <button onClick={() => { console.log(tokenRef.current.value)}}>btn</button>
+      <button onClick={() => { console.log(tokenRef.current.value) }}>{totalPrice}</button>
     </div>
   )
 }
