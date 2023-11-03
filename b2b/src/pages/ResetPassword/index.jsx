@@ -12,10 +12,8 @@ export function ResetPassword() {
     const [requestResetPassword] = useRequestResetPasswordMutation();
 
     async function onSubmitHandler(values) {
-        console.log(values);
         try {
           const response = await requestResetPassword(values);
-          console.log(response)
           if (response.data) {
             setMsg(true);
           } else {
@@ -27,7 +25,6 @@ export function ResetPassword() {
     }
     useEffect(() => {
         if (error || msg) {
-          console.log(error);
           const timer = setTimeout(() => {
             setError(null);
             setMsg(null);

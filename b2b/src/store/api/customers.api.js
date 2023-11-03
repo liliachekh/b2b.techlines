@@ -59,20 +59,7 @@ export const customersApi = api.injectEndpoints({
       }),
       // invalidatesTags: ['Customers']
     }),
-    verifyUrl: builder.query({
-      query: () => ({
-        url: 'password-reset/new-password/:token/:id',
-        method: 'GET',
-      })
-    }),
-    resetPassword: builder.mutation({
-      query: (body) => ({
-        url: 'password-reset/new-password/:token/:id',
-        method: 'POST',
-        body: body
-      }),
-    })
   })
 })
 
-export const { useLogInMutation, useLogOutMutation, useGetCustomerQuery, useChangeAccountMutation, useChangePasswordMutation, useGetLoggedInQuery, useRequestResetPasswordMutation, useVerifyUrlQuery ,useResetPasswordMutation } = customersApi;
+export const { useLogInMutation, useLogOutMutation, useGetCustomerQuery, useChangeAccountMutation, useChangePasswordMutation, useGetLoggedInQuery, useRequestResetPasswordMutation } = customersApi;

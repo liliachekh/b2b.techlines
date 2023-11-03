@@ -4,14 +4,12 @@ import { useState, useEffect } from "react";
 import { validationSchemaNewPassword } from "../../validation";
 import { createNewPasswordFormFields } from "./createNewPasswordFields";
 import { Link, useParams, useNavigate } from "react-router-dom";
-// import { useResetPasswordMutation } from "../../store/api/customers.api";
 
 export function CreateNewPassword() {
 
   const [validUrl, setValidUrl] = useState(false);
   const [msg, setMsg] = useState(null);
   const [error, setError] = useState(null);
-  // const [resetPassword] = useResetPasswordMutation();
   const navigate = useNavigate();
   const param = useParams();
   const url = `http://localhost:4000/api/password-reset/new-password/${param.token}/${param.id}`;
@@ -27,7 +25,6 @@ export function CreateNewPassword() {
             },
           });
           if (response.ok) {
-            console.log(response);
             setValidUrl(true);
           } else {
             navigate("/not-found");
@@ -50,7 +47,6 @@ export function CreateNewPassword() {
         body: JSON.stringify({ password: password }),
       });
       if (res.ok) {
-        console.log(res);
         setMsg(true);
       } else {
         setError(res.message);

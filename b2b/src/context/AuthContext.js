@@ -14,9 +14,10 @@ function AuthContextProvider(props) {
   const LogIn = useCallback(async () => {
     const data = await fetch(`${baseUrl}customers/loggedIn`, { method: 'GET', credentials: 'include' });
     const res = await data.json();
+    const isResetPassword = pathname.includes('/password-reset');
 
-    if (!res && pathname !== '/password-reset' && pathname !== '/password-reset/new-password/:token/:id') {
-      // navigate("/login")
+    if (!res && !isResetPassword && pathname !== '/not-found') {
+      navigate("/login")
       setLoggedIn(false);
     } else {
       setLoggedIn(res);
