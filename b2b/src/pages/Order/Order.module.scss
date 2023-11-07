@@ -15,6 +15,15 @@ $color-accent: #f92e3e;
     box-sizing: border-box;
   }
 
+  &__content>&__title {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+  }
+
+  &__content &__totalPrice {
+    font-size: 1.5rem;
+  }
+
   &__title {
     margin-bottom: 2rem;
     font-size: 1.5rem;
@@ -43,7 +52,12 @@ $color-accent: #f92e3e;
   }
 
   &__aside {
-    flex: 1 0 35%
+    flex: 1 0 35%;
+    order: 2;
+
+    @media (min-width: 768px) {
+      order: unset;
+    }
   }
 
   &__form {
@@ -228,6 +242,10 @@ $color-accent: #f92e3e;
 
   &__title {
     font-size: 1.2rem;
+  }
+
+  &__totalPrice {
+    font-size: 1.5rem;
   }
 
   &__item {

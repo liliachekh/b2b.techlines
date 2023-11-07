@@ -1,7 +1,10 @@
+import { useTitle } from "../../hooks";
 import style from "./privacyPolicy.module.scss";
 import {privacyPolicyData} from "./privacyPolicyData.jsx";
 
 export function PrivacyPolicy() {
+  useTitle('Privacy Policy');
+
   return (
       <section className={style.privacyPolicy}>
         <div className={style.privacyPolicy__container}>

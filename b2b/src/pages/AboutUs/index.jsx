@@ -1,6 +1,9 @@
+import { useTitle } from "../../hooks";
 import style from "./aboutUs.module.scss";
 
 export function AboutUs() {
+  useTitle('About Us');
+
   return (
       <section className={style.aboutUs}>
         <div className={style.aboutUs__container}>

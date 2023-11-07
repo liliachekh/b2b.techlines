@@ -1,7 +1,10 @@
 import { DeliveryList } from "../../components/DeliveryList";
+import { useTitle } from "../../hooks";
 import style from "./delivery.module.scss";
 
 export function Delivery() {
+  useTitle('Delivery');
+
   return (
       <section className={style.delivery}>
         <div className={style.delivery__container}>

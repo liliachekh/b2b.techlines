@@ -1,10 +1,10 @@
 import { useSetCartMutation, useGetCartQuery } from "../store/api/cart.api";
 
 export function useAddToCart() {
-  const [setCart] = useSetCartMutation();
+  const [setCart, { isLoading }] = useSetCartMutation();
   const { data: cart = {} } = useGetCartQuery();
 
-  return async (id, amount) => {
+  return [async (id, amount) => {
     if (cart?.products.length > 0) {
       const newCart = cart?.products.map(({ product, cartQuantity }) => {
         if (product._id === id) return {
@@ -20,5 +20,5 @@ export function useAddToCart() {
     } else {
       await setCart({ products: { product: id, cartQuantity: amount } }).unwrap();
     }
-  }
+  }, isLoading]
 }

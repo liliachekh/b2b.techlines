@@ -720,3 +720,19 @@ $color-grey: #5d5d5d;
     }
   }
 }
+
+.loading {
+  animation: pressBtn .5s linear infinite;
+}
+
+@keyframes pressBtn {
+  0% {
+    scale: 1;
+  }
+  50% {
+    scale: .9;
+  }
+  100% {
+    scale: 1;
+  }
+}

@@ -1,7 +1,10 @@
+import { useTitle } from "../../hooks";
 import style from "./cookiePolicy.module.scss";
 import {cookiePolicyData} from "./cookiePolicyData.jsx";
 
 export function CookiePolicy() {
+  useTitle('Cookie Policy');
+
   return (
       <section className={style.cookiePolicy}>
         <div className={style.cookiePolicy__container}>

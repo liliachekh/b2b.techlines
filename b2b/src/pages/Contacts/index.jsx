@@ -1,7 +1,10 @@
+import { useTitle } from "../../hooks";
 import style from "./contacts.module.scss"
 import { contacts } from "./contactsFields"
 
 export function Contacts () {
+  useTitle('Contacts');
+
   return (
       <section className={style.contacts}>
       <div className={style.contacts__container}>

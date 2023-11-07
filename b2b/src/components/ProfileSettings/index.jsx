@@ -5,8 +5,10 @@ import FormikForm from '../FormikForm';
 import { validationSchemaAccount, validationSchemaPassword } from '../../validation';
 import Loader from "../../components/Loader";
 import { useEffect, useState } from 'react';
+import { useTitle } from '../../hooks';
 
 export function ProfileSettings() {
+  useTitle('Profile | Settings');
   const { data: customer = {}, isLoading } = useGetCustomerQuery();
   const [changePassword] = useChangePasswordMutation();
   const [changeAccount] = useChangeAccountMutation();

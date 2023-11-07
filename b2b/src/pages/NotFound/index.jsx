@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import style from './notFound.module.scss';
 import { useLocation } from 'react-router-dom';
+import { useTitle } from '../../hooks';
 
 export function NotFound() {
+  useTitle('Not Found');
   const location = useLocation();
 
   return (
