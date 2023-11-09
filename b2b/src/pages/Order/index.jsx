@@ -155,6 +155,7 @@ export function Order() {
             {!order
               ? <ShippingForm onSubmitShipping={onSubmitShipping} />
               : <PaymentForm
+                setOrder={setOrder}
                 orderNo={order.orderNo}
                 totalPrice={paymentInfo === "CARD" ? totalPriceByCard : totalPrice} />}
           </div>
