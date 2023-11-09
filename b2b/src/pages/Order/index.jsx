@@ -82,6 +82,10 @@ export function Order() {
     }
   }
 
+  async function cancelOrder() {
+
+  }
+
   if (cartLoading || customerLoading || orderLoading || cartDeleteing) return <Loader />
 
   if (!cart) return <Navigate to="/cart" />
@@ -143,6 +147,9 @@ export function Order() {
                     Delivery: <span className={styles.aside__text_amount}>35 €</span>
                   </p>
                 </div>}
+              {/* {order
+                ? <button className={styles.aside__btn} onClick={cancelOrder}>Back to shipping</button>
+                : <Link to='/cart' className={styles.aside__btn}>Back to cart</Link>} */}
               <Link to='/cart' className={styles.aside__btn}>Back to cart</Link>
             </div>
             {!order

@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import styles from './paymentForm.module.scss';
 import { redsysScript } from '../../pages/Order/redsys';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { animateModal } from '../../animation';
 import { useDeleteCartMutation } from '../../store/api/cart.api';
@@ -19,7 +19,37 @@ export function PaymentForm({ orderNo, totalPrice }) {
     navigate('/');
   }
 
-  async function receiveMessage() {
+  // async function receiveMessage() {
+  //   if (document.getElementById('token')?.value) {
+  //     const token = document.getElementById('token').value;
+  //     const amount = (totalPrice * 100).toFixed();
+
+  //     var reqObj = {
+  //       "DS_MERCHANT_AMOUNT": amount,
+  //       "DS_MERCHANT_CURRENCY": "978",
+  //       "DS_MERCHANT_IDOPER": token,
+  //       "DS_MERCHANT_MERCHANTCODE": "361686405",
+  //       "DS_MERCHANT_ORDER": orderNo,
+  //       "DS_MERCHANT_TERMINAL": "1",
+  //       "DS_MERCHANT_TRANSACTIONTYPE": "0"
+  //     }
+
+  //     const res = await fetch('http://localhost:4000/api/payment',
+  //       {
+  //         method: 'POST',
+  //         headers: { "Content-Type": "application/json" },
+  //         credentials: 'include',
+  //         body: JSON.stringify(reqObj)
+  //       });
+  //     if (!res.ok) console.log('Error in payment')
+  //     if (res.ok) setModal('ok')
+  //     window.removeEventListener("message", receiveMessage);
+  //   }
+  // }
+
+  // window.addEventListener("message", receiveMessage);
+
+  const receiveMessage = useCallback(async function () {
     if (document.getElementById('token')?.value) {
       const token = document.getElementById('token').value;
       const amount = (totalPrice * 100).toFixed();
@@ -45,14 +75,12 @@ export function PaymentForm({ orderNo, totalPrice }) {
       if (res.ok) setModal('ok')
       window.removeEventListener("message", receiveMessage);
     }
-  }
+  }, [orderNo, totalPrice])
 
-  window.addEventListener("message", receiveMessage);
-
-  // useEffect(() => {
-  //   window.addEventListener("message", receiveMessage);
-  //   return window.removeEventListener("message", receiveMessage);
-  // }, [])
+  useEffect(() => {
+    window.addEventListener("message", receiveMessage);
+    // return window.removeEventListener("message", receiveMessage);
+  }, [receiveMessage])
 
   return (
     <>
