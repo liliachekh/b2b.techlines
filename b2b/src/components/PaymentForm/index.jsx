@@ -14,13 +14,11 @@ export function PaymentForm({ setOrder, orderNo, totalPrice }) {
   const [deleteCart] = useDeleteCartMutation();
 
   async function closeModal() {
-    setModal(null);
+    window.location.href = 'http://localhost:3000/'
+    // setModal(null);
     await deleteCart().unwrap();
     // setOrder(null)
-    navigate('/');
-  }
-  function showModal() {
-    setModal('ok')
+    // navigate('/');
   }
 
   async function receiveMessage() {
@@ -28,7 +26,7 @@ export function PaymentForm({ setOrder, orderNo, totalPrice }) {
       const token = document.getElementById('token').value;
       const amount = (totalPrice * 100).toFixed();
 
-      var reqObj = {
+      const reqObj = {
         "DS_MERCHANT_AMOUNT": amount,
         "DS_MERCHANT_CURRENCY": "978",
         "DS_MERCHANT_IDOPER": token,
@@ -92,7 +90,8 @@ export function PaymentForm({ setOrder, orderNo, totalPrice }) {
     <>
       {modal === 'ok' &&
         <AnimatePresence>
-          <motion.div className={styles.modal} onClick={closeModal} role='button' {...animateModal}>
+          {/* <motion.div className={styles.modal} onClick={closeModal} role='button' {...animateModal}> */}
+          <motion.div className={styles.modal} role='button' {...animateModal}>
             <div className={styles.modal__wrapper}>
               <div className={styles.modal__text}>
                 Your order has been processed and invoice has been sent to you by email
@@ -109,7 +108,7 @@ export function PaymentForm({ setOrder, orderNo, totalPrice }) {
 
       <div className={styles.form}>
         <Helmet>
-          <script>{redsysScript(orderNo, totalPrice, showModal)}</script>
+          <script>{redsysScript(orderNo, totalPrice)}</script>
         </Helmet>
         <h3 className={styles.form__title}>Payment form</h3>
         <div id="card-form" style={{ height: '400px' }} />

@@ -1,5 +1,5 @@
 
-export const redsysScript = (orderNo, totalPrice, showModal) => (`
+export const redsysScript = (orderNo, totalPrice) => (`
 function merchantValidationEjemplo() {
   //Insertar validaciones…
   // alert("Esto son validaciones propias");
