@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useAddToCart, useInCart } from "../../hooks";
 import { Arrow, Cart } from "../icons";
 
-function AddToCartBtn({ id, enabled, amount, displayTable }) {
+function AddToCartBtn({ id, enabled, amount, quantity, displayTable }) {
   const inCart = useInCart(id);
   const [handleAddToCart, isAdditing] = useAddToCart();
 
@@ -18,7 +18,7 @@ function AddToCartBtn({ id, enabled, amount, displayTable }) {
   )
 
   return (
-    enabled
+    enabled && quantity > 0
       ?
       <button
         type='button'

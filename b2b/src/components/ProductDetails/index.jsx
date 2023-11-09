@@ -58,7 +58,7 @@ export default function ProductDetails({ _id, name, currentPrice, brand, itemNo,
             <p className={styles.purchase__price_text}>Total amount:</p>
             <p className={styles.purchase__price_total}>{(tierPrice(currentPrice) * amount)?.toFixed(2)} €</p>
           </div>
-          <AddToCartBtn id={_id} enabled={enabled} amount={amount} />
+          <AddToCartBtn id={_id} enabled={enabled} amount={amount} quantity={quantity} />
         </div>
       </div>
     </div>
