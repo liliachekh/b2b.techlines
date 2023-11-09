@@ -1,16 +1,15 @@
 
-
-export const redsysScript = (orderNo, totalPrice) => (`
+export const redsysScript = (orderNo, totalPrice, showModal) => (`
 function merchantValidationEjemplo() {
   //Insertar validaciones…
-  alert("Esto son validaciones propias");
+  // alert("Esto son validaciones propias");
   return true;
 }
-const req = (token) => ({
-  "DS_MERCHANT_AMOUNT": "${totalPrice}",
+var reqObj = (token) => ({
+  "DS_MERCHANT_AMOUNT": "${totalPrice * 100}",
   "DS_MERCHANT_CURRENCY": "978",
   "DS_MERCHANT_IDOPER": token,
-  "DS_MERCHANT_MERCHANTCODE": "999008881",
+  "DS_MERCHANT_MERCHANTCODE": "361686405",
   "DS_MERCHANT_ORDER": "${orderNo}",
   "DS_MERCHANT_TERMINAL": "1",
   "DS_MERCHANT_TRANSACTIONTYPE": "0"
@@ -18,13 +17,23 @@ const req = (token) => ({
 
 window.addEventListener("message", async function receiveMessage(event) {
   storeIdOper(event, "token", "errorCode", merchantValidationEjemplo);
-  fetch('',)
-  console.log(req(token.value))
+  
+  // if (document.getElementById('token')?.value) {
+  //   const res = await fetch('http://localhost:4000/api/payment',
+  //     {
+  //       method: 'POST',
+  //       headers: {"Content-Type": "application/json"},
+  //       credentials: 'include',
+  //       body: JSON.stringify(reqObj(token.value))
+  //     });
+  //   if (!res.ok) console.log('Error in payment')
+  //   if (res.ok) console.log('Payment ok')
+  // }
 });
 
 var insiteJSON = {
   "id": "card-form",
-  "fuc": "999008881",
+  "fuc": "361686405",
   "terminal": "1",
   "order": "${orderNo}",
   "estiloInsite": "twoRows",

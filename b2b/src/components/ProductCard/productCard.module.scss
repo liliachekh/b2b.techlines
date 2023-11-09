@@ -82,6 +82,10 @@ $color-grey: #5d5d5d;
         // margin: -.63rem 0 -.63rem -.63rem;
         overflow: hidden;
       }
+
+      @media (min-width: 1270px) {
+        width: 350px;
+      }
     }
 
     .cart &,
@@ -141,7 +145,7 @@ $color-grey: #5d5d5d;
       .order & {
         @media (min-width: 1024px) {
           // flex: 1 0 70px;
-          max-width: initial;
+          // max-width: initial;
           // padding: 0 5px;
         }
       }

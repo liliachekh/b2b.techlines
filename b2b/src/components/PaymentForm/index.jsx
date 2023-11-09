@@ -1,61 +1,90 @@
 import { Helmet } from 'react-helmet-async';
 import styles from './paymentForm.module.scss';
 import { redsysScript } from '../../pages/Order/redsys';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { animateModal } from '../../animation';
+import { useDeleteCartMutation } from '../../store/api/cart.api';
+import { useNavigate } from 'react-router-dom';
 
 export function PaymentForm({ orderNo, totalPrice }) {
-  const tokenRef = useRef(null);
-  const errorCodeRef = useRef(null);
+  const navigate = useNavigate();
+  const [modal, setModal] = useState(null);
 
-  function merchantValidationEjemplo() {
-    //Insertar validaciones…
-    alert("Esto son validaciones propias");
-    return true;
-  }
-  const req = (token) => ({
-    "DS_MERCHANT_AMOUNT": `"${totalPrice}"`,
-    "DS_MERCHANT_CURRENCY": "978",
-    "DS_MERCHANT_IDOPER": `"${token}"`,
-    "DS_MERCHANT_MERCHANTCODE": "999008881",
-    "DS_MERCHANT_ORDER": "${orderNo}",
-    "DS_MERCHANT_TERMINAL": "1",
-    "DS_MERCHANT_TRANSACTIONTYPE": "0"
-  })
+  const [deleteCart] = useDeleteCartMutation();
 
-  window.addEventListener("message", async function receiveMessage(event) {
-    console.log(event)
-    // console.log(req(token.value))
-  });
-
-  var insiteJSON = {
-    "id": "card-form",
-    "fuc": "999008881",
-    "terminal": "1",
-    "order": orderNo,
-    "estiloInsite": "twoRows",
-    "idioma": "2",
-    "mostrarLogo": "false",
-    "buttonValue": "BUY",
-    "styleButton": "color:#f7fbfa; background-color: #202025;",
-    "styleGroup": "background-color: red;",
-    "styleBox": "border-radius: .3rem; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4)",
+  async function closeModal() {
+    setModal(null);
+    await deleteCart().unwrap();
+    navigate('/');
   }
 
-  // getInSiteFormJSON(insiteJSON);
+  async function receiveMessage() {
+    if (document.getElementById('token')?.value) {
+      const token = document.getElementById('token').value;
+      const amount = (totalPrice * 100).toFixed();
+
+      var reqObj = {
+        "DS_MERCHANT_AMOUNT": amount,
+        "DS_MERCHANT_CURRENCY": "978",
+        "DS_MERCHANT_IDOPER": token,
+        "DS_MERCHANT_MERCHANTCODE": "361686405",
+        "DS_MERCHANT_ORDER": orderNo,
+        "DS_MERCHANT_TERMINAL": "1",
+        "DS_MERCHANT_TRANSACTIONTYPE": "0"
+      }
+
+      const res = await fetch('http://localhost:4000/api/payment',
+        {
+          method: 'POST',
+          headers: { "Content-Type": "application/json" },
+          credentials: 'include',
+          body: JSON.stringify(reqObj)
+        });
+      if (!res.ok) console.log('Error in payment')
+      if (res.ok) setModal('ok')
+      window.removeEventListener("message", receiveMessage);
+    }
+  }
+
+  window.addEventListener("message", receiveMessage);
+
+  // useEffect(() => {
+  //   window.addEventListener("message", receiveMessage);
+  //   return window.removeEventListener("message", receiveMessage);
+  // }, [])
 
   return (
-    <div className={styles.form}>
-      <Helmet>
-        <script>{redsysScript(orderNo, totalPrice)}</script>
-      </Helmet>
-      <h3 className={styles.form__title}>Payment form</h3>
-      <div id="card-form" style={{ height: '400px' }} />
+    <>
+      {modal === 'ok' &&
+        <AnimatePresence>
+          <motion.div className={styles.modal} onClick={closeModal} role='button' {...animateModal}>
+            <div className={styles.modal__wrapper}>
+              <div className={styles.modal__text}>
+                Your order has been processed and invoice has been sent to you by email
+              </div>
+              <div className={styles.modal__text}>
+                Thank you for your purchase!
+              </div>
+              <button className={styles.modal__btn} onClick={closeModal}>
+                OK
+              </button>
+            </div>
+          </motion.div>
+        </AnimatePresence>}
 
-      <form name="datos" onChange={(e)=>console.log(e)}>
-        <input ref={tokenRef} type="hidden" id="token"></input>
-        <input ref={errorCodeRef} type="hidden" id="errorCode"></input>
-      </form>
-      <button onClick={() => { console.log(tokenRef.current.value) }}>{totalPrice}</button>
-    </div>
+      <div className={styles.form}>
+        <Helmet>
+          <script>{redsysScript(orderNo, totalPrice)}</script>
+        </Helmet>
+        <h3 className={styles.form__title}>Payment form</h3>
+        <div id="card-form" style={{ height: '400px' }} />
+
+        <form name="datos">
+          <input type="hidden" id="token"></input>
+          <input type="hidden" id="errorCode"></input>
+        </form>
+      </div>
+    </>
   )
 }

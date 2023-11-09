@@ -134,7 +134,7 @@ export function Order() {
                   </p>
                 </div>
               ))}
-              {deliveryPrice &&
+              {deliveryPrice > 0 &&
                 <div className={styles.aside__item}>
                   <p className={styles.aside__text}>
                     For orders with a total value of more than €2.500, ALC ZOOM will assume the shipping costs.
