@@ -6,7 +6,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import Loader from '../../components/Loader';
 import { useChangeAccountMutation, useGetCustomerQuery } from '../../store/api/customers.api';
 import { areObjectsEqual } from '../../utils';
-import { useSetOrderMutation } from '../../store/api/order.api';
+import { useDeleteOrderMutation, useSetOrderMutation } from '../../store/api/order.api';
 import { AnimatePresence, motion } from 'framer-motion';
 import { animateModal } from '../../animation';
 import { useTierPrice, useTitle, useTotalPrice } from '../../hooks';
@@ -22,6 +22,7 @@ export function Order() {
   const [changeAccount] = useChangeAccountMutation();
   const [placeOrder, { isLoading: orderLoading }] = useSetOrderMutation();
   const [deleteCart, { isLoading: cartDeleteing }] = useDeleteCartMutation();
+  const [deleteOrder] = useDeleteOrderMutation();
 
   const navigate = useNavigate();
   const [invoice, setInvoice] = useState(null);
@@ -82,8 +83,11 @@ export function Order() {
     }
   }
 
-  async function cancelOrder() {
-
+  async function cancelOrder(orderId) {
+    window.location.href = 'http://localhost:3000/order'
+    await deleteOrder(orderId).unwrap();
+    // setOrder(null);
+    // setPaymentInfo(null);
   }
 
   if (cartLoading || customerLoading || orderLoading || cartDeleteing) return <Loader />
@@ -147,10 +151,10 @@ export function Order() {
                     Delivery: <span className={styles.aside__text_amount}>35 €</span>
                   </p>
                 </div>}
-              {/* {order
-                ? <button className={styles.aside__btn} onClick={cancelOrder}>Back to shipping</button>
-                : <Link to='/cart' className={styles.aside__btn}>Back to cart</Link>} */}
-              <Link to='/cart' className={styles.aside__btn}>Back to cart</Link>
+              {order
+                ? <button className={styles.aside__btn} onClick={() => cancelOrder(order._id)}>Back to shipping</button>
+                : <Link to='/cart' className={styles.aside__btn}>Back to cart</Link>}
+              {/* <Link to='/cart' className={styles.aside__btn}>Back to cart</Link> */}
             </div>
             {!order
               ? <ShippingForm onSubmitShipping={onSubmitShipping} />

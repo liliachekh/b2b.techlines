@@ -5,10 +5,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { animateModal } from '../../animation';
 import { useDeleteCartMutation } from '../../store/api/cart.api';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 export function PaymentForm({ setOrder, orderNo, totalPrice }) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [modal, setModal] = useState(null);
 
   const [deleteCart] = useDeleteCartMutation();
@@ -90,8 +90,8 @@ export function PaymentForm({ setOrder, orderNo, totalPrice }) {
     <>
       {modal === 'ok' &&
         <AnimatePresence>
-          {/* <motion.div className={styles.modal} onClick={closeModal} role='button' {...animateModal}> */}
-          <motion.div className={styles.modal} role='button' {...animateModal}>
+          <motion.div className={styles.modal} onClick={closeModal} role='button' {...animateModal}>
+          {/* <motion.div className={styles.modal} role='button' {...animateModal}> */}
             <div className={styles.modal__wrapper}>
               <div className={styles.modal__text}>
                 Your order has been processed and invoice has been sent to you by email
