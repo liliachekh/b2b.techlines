@@ -12,7 +12,7 @@ export function CreateNewPassword() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const param = useParams();
-  const url = `http://localhost:4000/api/password-reset/new-password/${param.token}/${param.id}`;
+  const url = `https://storage.techlines.es/api/password-reset/new-password/${param.token}/${param.id}`;
 
   useEffect(() => {
     const verifyUrl = async () => {
