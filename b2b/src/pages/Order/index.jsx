@@ -1,19 +1,17 @@
 import styles from './Order.module.scss';
 import { useDeleteCartMutation, useGetCartQuery } from "../../store/api/cart.api";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Loader from '../../components/Loader';
-import FormikForm from '../../components/FormikForm';
 import { useChangeAccountMutation, useGetCustomerQuery } from '../../store/api/customers.api';
-import { shippingOrderFields } from './orderFields';
-import { validationSchemaOrderShipping } from '../../validation';
-import { initialValuesShippingForm } from '../../utils/vars';
 import { areObjectsEqual } from '../../utils';
 import { useSetOrderMutation } from '../../store/api/order.api';
 import { AnimatePresence, motion } from 'framer-motion';
 import { animateModal } from '../../animation';
 import { useTierPrice, useTitle } from '../../hooks';
+import { ShippingForm } from '../../components/ShippingForm';
+import { PaymentForm } from '../../components/PaymentForm';
 
 export function Order() {
   useTitle('Order');
@@ -22,17 +20,22 @@ export function Order() {
   const { data: customer = {}, isLoading: customerLoading } = useGetCustomerQuery();
   const { data: cart = {}, isLoading: cartLoading } = useGetCartQuery();
   const [changeAccount] = useChangeAccountMutation();
-  const [setOrder, { isLoading: orderLoading }] = useSetOrderMutation();
+  const [placeOrder, { isLoading: orderLoading }] = useSetOrderMutation();
   const [deleteCart, { isLoading: cartDeleteing }] = useDeleteCartMutation();
 
   const navigate = useNavigate();
   const [invoice, setInvoice] = useState(null);
+  const [order, setOrder] = useState(null);
+  const [token, setToken] = useState(null);
+  const [error, setError] = useState(null);
 
   const totalPrice = Number(cart?.products
     ?.map(({ product: { currentPrice }, cartQuantity }) => tierPrice(currentPrice) * cartQuantity)
-    ?.reduce((prev, next) => prev + next).toFixed(2))
+    ?.reduce((prev, next) => prev + next)
+    .toFixed(2))
 
   async function closeInvoice() {
+    setInvoice(false);
     await deleteCart().unwrap();
     navigate('/');
   }
@@ -53,7 +56,7 @@ export function Order() {
       delete values?.save;
       delete values?.paymentInfo;
 
-      await setOrder({
+      const { order } = await placeOrder({
         customerId: customer._id,
         email: values?.email,
         mobile: values?.telephone,
@@ -63,18 +66,23 @@ export function Order() {
         deliveryPrice: totalPrice > 2500 ? 0 : 35,
       }).unwrap();
 
-
       if (paymentInfo === "IBAN") {
         setInvoice(true);
+        window.open('https://storage.techlines.es/invoices/invoice.pdf', '_blank');
+        // window.open('http://localhost:4000/invoices/invoice.pdf', '_blank');
       } else {
-        await deleteCart().unwrap();
+        setOrder(order);
+        // await deleteCart().unwrap();
       }
-      
-      window.open('https://storage.techlines.es/invoices/invoice.pdf', '_blank');
+
     } catch (error) {
       console.log(error);
     }
   }
+
+  useEffect(() => {
+    console.log(token);
+  }, [token, error])
 
   if (cartLoading || customerLoading || orderLoading || cartDeleteing) return <Loader />
 
@@ -100,6 +108,7 @@ export function Order() {
             </div>
           </motion.div>
         </AnimatePresence>}
+
       <div className={styles.order}>
         <div className={styles.order__container}>
           <h2 className={styles.order__title}>My order</h2>
@@ -132,18 +141,11 @@ export function Order() {
                     Delivery: <span className={styles.aside__text_amount}>35 €</span>
                   </p>
                 </div>}
-              {/* <ProductCard {...product} cartItem={true} key={product?._id} /></>))} */}
               <Link to='/cart' className={styles.aside__btn}>Back to cart</Link>
             </div>
-            <div className={styles.order__form}>
-              <h3 className={styles.order__subtitle}>Shipping form</h3>
-              <FormikForm
-                initialValues={initialValuesShippingForm}
-                validationSchema={validationSchemaOrderShipping}
-                fields={shippingOrderFields}
-                callback={onSubmitShipping}
-                submitBtn="Submit" />
-            </div>
+            {!order
+              ? <ShippingForm onSubmitShipping={onSubmitShipping} />
+              : <PaymentForm orderNo={order.orderNo} onAuth={setToken}/>}
           </div>
         </div>
       </div>

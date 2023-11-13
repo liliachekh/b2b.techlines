@@ -1,9 +1,12 @@
 import './App.scss';
 import Router from './router';
-
+import { HelmetProvider } from 'react-helmet-async';
 function App() {
+  const helmetContext = {};
   return (
-    <Router/>
+    <HelmetProvider context={helmetContext}>
+      <Router />
+    </HelmetProvider>
   );
 }
 

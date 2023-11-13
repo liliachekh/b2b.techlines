@@ -1,18 +1,21 @@
 import style from "./forgotPassword.module.scss";
 import { Formik, Form } from 'formik';
 import Input from "../Input";
-import { forgotPasswordFormField } from "./forgotPasswordFormField";
-import { validationSchemaRegisteredEmail } from "../../validation";
+// import { forgotPasswordFormField } from "./forgotPasswordFormField";
+// import { validationSchemaRegisteredEmail } from "../../validation";
 import { PasswordReset } from "../icons/passwordReset.jsx";
 
-export default function ForgotPassword({ callback }) {
-
+export default function ForgotPassword({
+  initialValues,
+  validationSchema,
+  fields,
+  callback,
+  submitBtn,
+}) {
   return (
     <Formik
-    initialValues={{
-      registeredEmail: '',
-    }}
-    validationSchema={validationSchemaRegisteredEmail}
+    initialValues={initialValues}
+    validationSchema={validationSchema}
     onSubmit={async (values, { setSubmitting }) => {
       callback(values);
       setSubmitting(false);
@@ -27,7 +30,7 @@ export default function ForgotPassword({ callback }) {
           Enter your registered email address to receive link for the password recovery process.
           </p>
           </div>
-          {forgotPasswordFormField.map(field => {
+          {fields.map(field => {
               return <Input
               key={field.name}
               {...field}
@@ -35,7 +38,7 @@ export default function ForgotPassword({ callback }) {
               inputClass={style.form__input}
               errorClass={style.form__error} />
           })}
-        <button className={style.form__submit} type='submit'>Get link</button>
+        <button className={style.form__submit} type='submit'>{submitBtn}</button>
       </Form>
   </Formik>
   )

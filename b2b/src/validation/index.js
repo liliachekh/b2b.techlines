@@ -157,3 +157,20 @@ export const validationSchemaProfileShipping = Yup.object({
     .matches(/^\+\d{11,12}$/, "Invalid phone number format")
     .required("Required Field!"),
 })
+
+export const validationSchemaNewPassword = Yup.object({
+  password: Yup.string()
+    .min(7, 'Must contain at least 7 letters')
+    .max(30, 'Can be no more than 30 characters')
+    .matches(/^[a-zA-Z0-9]+$/, 'Must be a-z A-Z 0-9')
+    .trim()
+    .notOneOf([Yup.ref('curPassword'), null], 'New and current passwords must NOT match')
+    .required("Required Field!"),
+  confPassword: Yup.string()
+    .min(7, 'Must contain at least 7 letters')
+    .max(30, 'Can be no more than 30 characters')
+    .matches(/^[a-zA-Z0-9]+$/, 'Must be a-z A-Z 0-9')
+    .trim()
+    .oneOf([Yup.ref('password'), null], 'New and confirm passwords Must match')
+    .required("Required Field!"),
+});
