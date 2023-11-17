@@ -41,7 +41,53 @@ export function Order() {
     await deleteCart().unwrap();
     navigate('/');
   }
+  let merchantParametersInput = document.getElementById("Ds_MerchantParameters");
+let signatureInput = document.getElementById("Ds_Signature");
+console.log("merchantParametersInput:", merchantParametersInput);
+console.log("signatureInput:", signatureInput);
+let paymentForm = document.getElementById("from");
 
+  async function receiveFormData(order) {
+    
+    const amount = (totalPrice * 100).toFixed();
+
+    const reqObj = {
+      "DS_MERCHANT_AMOUNT": amount,
+      "DS_MERCHANT_CURRENCY": "978",
+      "DS_MERCHANT_MERCHANTCODE": "361686405",
+      "DS_MERCHANT_ORDER": order.orderNo,
+      "DS_MERCHANT_TERMINAL": "1",
+      "DS_MERCHANT_TRANSACTIONTYPE": "0"
+    }
+
+    const res = await fetch('http://localhost:4000/api/payment',
+      {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        credentials: 'include',
+        body: JSON.stringify(reqObj)
+      });
+    if (!res.ok) console.log('Error in payment')
+    if (res.ok) {
+      // тут потрібно заповнити форму даними з відповіді серверу 
+      const data = await res.json();
+console.log(data, merchantParametersInput);
+      // Декодування значень з BASE64
+      // const decodedParameters = JSON.parse(atob(data.Ds_MerchantParameters));
+
+      // Заповнення форми з отриманими значеннями
+      if (merchantParametersInput && signatureInput) {
+        merchantParametersInput.value = data.Ds_MerchantParameters;
+        signatureInput.value = data.Ds_Signature;
+        console.log("Updated values:", merchantParametersInput.value, signatureInput.value);
+        // paymentForm.submit();
+      }
+      // document.getElementById("Ds_MerchantParameters").value = data.Ds_MerchantParameters;
+      // document.getElementById("Ds_Signature").value = data.Ds_Signature;
+      
+      // deleteCart()
+    }
+}
   async function onSubmitShipping(values) {
     try {
       if (values?.save) {
@@ -74,7 +120,8 @@ export function Order() {
         window.open('https://storage.techlines.es/invoices/invoice.pdf', '_blank');
         // window.open('http://localhost:4000/invoices/invoice.pdf', '_blank');
       } else {
-        setOrder(order);
+        // setOrder(order);
+        receiveFormData(order)
         // await deleteCart().unwrap();
       }
 
@@ -156,12 +203,19 @@ export function Order() {
                 : <Link to='/cart' className={styles.aside__btn}>Back to cart</Link>}
               {/* <Link to='/cart' className={styles.aside__btn}>Back to cart</Link> */}
             </div>
-            {!order
-              ? <ShippingForm onSubmitShipping={onSubmitShipping} />
-              : <PaymentForm
-                setOrder={setOrder}
-                orderNo={order.orderNo}
-                totalPrice={paymentInfo === "CARD" ? totalPriceByCard : totalPrice} />}
+            {!order &&
+               <><ShippingForm onSubmitShipping={onSubmitShipping} />
+              <form name="from" id="from"action="https://sis-t.redsys.es:25443/sis/realizarPago" method="POST">
+              <input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1"/>
+              <input type="hidden" name="Ds_MerchantParameters" id="Ds_MerchantParameters" value="
+              "/>
+              <input type="hidden" name="Ds_Signature" id="Ds_Signature" value=""/>
+              </form></>
+              // : <PaymentForm
+              //   setOrder={setOrder}
+              //   orderNo={order.orderNo}
+              //   totalPrice={paymentInfo === "CARD" ? totalPriceByCard : totalPrice} />
+            }
           </div>
         </div>
       </div>
