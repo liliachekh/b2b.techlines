@@ -12,6 +12,7 @@ import { animateModal } from '../../animation';
 import { useTierPrice, useTitle, useTotalPrice } from '../../hooks';
 import { ShippingForm } from '../../components/ShippingForm';
 import { PaymentForm } from '../../components/PaymentForm';
+import { useRef } from 'react';
 
 export function Order() {
   useTitle('Order');
@@ -41,11 +42,10 @@ export function Order() {
     await deleteCart().unwrap();
     navigate('/');
   }
-  let merchantParametersInput = document.getElementById("Ds_MerchantParameters");
-let signatureInput = document.getElementById("Ds_Signature");
-console.log("merchantParametersInput:", merchantParametersInput);
-console.log("signatureInput:", signatureInput);
-let paymentForm = document.getElementById("from");
+
+let merchantParametersInput = useRef(null);
+let signatureInput = useRef(null);
+let paymentForm = useRef(null)
 
   async function receiveFormData(order) {
     
@@ -69,9 +69,8 @@ let paymentForm = document.getElementById("from");
       });
     if (!res.ok) console.log('Error in payment')
     if (res.ok) {
-      // тут потрібно заповнити форму даними з відповіді серверу 
       const data = await res.json();
-console.log(data, merchantParametersInput);
+console.log(data, merchantParametersInput, signatureInput);
       // Декодування значень з BASE64
       // const decodedParameters = JSON.parse(atob(data.Ds_MerchantParameters));
 
@@ -79,11 +78,9 @@ console.log(data, merchantParametersInput);
       if (merchantParametersInput && signatureInput) {
         merchantParametersInput.value = data.Ds_MerchantParameters;
         signatureInput.value = data.Ds_Signature;
-        console.log("Updated values:", merchantParametersInput.value, signatureInput.value);
-        // paymentForm.submit();
+        console.log("Updated values:", merchantParametersInput.value,"2", signatureInput.value);
+        paymentForm.current.submit();
       }
-      // document.getElementById("Ds_MerchantParameters").value = data.Ds_MerchantParameters;
-      // document.getElementById("Ds_Signature").value = data.Ds_Signature;
       
       // deleteCart()
     }
@@ -205,11 +202,10 @@ console.log(data, merchantParametersInput);
             </div>
             {!order &&
                <><ShippingForm onSubmitShipping={onSubmitShipping} />
-              <form name="from" id="from"action="https://sis-t.redsys.es:25443/sis/realizarPago" method="POST">
+              <form ref={paymentForm} name="from" id="from"action="https://sis-t.redsys.es:25443/sis/realizarPago" method="POST">
               <input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1"/>
-              <input type="hidden" name="Ds_MerchantParameters" id="Ds_MerchantParameters" value="
-              "/>
-              <input type="hidden" name="Ds_Signature" id="Ds_Signature" value=""/>
+              <input ref ={merchantParametersInput} type="hidden" name="Ds_MerchantParameters" id="Ds_MerchantParameters" value=""/>
+              <input ref={signatureInput} type="hidden" name="Ds_Signature" id="Ds_Signature" value=""/>
               </form></>
               // : <PaymentForm
               //   setOrder={setOrder}
