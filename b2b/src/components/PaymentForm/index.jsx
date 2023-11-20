@@ -5,12 +5,14 @@ import { useCallback, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { animateModal } from '../../animation';
 import { useDeleteCartMutation } from '../../store/api/cart.api';
+import { Payment3DS } from '../Payment3DS';
 // import { useNavigate } from 'react-router-dom';
 
 export function PaymentForm({ setOrder, orderNo, totalPrice }) {
   // const navigate = useNavigate();
   const [modal, setModal] = useState(null);
-
+  const [payment, setPayment] = useState(null);
+const [threeDSMethodData, setThreeDSMethodData] = useState(null);
   const [deleteCart] = useDeleteCartMutation();
 
   async function closeModal() {
@@ -44,50 +46,24 @@ export function PaymentForm({ setOrder, orderNo, totalPrice }) {
           headers: { "Content-Type": "application/json" },
           credentials: 'include',
           body: JSON.stringify(reqObj)
-        });
+        })
       if (!res.ok) console.log('Error in payment')
-      if (res.ok) setModal('ok')
+      if (res.ok) { 
+        const responseData = await res.json();
+        setThreeDSMethodData (responseData.threeDSMethodData)
+        setPayment('ok')}
       // window.removeEventListener("message", receiveMessage);
     }
   }
+  useEffect(() => {
+    // console.log(threeDSMethodData);
+  }, [threeDSMethodData]);
 
   window.addEventListener("message", receiveMessage);
 
-  // const receiveMessage = useCallback(async function () {
-  //   if (document.getElementById('token')?.value) {
-  //     const token = document.getElementById('token').value;
-  //     const amount = (totalPrice * 100).toFixed();
-
-  //     var reqObj = {
-  //       "DS_MERCHANT_AMOUNT": amount,
-  //       "DS_MERCHANT_CURRENCY": "978",
-  //       "DS_MERCHANT_IDOPER": token,
-  //       "DS_MERCHANT_MERCHANTCODE": "361686405",
-  //       "DS_MERCHANT_ORDER": orderNo,
-  //       "DS_MERCHANT_TERMINAL": "1",
-  //       "DS_MERCHANT_TRANSACTIONTYPE": "0"
-  //     }
-
-  //     const res = await fetch('http://localhost:4000/api/payment',
-  //       {
-  //         method: 'POST',
-  //         headers: { "Content-Type": "application/json" },
-  //         credentials: 'include',
-  //         body: JSON.stringify(reqObj)
-  //       });
-  //     if (!res.ok) console.log('Error in payment')
-  //     if (res.ok) setModal('ok')
-  //     // window.removeEventListener("message", receiveMessage);
-  //   }
-  // }, [orderNo, totalPrice])
-
-  // useEffect(() => {
-  //   window.addEventListener("message", receiveMessage);
-  //   // return window.removeEventListener("message", receiveMessage);
-  // }, [receiveMessage])
-
   return (
     <>
+    {payment === 'ok' && <Payment3DS threeDSMethodData={threeDSMethodData}/>}
       {modal === 'ok' &&
         <AnimatePresence>
           <motion.div className={styles.modal} onClick={closeModal} role='button' {...animateModal}>
