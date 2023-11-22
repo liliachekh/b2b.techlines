@@ -11,7 +11,7 @@ import DiscountField from '../../components/DiscountField';
 
 export function Cart() {
   useTitle('Cart');
-  const { totalPrice, totalPriceDiscount } = useTotalPrice();
+  const { totalPrice, deliveryPrice, totalPriceDiscount } = useTotalPrice();
   const { data: cart = {}, isLoading } = useGetCartQuery();
   const { loggedIn } = useContext(AuthContext);
 
@@ -54,9 +54,10 @@ export function Cart() {
                   </>}
                 <div className={styles.aside__totalPrice}>
                   <span className={styles.aside__totalPrice_title}>Order Total:</span>
-                  {totalPrice <= 2500
+                  {/* {totalPrice <= 2500
                     ? (totalPriceDiscount + 35).toFixed(2) + ' €'
-                    : totalPriceDiscount.toFixed(2) + ' €'}
+                    : totalPriceDiscount.toFixed(2) + ' €'} */}
+                  {totalPriceDiscount.toFixed(2) + ' €'}
                 </div>
                 <Link to='/order' disabled={!cart?.products?.length} className={styles.aside__btn}>Proceed to Checkout</Link>
               </div>
