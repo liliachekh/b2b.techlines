@@ -31,11 +31,6 @@ export function Order() {
 
   const { totalPrice, totalPriceByCard, deliveryPrice } = useTotalPrice();
 
-  // const totalPrice = Number(cart?.products
-  //   ?.map(({ product: { currentPrice }, cartQuantity }) => tierPrice(currentPrice) * cartQuantity)
-  //   ?.reduce((prev, next) => prev + next)
-  //   .toFixed(2))
-
   async function closeInvoice() {
     setInvoice(false);
     await deleteCart().unwrap();
@@ -67,6 +62,7 @@ export function Order() {
         paymentInfo,
         status: 'payment required',
         deliveryPrice: deliveryPrice,
+        discount: cart?.discount || null,
       }).unwrap();
 
       if (paymentInfo === "IBAN") {

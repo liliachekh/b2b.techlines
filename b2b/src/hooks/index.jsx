@@ -7,3 +7,4 @@ export * from "./useQueryString";
 export * from "./useTitle";
 export * from "./useTierPrice";
 export * from "./useTotalPrice";
+export * from "./useUpdateCart";
