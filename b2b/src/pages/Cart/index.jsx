@@ -57,7 +57,7 @@ export function Cart() {
                   {/* {totalPrice <= 2500
                     ? (totalPriceDiscount + 35).toFixed(2) + ' €'
                     : totalPriceDiscount.toFixed(2) + ' €'} */}
-                  {totalPriceDiscount.toFixed(2) + ' €'}
+                  {totalPriceDiscount + ' €'}
                 </div>
                 <Link to='/order' disabled={!cart?.products?.length} className={styles.aside__btn}>Proceed to Checkout</Link>
               </div>
