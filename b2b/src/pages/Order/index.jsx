@@ -145,7 +145,7 @@ export function Order() {
                     Delivery: <span className={styles.aside__text_amount}>35 €</span>
                   </p>
                 </div>}
-              {cart?.discount &&
+              {cart?.discount > 0 &&
                 <div className={styles.aside__item}>
                   <p className={`${styles.aside__text} ${styles.aside__text_name}`}>
                     Your discount: <span className={styles.aside__text_amount}>-{cart?.discount} €</span>
