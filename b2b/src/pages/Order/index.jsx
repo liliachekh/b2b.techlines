@@ -116,9 +116,7 @@ export function Order() {
           <h2 className={styles.order__title}>My order</h2>
           <div className={styles.order__wrapper}>
             <div className={`${styles.order__aside} ${styles.aside}`}>
-              {/* <h3 className={styles.aside__title}>Order Total: <span className={styles.aside__totalPrice}>{totalPrice > 2500 ? totalPrice : totalPrice + 35} €</span></h3> */}
               <h3 className={styles.aside__title}>
-                {/* Order Total: <span className={styles.aside__totalPrice}>{totalPrice} €</span> */}
                 Order Total: <span className={styles.aside__totalPrice}> {paymentInfo === "CARD" ? totalPriceByCard : totalPrice} €</span>
               </h3>
               <h3 className={styles.aside__title}>Order List:</h3>
@@ -150,7 +148,6 @@ export function Order() {
               {order
                 ? <button className={styles.aside__btn} onClick={() => cancelOrder(order._id)}>Back to shipping</button>
                 : <Link to='/cart' className={styles.aside__btn}>Back to cart</Link>}
-              {/* <Link to='/cart' className={styles.aside__btn}>Back to cart</Link> */}
             </div>
             {!order
               ? <ShippingForm onSubmitShipping={onSubmitShipping} />

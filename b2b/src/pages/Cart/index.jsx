@@ -5,21 +5,15 @@ import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import { Link, Navigate } from "react-router-dom";
 import Loader from '../../components/Loader';
-import { useTierPrice, useTitle } from '../../hooks';
+import { useTitle, useTotalPrice } from '../../hooks';
 import { motion } from "framer-motion";
 import DiscountField from '../../components/DiscountField';
 
 export function Cart() {
   useTitle('Cart');
-  const tierPrice = useTierPrice();
+  const { totalPrice, totalPriceDiscount } = useTotalPrice();
   const { data: cart = {}, isLoading } = useGetCartQuery();
   const { loggedIn } = useContext(AuthContext);
-
-  const totalPrice = cart?.products
-    ?.map(({ product: { currentPrice }, cartQuantity }) => tierPrice(currentPrice) * cartQuantity)
-    ?.reduce((prev, next) => prev + next)
-
-  const totalPriceDiscount = totalPrice - (cart?.discount || 0);
 
   if (isLoading) return <Loader />
 
@@ -55,7 +49,7 @@ export function Cart() {
                     </div>
                     <div className={styles.aside__price}>
                       <span className={styles.aside__price_title}>Price:</span>
-                      {totalPriceDiscount.toFixed(2) + ' €'}
+                      {totalPrice.toFixed(2) + ' €'}
                     </div>
                   </>}
                 <div className={styles.aside__totalPrice}>
