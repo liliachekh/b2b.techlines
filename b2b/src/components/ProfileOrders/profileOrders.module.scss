@@ -30,6 +30,15 @@ $color-grey-light: #e3e3e3;
   &__text {
     font-size: 1rem;
 
+    &_total {
+      padding: 1rem;
+      border-radius: 1rem;
+      background-color: $color-light;
+      color: $color-dark;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+      margin: 0 auto;
+    }
+
     &_value {
       font-size: 1.3rem;
       font-weight: 700;
