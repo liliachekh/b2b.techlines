@@ -63,7 +63,6 @@ const [threeDSMethodData, setThreeDSMethodData] = useState(null);
 
   return (
     <>
-    {payment === 'ok' && <Payment3DS threeDSMethodData={threeDSMethodData}/>}
       {modal === 'ok' &&
         <AnimatePresence>
           <motion.div className={styles.modal} onClick={closeModal} role='button' {...animateModal}>
@@ -88,6 +87,8 @@ const [threeDSMethodData, setThreeDSMethodData] = useState(null);
         </Helmet>
         <h3 className={styles.form__title}>Payment form</h3>
         <div id="card-form" style={{ height: '400px' }} />
+
+        {payment === 'ok' && <Payment3DS threeDSMethodData={threeDSMethodData} />}
 
         <form name="datos">
           <input type="hidden" id="token"></input>
