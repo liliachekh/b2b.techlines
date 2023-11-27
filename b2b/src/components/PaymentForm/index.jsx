@@ -13,6 +13,8 @@ export function PaymentForm({ setOrder, orderNo, totalPrice }) {
   const [modal, setModal] = useState(null);
   const [payment, setPayment] = useState(null);
 const [threeDSMethodData, setThreeDSMethodData] = useState(null);
+const [threeDSMethodURL, setThreeDSMethodURL] = useState(null);
+
   const [deleteCart] = useDeleteCartMutation();
 
   async function closeModal() {
@@ -51,6 +53,7 @@ const [threeDSMethodData, setThreeDSMethodData] = useState(null);
       if (res.ok) { 
         const responseData = await res.json();
         setThreeDSMethodData (responseData.threeDSMethodData)
+        if(responseData.threeDSMethodURL) setThreeDSMethodURL(responseData.threeDSMethodURL)
         setPayment('ok')}
       // window.removeEventListener("message", receiveMessage);
     }
@@ -88,7 +91,7 @@ const [threeDSMethodData, setThreeDSMethodData] = useState(null);
         <h3 className={styles.form__title}>Payment form</h3>
         <div id="card-form" style={{ height: '400px' }} />
 
-        {payment === 'ok' && <Payment3DS threeDSMethodData={threeDSMethodData} />}
+        {threeDSMethodURL && <Payment3DS threeDSMethodData={threeDSMethodData} threeDSMethodURL={threeDSMethodURL}/>}
 
         <form name="datos">
           <input type="hidden" id="token"></input>
