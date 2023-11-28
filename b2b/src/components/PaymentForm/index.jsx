@@ -14,6 +14,7 @@ export function PaymentForm({ setOrder, orderNo, totalPrice }) {
   const [payment, setPayment] = useState(null);
   const [threeDSMethodData, setThreeDSMethodData] = useState(null);
   const [threeDSMethodURL, setThreeDSMethodURL] = useState(null);
+
   const [deleteCart] = useDeleteCartMutation();
 
   async function closeModal() {
@@ -41,18 +42,50 @@ export function PaymentForm({ setOrder, orderNo, totalPrice }) {
 
       document.getElementById("token").value = null;
 
-      const res = await fetch("http://localhost:4000/api/payment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(reqObj),
-      });
-      if (!res.ok) console.log("Error in payment");
+      const res = await fetch('http://localhost:4000/api/payment',
+        {
+          method: 'POST',
+          headers: { "Content-Type": "application/json" },
+          credentials: 'include',
+          body: JSON.stringify(reqObj)
+        })
+      if (!res.ok) console.log('Error in payment')
       if (res.ok) {
         const responseData = await res.json();
-        setThreeDSMethodData(responseData.threeDSMethodData);
-        setThreeDSMethodURL(responseData.threeDSMethodURL);
-        setPayment("ok");
+        console.log(responseData);
+
+        setThreeDSMethodData(responseData.threeDSMethodData)
+
+        if (responseData.threeDSMethodURL) {
+          // setThreeDSMethodURL(responseData.threeDSMethodURL)
+        } else {
+          const browser = {
+            "threeDSInfo": "AuthenticationData",
+            "protocolVersion": responseData.protocolVersion,
+            "browserAcceptHeader": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8,application/json",
+            "browserUserAgent": window.navigator.userAgent,
+            "browserJavaEnabled": window.navigator.javaEnabled() || false,
+            "browserLanguage": window.navigator.language,
+            "browserColorDepth": window.screen.pixelDepth,
+            "browserScreenHeight": window.screen.availHeight,
+            "browserScreenWidth": window.screen.availWidth,
+            "browserTZ": new Date().getTimezoneOffset(),
+            "threeDSServerTransID": responseData.threeDSServerTransID,
+            "notificationURL": "https://dev.techlines.es/api/payment/3DS",
+            "threeDSCompInd": "Y"
+          }
+
+          console.log({ ...reqObj, "DS_MERCHANT_EMV3DS": { ...browser } });
+          const res = await fetch('http://localhost:4000/api/payment/authorization',
+            {
+              method: 'POST',
+              headers: { "Content-Type": "application/json" },
+              credentials: 'include',
+              body: JSON.stringify({ ...reqObj, "DS_MERCHANT_EMV3DS": { ...browser } })
+            })
+          console.log(res);
+        }
+        setPayment('ok')
       }
       // window.removeEventListener("message", receiveMessage);
     }
@@ -63,14 +96,9 @@ export function PaymentForm({ setOrder, orderNo, totalPrice }) {
 
   return (
     <>
-      {payment === "ok" && <Payment3DS threeDSMethodData={threeDSMethodData} threeDSMethodURL={threeDSMethodURL}/>}
-      {modal === "ok" && (
+      {modal === 'ok' &&
         <AnimatePresence>
-          <motion.div
-            className={styles.modal}
-            onClick={closeModal}
-            role="button"
-            {...animateModal}>
+          <motion.div className={styles.modal} onClick={closeModal} role='button' {...animateModal}>
             {/* <motion.div className={styles.modal} role='button' {...animateModal}> */}
             <div className={styles.modal__wrapper}>
               <div className={styles.modal__text}>
@@ -88,17 +116,16 @@ export function PaymentForm({ setOrder, orderNo, totalPrice }) {
             </div>
           </motion.div>
         </AnimatePresence>
-      )}
+      }
 
       <div className={styles.form}>
         <Helmet>
           <script>{redsysScript(orderNo, totalPrice)}</script>
         </Helmet>
         <h3 className={styles.form__title}>Payment form</h3>
-        <div
-          id="card-form"
-          style={{ height: "400px" }}
-        />
+        <div id="card-form" style={{ height: '400px' }} />
+
+        {threeDSMethodURL && <Payment3DS threeDSMethodData={threeDSMethodData} threeDSMethodURL={threeDSMethodURL} />}
 
         <form name="datos">
           <input
@@ -112,16 +139,3 @@ export function PaymentForm({ setOrder, orderNo, totalPrice }) {
     </>
   );
 }
-  //   console.log(navigator.userAgent);
-  //   console.log(window.navigator.language)
-  //   console.log(window.navigator.userAgent)
-  //   console.log(window.navigator.javaEnabled());
-  //   console.log(window.screen.height);
-  //   console.log(window.screen.width);
-  //   console.log(window.screen.colorDepth);
-  //   console.log(new Date().getTimezoneOffset() / 60 );
-  //   let xhr = new XMLHttpRequest();
-  //   xhr.open('GET', window.location, false);
-  //   xhr.send();
-  //   let browserAcceptHeader = xhr.getAllResponseHeaders();
-  // console.log(browserAcceptHeader);

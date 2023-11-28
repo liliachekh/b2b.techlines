@@ -12,9 +12,13 @@ export function useTotalPrice() {
 
   const deliveryPrice = totalPrice > 2500 ? 0 : 35;
 
+  const totalPriceDiscount = (totalPrice - (cart?.discount || 0) + deliveryPrice).toFixed(2);
+
   return {
-    totalPrice: totalPrice > 2500 ? totalPrice : totalPrice + 35,
-    totalPriceByCard: (totalPrice + (totalPrice * 0.017) + deliveryPrice).toFixed(2),
+    totalPrice,
+    // totalPrice: totalPrice > 2500 ? totalPrice : totalPrice + 35,
+    totalPriceByCard: (totalPrice + (totalPrice * 0.017) - (cart?.discount || 0) + deliveryPrice).toFixed(2),
     deliveryPrice,
+    totalPriceDiscount
   }
 }

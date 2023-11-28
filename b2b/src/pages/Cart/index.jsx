@@ -5,18 +5,15 @@ import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import { Link, Navigate } from "react-router-dom";
 import Loader from '../../components/Loader';
-import { useTierPrice, useTitle } from '../../hooks';
+import { useTitle, useTotalPrice } from '../../hooks';
 import { motion } from "framer-motion";
+import DiscountField from '../../components/DiscountField';
 
 export function Cart() {
   useTitle('Cart');
-  const tierPrice = useTierPrice();
+  const { totalPrice, deliveryPrice, totalPriceDiscount } = useTotalPrice();
   const { data: cart = {}, isLoading } = useGetCartQuery();
   const { loggedIn } = useContext(AuthContext);
-
-  const totalPrice = cart?.products
-    ?.map(({ product: { currentPrice }, cartQuantity }) => tierPrice(currentPrice) * cartQuantity)
-    ?.reduce((prev, next) => prev + next)
 
   if (isLoading) return <Loader />
 
@@ -41,6 +38,9 @@ export function Cart() {
               <div className={`${styles.cart__aside} ${styles.aside}`}>
                 <h3 className={styles.aside__title}>Summary</h3>
                 <p className={styles.aside__text}>For orders with a total value of more than €2.500, ALC ZOOM will assume the shipping costs.</p>
+                
+                <DiscountField discount={cart?.discount}/>
+
                 {totalPrice <= 2500 &&
                   <>
                     <div className={styles.aside__price}>
@@ -54,9 +54,10 @@ export function Cart() {
                   </>}
                 <div className={styles.aside__totalPrice}>
                   <span className={styles.aside__totalPrice_title}>Order Total:</span>
-                  {totalPrice <= 2500
-                    ? (totalPrice + 35).toFixed(2) + ' €'
-                    : totalPrice.toFixed(2)}
+                  {/* {totalPrice <= 2500
+                    ? (totalPriceDiscount + 35).toFixed(2) + ' €'
+                    : totalPriceDiscount.toFixed(2) + ' €'} */}
+                  {totalPriceDiscount + ' €'}
                 </div>
                 <Link to='/order' disabled={!cart?.products?.length} className={styles.aside__btn}>Proceed to Checkout</Link>
               </div>

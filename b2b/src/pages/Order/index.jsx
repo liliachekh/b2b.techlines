@@ -29,12 +29,7 @@ export function Order() {
   const [order, setOrder] = useState(null);
   const [paymentInfo, setPaymentInfo] = useState(null);
 
-  const { totalPrice, totalPriceByCard, deliveryPrice } = useTotalPrice();
-
-  // const totalPrice = Number(cart?.products
-  //   ?.map(({ product: { currentPrice }, cartQuantity }) => tierPrice(currentPrice) * cartQuantity)
-  //   ?.reduce((prev, next) => prev + next)
-  //   .toFixed(2))
+  const { totalPriceDiscount, totalPriceByCard, deliveryPrice } = useTotalPrice();
 
   async function closeInvoice() {
     setInvoice(false);
@@ -67,6 +62,7 @@ export function Order() {
         paymentInfo,
         status: 'payment required',
         deliveryPrice: deliveryPrice,
+        discount: cart?.discount || 0,
       }).unwrap();
 
       if (paymentInfo === "IBAN") {
@@ -120,10 +116,8 @@ export function Order() {
           <h2 className={styles.order__title}>My order</h2>
           <div className={styles.order__wrapper}>
             <div className={`${styles.order__aside} ${styles.aside}`}>
-              {/* <h3 className={styles.aside__title}>Order Total: <span className={styles.aside__totalPrice}>{totalPrice > 2500 ? totalPrice : totalPrice + 35} €</span></h3> */}
               <h3 className={styles.aside__title}>
-                {/* Order Total: <span className={styles.aside__totalPrice}>{totalPrice} €</span> */}
-                Order Total: <span className={styles.aside__totalPrice}> {paymentInfo === "CARD" ? totalPriceByCard : totalPrice} €</span>
+                Order Total: <span className={styles.aside__totalPrice}> {paymentInfo === "CARD" ? totalPriceByCard : totalPriceDiscount} €</span>
               </h3>
               <h3 className={styles.aside__title}>Order List:</h3>
               {cart?.products?.map(({ product: { name, currentPrice }, cartQuantity }) => (
@@ -151,17 +145,22 @@ export function Order() {
                     Delivery: <span className={styles.aside__text_amount}>35 €</span>
                   </p>
                 </div>}
+              {cart?.discount > 0 &&
+                <div className={styles.aside__item}>
+                  <p className={`${styles.aside__text} ${styles.aside__text_name}`}>
+                    Your discount: <span className={styles.aside__text_amount}>-{cart?.discount} €</span>
+                  </p>
+                </div>}
               {order
                 ? <button className={styles.aside__btn} onClick={() => cancelOrder(order._id)}>Back to shipping</button>
                 : <Link to='/cart' className={styles.aside__btn}>Back to cart</Link>}
-              {/* <Link to='/cart' className={styles.aside__btn}>Back to cart</Link> */}
             </div>
             {!order
               ? <ShippingForm onSubmitShipping={onSubmitShipping} />
               : <PaymentForm
                 setOrder={setOrder}
                 orderNo={order.orderNo}
-                totalPrice={paymentInfo === "CARD" ? totalPriceByCard : totalPrice} />}
+                totalPrice={paymentInfo === "CARD" ? totalPriceByCard : totalPriceDiscount} />}
           </div>
         </div>
       </div>

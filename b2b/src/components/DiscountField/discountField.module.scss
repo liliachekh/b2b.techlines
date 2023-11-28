@@ -1,0 +1,114 @@
+$color-light: #f7fbfa;
+$color-dark: #202025;
+$color-grey: #5d5d5d;
+$color-grey-light: #e3e3e3;
+$color-accent: #f92e3e;
+
+.discount {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  font-weight: 700;
+
+  &__title {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  &__btn {
+    position: relative;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    background: $color-dark;
+    cursor: pointer;
+    transition: background-color .3s;
+
+    @media (min-width: 420px) {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+
+    &:hover {
+      background: $color-grey;
+    }
+
+    &_cancel {
+      background-color: $color-accent;
+      transform: rotate(45deg);
+    }
+
+    &_cancel::after,
+    &_cancel::before,
+    &_add::before,
+    &_add::after {
+      position: absolute;
+      content: '';
+      left: 50%;
+      top: 50%;
+      width: 60%;
+      height: 2px;
+      background: $color-light;
+      transform: translate(-50%, -50%);
+    }
+
+    &_cancel::before,
+    &_add::before {
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+
+    &_cancel:disabled,
+    &_add:disabled {
+      opacity: .5;
+    }
+  }
+
+  &__form {
+    display: flex;
+    gap: .63rem;
+    width: 100%;
+    margin-top: .63rem;
+  }
+
+  &__label {
+    position: relative;
+    width: 100%;
+  }
+
+  &__error {
+    position: absolute;
+    left: 0;
+    bottom: -1rem;
+    color: $color-accent;
+    font-size: .8rem;
+  }
+
+  &__input {
+    width: 100%;
+    font-size: 1.2rem;
+    text-align: center;
+    border: 2px solid $color-grey;
+    border-radius: 5px;
+    box-sizing: border-box;
+
+    &_error {
+      border: 2px solid $color-accent;
+    }
+  }
+
+  &__submit {
+    cursor: pointer;
+
+    &:disabled {
+      color: $color-grey;
+    }
+  }
+
+  &__amount {
+    display: flex;
+    align-items: center;
+    gap: 0.63rem;
+  }
+}
