@@ -7,11 +7,11 @@ import Loader from '../../components/Loader';
 import { useChangeAccountMutation, useGetCustomerQuery } from '../../store/api/customers.api';
 import { areObjectsEqual } from '../../utils';
 import { useDeleteOrderMutation, useSetOrderMutation } from '../../store/api/order.api';
-import { AnimatePresence, motion } from 'framer-motion';
-import { animateModal } from '../../animation';
 import { useTierPrice, useTitle, useTotalPrice } from '../../hooks';
 import { ShippingForm } from '../../components/ShippingForm';
 import { PaymentForm } from '../../components/PaymentForm';
+import { useDispatch } from 'react-redux';
+import { showModal } from '../../store/modalSlice';
 
 export function Order() {
   useTitle('Order');
@@ -25,17 +25,11 @@ export function Order() {
   const [deleteOrder] = useDeleteOrderMutation();
 
   const navigate = useNavigate();
-  const [invoice, setInvoice] = useState(null);
+  const dispatch = useDispatch();
   const [order, setOrder] = useState(null);
   const [paymentInfo, setPaymentInfo] = useState(null);
 
   const { totalPriceDiscount, totalPriceByCard, deliveryPrice } = useTotalPrice();
-
-  async function closeInvoice() {
-    setInvoice(false);
-    await deleteCart().unwrap();
-    navigate('/');
-  }
 
   async function onSubmitShipping(values) {
     try {
@@ -66,7 +60,9 @@ export function Order() {
       }).unwrap();
 
       if (paymentInfo === "IBAN") {
-        setInvoice(true);
+        navigate('/');
+        dispatch(showModal('order'))
+        await deleteCart().unwrap();
         window.open('https://storage.techlines.es/invoices/invoice.pdf', '_blank');
         // window.open('http://localhost:4000/invoices/invoice.pdf', '_blank');
       } else {
@@ -94,23 +90,6 @@ export function Order() {
 
   return (
     <>
-      {invoice &&
-        <AnimatePresence>
-          <motion.div className={styles.invoice} onClick={closeInvoice} role='button' {...animateModal}>
-            <div className={styles.invoice__wrapper}>
-              <div className={styles.invoice__text}>
-                Your order has been processed and invoice has been sent to you by email
-              </div>
-              <div className={styles.invoice__text}>
-                Thank you for your purchase!
-              </div>
-              <button className={styles.invoice__btn} onClick={closeInvoice}>
-                OK
-              </button>
-            </div>
-          </motion.div>
-        </AnimatePresence>}
-
       <div className={styles.order}>
         <div className={styles.order__container}>
           <h2 className={styles.order__title}>My order</h2>
