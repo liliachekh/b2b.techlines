@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { Home, LoginForm, ResetPassword, Cart, Profile, Product, Order, NotFound, CreateNewPassword } from "../pages";
+import { Home, LoginForm, ResetPassword, Cart, Profile, Product, Order, NotFound, CreateNewPassword, AdminProducts } from "../pages";
 import { ProfileSettings } from "../components/ProfileSettings";
 import { ProfileOrders } from "../components/ProfileOrders";
 import { MainLayout } from "../pages/MainLayout";
@@ -39,6 +39,7 @@ export default function Router() {
       <Route path="/password-reset/new-password/:token/:id" element={<CreateNewPassword/>} />
       <Route path="/not-found" element={<NotFound />} />
       <Route path="*" element={<NotFound />} />
+      <Route path="/admin" element={<AdminProducts />} />
     </Routes>
   );
 }
