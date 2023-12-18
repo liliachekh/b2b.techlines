@@ -29,7 +29,6 @@ export function AdminProducts() {
     {/* <AdminHeader loggedIn={true} /> */}
     <Filter />
     <div className={style.admin}>
-        <div className={style.admin__container}>
           {/* {openForm && product
             ? <EditProductForm
               product={product}
@@ -37,6 +36,7 @@ export function AdminProducts() {
             : addProduct
               ? <AddProductForm onCloseForm={handleFormClose} />
               : <> */}
+                <div className={style.admin__container}>
                 <div className={style.admin__header}>
                   <h1 className={style.admin__title}>Products</h1>
                   <button className={style.admin__btn} type='button' >Add new product</button>
@@ -50,6 +50,7 @@ export function AdminProducts() {
                   <p className={style.table__cell}>Price</p>
                   <p className={style.table__cell}>Actions</p>
                 </div>
+                </div>
                 <ProductList
                   {...products}
                   // customButtonHandler={handleEditButtonClick}
@@ -58,7 +59,6 @@ export function AdminProducts() {
                   />
               {/* </>
           } */}
-        </div>
       </div>
     </>
     )
