@@ -2,10 +2,14 @@ import ProductList from "../../components/ProductList";
 import style from "./AdminProducts.module.scss";
 import { useGetAllProductsQuery } from "../../store/api/products.api";
 import Loader from "../../components/Loader";
+import { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from "react-router-dom";
 import Filter from "../../components/Filter";
 import { useQueryString, useTitle } from '../../hooks';
 import { useLocation } from "react-router-dom";
+import { Modal } from "../../components/Modal";
+import { modalProps } from '../../components/Modal/modalProps';
 
 export function AdminProducts() {
 
@@ -14,11 +18,18 @@ export function AdminProducts() {
     const navigate = useNavigate();
     const perPage = params.perPage;
     const page = params.startPage;
-  
     const { data: products = [], error, isLoading } = useGetAllProductsQuery(search ? search : `?startPage=${page}&perPage=${perPage}`);
 
-    if (isLoading) return <Loader />;
+    const modalType = useSelector((state) => state.modal.modal);
   
+    useEffect(() => {
+      modalType
+        ? document.body.style.overflow = 'hidden'
+        : document.body.style.overflow = 'auto';
+    }, [modalType]);
+
+    if (isLoading) return <Loader />;
+
     if (error?.status === 400) navigate("/not-found");
   
     return (
