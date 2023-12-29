@@ -6,9 +6,9 @@ import style from './modal.module.scss';
 import { motion, AnimatePresence } from 'framer-motion';
 import { animateModal } from '../../animation';
 
-export function Modal(props) {
+export function Modal({ data, onDelete }) {
   const dispatch = useDispatch();
-  const { type, header, text, actions, icon } = props;
+  const { type, header, text, actions, icon } = data;
   // const error = useSelector((state) => state.error.error)
 
   async function onCloseModal() {
@@ -17,6 +17,9 @@ export function Modal(props) {
   }
 
   function onSubmitModal() {
+    if (onDelete && typeof onDelete === 'function') {
+      onDelete();
+    }
     onCloseModal();
   }
 

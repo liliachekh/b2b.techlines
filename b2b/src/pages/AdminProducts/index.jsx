@@ -1,15 +1,18 @@
 import ProductList from "../../components/ProductList";
+import EditProductForm from "../../components/EditProductForm";
 import style from "./AdminProducts.module.scss";
 import { useGetAllProductsQuery } from "../../store/api/products.api";
 import Loader from "../../components/Loader";
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Filter from "../../components/Filter";
 import { useQueryString, useTitle } from '../../hooks';
 import { useLocation } from "react-router-dom";
 import { Modal } from "../../components/Modal";
 import { modalProps } from '../../components/Modal/modalProps';
+import { fetchData } from "../../utils";
+import { baseUrl } from "../../utils/vars";
 
 export function AdminProducts() {
 
@@ -21,6 +24,34 @@ export function AdminProducts() {
     const { data: products = [], error, isLoading } = useGetAllProductsQuery(search ? search : `?startPage=${page}&perPage=${perPage}`);
 
     const modalType = useSelector((state) => state.modal.modal);
+    const [openForm, setOpenForm] = useState(false);
+    const [productId, setProductId] = useState(null);
+    const [product, setProduct] = useState(null);
+    const [addProduct, setAddProduct] = useState(false);
+
+    function handleEditButtonClick(id) {
+      setProductId(id);
+      setOpenForm(true);
+      console.log(productId);
+      console.log(product);
+    }
+  
+    function handleFormClose() {
+      setOpenForm(false);
+      setProductId(null);
+      setProduct(null);
+      setAddProduct(false)
+    }
+
+    const getProduct = useCallback(async () => {
+    const product = await fetchData(`${baseUrl}products/${productId}`)
+    setProduct(product);
+    // if (!product) return <Loader />;
+  }, [productId]);
+
+    useEffect(() => {
+      productId && getProduct();
+    }, [getProduct, productId]);
   
     useEffect(() => {
       modalType
@@ -40,13 +71,13 @@ export function AdminProducts() {
     {/* <AdminHeader loggedIn={true} /> */}
     <Filter />
     <div className={style.admin}>
-          {/* {openForm && product
+          {openForm && product
             ? <EditProductForm
               product={product}
               onCloseForm={handleFormClose} />
-            : addProduct
-              ? <AddProductForm onCloseForm={handleFormClose} />
-              : <> */}
+            // : addProduct
+            //   ? <AddProductForm onCloseForm={handleFormClose} />
+              : <>
                 <div className={style.admin__container}>
                 <div className={style.admin__header}>
                   <h1 className={style.admin__title}>Products</h1>
@@ -64,12 +95,12 @@ export function AdminProducts() {
                 </div>
                 <ProductList
                   {...products}
-                  // customButtonHandler={handleEditButtonClick}
+                  customButtonHandler={handleEditButtonClick}
                   adminCard={true}
                   // deleteButtonHandler={handleDelButton} 
                   />
-              {/* </>
-          } */}
+              </>
+          }
       </div>
     </>
     )
