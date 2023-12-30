@@ -51,6 +51,7 @@ export function AdminProducts() {
 
     useEffect(() => {
       productId && getProduct();
+      console.log(product);
     }, [getProduct, productId]);
   
     useEffect(() => {

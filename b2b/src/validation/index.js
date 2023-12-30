@@ -174,3 +174,24 @@ export const validationSchemaNewPassword = Yup.object({
     .oneOf([Yup.ref('password'), null], 'New and confirm passwords Must match')
     .required("Required Field!"),
 });
+
+export const validationSchemaProduct = Yup.object().shape({
+  enabled: Yup.boolean(),
+  imageUrls: Yup.array().required("Required Field!"),
+  quantity: Yup.number().integer().positive().required("Required Field!"),
+  _id: Yup.string(),
+  name: Yup.string().required("Required Field!"),
+  author: Yup.string().required("Required Field!"),
+  categories: Yup.string().required("Required Field!"),
+  brand: Yup.string().required("Required Field!"),
+  theme: Yup.array().of(Yup.string()).required("Required Field!"),
+  currentPrice: Yup.number().positive().required("Required Field!"),
+  productUrl: Yup.string().required("Required Field!"),
+  color: Yup.string(),
+  type: Yup.string(),
+  memory: Yup.string().required("Required Field!"),
+  itemNo: Yup.string(),
+  date: Yup.string(),
+  ean: Yup.string(),
+  __v: Yup.number(),
+});
