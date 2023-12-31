@@ -15,7 +15,7 @@ import Input from "../Input";
 import Select from '../Select';
 
 export default function EditProductForm({ product, onCloseForm }) {
-//   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 const { data: filtersBD = [] } = useGetFiltersQuery();
 
 
@@ -24,7 +24,26 @@ const initialValues = { ...product };
 return (
   <Formik initialValues={initialValues}
       validationSchema={validationSchemaProduct}
-    // onSubmit={onSubmit}
+    onSubmit={
+      async (values, { setSubmitting }) => {
+        console.log(values);
+        console.log(product._id);
+        try {
+          await fetch(`${baseUrl}products/${product._id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(values)
+          });
+          onCloseForm()
+          setSubmitting(false);
+          dispatch(showModal('saved'))
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
     >
     <Form className={style.form}>
         {editProductFormFields.map((field) => {

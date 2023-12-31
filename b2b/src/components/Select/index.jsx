@@ -41,7 +41,7 @@ const Select = ( {items, options, ...props }) => {
             ))
           : items?.map(({ name, type }) => (
               // Ваш код для items
-              <option key={type} value={name}>
+              <option key={name} value={name}>
                 {name}
               </option>
             ))}

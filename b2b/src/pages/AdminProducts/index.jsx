@@ -66,11 +66,15 @@ export function AdminProducts() {
   
     return (
     <>
-    {/* {modalType && (
-      <Modal data={modalProps.find((modal) => modal.type === modalType)} onDelete={() => deleteProduct(product)} />
-    )} */}
+    {modalType && (
+      <Modal data={modalProps.find((modal) => modal.type === modalType)} 
+      // onDelete={() => deleteProduct(product)} 
+      />
+    )}
     {/* <AdminHeader loggedIn={true} /> */}
-    <Filter />
+    {!openForm && !addProduct && (
+      <Filter />
+    )}
     <div className={style.admin}>
           {openForm && product
             ? <EditProductForm
