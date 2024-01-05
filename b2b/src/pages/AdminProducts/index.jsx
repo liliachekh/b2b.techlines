@@ -91,7 +91,7 @@ export function AdminProducts() {
                 <div className={`${style.admin__table} ${style.table}`}>
                   <p className={style.table__cell}>Image</p>
                   <p className={style.table__cell}>Name</p>
-                  <p className={style.table__cell}>Author</p>
+                  <p className={style.table__cell}>Brand</p>
                   <p className={style.table__cell}>Quantity</p>
                   <p className={style.table__cell}>Enabled</p>
                   <p className={style.table__cell}>Price</p>
