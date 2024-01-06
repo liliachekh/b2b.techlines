@@ -1,5 +1,6 @@
 import ProductList from "../../components/ProductList";
 import EditProductForm from "../../components/EditProductForm";
+import AddProductForm from "../../components/AddProductForm";
 import style from "./AdminProducts.module.scss";
 import { useGetAllProductsQuery } from "../../store/api/products.api";
 import Loader from "../../components/Loader";
@@ -34,6 +35,10 @@ export function AdminProducts() {
       setOpenForm(true);
       console.log(productId);
       console.log(product);
+    }
+
+    function handleAddButton() {
+      setAddProduct(true)
     }
   
     function handleFormClose() {
@@ -80,13 +85,13 @@ export function AdminProducts() {
             ? <EditProductForm
               product={product}
               onCloseForm={handleFormClose} />
-            // : addProduct
-            //   ? <AddProductForm onCloseForm={handleFormClose} />
+            : addProduct
+              ? <AddProductForm onCloseForm={handleFormClose} />
               : <>
                 <div className={style.admin__container}>
                 <div className={style.admin__header}>
                   <h1 className={style.admin__title}>Products</h1>
-                  <button className={style.admin__btn} type='button' >Add new product</button>
+                  <button className={style.admin__btn} type='button' onClick={handleAddButton} >Add new product</button>
                 </div>
                 <div className={`${style.admin__table} ${style.table}`}>
                   <p className={style.table__cell}>Image</p>

@@ -15,3 +15,4 @@ export * from "./delete.jsx";
 export * from "./edit.jsx";
 export * from "./view.jsx";
 export * from "./success-icon.jsx";
+export * from "./uploadFile.jsx";
