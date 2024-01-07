@@ -193,3 +193,17 @@ export const validationSchemaProduct = Yup.object().shape({
   ean: Yup.string(),
   __v: Yup.number(),
 });
+
+export const validationSchemaAddProduct = Yup.object().shape({
+  enabled: Yup.boolean(),
+  imageUrls: Yup.array(),
+  quantity: Yup.number().integer().positive().required("Required Field!"),
+  name: Yup.string().required("Required Field!"),
+  categories: Yup.string().required("Required Field!"),
+  brand: Yup.string().required("Required Field!"),
+  currentPrice: Yup.number().positive().required("Required Field!"),
+  productUrl: Yup.string().required("Required Field!"),
+  color: Yup.string(),
+  type: Yup.string(),
+  memory: Yup.string(),
+});

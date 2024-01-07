@@ -5,7 +5,7 @@ import { showModal } from '../../store/modalSlice';
 // import { setErrorAction } from '../../redux/actions/errorActions';
 import { baseUrl } from '../../utils/vars';
 import { Formik, Form } from 'formik';
-import { validationSchemaProduct } from '../../validation';
+import { validationSchemaAddProduct } from '../../validation';
 import Select from '../Select';
 // import Checkbox from '../Checkbox';
 import { addProductFormFields } from './addProductFormField';
@@ -30,9 +30,8 @@ export default function AddProductForm({ onCloseForm, isInAccount }) {
         productUrl: '',
         memory: '',
         type: '',
-        itemNo: '',
       }}
-      validationSchema={validationSchemaProduct}
+      validationSchema={validationSchemaAddProduct}
       onSubmit={
       async (values, { setSubmitting }) => {
         console.log(values);

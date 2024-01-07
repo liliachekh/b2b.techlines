@@ -3,6 +3,7 @@ import style from "./photoUploader.module.scss"
 import { UploadFile } from '../icons'
 import Input from '../Input';
 import { inputFields } from './inputFields';
+import { baseUrl } from '../../utils/vars';
 
 export default function PhotoUploader({ isInAccount = false }) {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -21,11 +22,16 @@ export default function PhotoUploader({ isInAccount = false }) {
       const formData = new FormData();
       formData.append('file', selectedFile);
       formData.append('upload_preset', 'images');
+      console.log(formData);
 
       const response = await fetch('https://storage.techlines.es/api/products/images',
         {
           method: 'POST',
           body: formData,
+          headers: {
+            // 'Accept': 'application/json',
+            'Content-Type': 'application/json', 
+          },
         }
       );
 
@@ -33,6 +39,8 @@ export default function PhotoUploader({ isInAccount = false }) {
       // setImageUrl(data.secure_url)
       setImageUrl((prevUrls) => [...prevUrls, data.secure_url]);
       setShowSuccessMessage(true);
+      console.log(data);
+      console.log(imageUrl);
 
       setTimeout(() => {
         setShowSuccessMessage(false);
