@@ -1,6 +1,7 @@
 import ProductList from "../../components/ProductList";
 import EditProductForm from "../../components/EditProductForm";
 import AddProductForm from "../../components/AddProductForm";
+import AdminHeader from "../../components/AdminHeader";
 import style from "./AdminProducts.module.scss";
 import { useGetAllProductsQuery } from "../../store/api/products.api";
 import Loader from "../../components/Loader";
@@ -75,7 +76,7 @@ export function AdminProducts() {
       // onDelete={() => deleteProduct(product)} 
       />
     )}
-    {/* <AdminHeader loggedIn={true} /> */}
+    <AdminHeader loggedIn={true} />
     {!openForm && !addProduct && (
       <Filter />
     )}

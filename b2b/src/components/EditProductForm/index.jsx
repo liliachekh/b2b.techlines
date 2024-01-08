@@ -1,16 +1,14 @@
 
 import style from './editProductForm.module.scss';
 import { editProductFormFields } from './editProductFormField';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { showModal } from '../../store/modalSlice';
 // import { setErrorAction } from '../../redux/actions/errorActions';
 import { baseUrl } from '../../utils/vars';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 import { validationSchemaProduct } from '../../validation';
-import { fetchData } from '../../utils';
-// import { reqPut } from '../../utils/requestBody';
 import { useGetFiltersQuery } from '../../store/api/filter.api';
-import Loader from '../Loader';
+// import Loader from '../Loader';
 import Input from "../Input";
 import Select from '../Select';
 

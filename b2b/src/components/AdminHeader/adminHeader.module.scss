@@ -1,0 +1,123 @@
+$color-light: #f7fbfa;
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+  }
+  
+  .logo>img {
+    width: 70px;
+  }
+
+  .header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: $color-light;
+    color: #202025;
+    // font-size: 12px;
+    // font-weight: 800;
+    // letter-spacing: 2px;
+    // line-height: 200%;
+    // text-transform: uppercase;
+    z-index: 10;
+  
+    &__wrapper {
+    //   padding: 15px 0;
+    transition: all .4s ease-out;
+    //   background-color: rgb(247, 251, 250);
+    box-shadow: 1px 5px 15px rgba(0, 0, 0, 0.4);
+    }
+  
+    &__container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-width: 320px;
+      max-width: 1470px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    //   box-sizing: border-box;
+    //   height: 76px;
+    }
+  
+    // &__link {
+    //   display: flex;
+    //   align-items: center;
+    // }
+  
+    // &__logo {
+    //   display: flex;
+    //   align-items: center;
+    //   gap: 12px;
+    // }
+  
+    &__logOut {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: .7rem 1rem;
+      transition: color .3s;
+      border: 2px solid #202025;
+      border-radius: 4px;
+      background: transparent;
+      color: #f7fbfa;
+      font-size: 1rem;
+      font-weight: 500;
+      text-align: center;
+      text-transform: uppercase;
+      cursor: pointer;
+      overflow: hidden;
+      z-index: 1;
+  
+      &::before {
+        position: absolute;
+        top: -5%;
+        left: -5%;
+        width: 110%;
+        height: 110%;
+        background-color: #202025;
+        content: '';
+        z-index: -1;
+      }
+  
+      &::after {
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        height: 100%;
+        transition: all .3s;
+        border-radius: 50%;
+        background-color: #f7fbfa;
+        content: '';
+        z-index: -1;
+      }
+  
+      &:hover {
+        color: #202025;
+      }
+  
+      &:hover {
+        &::after {
+          top: -50%;
+          width: 200%;
+          height: 200%;
+        }
+      }
+    }
+  
+    // &__title {
+    //   display: none;
+  
+    //   @media (min-width: 481px) {
+    //     display: block;
+    //     color: #010101;
+    //     font-size: 24px;
+    //     font-weight: 900;
+    //     line-height: 167%;
+    //     text-decoration: none;
+    //   }
+    // }
+  }
