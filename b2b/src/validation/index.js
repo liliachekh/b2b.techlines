@@ -196,7 +196,7 @@ export const validationSchemaProduct = Yup.object().shape({
 
 export const validationSchemaAddProduct = Yup.object().shape({
   enabled: Yup.boolean(),
-  imageUrls: Yup.array(),
+  imageUrls: Yup.array().required("Required Field!"),
   quantity: Yup.number().integer().positive().required("Required Field!"),
   name: Yup.string().required("Required Field!"),
   categories: Yup.string().required("Required Field!"),
