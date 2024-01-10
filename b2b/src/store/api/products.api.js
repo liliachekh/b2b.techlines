@@ -16,7 +16,17 @@ export const productsApi = api.injectEndpoints({
       query: (productUrl) => `products/${productUrl}`,
       providesTags: (result, error, id) => [{ type: 'Product', id }],
     }),
+    getProducts: builder.query({
+      query: () => `products/`,
+      providesTags: (result) =>
+        result
+          ? [
+            ...result?.map(({ id }) => ({ type: 'Products', id })),
+            { type: 'Products', id: 'LIST' },
+          ]
+          : [{ type: 'Products', id: 'LIST' }],
+    }),
   })
 })
 
-export const { useGetAllProductsQuery, useGetProductQuery } = productsApi;
+export const { useGetAllProductsQuery, useGetProductQuery, useGetProductsQuery } = productsApi;

@@ -3,17 +3,18 @@ import EditProductForm from "../../components/EditProductForm";
 import AddProductForm from "../../components/AddProductForm";
 import AdminHeader from "../../components/AdminHeader";
 import style from "./AdminProducts.module.scss";
-import { useGetAllProductsQuery } from "../../store/api/products.api";
+import { useGetAllProductsQuery, useGetProductsQuery } from "../../store/api/products.api";
 import Loader from "../../components/Loader";
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import Filter from "../../components/Filter";
-import { useQueryString, useTitle } from '../../hooks';
+import { useQueryString } from '../../hooks';
 import { useLocation } from "react-router-dom";
 import { Modal } from "../../components/Modal";
 import { modalProps } from '../../components/Modal/modalProps';
 import { fetchData } from "../../utils";
+import { showModal } from '../../store/modalSlice';
 import { baseUrl } from "../../utils/vars";
 
 export function AdminProducts() {
@@ -24,18 +25,46 @@ export function AdminProducts() {
     const perPage = params.perPage;
     const page = params.startPage;
     const { data: products = [], error, isLoading } = useGetAllProductsQuery(search ? search : `?startPage=${page}&perPage=${perPage}`);
+    const { data: allProducts = []} = useGetProductsQuery();
 
     const modalType = useSelector((state) => state.modal.modal);
     const [openForm, setOpenForm] = useState(false);
     const [productId, setProductId] = useState(null);
     const [product, setProduct] = useState(null);
     const [addProduct, setAddProduct] = useState(false);
+    const dispatch = useDispatch();
+
+    function handleDelButton(itemNo) {
+      const product = allProducts.find((product) => product.itemNo === itemNo);
+      setProduct(product);
+      dispatch(showModal('deleteProduct'));
+      console.log(allProducts);
+      console.log(product);
+      console.log(itemNo);
+    }
+
+    async function deleteProduct(product) {
+      try {
+        // await fetchData(`${baseUrl}products/${product.itemNo}`);
+        await fetch(`${baseUrl}products/${product.itemNo}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        dispatch(showModal('saved'));
+      } catch (error) {
+        // dispatch(setErrorAction(error.message));
+        // dispatch(setModalType('error'))
+        console.log(error);
+      }
+    }
 
     function handleEditButtonClick(id) {
       setProductId(id);
       setOpenForm(true);
-      console.log(productId);
-      console.log(product);
+      // console.log(productId);
+      // console.log(product);
     }
 
     function handleAddButton() {
@@ -73,7 +102,7 @@ export function AdminProducts() {
     <>
     {modalType && (
       <Modal data={modalProps.find((modal) => modal.type === modalType)} 
-      // onDelete={() => deleteProduct(product)} 
+      onDelete={() => deleteProduct(product)} 
       />
     )}
     <AdminHeader loggedIn={true} />
@@ -106,7 +135,7 @@ export function AdminProducts() {
                   {...products}
                   customButtonHandler={handleEditButtonClick}
                   adminCard={true}
-                  // deleteButtonHandler={handleDelButton} 
+                  deleteButtonHandler={handleDelButton} 
                   />
               </>
           }

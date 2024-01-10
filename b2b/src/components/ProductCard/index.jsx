@@ -138,7 +138,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
         itemNo,
       }}
       buttonHandler={() => buttonHandler(productUrl)}
-      deleteButtonHandler={() => deleteButtonHandler(productUrl)} />
+      deleteButtonHandler={() => deleteButtonHandler(itemNo)} />
     </div>
   )
 
