@@ -3,7 +3,6 @@ import style from './editProductForm.module.scss';
 import { editProductFormFields } from './editProductFormField';
 import { useDispatch } from 'react-redux';
 import { showModal } from '../../store/modalSlice';
-// import { setErrorAction } from '../../redux/actions/errorActions';
 import { baseUrl } from '../../utils/vars';
 import { Formik, Form } from 'formik';
 import { validationSchemaProduct } from '../../validation';
@@ -12,9 +11,9 @@ import { useGetFiltersQuery } from '../../store/api/filter.api';
 import Input from "../Input";
 import Select from '../Select';
 
-export default function EditProductForm({ product, onCloseForm }) {
+export default function EditProductForm({ product, onCloseForm, refetchProducts }) {
   const dispatch = useDispatch();
-const { data: filtersBD = [] } = useGetFiltersQuery();
+  const { data: filtersBD = [] } = useGetFiltersQuery();
 
 
 const initialValues = { ...product };
@@ -24,8 +23,6 @@ return (
       validationSchema={validationSchemaProduct}
     onSubmit={
       async (values, { setSubmitting }) => {
-        console.log(values);
-        console.log(product._id);
         try {
           await fetch(`${baseUrl}products/${product._id}`, {
             method: 'PUT',
@@ -36,8 +33,10 @@ return (
           });
           onCloseForm()
           setSubmitting(false);
-          dispatch(showModal('saved'))
+          dispatch(showModal('saved'));
+          refetchProducts();
         } catch (error) {
+          dispatch(showModal('error'));
           console.log(error);
         }
       }

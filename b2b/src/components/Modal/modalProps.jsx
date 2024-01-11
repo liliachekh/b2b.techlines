@@ -3,17 +3,18 @@ import style from './modal.module.scss';
 import { Success } from '../icons/success-icon';
 
 export const modalProps = [
-  // {
-  //   type: 'error',
-  //   header: 'an error occurred',
-  //   actions(onClose, onSubmit, className) {
-  //     return (
-  //       <div className={className}>
-  //         <button type='button' onClick={onClose} className={`${style.modal__btn} ${style.cancelBtn}`}>OK</button>
-  //       </div>
-  //     );
-  //   },
-  // },
+  {
+    type: 'error',
+    header: 'An error occurred',
+    text: 'Something went wrong, can not complete operation.',
+    actions(onClose, onSubmit, className) {
+      return (
+        <div className={className}>
+          <button type='button' onClick={onClose} className={`${style.modal__btn} ${style.cancelBtn}`}>OK</button>
+        </div>
+      );
+    },
+  },
   {
     type: 'order',
     header: 'Your order has been processed!',

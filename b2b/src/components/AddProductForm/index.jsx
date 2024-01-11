@@ -2,12 +2,10 @@ import Input from '../Input';
 import style from './addProductForm.module.scss';
 import { useDispatch } from 'react-redux';
 import { showModal } from '../../store/modalSlice';
-// import { setErrorAction } from '../../redux/actions/errorActions';
 import { baseUrl } from '../../utils/vars';
 import { Formik, Form } from 'formik';
 import { validationSchemaAddProduct } from '../../validation';
 import Select from '../Select';
-// import Checkbox from '../Checkbox';
 import { addProductFormFields } from './addProductFormField';
 import PhotoUploader from '../PhotoUploader/index';
 import { useGetFiltersQuery } from '../../store/api/filter.api';
@@ -34,7 +32,6 @@ export default function AddProductForm({ onCloseForm, isInAccount }) {
       validationSchema={validationSchemaAddProduct}
       onSubmit={
       async (values, { setSubmitting }) => {
-        console.log(values);
         try {
           await fetch(`${baseUrl}products`, {
             method: 'POST',
@@ -47,6 +44,7 @@ export default function AddProductForm({ onCloseForm, isInAccount }) {
           setSubmitting(false);
           dispatch(showModal('saved'))
         } catch (error) {
+          dispatch(showModal('error'));
           console.log(error);
         }
       }

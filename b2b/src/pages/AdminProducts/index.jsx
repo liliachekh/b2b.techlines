@@ -24,7 +24,7 @@ export function AdminProducts() {
     const navigate = useNavigate();
     const perPage = params.perPage;
     const page = params.startPage;
-    const { data: products = [], error, isLoading } = useGetAllProductsQuery(search ? search : `?startPage=${page}&perPage=${perPage}`);
+    const { data: products = [], error, isLoading, refetch } = useGetAllProductsQuery(search ? search : `?startPage=${page}&perPage=${perPage}`);
     const { data: allProducts = []} = useGetProductsQuery();
 
     const modalType = useSelector((state) => state.modal.modal);
@@ -38,14 +38,10 @@ export function AdminProducts() {
       const product = allProducts.find((product) => product.itemNo === itemNo);
       setProduct(product);
       dispatch(showModal('deleteProduct'));
-      console.log(allProducts);
-      console.log(product);
-      console.log(itemNo);
     }
 
     async function deleteProduct(product) {
       try {
-        // await fetchData(`${baseUrl}products/${product.itemNo}`);
         await fetch(`${baseUrl}products/${product.itemNo}`, {
           method: 'DELETE',
           headers: {
@@ -53,9 +49,10 @@ export function AdminProducts() {
           },
         });
         dispatch(showModal('saved'));
+        refetch();
       } catch (error) {
         // dispatch(setErrorAction(error.message));
-        // dispatch(setModalType('error'))
+        dispatch(showModal('error'));
         console.log(error);
       }
     }
@@ -63,8 +60,6 @@ export function AdminProducts() {
     function handleEditButtonClick(id) {
       setProductId(id);
       setOpenForm(true);
-      // console.log(productId);
-      // console.log(product);
     }
 
     function handleAddButton() {
@@ -114,7 +109,8 @@ export function AdminProducts() {
           {openForm && product
             ? <EditProductForm
               product={product}
-              onCloseForm={handleFormClose} />
+              onCloseForm={handleFormClose} 
+              refetchProducts={refetch}/>
             : addProduct
               ? <AddProductForm onCloseForm={handleFormClose} />
               : <>
@@ -136,6 +132,7 @@ export function AdminProducts() {
                   customButtonHandler={handleEditButtonClick}
                   adminCard={true}
                   deleteButtonHandler={handleDelButton} 
+                  refetchProducts={refetch}
                   />
               </>
           }
