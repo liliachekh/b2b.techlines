@@ -10,7 +10,7 @@ import { addProductFormFields } from './addProductFormField';
 import PhotoUploader from '../PhotoUploader/index';
 import { useGetFiltersQuery } from '../../store/api/filter.api';
 
-export default function AddProductForm({ onCloseForm, isInAccount }) {
+export default function AddProductForm({ onCloseForm, isInAccount, refetchProducts }) {
     const dispatch = useDispatch();
     const { data: filtersBD = [] } = useGetFiltersQuery();
 
@@ -42,7 +42,8 @@ export default function AddProductForm({ onCloseForm, isInAccount }) {
           });
           onCloseForm();
           setSubmitting(false);
-          dispatch(showModal('saved'))
+          dispatch(showModal('saved'));
+          refetchProducts();
         } catch (error) {
           dispatch(showModal('error'));
           console.log(error);

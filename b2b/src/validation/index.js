@@ -206,4 +206,5 @@ export const validationSchemaAddProduct = Yup.object().shape({
   color: Yup.string(),
   type: Yup.string(),
   memory: Yup.string(),
+  ean: Yup.string().required("Required Field!"),
 });

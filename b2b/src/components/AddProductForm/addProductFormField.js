@@ -134,6 +134,17 @@ export const addProductFormFields = [
       type: "text",
       placeholder: "Enter type",
     },
+    {
+      tagType: 'regular',
+      label: "EAN",
+      labelClass: style.form__label,
+      inputClass: style.form__input,
+      errorClass: style.form__error,
+      id: "ean",
+      name: "ean",
+      type: "text",
+      placeholder: "Enter EAN",
+    },
     // {
     //   tagType: 'regular',
     //   label: "ItemNo",

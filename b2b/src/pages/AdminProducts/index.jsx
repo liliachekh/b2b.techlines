@@ -24,8 +24,8 @@ export function AdminProducts() {
     const navigate = useNavigate();
     const perPage = params.perPage;
     const page = params.startPage;
-    const { data: products = [], error, isLoading, refetch } = useGetAllProductsQuery(search ? search : `?startPage=${page}&perPage=${perPage}`);
-    const { data: allProducts = []} = useGetProductsQuery();
+    const { data: products = [], error, isLoading, refetch} = useGetAllProductsQuery(search ? search : `?startPage=${page}&perPage=${perPage}`);
+    const { data: productsList = [], refetch: refetchProductsList } = useGetProductsQuery();
 
     const modalType = useSelector((state) => state.modal.modal);
     const [openForm, setOpenForm] = useState(false);
@@ -35,9 +35,12 @@ export function AdminProducts() {
     const dispatch = useDispatch();
 
     function handleDelButton(itemNo) {
-      const product = allProducts.find((product) => product.itemNo === itemNo);
+      const product = productsList.find((product) => product.itemNo === itemNo);
       setProduct(product);
       dispatch(showModal('deleteProduct'));
+      console.log(product);
+      // console.log(products);
+      // console.log(productsList);
     }
 
     async function deleteProduct(product) {
@@ -49,7 +52,7 @@ export function AdminProducts() {
           },
         });
         dispatch(showModal('saved'));
-        refetch();
+        refetchProductsList();
       } catch (error) {
         // dispatch(setErrorAction(error.message));
         dispatch(showModal('error'));
@@ -60,17 +63,20 @@ export function AdminProducts() {
     function handleEditButtonClick(id) {
       setProductId(id);
       setOpenForm(true);
+      console.log(product);
     }
 
     function handleAddButton() {
       setAddProduct(true)
+      console.log(product);
     }
   
     function handleFormClose() {
       setOpenForm(false);
       setProductId(null);
       setProduct(null);
-      setAddProduct(false)
+      setAddProduct(false);
+      console.log(product);
     }
 
     const getProduct = useCallback(async () => {
@@ -88,6 +94,10 @@ export function AdminProducts() {
         ? document.body.style.overflow = 'hidden'
         : document.body.style.overflow = 'auto';
     }, [modalType]);
+
+    useEffect(() => {
+      refetch();
+    }, [productsList, refetch])
 
     if (isLoading) return <Loader />;
 
@@ -110,9 +120,9 @@ export function AdminProducts() {
             ? <EditProductForm
               product={product}
               onCloseForm={handleFormClose} 
-              refetchProducts={refetch}/>
+              refetchProducts={refetchProductsList}/>
             : addProduct
-              ? <AddProductForm onCloseForm={handleFormClose} />
+              ? <AddProductForm onCloseForm={handleFormClose} refetchProducts={refetchProductsList}/>
               : <>
                 <div className={style.admin__header}>
                   <h1 className={style.admin__title}>Products</h1>
@@ -132,7 +142,7 @@ export function AdminProducts() {
                   customButtonHandler={handleEditButtonClick}
                   adminCard={true}
                   deleteButtonHandler={handleDelButton} 
-                  refetchProducts={refetch}
+                  // refetchProducts={refetch}
                   />
               </>
           }
