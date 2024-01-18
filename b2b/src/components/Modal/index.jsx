@@ -6,15 +6,23 @@ import style from './modal.module.scss';
 import { motion, AnimatePresence } from 'framer-motion';
 import { animateModal } from '../../animation';
 
-export function Modal({ data, onDelete }) {
+export function Modal({ data, onDelete, onCloseForm }) {
   const dispatch = useDispatch();
   const { type, header, text, actions, icon } = data;
   // const error = useSelector((state) => state.error.error)
 
+  // async function onCloseModal() {
+  //   dispatch(hideModal(null));
+  //   // dispatch(setErrorAction(null));
+  // }
   async function onCloseModal() {
+    if (onCloseForm && typeof onCloseForm === 'function') {
+      onCloseForm();  // Вызывайте onCloseForm перед закрытием модального окна
+    }
     dispatch(hideModal(null));
     // dispatch(setErrorAction(null));
   }
+
 
   function onSubmitModal() {
     if (onDelete && typeof onDelete === 'function') {

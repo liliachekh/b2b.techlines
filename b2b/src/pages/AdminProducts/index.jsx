@@ -34,13 +34,11 @@ export function AdminProducts() {
     const [addProduct, setAddProduct] = useState(false);
     const dispatch = useDispatch();
 
-    function handleDelButton(itemNo) {
-      const product = productsList.find((product) => product.itemNo === itemNo);
-      setProduct(product);
+    function handleDelButton(id) {
+      // const product = productsList.find((product) => product.itemNo === itemNo);
+      // setProduct(product);
+      setProductId(id);
       dispatch(showModal('deleteProduct'));
-      console.log(product);
-      // console.log(products);
-      // console.log(productsList);
     }
 
     async function deleteProduct(product) {
@@ -63,12 +61,10 @@ export function AdminProducts() {
     function handleEditButtonClick(id) {
       setProductId(id);
       setOpenForm(true);
-      console.log(product);
     }
 
     function handleAddButton() {
       setAddProduct(true)
-      console.log(product);
     }
   
     function handleFormClose() {
@@ -76,7 +72,6 @@ export function AdminProducts() {
       setProductId(null);
       setProduct(null);
       setAddProduct(false);
-      console.log(product);
     }
 
     const getProduct = useCallback(async () => {
@@ -107,7 +102,8 @@ export function AdminProducts() {
     <>
     {modalType && (
       <Modal data={modalProps.find((modal) => modal.type === modalType)} 
-      onDelete={() => deleteProduct(product)} 
+      onDelete={() => deleteProduct(product)}
+      onCloseForm={handleFormClose} 
       />
     )}
     <AdminHeader loggedIn={true} />
@@ -142,7 +138,6 @@ export function AdminProducts() {
                   customButtonHandler={handleEditButtonClick}
                   adminCard={true}
                   deleteButtonHandler={handleDelButton} 
-                  // refetchProducts={refetch}
                   />
               </>
           }
