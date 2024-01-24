@@ -3,7 +3,7 @@ import EditProductForm from "../../components/EditProductForm";
 import AddProductForm from "../../components/AddProductForm";
 import AdminHeader from "../../components/AdminHeader";
 import style from "./AdminProducts.module.scss";
-import { useGetAllProductsQuery, useGetProductsQuery } from "../../store/api/products.api";
+import { useGetAllProductsQuery, useGetProductsQuery, useDeleteProductMutation } from "../../store/api/products.api";
 import Loader from "../../components/Loader";
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,6 +26,7 @@ export function AdminProducts() {
     const page = params.startPage;
     const { data: products = [], error, isLoading, refetch} = useGetAllProductsQuery(search ? search : `?startPage=${page}&perPage=${perPage}`);
     const { data: productsList = [], refetch: refetchProductsList } = useGetProductsQuery();
+    const [delProduct ] = useDeleteProductMutation();
 
     const modalType = useSelector((state) => state.modal.modal);
     const [openForm, setOpenForm] = useState(false);
@@ -43,12 +44,7 @@ export function AdminProducts() {
 
     async function deleteProduct(product) {
       try {
-        await fetch(`${baseUrl}products/${product.itemNo}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        await delProduct(product.itemNo);
         dispatch(showModal('saved'));
         refetchProductsList();
       } catch (error) {
