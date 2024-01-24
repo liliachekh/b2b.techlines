@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { hideModal } from '../../store/modalSlice';
 // import { setErrorAction } from '../../redux/actions/errorActions';
 import style from './modal.module.scss';
@@ -9,18 +9,12 @@ import { animateModal } from '../../animation';
 export function Modal({ data, onDelete, onCloseForm }) {
   const dispatch = useDispatch();
   const { type, header, text, actions, icon } = data;
-  // const error = useSelector((state) => state.error.error)
 
-  // async function onCloseModal() {
-  //   dispatch(hideModal(null));
-  //   // dispatch(setErrorAction(null));
-  // }
   async function onCloseModal() {
     if (onCloseForm && typeof onCloseForm === 'function') {
-      onCloseForm();  // Вызывайте onCloseForm перед закрытием модального окна
+      onCloseForm();
     }
     dispatch(hideModal(null));
-    // dispatch(setErrorAction(null));
   }
 
 
