@@ -2,6 +2,7 @@ import ProductList from "../../components/ProductList";
 import EditProductForm from "../../components/EditProductForm";
 import AddProductForm from "../../components/AddProductForm";
 import AdminHeader from "../../components/AdminHeader";
+import AddAdminParamsForm from "../../components/AddAdminParamsForm";
 import style from "./AdminProducts.module.scss";
 import { useGetAllProductsQuery, useGetProductsQuery, useDeleteProductMutation } from "../../store/api/products.api";
 import Loader from "../../components/Loader";
@@ -33,6 +34,7 @@ export function AdminProducts() {
     const [productId, setProductId] = useState(null);
     const [product, setProduct] = useState(null);
     const [addProduct, setAddProduct] = useState(false);
+    const [adminParam, setAdminParam] = useState(null);
     const dispatch = useDispatch();
 
     function handleDelButton(id) {
@@ -68,6 +70,11 @@ export function AdminProducts() {
       setProductId(null);
       setProduct(null);
       setAddProduct(false);
+      setAdminParam(null);
+    }
+
+    function handleAdminParamsButton(param) {
+      setAdminParam(param);
     }
 
     const getProduct = useCallback(async () => {
@@ -103,7 +110,7 @@ export function AdminProducts() {
       />
     )}
     <AdminHeader loggedIn={true} />
-    {!openForm && !addProduct && (
+    {!openForm && !addProduct && !adminParam && (
       <Filter />
     )}
     <div className={style.admin}>
@@ -115,9 +122,13 @@ export function AdminProducts() {
               refetchProducts={refetchProductsList}/>
             : addProduct
               ? <AddProductForm onCloseForm={handleFormClose} refetchProducts={refetchProductsList}/>
+            : adminParam
+              ? <AddAdminParamsForm adminParam={adminParam} onCloseForm={handleFormClose}/>
               : <>
                 <div className={style.admin__header}>
                   <h1 className={style.admin__title}>Products</h1>
+                  <button className={style.admin__btn} type='button' onClick={()=> handleAdminParamsButton('brand')} >Brands</button>
+                  <button className={style.admin__btn} type='button' onClick={()=> handleAdminParamsButton('categories')} >Categories</button>
                   <button className={style.admin__btn} type='button' onClick={handleAddButton} >Add new product</button>
                 </div>
                 <div className={`${style.admin__table} ${style.table}`}>
