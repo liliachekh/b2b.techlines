@@ -2,7 +2,7 @@ import ProductList from "../../components/ProductList";
 import EditProductForm from "../../components/EditProductForm";
 import AddProductForm from "../../components/AddProductForm";
 import AdminHeader from "../../components/AdminHeader";
-import AddAdminParamsForm from "../../components/AddAdminParamsForm";
+import AdminParams from "../../components/AdminParams";
 import style from "./AdminProducts.module.scss";
 import { useGetAllProductsQuery, useGetProductsQuery, useDeleteProductMutation } from "../../store/api/products.api";
 import Loader from "../../components/Loader";
@@ -123,7 +123,7 @@ export function AdminProducts() {
             : addProduct
               ? <AddProductForm onCloseForm={handleFormClose} refetchProducts={refetchProductsList}/>
             : adminParam
-              ? <AddAdminParamsForm adminParam={adminParam} onCloseForm={handleFormClose}/>
+              ? <AdminParams adminParam={adminParam} onCloseForm={handleFormClose}/>
               : <>
                 <div className={style.admin__header}>
                   <h1 className={style.admin__title}>Products</h1>

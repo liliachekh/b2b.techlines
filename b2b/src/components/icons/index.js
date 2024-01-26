@@ -16,3 +16,5 @@ export * from "./edit.jsx";
 export * from "./view.jsx";
 export * from "./success-icon.jsx";
 export * from "./uploadFile.jsx";
+export * from "./check.jsx";
+export * from "./close.jsx";
