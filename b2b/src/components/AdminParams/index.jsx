@@ -1,4 +1,4 @@
-import style from "./addAdminParamsForm.module.scss";
+import style from "./adminParams.module.scss";
 import { useGetFiltersQuery } from "../../store/api/filter.api";
 import { Edit, Check, Close } from "../icons";
 import { useState } from "react";
@@ -58,7 +58,10 @@ export default function AdminParams({ adminParam, onCloseForm }) {
           </div>
           <nav className={style.adminParams__nav}>
             <button className={style.adminParams__btn} onClick={handleAddParam}>Add</button>
-            <button className={style.adminParams__btn}>Delete</button>
+            <button 
+            className={`${style.adminParams__btn} ${selectedParams.length === 0 && style.adminParams__btnDisabled}`}
+            disabled={selectedParams.length === 0}
+            >Delete</button>
           </nav>
           <div className={style.adminParams__main}>
           <table className={style.adminParams__table}>
@@ -103,7 +106,7 @@ export default function AdminParams({ adminParam, onCloseForm }) {
                   ))}
             </table>
             {addParam && (
-              <AddAdminParamsForm onCloseForm={handleCancelAddParam}/>
+              <AddAdminParamsForm adminParam={adminParam} onCloseForm={handleCancelAddParam}/>
             )}
           </div>
         </div>

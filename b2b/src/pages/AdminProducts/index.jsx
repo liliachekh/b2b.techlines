@@ -127,9 +127,11 @@ export function AdminProducts() {
               : <>
                 <div className={style.admin__header}>
                   <h1 className={style.admin__title}>Products</h1>
+                  <div className={style.admin__headerBtns}>
                   <button className={style.admin__btn} type='button' onClick={()=> handleAdminParamsButton('brand')} >Brands</button>
                   <button className={style.admin__btn} type='button' onClick={()=> handleAdminParamsButton('categories')} >Categories</button>
                   <button className={style.admin__btn} type='button' onClick={handleAddButton} >Add new product</button>
+                  </div>
                 </div>
                 <div className={`${style.admin__table} ${style.table}`}>
                   <p className={style.table__cell}>Image</p>

@@ -208,3 +208,8 @@ export const validationSchemaAddProduct = Yup.object().shape({
   memory: Yup.string(),
   ean: Yup.string().required("Required Field!"),
 });
+
+export const validationSchemaAddAdminParams = Yup.object().shape({
+  name: Yup.string().required("Required Field!"),
+  type: Yup.string().required("Required Field!"),
+});

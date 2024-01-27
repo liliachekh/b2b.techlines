@@ -5,17 +5,18 @@ import { baseUrl } from '../../utils/vars';
 import style from './addAdminParamsForm.module.scss';
 import Input from '../Input';
 import {addAdminParamsFormFields} from './addAdminParamsFormFields';
+import { validationSchemaAddAdminParams } from '../../validation';
 
 
-export default function AddAdminParamsForm({onCloseForm}) {
+export default function AddAdminParamsForm({adminParam, onCloseForm}) {
     const dispatch = useDispatch();
     return(
         <Formik
       initialValues={{
-        type: '',
+        type: adminParam,
         name: '',
       }}
-    //   validationSchema={validationSchemaAddAdminParams}
+      validationSchema={validationSchemaAddAdminParams}
       onSubmit={
       async (values, { setSubmitting }) => {
         try {
@@ -26,6 +27,7 @@ export default function AddAdminParamsForm({onCloseForm}) {
             },
             body: JSON.stringify(values)
           });
+          console.log(values);
           onCloseForm();
           setSubmitting(false);
           dispatch(showModal('saved'));

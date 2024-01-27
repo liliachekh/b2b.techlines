@@ -80,12 +80,29 @@ $color-grey-light: #e3e3e3;
         }
       }
 
+      &__btnDisabled {
+        color: #202025;
+  
+        &::before {
+          background-color: $color-grey;
+        }
+  
+        &::after {
+          background-color: $color-grey;
+        }
+      }
+
     &__nav {
       display: flex;
       justify-content: flex-end;
       gap: 10px;
     }
 
+    &__main {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
     // &__list {
     //   display: flex;
     //   flex-direction: column;
