@@ -1,26 +1,33 @@
 import style from "./adminParams.module.scss";
-import { useGetFiltersQuery } from "../../store/api/filter.api";
+import { useGetFiltersQuery, useDeleteFiltersMutation } from "../../store/api/filter.api";
 import { Edit, Check, Close } from "../icons";
 import { useState } from "react";
 import AddAdminParamsForm from "../AddAdminParamsForm";
+import { useDispatch } from 'react-redux';
+import { showModal } from '../../store/modalSlice';
 
 export default function AdminParams({ adminParam, onCloseForm }) {
-  const { data: filtersBD = [] } = useGetFiltersQuery();
+  const { data: filtersBD = [], refetch } = useGetFiltersQuery();
   const [selectedParams, setSelectedParams] = useState([]);
   // Edit
   const [editParamId, setEditParamId] = useState(null);
-  const [editedParams, setEditedParams] = useState({});
+  const [editedParams, setEditedParams] = useState('');
   // Add
   const [addParam, setAddParam] = useState(false);
+  // Delete
+  const [delFilters] = useDeleteFiltersMutation();
 
-  const handleEditParam = (paramId) => {
+  const dispatch = useDispatch();
+
+  const handleEditParam = (paramId, paramName) => {
     // встановити айді для редагування
     setEditParamId(paramId);
+    setEditedParams(paramName);
   };
 
-  const handleInputChange = (value) => {
+  const handleInputChange = (e) => {
     // Запись нового значения в стейт
-    setEditedParams({ [editParamId]: value });
+    setEditedParams(e.target.value);
     console.log(editedParams);
     console.log(editParamId);
   };
@@ -33,20 +40,32 @@ export default function AdminParams({ adminParam, onCloseForm }) {
 
   const handleAddParam = () => {
     setAddParam(true);
+    console.log(selectedParams);
   }
 
   const handleCancelAddParam = () => {
     setAddParam(false);
   }
 
-  // const handleCheckboxChange = (paramId) => {
-  //   // оновлення масиву з параметрами при встановленні чекбоксу
-  //   if (selectedParams.includes(paramId)) {
-  //     setSelectedParams(selectedParams.filter((id) => id !== paramId));
-  //   } else {
-  //     setSelectedParams([...selectedParams, paramId]);
-  //   }
-  // };
+  const handleCheckboxChange = (paramId) => {
+    // оновлення масиву з параметрами при встановленні чекбоксу
+    if (selectedParams.includes(paramId)) {
+      setSelectedParams(selectedParams.filter((id) => id !== paramId));
+    } else {
+      setSelectedParams([...selectedParams, paramId]);
+    }
+  };
+
+  async function deleteFilters(selectedParams) {
+    try {
+      await delFilters(selectedParams);
+      dispatch(showModal('saved'));
+      refetch();
+    } catch (error) {
+      dispatch(showModal('error'));
+      console.log(error);
+    }
+  }
 
   return (
     <>
@@ -61,7 +80,9 @@ export default function AdminParams({ adminParam, onCloseForm }) {
             <button 
             className={`${style.adminParams__btn} ${selectedParams.length === 0 && style.adminParams__btnDisabled}`}
             disabled={selectedParams.length === 0}
-            >Delete</button>
+            onClick={()=> deleteFilters(selectedParams)}
+            >Delete
+            </button>
           </nav>
           <div className={style.adminParams__main}>
           <table className={style.adminParams__table}>
@@ -75,15 +96,20 @@ export default function AdminParams({ adminParam, onCloseForm }) {
                   .map((param) => (
                     <tr key={param._id}>
                       <td>
-                        <input type="checkbox" />
+                        <input type="checkbox" 
+                        checked={selectedParams.includes(param._id)}
+                        onChange={() => handleCheckboxChange(param._id)}
+                        />
                       </td>
                       <td>
                   {editParamId === param._id ? (
                     <div className={style.adminParams__editItems}>
                     <input className={style.adminParams__editItemsInput}
                       type="text"
-                      value={editedParams[param._id] || ''}
-                      onChange={(e) => handleInputChange(e.target.value)}
+                      id="edit"
+                      name="edit"
+                      value={editedParams}
+                      onChange={handleInputChange}
                     />
                     <button className={style.adminParams__editItemsBtn}> <Check/> </button>
                     </div>
@@ -97,7 +123,7 @@ export default function AdminParams({ adminParam, onCloseForm }) {
                       <button onClick={handleCancelEdit}> <Close/> </button>
                     </>
                   ) : (
-                    <button onClick={() => handleEditParam(param._id)}>
+                    <button onClick={() => handleEditParam(param._id, param.name)}>
                       <Edit/>
                     </button>
                   )}
@@ -106,7 +132,7 @@ export default function AdminParams({ adminParam, onCloseForm }) {
                   ))}
             </table>
             {addParam && (
-              <AddAdminParamsForm adminParam={adminParam} onCloseForm={handleCancelAddParam}/>
+              <AddAdminParamsForm adminParam={adminParam} onCloseForm={handleCancelAddParam} refetch={refetch}/>
             )}
           </div>
         </div>
