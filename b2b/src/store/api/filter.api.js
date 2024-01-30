@@ -31,7 +31,15 @@ export const filterApi = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Filters', id: 'LIST' }]
     }),
+    updateFilter: builder.mutation({
+      query: ({id, body}) => ({
+        url: `filters/${id}`,
+        method: 'PUT',
+        body: body,
+      }),
+      invalidatesTags: [{ type: 'Filters', id: 'LIST' }]
+    }),
   })
 })
 
-export const { useGetFiltersQuery, useDeleteFiltersMutation, useSetFilterMutation } = filterApi;
+export const { useGetFiltersQuery, useDeleteFiltersMutation, useSetFilterMutation, useUpdateFilterMutation } = filterApi;

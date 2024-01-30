@@ -1,5 +1,5 @@
 import style from "./adminParams.module.scss";
-import { useGetFiltersQuery, useDeleteFiltersMutation } from "../../store/api/filter.api";
+import { useGetFiltersQuery, useDeleteFiltersMutation, useUpdateFilterMutation } from "../../store/api/filter.api";
 import { Edit, Check, Close } from "../icons";
 import { useState } from "react";
 import AddAdminParamsForm from "../AddAdminParamsForm";
@@ -12,6 +12,7 @@ export default function AdminParams({ adminParam, onCloseForm }) {
   // Edit
   const [editParamId, setEditParamId] = useState(null);
   const [editedParams, setEditedParams] = useState('');
+  const [updateFilterData] = useUpdateFilterMutation();
   // Add
   const [addParam, setAddParam] = useState(false);
   // Delete
@@ -26,10 +27,8 @@ export default function AdminParams({ adminParam, onCloseForm }) {
   };
 
   const handleInputChange = (e) => {
-    // Запись нового значения в стейт
+    // Запис нового значення в стейт
     setEditedParams(e.target.value);
-    console.log(editedParams);
-    console.log(editParamId);
   };
 
   const handleCancelEdit = () => {
@@ -40,7 +39,6 @@ export default function AdminParams({ adminParam, onCloseForm }) {
 
   const handleAddParam = () => {
     setAddParam(true);
-    console.log(selectedParams);
   }
 
   const handleCancelAddParam = () => {
@@ -66,6 +64,18 @@ export default function AdminParams({ adminParam, onCloseForm }) {
       console.log(error);
     }
   }
+
+  async function updateFilter(id, body) {
+    try {
+      await updateFilterData( { id, body: { name: body } } );
+      dispatch(showModal('saved'));
+      refetch();
+      setEditParamId(null);
+    } catch (error) {
+      dispatch(showModal('error'));
+      console.error('Error updating filter:', error);
+    }
+  };
 
   return (
     <>
@@ -111,7 +121,9 @@ export default function AdminParams({ adminParam, onCloseForm }) {
                       value={editedParams}
                       onChange={handleInputChange}
                     />
-                    <button className={style.adminParams__editItemsBtn}> <Check/> </button>
+                    <button className={style.adminParams__editItemsBtn}
+                      onClick={()=> updateFilter(editParamId, editedParams)}
+                    > <Check/> </button>
                     </div>
                   ) : (
                     param.name
