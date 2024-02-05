@@ -3,6 +3,7 @@ import EditProductForm from "../../components/EditProductForm";
 import AddProductForm from "../../components/AddProductForm";
 import AdminHeader from "../../components/AdminHeader";
 import AdminParams from "../../components/AdminParams";
+import BackToTop from "../../components/BackToTop"
 import style from "./AdminProducts.module.scss";
 import { useGetAllProductsQuery, useGetProductsQuery, useDeleteProductMutation } from "../../store/api/products.api";
 import Loader from "../../components/Loader";
@@ -124,6 +125,7 @@ export function AdminProducts() {
       />
     )}
     <AdminHeader loggedIn={true} />
+    <BackToTop />
     {!openForm && !addProduct && !adminParam && (
       <Filter />
     )}
