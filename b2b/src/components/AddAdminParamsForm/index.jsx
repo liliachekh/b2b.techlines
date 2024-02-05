@@ -1,6 +1,4 @@
 import { Formik, Form } from 'formik';
-import { useDispatch } from 'react-redux';
-import { showModal } from '../../store/modalSlice';
 import style from './addAdminParamsForm.module.scss';
 import Input from '../Input';
 import {addAdminParamsFormFields} from './addAdminParamsFormFields';
@@ -8,8 +6,7 @@ import { validationSchemaAddAdminParams } from '../../validation';
 import { useSetFilterMutation } from '../../store/api/filter.api';
 
 
-export default function AddAdminParamsForm({adminParam, onCloseForm, refetch}) {
-    const dispatch = useDispatch();
+export default function AddAdminParamsForm({adminParam, onCloseForm, refetch, setSuccessMsg, setErrorMsg}) {
     const [setFilter] = useSetFilterMutation();
     return(
         <Formik
@@ -21,13 +18,17 @@ export default function AddAdminParamsForm({adminParam, onCloseForm, refetch}) {
       onSubmit={
       async (values, { setSubmitting }) => {
         try {
-          await setFilter(values);
-          setSubmitting(false);
-          dispatch(showModal('saved'));
-          refetch();
+          const response = await setFilter(values);
+          if (response.data) {
+            setSubmitting(false);
+            setSuccessMsg(true);
+            refetch();
+            onCloseForm();
+          } else {
+            setErrorMsg(response.error.data.message);
+          }
         } catch (error) {
-          dispatch(showModal('error'));
-          console.log(error);
+          setErrorMsg(error.data.message);
         }
       }
     }>

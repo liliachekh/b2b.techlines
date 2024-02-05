@@ -3,10 +3,10 @@ import { useGetFiltersQuery, useDeleteFiltersMutation, useUpdateFilterMutation }
 import { Edit, Check, Close } from "../icons";
 import { useState } from "react";
 import AddAdminParamsForm from "../AddAdminParamsForm";
-import { useDispatch } from 'react-redux';
-import { showModal } from '../../store/modalSlice';
+// import { useDispatch } from 'react-redux';
+// import { showModal } from '../../store/modalSlice';
 
-export default function AdminParams({ adminParam, onCloseForm }) {
+export default function AdminParams({ adminParam, onCloseForm, setSuccessMsg, setErrorMsg }) {
   const { data: filtersBD = [], refetch } = useGetFiltersQuery();
   const [selectedParams, setSelectedParams] = useState([]);
   // Edit
@@ -18,7 +18,6 @@ export default function AdminParams({ adminParam, onCloseForm }) {
   // Delete
   const [delFilters] = useDeleteFiltersMutation();
 
-  const dispatch = useDispatch();
 
   const handleEditParam = (paramId, paramName) => {
     // встановити айді для редагування
@@ -56,24 +55,30 @@ export default function AdminParams({ adminParam, onCloseForm }) {
 
   async function deleteFilters(selectedParams) {
     try {
-      await delFilters(selectedParams);
-      dispatch(showModal('saved'));
-      refetch();
+      const response = await delFilters(selectedParams);
+      if (response.data) {
+        setSuccessMsg(true);
+        refetch();
+      } else {
+        setErrorMsg(response.error.data.message);
+      }
     } catch (error) {
-      dispatch(showModal('error'));
-      console.log(error);
+      setErrorMsg(error.data.message);
     }
   }
 
   async function updateFilter(id, body) {
     try {
-      await updateFilterData( { id, body: { name: body } } );
-      dispatch(showModal('saved'));
-      refetch();
-      setEditParamId(null);
+      const response = await updateFilterData( { id, body: { name: body } } );
+      if (response.data) {
+        setSuccessMsg(true);
+        refetch();
+        setEditParamId(null);
+      } else {
+        setErrorMsg(response.error.data.message);
+      }
     } catch (error) {
-      dispatch(showModal('error'));
-      console.error('Error updating filter:', error);
+      setErrorMsg(error.data.message);
     }
   };
 
@@ -96,11 +101,14 @@ export default function AdminParams({ adminParam, onCloseForm }) {
           </nav>
           <div className={style.adminParams__main}>
           <table className={style.adminParams__table}>
+                <thead>
                 <tr>
                   <th></th>
                   <th scope="col">Name of the {adminParam}</th>
                   <th scope="col">Edit</th>
                 </tr>
+                </thead>
+                <tbody>
                 {filtersBD
                   .filter((param) => param.type === adminParam)
                   .map((param) => (
@@ -142,9 +150,16 @@ export default function AdminParams({ adminParam, onCloseForm }) {
                 </td>
                     </tr>
                   ))}
+                </tbody>
             </table>
             {addParam && (
-              <AddAdminParamsForm adminParam={adminParam} onCloseForm={handleCancelAddParam} refetch={refetch}/>
+              <AddAdminParamsForm 
+              adminParam={adminParam} 
+              onCloseForm={handleCancelAddParam} 
+              refetch={refetch}
+              setSuccessMsg={setSuccessMsg}
+              setErrorMsg={setErrorMsg}
+              />
             )}
           </div>
         </div>

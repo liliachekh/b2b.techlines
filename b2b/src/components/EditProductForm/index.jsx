@@ -1,8 +1,6 @@
 
 import style from './editProductForm.module.scss';
 import { editProductFormFields } from './editProductFormField';
-import { useDispatch } from 'react-redux';
-import { showModal } from '../../store/modalSlice';
 import { baseUrl } from '../../utils/vars';
 import { Formik, Form } from 'formik';
 import { validationSchemaProduct } from '../../validation';
@@ -11,8 +9,7 @@ import { useGetFiltersQuery } from '../../store/api/filter.api';
 import Input from "../Input";
 import Select from '../Select';
 
-export default function EditProductForm({ product, onCloseForm, refetchProducts }) {
-  const dispatch = useDispatch();
+export default function EditProductForm({ product, onCloseForm, refetchProducts, setSuccessMsg, setErrorMsg }) {
   const { data: filtersBD = [] } = useGetFiltersQuery();
 
 
@@ -33,11 +30,10 @@ return (
           });
           onCloseForm()
           setSubmitting(false);
-          dispatch(showModal('saved'));
+          setSuccessMsg(true);
           refetchProducts();
         } catch (error) {
-          dispatch(showModal('error'));
-          console.log(error);
+          setErrorMsg(error.data.message);
         }
       }
     }

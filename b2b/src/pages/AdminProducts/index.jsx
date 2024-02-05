@@ -36,6 +36,8 @@ export function AdminProducts() {
     const [addProduct, setAddProduct] = useState(false);
     const [adminParam, setAdminParam] = useState(null);
     const dispatch = useDispatch();
+    const [successMsg, setSuccessMsg] = useState(null);
+    const [errorMsg, setErrorMsg] = useState(null);
 
     function handleDelButton(id) {
       // const product = productsList.find((product) => product.itemNo === itemNo);
@@ -87,15 +89,25 @@ export function AdminProducts() {
       productId && getProduct();
     }, [getProduct, productId]);
   
-    useEffect(() => {
-      modalType
-        ? document.body.style.overflow = 'hidden'
-        : document.body.style.overflow = 'auto';
-    }, [modalType]);
+    // useEffect(() => {
+    //   modalType
+    //     ? document.body.style.overflow = 'hidden'
+    //     : document.body.style.overflow = 'auto';
+    // }, [modalType]);
 
     useEffect(() => {
       refetch();
-    }, [productsList, refetch])
+    }, [productsList, refetch]);
+
+    useEffect(() => {
+      if (errorMsg || successMsg) {
+      const timer = setTimeout(() => {
+        setErrorMsg(null);
+        setSuccessMsg(null);
+        clearTimeout(timer);
+      }, 2500);
+      }
+    }, [errorMsg, successMsg]);
 
     if (isLoading) return <Loader />;
 
@@ -103,6 +115,8 @@ export function AdminProducts() {
   
     return (
     <>
+    {errorMsg && <div className={style.admin__errorMessage}>{errorMsg}</div>}
+    {successMsg && <div className={style.admin__successMessage}>Changes saved successfully</div>}
     {modalType && (
       <Modal data={modalProps.find((modal) => modal.type === modalType)} 
       onDelete={() => deleteProduct(product)}
@@ -119,11 +133,13 @@ export function AdminProducts() {
             ? <EditProductForm
               product={product}
               onCloseForm={handleFormClose} 
-              refetchProducts={refetchProductsList}/>
+              refetchProducts={refetchProductsList}
+              setSuccessMsg={setSuccessMsg}
+              setErrorMsg={setErrorMsg}/>
             : addProduct
               ? <AddProductForm onCloseForm={handleFormClose} refetchProducts={refetchProductsList}/>
             : adminParam
-              ? <AdminParams adminParam={adminParam} onCloseForm={handleFormClose}/>
+              ? <AdminParams adminParam={adminParam} onCloseForm={handleFormClose} setSuccessMsg={setSuccessMsg} setErrorMsg={setErrorMsg}/>
               : <>
                 <div className={style.admin__header}>
                   <h1 className={style.admin__title}>Products</h1>
