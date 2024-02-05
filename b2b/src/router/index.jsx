@@ -10,7 +10,6 @@ import { PrivacyPolicy } from "../pages/PrivacyPolicy";
 import { TermsAndConditions } from "../pages/TermsAndConditions";
 import { CookiePolicy } from "../pages/CookiePolicy";
 import { ProfileShipping } from "../components/ProfileShipping";
-import { Payment3DS } from "../components/Payment3DS";
 
 export default function Router() {
   return (
@@ -23,7 +22,6 @@ export default function Router() {
         {/* </Route> */}
         <Route path="/cart" element={<Cart />} />
         <Route path="/order" element={<Order />} />
-        <Route path="/payment" element={<Payment3DS />} />
         <Route path="/profile" element={<Profile />}>
           <Route index element={<ProfileSettings />} />
           <Route path="/profile/orders" element={<ProfileOrders />} />

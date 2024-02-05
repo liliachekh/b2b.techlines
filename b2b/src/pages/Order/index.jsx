@@ -1,15 +1,14 @@
 import styles from './Order.module.scss';
 import { useDeleteCartMutation, useGetCartQuery } from "../../store/api/cart.api";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Loader from '../../components/Loader';
 import { useChangeAccountMutation, useGetCustomerQuery } from '../../store/api/customers.api';
 import { areObjectsEqual } from '../../utils';
-import { useDeleteOrderMutation, useSetOrderMutation } from '../../store/api/order.api';
+import { useSetOrderMutation } from '../../store/api/order.api';
 import { useTierPrice, useTitle, useTotalPrice } from '../../hooks';
 import { ShippingForm } from '../../components/ShippingForm';
-import { PaymentForm } from '../../components/PaymentForm';
 import { useDispatch } from 'react-redux';
 import { showModal } from '../../store/modalSlice';
 
@@ -22,13 +21,9 @@ export function Order() {
   const [changeAccount] = useChangeAccountMutation();
   const [placeOrder, { isLoading: orderLoading }] = useSetOrderMutation();
   const [deleteCart, { isLoading: cartDeleteing }] = useDeleteCartMutation();
-  const [deleteOrder] = useDeleteOrderMutation();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [order, setOrder] = useState(null);
-  // const [paymentInfo, setPaymentInfo] = useState(null);
-
   const { totalPriceDiscount, deliveryPrice } = useTotalPrice();
 
   async function onSubmitShipping(values) {
@@ -43,8 +38,6 @@ export function Order() {
         }
       }
 
-      // const paymentInfo = values?.paymentInfo;
-      // setPaymentInfo(paymentInfo);
       delete values?.save;
       delete values?.paymentInfo;
 
@@ -68,13 +61,6 @@ export function Order() {
     } catch (error) {
       console.log(error);
     }
-  }
-
-  async function cancelOrder(orderId) {
-    window.location.href = 'http://localhost:3000/order'
-    await deleteOrder(orderId).unwrap();
-    // setOrder(null);
-    // setPaymentInfo(null);
   }
 
   if (cartLoading || customerLoading || orderLoading || cartDeleteing) return <Loader />
@@ -125,16 +111,9 @@ export function Order() {
                     Your discount: <span className={styles.aside__text_amount}>-{cart?.discount} €</span>
                   </p>
                 </div>}
-              {order
-                ? <button className={styles.aside__btn} onClick={() => cancelOrder(order._id)}>Back to shipping</button>
-                : <Link to='/cart' className={styles.aside__btn}>Back to cart</Link>}
+              <Link to='/cart' className={styles.aside__btn}>Back to cart</Link>
             </div>
-            {!order
-              ? <ShippingForm onSubmitShipping={onSubmitShipping} />
-              : <PaymentForm
-                // setOrder={setOrder}
-                orderNo={order.orderNo}
-                totalPrice={totalPriceDiscount} />}
+            <ShippingForm onSubmitShipping={onSubmitShipping} />
           </div>
         </div>
       </div>

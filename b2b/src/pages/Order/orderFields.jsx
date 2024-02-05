@@ -102,32 +102,32 @@ export const shippingOrderFields = [
     name: "save",
     type: "checkbox",
   },
-  {
-    tagType: 'custom',
-    id: 'divider',
-    content() {
-      return (
-        <div key="divider">
-          <div style={{ height: '2px', background: '#5d5d5d', boxShadow: '1px 5px 10px rgba(0, 0, 0, 0.4)', marginBottom: '2rem' }} />
-          <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>Payment type:</h3>
-        </div>
-      )
-    }
-  },
-  {
-    tagType: 'regular',
-    label: "IBAN",
-    id: "IBAN",
-    name: "paymentInfo",
-    type: "radio",
-    value: "IBAN",
-  },
-  {
-    tagType: 'regular',
-    label: "CARD + 1.7%",
-    id: "CARD",
-    name: "paymentInfo",
-    type: "radio",
-    value: "CARD",
-  },
+  // {
+  //   tagType: 'custom',
+  //   id: 'divider',
+  //   content() {
+  //     return (
+  //       <div key="divider">
+  //         <div style={{ height: '2px', background: '#5d5d5d', boxShadow: '1px 5px 10px rgba(0, 0, 0, 0.4)', marginBottom: '2rem' }} />
+  //         <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>Payment type:</h3>
+  //       </div>
+  //     )
+  //   }
+  // },
+  // {
+  //   tagType: 'regular',
+  //   label: "IBAN",
+  //   id: "IBAN",
+  //   name: "paymentInfo",
+  //   type: "radio",
+  //   value: "IBAN",
+  // },
+  // {
+  //   tagType: 'regular',
+  //   label: "CARD + 1.7%",
+  //   id: "CARD",
+  //   name: "paymentInfo",
+  //   type: "radio",
+  //   value: "CARD",
+  // },
 ]
