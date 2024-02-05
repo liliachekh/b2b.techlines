@@ -1,23 +1,53 @@
 
-
-export const redsysScript = (orderNo) => (`
-      function merchantValidationEjemplo() {
+export const redsysScript = (orderNo, totalPrice) => (`
+function merchantValidationEjemplo() {
   //Insertar validaciones…
-  alert("Esto son validaciones propias");
+  // alert("Esto son validaciones propias");
   return true;
 }
 
-window.addEventListener("message", function receiveMessage(event) {
-  storeIdOper(event, "token", "errorCode", merchantValidationEjemplo);
-});
+// var reqObj = (token) => ({
+//   "DS_MERCHANT_AMOUNT": "${totalPrice * 100}",
+//   "DS_MERCHANT_CURRENCY": "978",
+//   "DS_MERCHANT_IDOPER": token,
+//   "DS_MERCHANT_MERCHANTCODE": "361686405",
+//   "DS_MERCHANT_ORDER": "${orderNo}",
+//   "DS_MERCHANT_TERMINAL": "1",
+//   "DS_MERCHANT_TRANSACTIONTYPE": "0"
+// })
 
-function pedido() {
-  return "pedido" + Math.floor((Math.random() * 1000) + 1);
-}
+window.addEventListener("message", async function receiveMessage(event) {
+  storeIdOper(event, "token", "errorCode", merchantValidationEjemplo);
+  
+  // if (document.getElementById('token')?.value) {
+  //   const token = document.getElementById('token').value;
+  //   const amount = (${totalPrice} * 100).toFixed();
+
+  //   var reqObj = {
+  //       "DS_MERCHANT_AMOUNT": amount,
+  //       "DS_MERCHANT_CURRENCY": "978",
+  //       "DS_MERCHANT_IDOPER": token,
+  //       "DS_MERCHANT_MERCHANTCODE": "361686405",
+  //       "DS_MERCHANT_ORDER": "${orderNo}",
+  //       "DS_MERCHANT_TERMINAL": "1",
+  //       "DS_MERCHANT_TRANSACTIONTYPE": "0"
+  //     }
+
+  //   const res = await fetch('http://localhost:4000/api/payment',
+  //     {
+  //       method: 'POST',
+  //       headers: {"Content-Type": "application/json"},
+  //       credentials: 'include',
+  //       body: JSON.stringify(reqObj)
+  //     });
+  //   if (!res.ok) console.log('Error in payment')
+  //   if (res.ok) console.log('Ok')
+  // }
+});
 
 var insiteJSON = {
   "id": "card-form",
-  "fuc": "999008881",
+  "fuc": "361686405",
   "terminal": "1",
   "order": "${orderNo}",
   "estiloInsite": "twoRows",

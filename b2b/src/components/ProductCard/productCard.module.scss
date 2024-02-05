@@ -77,10 +77,14 @@ $color-grey: #5d5d5d;
         flex-direction: row;
         align-items: center;
         width: 290px;
-        max-height: 100px;
+        // max-height: 100px;
         // max-height: 120px;
         // margin: -.63rem 0 -.63rem -.63rem;
         overflow: hidden;
+      }
+
+      @media (min-width: 1270px) {
+        width: 350px;
       }
     }
 
@@ -131,6 +135,7 @@ $color-grey: #5d5d5d;
       .productRow & {
         @media (min-width: 768px) {
           flex: 1 0 70px;
+          max-height: 100px;
           max-width: 70px;
           // padding: 0 5px;
         }
@@ -140,7 +145,7 @@ $color-grey: #5d5d5d;
       .order & {
         @media (min-width: 1024px) {
           // flex: 1 0 70px;
-          max-width: initial;
+          // max-width: initial;
           // padding: 0 5px;
         }
       }
@@ -729,9 +734,11 @@ $color-grey: #5d5d5d;
   0% {
     scale: 1;
   }
+
   50% {
     scale: .9;
   }
+
   100% {
     scale: 1;
   }

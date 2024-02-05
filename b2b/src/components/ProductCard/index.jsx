@@ -170,7 +170,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
         <div className={`${styles.purchase__price} ${styles.purchase__price_total} `}>
           {(tierPrice(currentPrice) * amount)?.toFixed(2)} €
         </div>
-        <AddToCartBtn id={_id} enabled={enabled} amount={amount} displayTable={displayTable} />
+        <AddToCartBtn id={_id} enabled={enabled} amount={amount} quantity={quantity} displayTable={displayTable} />
       </div>
     </div >
   );

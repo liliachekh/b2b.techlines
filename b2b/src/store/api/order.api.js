@@ -23,7 +23,14 @@ export const orderApi = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Orders', id: 'LIST' }, { type: 'Cart', id: 'LIST' }]
     }),
+    deleteOrder: builder.mutation({
+      query: (id) => ({
+        url: `orders/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: [{ type: 'Orders', id: 'LIST' }]
+    }),
   })
 })
 
-export const { useGetOrdersQuery, useSetOrderMutation } = orderApi;
+export const { useGetOrdersQuery, useSetOrderMutation, useDeleteOrderMutation } = orderApi;

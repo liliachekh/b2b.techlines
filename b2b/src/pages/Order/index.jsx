@@ -1,17 +1,17 @@
 import styles from './Order.module.scss';
 import { useDeleteCartMutation, useGetCartQuery } from "../../store/api/cart.api";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Loader from '../../components/Loader';
 import { useChangeAccountMutation, useGetCustomerQuery } from '../../store/api/customers.api';
 import { areObjectsEqual } from '../../utils';
-import { useSetOrderMutation } from '../../store/api/order.api';
-import { AnimatePresence, motion } from 'framer-motion';
-import { animateModal } from '../../animation';
-import { useTierPrice, useTitle } from '../../hooks';
+import { useDeleteOrderMutation, useSetOrderMutation } from '../../store/api/order.api';
+import { useTierPrice, useTitle, useTotalPrice } from '../../hooks';
 import { ShippingForm } from '../../components/ShippingForm';
 import { PaymentForm } from '../../components/PaymentForm';
+import { useDispatch } from 'react-redux';
+import { showModal } from '../../store/modalSlice';
 
 export function Order() {
   useTitle('Order');
@@ -22,23 +22,14 @@ export function Order() {
   const [changeAccount] = useChangeAccountMutation();
   const [placeOrder, { isLoading: orderLoading }] = useSetOrderMutation();
   const [deleteCart, { isLoading: cartDeleteing }] = useDeleteCartMutation();
+  const [deleteOrder] = useDeleteOrderMutation();
 
   const navigate = useNavigate();
-  const [invoice, setInvoice] = useState(null);
+  const dispatch = useDispatch();
   const [order, setOrder] = useState(null);
-  const [token, setToken] = useState(null);
-  const [error, setError] = useState(null);
+  const [paymentInfo, setPaymentInfo] = useState(null);
 
-  const totalPrice = Number(cart?.products
-    ?.map(({ product: { currentPrice }, cartQuantity }) => tierPrice(currentPrice) * cartQuantity)
-    ?.reduce((prev, next) => prev + next)
-    .toFixed(2))
-
-  async function closeInvoice() {
-    setInvoice(false);
-    await deleteCart().unwrap();
-    navigate('/');
-  }
+  const { totalPriceDiscount, totalPriceByCard, deliveryPrice } = useTotalPrice();
 
   async function onSubmitShipping(values) {
     try {
@@ -53,6 +44,7 @@ export function Order() {
       }
 
       const paymentInfo = values?.paymentInfo;
+      setPaymentInfo(paymentInfo);
       delete values?.save;
       delete values?.paymentInfo;
 
@@ -63,11 +55,14 @@ export function Order() {
         deliveryAddress: values,
         paymentInfo,
         status: 'payment required',
-        deliveryPrice: totalPrice > 2500 ? 0 : 35,
+        deliveryPrice: deliveryPrice,
+        discount: cart?.discount || 0,
       }).unwrap();
 
       if (paymentInfo === "IBAN") {
-        setInvoice(true);
+        navigate('/');
+        dispatch(showModal('order'))
+        await deleteCart().unwrap();
         window.open('https://storage.techlines.es/invoices/invoice.pdf', '_blank');
         // window.open('http://localhost:4000/invoices/invoice.pdf', '_blank');
       } else {
@@ -80,9 +75,12 @@ export function Order() {
     }
   }
 
-  useEffect(() => {
-    console.log(token);
-  }, [token, error])
+  async function cancelOrder(orderId) {
+    window.location.href = 'http://localhost:3000/order'
+    await deleteOrder(orderId).unwrap();
+    // setOrder(null);
+    // setPaymentInfo(null);
+  }
 
   if (cartLoading || customerLoading || orderLoading || cartDeleteing) return <Loader />
 
@@ -92,29 +90,14 @@ export function Order() {
 
   return (
     <>
-      {invoice &&
-        <AnimatePresence>
-          <motion.div className={styles.invoice} onClick={closeInvoice} role='button' {...animateModal}>
-            <div className={styles.invoice__wrapper}>
-              <div className={styles.invoice__text}>
-                Your order has been processed and invoice has been sent to you by email
-              </div>
-              <div className={styles.invoice__text}>
-                Thank you for your purchase!
-              </div>
-              <button className={styles.invoice__btn} onClick={closeInvoice}>
-                OK
-              </button>
-            </div>
-          </motion.div>
-        </AnimatePresence>}
-
       <div className={styles.order}>
         <div className={styles.order__container}>
           <h2 className={styles.order__title}>My order</h2>
           <div className={styles.order__wrapper}>
             <div className={`${styles.order__aside} ${styles.aside}`}>
-              <h3 className={styles.aside__title}>Order Total: <span className={styles.aside__totalPrice}>{totalPrice > 2500 ? totalPrice : totalPrice + 35} €</span></h3>
+              <h3 className={styles.aside__title}>
+                Order Total: <span className={styles.aside__totalPrice}> {paymentInfo === "CARD" ? totalPriceByCard : totalPriceDiscount} €</span>
+              </h3>
               <h3 className={styles.aside__title}>Order List:</h3>
               {cart?.products?.map(({ product: { name, currentPrice }, cartQuantity }) => (
                 <div className={styles.aside__item} key={name}>
@@ -132,7 +115,7 @@ export function Order() {
                   </p>
                 </div>
               ))}
-              {totalPrice <= 2500 &&
+              {deliveryPrice > 0 &&
                 <div className={styles.aside__item}>
                   <p className={styles.aside__text}>
                     For orders with a total value of more than €2.500, ALC ZOOM will assume the shipping costs.
@@ -141,11 +124,22 @@ export function Order() {
                     Delivery: <span className={styles.aside__text_amount}>35 €</span>
                   </p>
                 </div>}
-              <Link to='/cart' className={styles.aside__btn}>Back to cart</Link>
+              {cart?.discount > 0 &&
+                <div className={styles.aside__item}>
+                  <p className={`${styles.aside__text} ${styles.aside__text_name}`}>
+                    Your discount: <span className={styles.aside__text_amount}>-{cart?.discount} €</span>
+                  </p>
+                </div>}
+              {order
+                ? <button className={styles.aside__btn} onClick={() => cancelOrder(order._id)}>Back to shipping</button>
+                : <Link to='/cart' className={styles.aside__btn}>Back to cart</Link>}
             </div>
             {!order
               ? <ShippingForm onSubmitShipping={onSubmitShipping} />
-              : <PaymentForm orderNo={order.orderNo} onAuth={setToken}/>}
+              : <PaymentForm
+                setOrder={setOrder}
+                orderNo={order.orderNo}
+                totalPrice={paymentInfo === "CARD" ? totalPriceByCard : totalPriceDiscount} />}
           </div>
         </div>
       </div>
