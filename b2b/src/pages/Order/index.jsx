@@ -27,9 +27,9 @@ export function Order() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [order, setOrder] = useState(null);
-  const [paymentInfo, setPaymentInfo] = useState(null);
+  // const [paymentInfo, setPaymentInfo] = useState(null);
 
-  const { totalPriceDiscount, totalPriceByCard, deliveryPrice } = useTotalPrice();
+  const { totalPriceDiscount, deliveryPrice } = useTotalPrice();
 
   async function onSubmitShipping(values) {
     try {
@@ -43,32 +43,27 @@ export function Order() {
         }
       }
 
-      const paymentInfo = values?.paymentInfo;
-      setPaymentInfo(paymentInfo);
+      // const paymentInfo = values?.paymentInfo;
+      // setPaymentInfo(paymentInfo);
       delete values?.save;
       delete values?.paymentInfo;
 
-      const { order } = await placeOrder({
+      await placeOrder({
         customerId: customer._id,
         email: values?.email,
         mobile: values?.telephone,
         deliveryAddress: values,
-        paymentInfo,
+        paymentInfo: "IBAN",
         status: 'payment required',
         deliveryPrice: deliveryPrice,
         discount: cart?.discount || 0,
       }).unwrap();
 
-      if (paymentInfo === "IBAN") {
-        navigate('/');
-        dispatch(showModal('order'))
-        await deleteCart().unwrap();
-        window.open('https://storage.techlines.es/invoices/invoice.pdf', '_blank');
-        // window.open('http://localhost:4000/invoices/invoice.pdf', '_blank');
-      } else {
-        setOrder(order);
-        // await deleteCart().unwrap();
-      }
+      navigate('/');
+      dispatch(showModal('order'))
+      await deleteCart().unwrap();
+      window.open('https://storage.techlines.es/invoices/invoice.pdf', '_blank');
+      // window.open('http://localhost:4000/invoices/invoice.pdf', '_blank');
 
     } catch (error) {
       console.log(error);
@@ -96,7 +91,7 @@ export function Order() {
           <div className={styles.order__wrapper}>
             <div className={`${styles.order__aside} ${styles.aside}`}>
               <h3 className={styles.aside__title}>
-                Order Total: <span className={styles.aside__totalPrice}> {paymentInfo === "CARD" ? totalPriceByCard : totalPriceDiscount} €</span>
+                Order Total: <span className={styles.aside__totalPrice}>{totalPriceDiscount} €</span>
               </h3>
               <h3 className={styles.aside__title}>Order List:</h3>
               {cart?.products?.map(({ product: { name, currentPrice }, cartQuantity }) => (
@@ -137,9 +132,9 @@ export function Order() {
             {!order
               ? <ShippingForm onSubmitShipping={onSubmitShipping} />
               : <PaymentForm
-                setOrder={setOrder}
+                // setOrder={setOrder}
                 orderNo={order.orderNo}
-                totalPrice={paymentInfo === "CARD" ? totalPriceByCard : totalPriceDiscount} />}
+                totalPrice={totalPriceDiscount} />}
           </div>
         </div>
       </div>

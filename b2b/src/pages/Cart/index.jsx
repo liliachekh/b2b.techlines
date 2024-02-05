@@ -11,7 +11,7 @@ import DiscountField from '../../components/DiscountField';
 
 export function Cart() {
   useTitle('Cart');
-  const { totalPrice, deliveryPrice, totalPriceDiscount } = useTotalPrice();
+  const { totalPrice, totalPriceDiscount } = useTotalPrice();
   const { data: cart = {}, isLoading } = useGetCartQuery();
   const { loggedIn } = useContext(AuthContext);
 
