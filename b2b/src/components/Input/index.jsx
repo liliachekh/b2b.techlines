@@ -34,7 +34,9 @@ const Input = ({ label, ...props }) => {
         {...field}
         value={field.value || ''}
         readOnly={props.name === '_id'}
-        multiple={props.multiple} />
+        multiple={props.multiple} 
+        onWheel={(e) => e.target.blur()} 
+        />
       {meta.touched && meta.error && !isDesktop
         ? <div
           className={props.errorClass}>
