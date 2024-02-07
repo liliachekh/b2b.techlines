@@ -1,7 +1,7 @@
 import style from "./adminParams.module.scss";
 import { useGetFiltersQuery, useDeleteFiltersMutation, useUpdateFilterMutation } from "../../store/api/filter.api";
 import { Edit, Check, Close } from "../icons";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import AddAdminParamsForm from "../AddAdminParamsForm";
 // import { useDispatch } from 'react-redux';
 // import { showModal } from '../../store/modalSlice';
@@ -13,6 +13,7 @@ export default function AdminParams({ adminParam, onCloseForm, setSuccessMsg, se
   const [editParamId, setEditParamId] = useState(null);
   const [editedParams, setEditedParams] = useState('');
   const [updateFilterData] = useUpdateFilterMutation();
+  const tableRef = useRef();
   // Add
   const [addParam, setAddParam] = useState(false);
   // Delete
@@ -34,6 +35,13 @@ export default function AdminParams({ adminParam, onCloseForm, setSuccessMsg, se
     // скинути редагування
     setEditParamId(null);
     setEditedParams({});
+  };
+
+  function handleClickOutside (event) {
+    if (tableRef.current && !tableRef.current.contains(event.target)) {
+      setEditParamId(null);
+      setEditedParams({});
+    }
   };
 
   const handleAddParam = () => {
@@ -82,6 +90,13 @@ export default function AdminParams({ adminParam, onCloseForm, setSuccessMsg, se
     }
   };
 
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
       <div className={style.adminParams}>
@@ -100,7 +115,7 @@ export default function AdminParams({ adminParam, onCloseForm, setSuccessMsg, se
             </button>
           </nav>
           <div className={style.adminParams__main}>
-          <table className={style.adminParams__table}>
+          <table className={style.adminParams__table} ref={tableRef}>
                 <thead>
                 <tr>
                   <th></th>
