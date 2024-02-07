@@ -33,7 +33,7 @@ const Input = ({ label, ...props }) => {
         id={props.id}
         {...field}
         value={field.value || ''}
-        readOnly={props.name === '_id'}
+        readOnly={props.name === '_id' || props.readOnly}
         multiple={props.multiple} 
         onWheel={(e) => e.target.blur()} 
         />

@@ -11,6 +11,7 @@ export const addAdminParamsFormFields = [
       name: "type",
       type: "text",
       placeholder: "Enter type",
+      readOnly: true,
     },
     {
       tagType: 'regular',
