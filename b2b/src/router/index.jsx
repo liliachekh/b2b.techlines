@@ -15,6 +15,8 @@ import { Payment3DS } from "../components/Payment3DS";
 export default function Router() {
   return (
     <Routes>
+      <Route path="/payment3DS" element={<Payment3DS />} />
+
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
         {/* <Route path="/:productId" element={<Product />} /> */}

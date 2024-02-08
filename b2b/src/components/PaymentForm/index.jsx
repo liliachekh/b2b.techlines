@@ -41,8 +41,8 @@ export function PaymentForm({ setOrder, orderNo, totalPrice }) {
         const authorizationObj = { ...reqObj, "DS_MERCHANT_EMV3DS": { ...DS_MERCHANT_EMV3DS } }
   
         if (responseData.threeDSMethodURL) {
-          alert('threeDSMethodURL: ', threeDSMethodURL)
-          // setThreeDSMethodURL(responseData.threeDSMethodURL)
+          // alert('threeDSMethodURL: ', threeDSMethodURL)
+          setThreeDSMethodURL(responseData.threeDSMethodURL)
         } else {
           const res = await fetchData('http://localhost:4000/api/payment/authorization',
             {
@@ -80,7 +80,8 @@ export function PaymentForm({ setOrder, orderNo, totalPrice }) {
         <h3 className={styles.form__title}>Payment form</h3>
         <div id="card-form" style={{ height: '400px' }} />
 
-        {threeDSMethodURL && <Payment3DS threeDSMethodData={threeDSMethodData} threeDSMethodURL={threeDSMethodURL} />}
+        {threeDSMethodURL && <iframe src={`http://localhost:3000/payment3DS/?threeDSMethodURL=${threeDSMethodURL}&threeDSMethodData=${threeDSMethodData}`} width="500" height="100" frameBorder="0">Загрузка...</iframe>}
+        {/* {threeDSMethodURL && <Payment3DS threeDSMethodData={threeDSMethodData} threeDSMethodURL={threeDSMethodURL} />} */}
 
         <form name="datos">
           <input type="hidden" id="token"></input>
