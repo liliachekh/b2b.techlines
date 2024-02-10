@@ -7,7 +7,7 @@ import BackToTop from "../../components/BackToTop"
 import style from "./AdminProducts.module.scss";
 import { useGetAllProductsQuery, useGetProductsQuery, useDeleteProductMutation } from "../../store/api/products.api";
 import Loader from "../../components/Loader";
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import Filter from "../../components/Filter";
@@ -18,6 +18,8 @@ import { modalProps } from '../../components/Modal/modalProps';
 import { fetchData } from "../../utils";
 import { showModal } from '../../store/modalSlice';
 import { baseUrl } from "../../utils/vars";
+import AuthAdminContext from "../../context/AuthAdminContext";
+import { useAuthAdminContext } from "../../context/AuthAdminContext";
 
 export function AdminProducts() {
 
@@ -40,11 +42,15 @@ export function AdminProducts() {
     const [successMsg, setSuccessMsg] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
 
+    // const { loggedInAdmin } = useAuthAdminContext();
+    const { loggedInAdmin } = useContext(AuthAdminContext);
+
     function handleDelButton(id) {
       // const product = productsList.find((product) => product.itemNo === itemNo);
       // setProduct(product);
       setProductId(id);
       dispatch(showModal('deleteProduct'));
+      console.log(loggedInAdmin)
     }
 
     async function deleteProduct(product) {
@@ -89,12 +95,6 @@ export function AdminProducts() {
     useEffect(() => {
       productId && getProduct();
     }, [getProduct, productId]);
-  
-    // useEffect(() => {
-    //   modalType
-    //     ? document.body.style.overflow = 'hidden'
-    //     : document.body.style.overflow = 'auto';
-    // }, [modalType]);
 
     useEffect(() => {
       refetch();
@@ -113,6 +113,8 @@ export function AdminProducts() {
     if (isLoading) return <Loader />;
 
     if (error?.status === 400) navigate("/not-found");
+
+    if (loggedInAdmin === false) navigate("/not-found");
   
     return (
     <>

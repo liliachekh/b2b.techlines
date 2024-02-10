@@ -170,6 +170,10 @@ $color-grey-light: #e3e3e3;
     border: 2px solid $color-dark;
   }
 
+  &__table button {
+    cursor: pointer;
+  }
+
   &__editItems {
     display: flex;
     align-items: center;

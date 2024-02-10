@@ -10,6 +10,7 @@ import { PrivacyPolicy } from "../pages/PrivacyPolicy";
 import { TermsAndConditions } from "../pages/TermsAndConditions";
 import { CookiePolicy } from "../pages/CookiePolicy";
 import { ProfileShipping } from "../components/ProfileShipping";
+import { AuthAdminContextProvider } from "../context/AuthAdminContext";
 
 export default function Router() {
   return (
@@ -39,7 +40,7 @@ export default function Router() {
       <Route path="/password-reset/new-password/:token/:id" element={<CreateNewPassword/>} />
       <Route path="/not-found" element={<NotFound />} />
       <Route path="*" element={<NotFound />} />
-      <Route path="/admin" element={<AdminProducts />} />
+      <Route path="/admin" element={<AuthAdminContextProvider><AdminProducts /></AuthAdminContextProvider>} />
     </Routes>
   );
 }
