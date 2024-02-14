@@ -1,11 +1,11 @@
-import ProductList from "../../components/ProductList";
 import EditProductForm from "../../components/EditProductForm";
 import AddProductForm from "../../components/AddProductForm";
 import AdminHeader from "../../components/AdminHeader";
 import AdminParams from "../../components/AdminParams";
 import BackToTop from "../../components/BackToTop"
-import style from "./AdminProducts.module.scss";
-import { useGetAllProductsQuery, useGetProductsQuery, useDeleteProductMutation } from "../../store/api/products.api";
+import style from "./AdminCustomers.module.scss";
+import { useGetProductsQuery, useDeleteProductMutation } from "../../store/api/products.api";
+import { useGetAllCustomersQuery } from "../../store/api/customers.api";
 import Loader from "../../components/Loader";
 import { useCallback, useEffect, useState, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,15 +20,16 @@ import { showModal } from '../../store/modalSlice';
 import { baseUrl } from "../../utils/vars";
 import AuthAdminContext from "../../context/AuthAdminContext";
 import { useAuthAdminContext } from "../../context/AuthAdminContext";
+import { AdminCustomerCard } from "../../components/AdminCustomerCard";
 
-export function AdminProducts() {
+export function AdminCustomers() {
 
     const { search } = useLocation();
     const { params } = useQueryString();
     const navigate = useNavigate();
     const perPage = params.perPage;
     const page = params.startPage;
-    const { data: products = [], error, isLoading, refetch} = useGetAllProductsQuery(search ? search : `?startPage=${page}&perPage=${perPage}`);
+    const { data: customers = [], error, isLoading, refetch} = useGetAllCustomersQuery();
     const { data: productsList = [], refetch: refetchProductsList } = useGetProductsQuery();
     const [delProduct ] = useDeleteProductMutation();
     const modalType = useSelector((state) => state.modal.modal);
@@ -128,12 +129,12 @@ export function AdminProducts() {
     )}
     <AdminHeader loggedIn={true} />
     <BackToTop />
-    {!openForm && !addProduct && !adminParam && (
+    {/* {!openForm && !addProduct && !adminParam && (
       <Filter />
-    )}
+    )}   */}
     <div className={style.admin__nav}>
-      <Link to="/admin" className={activeButton === 'admin' ? `${style.admin__btn}` : `${style.admin__btn_active}`}>Products</Link>
-      <Link to="/admin/customers" className={style.admin__btn}>Customers</Link>
+      <Link to="/admin" className={style.admin__btn}>Products</Link>
+      <Link to="/admin/customers" className={activeButton === 'admin/customers' ? `${style.admin__btn}` : `${style.admin__btn_active}`}>Customers</Link>
     </div>
     <div className={style.admin}>
     <div className={style.admin__container}>
@@ -150,28 +151,31 @@ export function AdminProducts() {
               ? <AdminParams adminParam={adminParam} onCloseForm={handleFormClose} setSuccessMsg={setSuccessMsg} setErrorMsg={setErrorMsg}/>
               : <>
                 <div className={style.admin__header}>
-                  <h1 className={style.admin__title}>Products</h1>
+                  <h1 className={style.admin__title}>Customers</h1>
                   <div className={style.admin__headerBtns}>
-                  <button className={style.admin__btn} type='button' onClick={()=> handleAdminParamsButton('brand')} >Brands</button>
-                  <button className={style.admin__btn} type='button' onClick={()=> handleAdminParamsButton('categories')} >Categories</button>
-                  <button className={style.admin__btn} type='button' onClick={handleAddButton} >Add new product</button>
                   </div>
                 </div>
                 <div className={`${style.admin__table} ${style.table}`}>
-                  <p className={style.table__cell}>Image</p>
-                  <p className={style.table__cell}>Name</p>
-                  <p className={style.table__cell}>Brand</p>
-                  <p className={style.table__cell}>Quantity</p>
+                  <p className={style.table__cell}>ID</p>
+                  <p className={style.table__cell}>Email</p>
+                  <p className={style.table__cell}>First Name</p>
+                  <p className={style.table__cell}>Last Name</p>
+                  <p className={style.table__cell}>VAT</p>
                   <p className={style.table__cell}>Enabled</p>
-                  <p className={style.table__cell}>Price</p>
                   <p className={style.table__cell}>Actions</p>
                 </div>
-                <ProductList
+                {/* <ProductList
                   {...products}
                   customButtonHandler={handleEditButtonClick}
                   adminCard={true}
                   deleteButtonHandler={handleDelButton} 
-                  />
+                  /> */}
+                <div className={style.customers}>
+                  {customers.map(customer => (
+                      <AdminCustomerCard {...customer}/>
+                    ))
+                  }
+                </div> 
               </>
           }
       </div>

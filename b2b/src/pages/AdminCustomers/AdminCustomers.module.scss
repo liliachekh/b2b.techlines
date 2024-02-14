@@ -1,5 +1,9 @@
 .admin {
-    margin: 2rem 0;
+  max-width: 1470px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 0 15px;
 
     &__errorMessage {
       background-color: #f92e3e;
@@ -72,7 +76,7 @@
       justify-content: flex-start;
       margin: 0 auto;
       gap: 10px;
-      padding-top: 25px;
+      padding-top: 120px;
     }
   
     &__btn {
@@ -156,19 +160,23 @@
       // margin-bottom: 1.5rem;
       // margin: 0 1rem;
       padding: 10px;
+      padding-right: 25px;
       border: 1px solid #555;
-      border-radius: 13px;
+      border-radius: 10px 10px 0 0;
     }
   }
   
   .table {
+    max-width: 1440px;
+    width: 100%;
     display: grid;
     align-items: center;
     grid-template-columns: auto 4fr 2fr 2fr 2fr 1fr 3fr;
-    gap: 10px;
+    // gap: 10px;
     background: #202025;
     color: #f7fbfa;
     text-align: center;
+    box-sizing: border-box;
   
     &__cell {
       position: relative;
@@ -191,3 +199,15 @@
       }
     }
   }
+
+.customers {
+  background-color: #e5e5e5;
+    max-width: 1440px;
+    min-width: 360px;
+    padding: 10px 10px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    box-shadow: 1px 5px 15px rgba(0, 0, 0, 0.4);
+    border-radius: 0 0 10px 10px;
+    margin-bottom: 80px;
+}

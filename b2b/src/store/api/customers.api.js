@@ -27,6 +27,12 @@ export const customersApi = api.injectEndpoints({
       }),
       providesTags: ['Customers'],
     }),
+    getAllCustomers: builder.query({
+      query: () => ({
+        url: 'customers/customers',
+        method: 'GET'
+      })
+    }),
     changeAccount: builder.mutation({
       query: (body) => ({
         url: 'customers/',
@@ -62,4 +68,4 @@ export const customersApi = api.injectEndpoints({
   })
 })
 
-export const { useLogInMutation, useLogOutMutation, useGetCustomerQuery, useChangeAccountMutation, useChangePasswordMutation, useGetLoggedInQuery, useRequestResetPasswordMutation } = customersApi;
+export const { useLogInMutation, useLogOutMutation, useGetCustomerQuery, useGetAllCustomersQuery, useChangeAccountMutation, useChangePasswordMutation, useGetLoggedInQuery, useRequestResetPasswordMutation } = customersApi;

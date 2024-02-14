@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { Home, LoginForm, ResetPassword, Cart, Profile, Product, Order, NotFound, CreateNewPassword, AdminProducts } from "../pages";
+import { Home, LoginForm, ResetPassword, Cart, Profile, Product, Order, NotFound, CreateNewPassword, AdminProducts, AdminCustomers } from "../pages";
 import { ProfileSettings } from "../components/ProfileSettings";
 import { ProfileOrders } from "../components/ProfileOrders";
 import { MainLayout } from "../pages/MainLayout";
@@ -41,6 +41,7 @@ export default function Router() {
       <Route path="/not-found" element={<NotFound />} />
       <Route path="*" element={<NotFound />} />
       <Route path="/admin" element={<AuthAdminContextProvider><AdminProducts /></AuthAdminContextProvider>} />
+      <Route path="/admin/customers" element={<AuthAdminContextProvider><AdminCustomers /></AuthAdminContextProvider>} />
     </Routes>
   );
 }
