@@ -86,6 +86,11 @@ export function AdminProducts() {
       setAdminParam(param);
     }
 
+    function handleCopyButtonClick(copyProduct) {
+      setProduct(copyProduct);
+      setAddProduct(true);
+    }
+
     const getProduct = useCallback(async () => {
     const product = await fetchData(`${baseUrl}products/${productId}`)
     setProduct(product);
@@ -141,7 +146,7 @@ export function AdminProducts() {
               setSuccessMsg={setSuccessMsg}
               setErrorMsg={setErrorMsg}/>
             : addProduct
-              ? <AddProductForm onCloseForm={handleFormClose} refetchProducts={refetchProductsList}/>
+              ? <AddProductForm productCopy={product} onCloseForm={handleFormClose} refetchProducts={refetchProductsList}/>
             : adminParam
               ? <AdminParams adminParam={adminParam} onCloseForm={handleFormClose} setSuccessMsg={setSuccessMsg} setErrorMsg={setErrorMsg}/>
               : <>
@@ -166,7 +171,8 @@ export function AdminProducts() {
                   {...products}
                   customButtonHandler={handleEditButtonClick}
                   adminCard={true}
-                  deleteButtonHandler={handleDelButton} 
+                  deleteButtonHandler={handleDelButton}
+                  copyButtonHandler={handleCopyButtonClick} 
                   />
               </>
           }

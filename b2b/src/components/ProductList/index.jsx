@@ -8,7 +8,7 @@ import SortByBtn from '../SortByBtn';
 import Pagination from '../Pagination';
 import ProductListStyle from '../ProductListStyle';
 
-function ProductList({ products, productsQuantity, customButtonHandler, adminCard = false, deleteButtonHandler }) {
+function ProductList({ products, productsQuantity, customButtonHandler, adminCard = false, deleteButtonHandler, copyButtonHandler }) {
   const [displayTable, setDisplayTable] = useState(false);
   const ref = useRef(null);
 
@@ -34,6 +34,7 @@ function ProductList({ products, productsQuantity, customButtonHandler, adminCar
                 buttonHandler={customButtonHandler}
                 adminCard={adminCard}
                 deleteButtonHandler={deleteButtonHandler}
+                copyButtonHandler={copyButtonHandler}
                 />
               ))
               : <div className={`${styles.productList__empty} ${styles.empty}`}>

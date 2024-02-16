@@ -10,24 +10,24 @@ import { addProductFormFields } from './addProductFormField';
 import PhotoUploader from '../PhotoUploader/index';
 import { useGetFiltersQuery } from '../../store/api/filter.api';
 
-export default function AddProductForm({ onCloseForm, isInAccount, refetchProducts }) {
+export default function AddProductForm({ onCloseForm, isInAccount, refetchProducts, productCopy }) {
     const dispatch = useDispatch();
     const { data: filtersBD = [] } = useGetFiltersQuery();
 
   return (
     <Formik
       initialValues={{
-        name: '',
-        enabled: true,
+        name: productCopy?.name || '',
+        enabled: productCopy?.enabled || true,
         imageUrls: [],
-        quantity: 0,
-        brand: '',
-        categories: '',
-        color: '',
-        currentPrice: 0,
+        quantity: productCopy?.quantity || 0,
+        brand: productCopy?.brand || '',
+        categories: productCopy?.categories || '',
+        color: productCopy?.color || '',
+        currentPrice: productCopy?.currentPrice || 0,
         productUrl: '',
-        memory: '',
-        type: '',
+        memory: productCopy?.memory || '',
+        type: productCopy?.type || '',
       }}
       validationSchema={validationSchemaAddProduct}
       onSubmit={

@@ -1,10 +1,10 @@
 import style from "./adminProductCard.module.scss"
 import { Link } from 'react-router-dom';
-import { Delete, Edit, View } from '../icons';
+import { Delete, Edit, View, Copy } from '../icons';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
-export function AdminProductCard({ product: { imageUrls, name, currentPrice, _id, itemNo, quantity, brand, enabled, productUrl }, deleteButtonHandler, buttonHandler }) {
+export function AdminProductCard({ product: { imageUrls, name, currentPrice, _id, itemNo, quantity, brand, enabled, productUrl }, deleteButtonHandler, buttonHandler, copyButtonHandler }) {
 
   return (
     <div className={style.card}>
@@ -56,6 +56,12 @@ export function AdminProductCard({ product: { imageUrls, name, currentPrice, _id
           onClick={deleteButtonHandler}
           title="Delete">
           <Delete />
+        </button>
+        <button
+          className={style.card__btn}
+          onClick={copyButtonHandler}
+          title="Copy">
+          <Copy />
         </button>
       </div>
     </div>

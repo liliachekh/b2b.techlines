@@ -18,3 +18,4 @@ export * from "./success-icon.jsx";
 export * from "./uploadFile.jsx";
 export * from "./check.jsx";
 export * from "./close.jsx";
+export * from "./copy.jsx";

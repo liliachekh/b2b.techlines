@@ -9,7 +9,7 @@ import { useAmountChange, useInCart, useIncrease, useTierPrice } from '../../hoo
 import AddToCartBtn from '../AddToCartBtn';
 import { AdminProductCard } from '../AdminProductCard';
 
-function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, brand, enabled, productUrl, itemNo, displayTable, cartItem, orderQuantity, buttonHandler, deleteButtonHandler, adminCard = false }) {
+function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, brand, enabled, productUrl, itemNo, memory, color, displayTable, cartItem, orderQuantity, buttonHandler, deleteButtonHandler, adminCard = false, copyButtonHandler }) {
   const [deleteFromCart, { isLoading: isDeleting }] = useDeleteFromCartMutation();
   const tierPrice = useTierPrice();
 
@@ -138,7 +138,18 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
         itemNo,
       }}
       buttonHandler={() => buttonHandler(productUrl)}
-      deleteButtonHandler={() => deleteButtonHandler(productUrl)} />
+      deleteButtonHandler={() => deleteButtonHandler(productUrl)}
+      copyButtonHandler={() => copyButtonHandler({ 
+          quantity, 
+          name, 
+          currentPrice, 
+          categories, 
+          brand, 
+          enabled, 
+          productUrl,
+          memory,
+          color,
+      })} />
     </div>
   )
 
