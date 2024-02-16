@@ -19,7 +19,7 @@ import { fetchData } from "../../utils";
 import { showModal } from '../../store/modalSlice';
 import { baseUrl } from "../../utils/vars";
 import AuthAdminContext from "../../context/AuthAdminContext";
-import { useAuthAdminContext } from "../../context/AuthAdminContext";
+// import { useAuthAdminContext } from "../../context/AuthAdminContext";
 
 export function AdminProducts() {
 
