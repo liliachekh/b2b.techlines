@@ -10,14 +10,15 @@ export function useTotalPrice() {
     ?.reduce((prev, next) => prev + next)
     .toFixed(2));
 
-  const deliveryPrice = totalPrice > 2500 ? 0 : 35;
+  const deliveryPrice = totalPrice - (cart?.discount || 0) > 2500 ? 0 : 35;
 
   const totalPriceDiscount = (totalPrice - (cart?.discount || 0) + deliveryPrice).toFixed(2);
+
 
   return {
     totalPrice,
     // totalPrice: totalPrice > 2500 ? totalPrice : totalPrice + 35,
-    totalPriceByCard: (totalPrice + (totalPrice * 0.017) - (cart?.discount || 0) + deliveryPrice).toFixed(2),
+    totalPriceByCard: (Number(totalPriceDiscount)* 1.017).toFixed(2),
     deliveryPrice,
     totalPriceDiscount
   }

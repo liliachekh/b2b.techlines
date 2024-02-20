@@ -17,7 +17,9 @@ function merchantValidationEjemplo() {
 // })
 
 window.addEventListener("message", async function receiveMessage(event) {
-  storeIdOper(event, "token", "errorCode", merchantValidationEjemplo);
+  if (!document.getElementById("iframe3DS") && event.data !== 'form send') {
+    storeIdOper(event, "token", "errorCode", merchantValidationEjemplo);
+  }
   
   // if (document.getElementById('token')?.value) {
   //   const token = document.getElementById('token').value;

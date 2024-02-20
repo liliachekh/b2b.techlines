@@ -23,6 +23,16 @@ $color-accent: #f92e3e;
     font-size: 1.5rem;
   }
 
+  &__iframe {
+    visibility: hidden;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    border: none;
+  }
+
   form {
     max-width: 100%;
 

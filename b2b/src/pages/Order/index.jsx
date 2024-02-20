@@ -30,7 +30,7 @@ export function Order() {
   const [paymentInfo, setPaymentInfo] = useState(null);
 
   const { totalPriceDiscount, totalPriceByCard, deliveryPrice } = useTotalPrice();
-
+  
   async function onSubmitShipping(values) {
     try {
       if (values?.save) {
