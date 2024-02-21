@@ -8,9 +8,9 @@ import { initialReq, EMV3DS, baseUrl, localUrl } from '../../utils/vars';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { showModal } from '../../store/modalSlice';
-import { fetchData } from '../../utils';
+import { deleteDiscountCode, fetchData } from '../../utils';
 
-export function PaymentForm({ setOrder, orderNo, totalPrice }) {
+export function PaymentForm({ setOrder, orderNo, totalPrice, discountCode }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -61,6 +61,7 @@ export function PaymentForm({ setOrder, orderNo, totalPrice }) {
           if (res.message === 'Response 0000') {
             navigate('/');
             dispatch(showModal('order'))
+            if (discountCode) await deleteDiscountCode(discountCode);
             await deleteCart().unwrap();
           }
           console.log(`ANSWER from ${baseUrl}payment/authorization`, res);
@@ -149,6 +150,8 @@ export function PaymentForm({ setOrder, orderNo, totalPrice }) {
       console.log(timeDifference1 + ' c');
       console.log(timeDifference2 + ' c');
 
+      console.log('-----------------------');
+      console.log('-+-+-+-+ відправка Y +-+-+-+-');
       console.log('----------------------- end');
     }
   }, [sendAt, recievedAt])
@@ -199,6 +202,7 @@ export function PaymentForm({ setOrder, orderNo, totalPrice }) {
       }
       timeoutRef.current = setTimeout(() => {
         console.log('-+-+-+-+-+ Timeout fired! +-+-+-+-+-');
+        console.log('-+-+-+-+ відправка N +-+-+-+-');
         clearTimeout(timeoutRef.current);
       }, 500);
       //====================== Timer - end ============================

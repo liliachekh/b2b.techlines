@@ -5,7 +5,7 @@ import AuthContext from "../../context/AuthContext";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Loader from '../../components/Loader';
 import { useChangeAccountMutation, useGetCustomerQuery } from '../../store/api/customers.api';
-import { areObjectsEqual } from '../../utils';
+import { areObjectsEqual, deleteDiscountCode } from '../../utils';
 import { useDeleteOrderMutation, useSetOrderMutation } from '../../store/api/order.api';
 import { useTierPrice, useTitle, useTotalPrice } from '../../hooks';
 import { ShippingForm } from '../../components/ShippingForm';
@@ -61,10 +61,11 @@ export function Order() {
 
       if (paymentInfo === "IBAN") {
         navigate('/');
-        dispatch(showModal('order'))
+        dispatch(showModal('order'));
+        if (cart?.discountCode) await deleteDiscountCode(cart?.discountCode);
         await deleteCart().unwrap();
-        window.open('https://storage.techlines.es/invoices/invoice.pdf', '_blank');
-        // window.open('http://localhost:4000/invoices/invoice.pdf', '_blank');
+        // window.open('https://storage.techlines.es/invoices/invoice.pdf', '_blank');
+        window.open('http://localhost:4000/invoices/invoice.pdf', '_blank');
       } else {
         setOrder(order);
         // await deleteCart().unwrap();
@@ -139,7 +140,8 @@ export function Order() {
               : <PaymentForm
                 setOrder={setOrder}
                 orderNo={order.orderNo}
-                totalPrice={paymentInfo === "CARD" ? totalPriceByCard : totalPriceDiscount} />}
+                totalPrice={paymentInfo === "CARD" ? totalPriceByCard : totalPriceDiscount}
+                discountCode={cart?.discountCode}/>}
           </div>
         </div>
       </div>

@@ -25,7 +25,7 @@ export function ProfileOrders() {
             {/* <div className={`${styles.order__text} ${styles.order__text_total}`}>Total Sum: <span className={styles.order__text_value}>{totalSum.toFixed(2)} €</span></div> */}
           </div>
           <div className={styles.order__info}>
-            <div className={`${styles.order__text} ${styles.order__text_total}`}>Total Sum: <span className={styles.order__text_value}>{totalSum.toFixed(2)} €</span></div>
+            <div className={`${styles.order__text} ${styles.order__text_total}`}>Total Sum: <span className={styles.order__text_value}>{totalSum} €</span></div>
           </div>
         </div>))}
     </>

@@ -28,7 +28,7 @@ function DiscountField({ discount }) {
       }
 
       const discountData = await code.json()
-      updateCart(discountData.amount)
+      updateCart(discount, discountData.amount)
       showDiscountField()
     } catch (error) {
       setDiscountError(error?.message)
