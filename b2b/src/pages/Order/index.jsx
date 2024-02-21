@@ -5,7 +5,7 @@ import AuthContext from "../../context/AuthContext";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Loader from '../../components/Loader';
 import { useChangeAccountMutation, useGetCustomerQuery } from '../../store/api/customers.api';
-import { areObjectsEqual } from '../../utils';
+import { areObjectsEqual, deleteDiscountCode } from '../../utils';
 import { useSetOrderMutation } from '../../store/api/order.api';
 import { useTierPrice, useTitle, useTotalPrice } from '../../hooks';
 import { ShippingForm } from '../../components/ShippingForm';
@@ -54,6 +54,7 @@ export function Order() {
 
       navigate('/');
       dispatch(showModal('order'))
+      if (cart?.discountCode) await deleteDiscountCode(cart?.discountCode);
       await deleteCart().unwrap();
       window.open('https://storage.techlines.es/invoices/invoice.pdf', '_blank');
       // window.open('http://localhost:4000/invoices/invoice.pdf', '_blank');

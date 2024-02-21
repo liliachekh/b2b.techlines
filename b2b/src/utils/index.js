@@ -1,3 +1,5 @@
+import { baseUrl } from "./vars";
+
 export const scrollToTop = (e) => {
   !e?.ctrlKey && window.scrollTo({ top: 0, behavior: 'smooth' });
 };
@@ -39,4 +41,11 @@ export function areObjectsEqual(obj1, obj2) {
   }
 
   return true;
+}
+
+export async function deleteDiscountCode(code) {
+  await fetch(`${baseUrl}discounts/${code}`, {
+    method: 'PUT',
+    credentials: 'include',
+  });
 }
