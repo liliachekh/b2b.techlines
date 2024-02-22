@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { redsysScript } from '../../pages/Order/redsys';
 import styles from './paymentForm.module.scss';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDeleteCartMutation } from '../../store/api/cart.api';
 // import { Payment3DS } from '../Payment3DS';
 import { initialReq, EMV3DS, baseUrl, localUrl } from '../../utils/vars';
@@ -17,12 +17,35 @@ export function PaymentForm({ setOrder, orderNo, totalPrice, discountCode }) {
   const iframeRef = useRef(null);
   const timeoutRef = useRef(null);
 
+  const iframePage = useRef(null);
+
   const [threeDSMethodData, setThreeDSMethodData] = useState(null);
   const [threeDSMethodURL, setThreeDSMethodURL] = useState(null);
   const [sendAt, setSendAt] = useState(null);
   const [recievedAt, setRecievedAt] = useState(null);
+  const [authorizationObj, setAuthorizationObj] = useState(null);
 
   const [deleteCart] = useDeleteCartMutation();
+
+  const authorization = useCallback(async function(authorizationObj) {
+    // const DS_MERCHANT_EMV3DS = EMV3DS(protocolVersion, threeDSServerTransID, threeDSCompInd)
+    // const authorizationObj = { ...reqObj, "DS_MERCHANT_EMV3DS": { ...DS_MERCHANT_EMV3DS } }
+
+    const res = await fetchData(`${baseUrl}payment/authorization`,
+      {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        credentials: 'include',
+        body: JSON.stringify(authorizationObj)
+      })
+    if (res.message === 'Response 0000') {
+      navigate('/');
+      dispatch(showModal('order'))
+      await deleteCart().unwrap();
+      if (discountCode) await deleteDiscountCode(discountCode);
+    }
+    console.log(`ANSWER from ${baseUrl}payment/authorization`, res);
+  }, [deleteCart, discountCode, dispatch, navigate])
 
   async function receiveMessage() {
     try {
@@ -41,30 +64,34 @@ export function PaymentForm({ setOrder, orderNo, totalPrice, discountCode }) {
             body: JSON.stringify(reqObj)
           })
 
-        setThreeDSMethodData(responseData.threeDSMethodData)
+        setThreeDSMethodData(responseData.threeDSMethodData);
+
+        const DS_MERCHANT_EMV3DS = EMV3DS(responseData.protocolVersion, responseData.threeDSServerTransID);
+        const authorizationObj = { ...reqObj, "DS_MERCHANT_EMV3DS": { ...DS_MERCHANT_EMV3DS } };
 
         if (responseData.threeDSMethodURL) {
           // alert('threeDSMethodURL: ', threeDSMethodURL)
-          setThreeDSMethodURL(responseData.threeDSMethodURL)
+          setThreeDSMethodURL(responseData.threeDSMethodURL);
+          setAuthorizationObj(authorizationObj);
         } else {
-          const DS_MERCHANT_EMV3DS = EMV3DS(responseData.protocolVersion, responseData.threeDSServerTransID)
-          const authorizationObj = { ...reqObj, "DS_MERCHANT_EMV3DS": { ...DS_MERCHANT_EMV3DS } }
+          authorization(authorizationObj);
+          // const DS_MERCHANT_EMV3DS = EMV3DS(responseData.protocolVersion, responseData.threeDSServerTransID)
+          // const authorizationObj = { ...reqObj, "DS_MERCHANT_EMV3DS": { ...DS_MERCHANT_EMV3DS } }
 
-          const res = await fetchData(`${baseUrl}payment/authorization`,
-            {
-              method: 'POST',
-              headers: { "Content-Type": "application/json" },
-              credentials: 'include',
-              body: JSON.stringify(authorizationObj)
-            })
-
-          if (res.message === 'Response 0000') {
-            navigate('/');
-            dispatch(showModal('order'))
-            if (discountCode) await deleteDiscountCode(discountCode);
-            await deleteCart().unwrap();
-          }
-          console.log(`ANSWER from ${baseUrl}payment/authorization`, res);
+          // const res = await fetchData(`${baseUrl}payment/authorization`,
+          //   {
+          //     method: 'POST',
+          //     headers: { "Content-Type": "application/json" },
+          //     credentials: 'include',
+          //     body: JSON.stringify(authorizationObj)
+          //   })
+          // if (res.message === 'Response 0000') {
+          //   navigate('/');
+          //   dispatch(showModal('order'))
+          //   if (discountCode) await deleteDiscountCode(discountCode);
+          //   await deleteCart().unwrap();
+          // }
+          // console.log(`ANSWER from ${baseUrl}payment/authorization`, res);
         }
         // window.removeEventListener("message", receiveMessage);
       }
@@ -82,13 +109,17 @@ export function PaymentForm({ setOrder, orderNo, totalPrice, discountCode }) {
 
 
   const handleLoad = () => {
-    const recieved = new Date();
-    setRecievedAt(recieved)
+    // const recieved = new Date();
+    // setRecievedAt(recieved)
     //====================== Timer - start ============================
-    // if (timeoutRef.current) {
-    //   clearTimeout(timeoutRef.current);
-    // }
+    if (timeoutRef.current && iframePage.current) {
+      const recieved = new Date();
+      setRecievedAt(recieved)
+      clearTimeout(timeoutRef.current);
+    }
+    iframePage.current = true;
     //====================== Timer - end ============================
+
     // console.log('++++++++++ start');
     // console.log('recieved');
     // console.log(recieved);
@@ -108,8 +139,6 @@ export function PaymentForm({ setOrder, orderNo, totalPrice, discountCode }) {
     // const newPageInIframe = iframeRef.current.contentWindow.location;
     // console.log('Новая страница загружена в iframe:', newPageInIframe);                 //+++++++++++++++++++++++++++++++++++++++++ end
   };
-
-
 
   // useEffect(() => {
   //   if (sendAt && !recievedAt) {
@@ -133,28 +162,34 @@ export function PaymentForm({ setOrder, orderNo, totalPrice, discountCode }) {
   //     }
   //   }
   // }, [sendAt, recievedAt])
+
   useEffect(() => {
-    if (sendAt && recievedAt && timeoutRef.current) {
+    if (sendAt && recievedAt && timeoutRef.current && iframePage.current) {
       clearTimeout(timeoutRef.current);
 
       console.log('----------------------- start');
-      console.log('recieved');
-      console.log(recievedAt);
-      console.log('-----------------------');
-      console.log('sendAt');
-      console.log(sendAt);
-      console.log('-----------------------');
+      // console.log('recieved');
+      // console.log(recievedAt);
+      // console.log('-----------------------');
+      // console.log('sendAt');
+      // console.log(sendAt);
+      // console.log('-----------------------');
 
       const timeDifference1 = (recievedAt - sendAt) / 1000;
-      const timeDifference2 = Math.ceil((recievedAt - sendAt) / 1000);
+      // const timeDifference2 = Math.ceil((recievedAt - sendAt) / 1000);
       console.log(timeDifference1 + ' c');
-      console.log(timeDifference2 + ' c');
+      // console.log(timeDifference2 + ' c');
 
       console.log('-----------------------');
       console.log('-+-+-+-+ відправка Y +-+-+-+-');
       console.log('----------------------- end');
+
+      const DS_MERCHANT_EMV3DS = { ...authorizationObj.DS_MERCHANT_EMV3DS,  threeDSCompInd: 'Y'};
+      const obj = { ...authorizationObj, "DS_MERCHANT_EMV3DS": DS_MERCHANT_EMV3DS };
+      console.log(obj);
+      authorization({ ...obj});
     }
-  }, [sendAt, recievedAt])
+  }, [sendAt, recievedAt, authorization, authorizationObj])
 
 
 
@@ -193,7 +228,7 @@ export function PaymentForm({ setOrder, orderNo, totalPrice, discountCode }) {
     window.removeEventListener('message', handleMessage);
     if (iframeRef && event.source === iframeRef.current?.contentWindow) {
       const send = new Date();
-      setSendAt(send)
+      setSendAt(send);
       // console.log(send);
 
       //====================== Timer - start ============================
@@ -204,7 +239,9 @@ export function PaymentForm({ setOrder, orderNo, totalPrice, discountCode }) {
         console.log('-+-+-+-+-+ Timeout fired! +-+-+-+-+-');
         console.log('-+-+-+-+ відправка N +-+-+-+-');
         clearTimeout(timeoutRef.current);
-      }, 500);
+        timeoutRef.current = false;
+        iframePage.current = false;
+      }, 10000);
       //====================== Timer - end ============================
 
       console.log('+ + + + + + + + + ' + event.data + ' + + + + + + + + +')
