@@ -42,6 +42,6 @@ export const EMV3DS = (protocolVersion, threeDSServerTransID, threeDSCompInd) =>
   "browserScreenWidth": window.screen.availWidth,
   "browserTZ": new Date().getTimezoneOffset(),
   "threeDSServerTransID": threeDSServerTransID,
-  "notificationURL": "https://dev.techlines.es/api/payment/3DS",
+  "notificationURL": "https://storage.techlines.es/api/payment/3DS",
   "threeDSCompInd": threeDSCompInd || "N"
 })

@@ -25,9 +25,12 @@ export function PaymentForm({ setOrder, orderNo, totalPrice, discountCode }) {
   const [recievedAt, setRecievedAt] = useState(null);
   const [authorizationObj, setAuthorizationObj] = useState(null);
 
+  const [acsURL, setAcsURL] = useState(null);
+  const [creq, setCreq] = useState(null);
+
   const [deleteCart] = useDeleteCartMutation();
 
-  const authorization = useCallback(async function(authorizationObj) {
+  const authorization = useCallback(async function (authorizationObj) {
     // const DS_MERCHANT_EMV3DS = EMV3DS(protocolVersion, threeDSServerTransID, threeDSCompInd)
     // const authorizationObj = { ...reqObj, "DS_MERCHANT_EMV3DS": { ...DS_MERCHANT_EMV3DS } }
 
@@ -38,13 +41,16 @@ export function PaymentForm({ setOrder, orderNo, totalPrice, discountCode }) {
         credentials: 'include',
         body: JSON.stringify(authorizationObj)
       })
+    console.log(`ANSWER from ${baseUrl}payment/authorization`, res);
     if (res.message === 'Response 0000') {
       navigate('/');
       dispatch(showModal('order'))
       await deleteCart().unwrap();
       if (discountCode) await deleteDiscountCode(discountCode);
+    } else if (res.threeDSInfo === "ChallengeRequest") {
+      setAcsURL(res.acsURL)
+      setCreq(res.creq)
     }
-    console.log(`ANSWER from ${baseUrl}payment/authorization`, res);
   }, [deleteCart, discountCode, dispatch, navigate])
 
   async function receiveMessage() {
@@ -184,14 +190,20 @@ export function PaymentForm({ setOrder, orderNo, totalPrice, discountCode }) {
       console.log('-+-+-+-+ відправка Y +-+-+-+-');
       console.log('----------------------- end');
 
-      const DS_MERCHANT_EMV3DS = { ...authorizationObj.DS_MERCHANT_EMV3DS,  threeDSCompInd: 'Y'};
+      const DS_MERCHANT_EMV3DS = { ...authorizationObj.DS_MERCHANT_EMV3DS, threeDSCompInd: 'Y' };
       const obj = { ...authorizationObj, "DS_MERCHANT_EMV3DS": DS_MERCHANT_EMV3DS };
       console.log(obj);
-      authorization({ ...obj});
+      authorization({ ...obj });
     }
   }, [sendAt, recievedAt, authorization, authorizationObj])
 
 
+  useEffect(() => {
+    if (acsURL && creq) {
+      const form = document.getElementById("creq");
+      form.submit();
+    }
+  }, [acsURL, creq])
 
   // useEffect(() => {
   //   const handleMessage = (event) => {
@@ -241,6 +253,11 @@ export function PaymentForm({ setOrder, orderNo, totalPrice, discountCode }) {
         clearTimeout(timeoutRef.current);
         timeoutRef.current = false;
         iframePage.current = false;
+
+        const DS_MERCHANT_EMV3DS = { ...authorizationObj.DS_MERCHANT_EMV3DS, threeDSCompInd: 'N' };
+        const obj = { ...authorizationObj, "DS_MERCHANT_EMV3DS": DS_MERCHANT_EMV3DS };
+        console.log(obj);
+        authorization({ ...obj });
       }, 10000);
       //====================== Timer - end ============================
 
@@ -276,6 +293,12 @@ export function PaymentForm({ setOrder, orderNo, totalPrice, discountCode }) {
           <input type="hidden" id="token"></input>
           <input type="hidden" id="errorCode"></input>
         </form>
+
+        {acsURL && creq &&
+          <form id='creq' action={acsURL} method="post">
+            <input type="hidden" name="creq" value={creq} />
+          </form>
+        }
       </div>
     </>
   )
