@@ -1,16 +1,17 @@
 
 import style from './editProductForm.module.scss';
 import { editProductFormFields } from './editProductFormField';
-import { baseUrl } from '../../utils/vars';
 import { Formik, Form } from 'formik';
 import { validationSchemaProduct } from '../../validation';
 import { useGetFiltersQuery } from '../../store/api/filter.api';
+import { useUpdateProductMutation } from '../../store/api/products.api';
 // import Loader from '../Loader';
 import Input from "../Input";
 import Select from '../Select';
 
 export default function EditProductForm({ product, onCloseForm, refetchProducts, setSuccessMsg, setErrorMsg }) {
   const { data: filtersBD = [] } = useGetFiltersQuery();
+  const [updateProduct] = useUpdateProductMutation();
 
 
 const initialValues = { ...product };
@@ -21,17 +22,15 @@ return (
     onSubmit={
       async (values, { setSubmitting }) => {
         try {
-          await fetch(`${baseUrl}products/${product._id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(values)
-          });
-          onCloseForm()
-          setSubmitting(false);
-          setSuccessMsg(true);
-          refetchProducts();
+          const response = await updateProduct({id: product._id, body: values});
+          if (response.data) {
+            onCloseForm();
+            setSubmitting(false);
+            setSuccessMsg(true);
+            refetchProducts();
+          } else {
+            setErrorMsg(response.error.data.message);
+          }
         } catch (error) {
           setErrorMsg(error.data.message);
         }

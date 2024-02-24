@@ -33,7 +33,15 @@ export const productsApi = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Product', id: 'LIST' }]
     }),
+    updateProduct: builder.mutation({
+      query: ({id, body}) => ({
+        url: `products/${id}`,
+        method: 'PUT',
+        body: body,
+      }),
+      invalidatesTags: [{ type: 'Product', id: 'LIST' }]
+    }),
   })
 })
 
-export const { useGetAllProductsQuery, useGetProductQuery, useGetProductsQuery, useDeleteProductMutation } = productsApi;
+export const { useGetAllProductsQuery, useGetProductQuery, useGetProductsQuery, useDeleteProductMutation, useUpdateProductMutation } = productsApi;

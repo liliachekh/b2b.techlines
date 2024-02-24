@@ -50,7 +50,6 @@ export function AdminProducts() {
       // setProduct(product);
       setProductId(id);
       dispatch(showModal('deleteProduct'));
-      console.log(loggedInAdmin)
     }
 
     async function deleteProduct(product) {
@@ -59,7 +58,6 @@ export function AdminProducts() {
         dispatch(showModal('saved'));
         refetchProductsList();
       } catch (error) {
-        // dispatch(setErrorAction(error.message));
         dispatch(showModal('error'));
         console.log(error);
       }
