@@ -9,10 +9,12 @@ import Select from '../Select';
 import { addProductFormFields } from './addProductFormField';
 import PhotoUploader from '../PhotoUploader/index';
 import { useGetFiltersQuery } from '../../store/api/filter.api';
+import { useAddProductMutation } from '../../store/api/products.api';
 
 export default function AddProductForm({ onCloseForm, isInAccount, refetchProducts, productCopy }) {
     const dispatch = useDispatch();
     const { data: filtersBD = [] } = useGetFiltersQuery();
+    const [addProduct] = useAddProductMutation();
 
   return (
     <Formik
@@ -33,17 +35,23 @@ export default function AddProductForm({ onCloseForm, isInAccount, refetchProduc
       onSubmit={
       async (values, { setSubmitting }) => {
         try {
-          await fetch(`${baseUrl}products`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(values)
-          });
-          onCloseForm();
-          setSubmitting(false);
-          dispatch(showModal('saved'));
-          refetchProducts();
+          // await fetch(`${baseUrl}products`, {
+          //   method: 'POST',
+          //   headers: {
+          //     'Content-Type': 'application/json',
+          //   },
+          //   body: JSON.stringify(values)
+          // });
+          const response = await addProduct(values);
+          if (response.data) {
+            onCloseForm();
+            setSubmitting(false);
+            dispatch(showModal('saved'));
+            refetchProducts();
+          } else {
+            console.log(response.error)
+            dispatch(showModal('error'));
+          }
         } catch (error) {
           dispatch(showModal('error'));
           console.log(error);

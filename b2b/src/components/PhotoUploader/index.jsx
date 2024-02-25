@@ -4,11 +4,13 @@ import { UploadFile } from '../icons'
 import Input from '../Input';
 import { inputFields } from './inputFields';
 import { baseUrl } from '../../utils/vars';
+import { useUploadProductPhotoMutation } from '../../store/api/products.api';
 
 
 export default function PhotoUploader({ isInAccount = false }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [uploadPhoto] = useUploadProductPhotoMutation();
 
   const handleFileChange = (event) => {
     const files = event.target.files;
@@ -22,23 +24,24 @@ export default function PhotoUploader({ isInAccount = false }) {
       for (let i = 0; i < selectedFiles.length; i++) {
         formData.append('photos', selectedFiles[i], selectedFiles[i].name);
       }
-      const response = await fetch(`${baseUrl}products/images`,
-        {
-          method: 'POST',
-          body: formData,
-          headers: {
-            'path' : './static/images'
-          },
-        }
-      );
-      if (response.ok) {
+      // const response = await fetch(`${baseUrl}products/images`,
+      //   {
+      //     method: 'POST',
+      //     body: formData,
+      //     headers: {
+      //       'path' : './static/images'
+      //     },
+      //   }
+      // );
+      const response = await uploadPhoto(formData);
+      if (response.data) {
         setShowSuccessMessage(true);
 
         setTimeout(() => {
           setShowSuccessMessage(false);
         }, 3000);
       } else {
-        console.error('Error uploading image:', response.status);
+        console.error('Error uploading image:', response.error.data.message);
       }
     } catch (error) {
       console.error('Error uploading image:', error);

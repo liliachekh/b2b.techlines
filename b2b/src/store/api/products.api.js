@@ -41,7 +41,26 @@ export const productsApi = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Product', id: 'LIST' }]
     }),
+    addProduct: builder.mutation({
+      query: (body) => ({
+        url: `products/`,
+        method: 'POST',
+        body: body,
+      }),
+      invalidatesTags: [{ type: 'Product', id: 'LIST' }]
+    }),
+    uploadProductPhoto: builder.mutation({
+      query: (body) => ({
+        url: `products/images`,
+        method: 'POST',
+        body: body,
+        headers: {
+          'path': './static/images'
+        }
+      }),
+      invalidatesTags: [{ type: 'Product', id: 'LIST' }]
+    }),
   })
 })
 
-export const { useGetAllProductsQuery, useGetProductQuery, useGetProductsQuery, useDeleteProductMutation, useUpdateProductMutation } = productsApi;
+export const { useGetAllProductsQuery, useGetProductQuery, useGetProductsQuery, useDeleteProductMutation, useUpdateProductMutation, useAddProductMutation, useUploadProductPhotoMutation } = productsApi;
