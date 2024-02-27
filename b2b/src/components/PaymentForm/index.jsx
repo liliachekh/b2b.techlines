@@ -3,12 +3,12 @@ import { redsysScript } from '../../pages/Order/redsys';
 import styles from './paymentForm.module.scss';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDeleteCartMutation } from '../../store/api/cart.api';
-// import { Payment3DS } from '../Payment3DS';
 import { initialReq, EMV3DS, baseUrl, localUrl } from '../../utils/vars';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { showModal } from '../../store/modalSlice';
 import { deleteDiscountCode, fetchData } from '../../utils';
+import { PaymentAuth } from '../PaymentAuth';
 
 export function PaymentForm({ setOrder, orderNo, totalPrice, discountCode }) {
   const navigate = useNavigate();
@@ -16,40 +16,35 @@ export function PaymentForm({ setOrder, orderNo, totalPrice, discountCode }) {
 
   const iframeRef = useRef(null);
   const timeoutRef = useRef(null);
-
   const iframePage = useRef(null);
 
-  const [threeDSMethodData, setThreeDSMethodData] = useState(null);
-  const [threeDSMethodURL, setThreeDSMethodURL] = useState(null);
-  const [sendAt, setSendAt] = useState(null);
-  const [recievedAt, setRecievedAt] = useState(null);
+  const [threeDSMethod, setThreeDSMethod] = useState(null);
+  const [timer, setTimer] = useState(null);
   const [authorizationObj, setAuthorizationObj] = useState(null);
-
-  const [acsURL, setAcsURL] = useState(null);
   const [creq, setCreq] = useState(null);
 
   const [deleteCart] = useDeleteCartMutation();
 
-  const authorization = useCallback(async function (authorizationObj) {
-    // const DS_MERCHANT_EMV3DS = EMV3DS(protocolVersion, threeDSServerTransID, threeDSCompInd)
-    // const authorizationObj = { ...reqObj, "DS_MERCHANT_EMV3DS": { ...DS_MERCHANT_EMV3DS } }
-
-    const res = await fetchData(`${baseUrl}payment/authorization`,
-      {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        credentials: 'include',
-        body: JSON.stringify(authorizationObj)
-      })
-    console.log(`ANSWER from ${baseUrl}payment/authorization`, res);
-    if (res.message === 'Response 0000') {
-      navigate('/');
-      dispatch(showModal('order'))
-      await deleteCart().unwrap();
-      if (discountCode) await deleteDiscountCode(discountCode);
-    } else if (res.threeDSInfo === "ChallengeRequest") {
-      setAcsURL(res.acsURL)
-      setCreq(res.creq)
+  const reqAuthorization = useCallback(async function (authObj) {
+    try {
+      const resPaymentAuth = await fetchData(`${baseUrl}payment/authorization`,
+        {
+          method: 'POST',
+          headers: { "Content-Type": "application/json" },
+          credentials: 'include',
+          body: JSON.stringify(authObj)
+        })
+      // console.log(`ANSWER from ${baseUrl}payment/authorization`, resPaymentAuth);
+      if (resPaymentAuth.message === 'Response 0000') {
+        navigate('/');
+        dispatch(showModal('order'))
+        await deleteCart().unwrap();
+        if (discountCode) await deleteDiscountCode(discountCode);
+      } else if (resPaymentAuth.threeDSInfo === "ChallengeRequest") {
+        setCreq({ creq: resPaymentAuth.creq, acsURL: resPaymentAuth.acsURL })
+      }
+    } catch (error) {
+      console.log(error);
     }
   }, [deleteCart, discountCode, dispatch, navigate])
 
@@ -62,7 +57,7 @@ export function PaymentForm({ setOrder, orderNo, totalPrice, discountCode }) {
 
         document.getElementById('token').value = null
 
-        const responseData = await fetchData(`${baseUrl}payment/`,
+        const resPayment = await fetchData(`${baseUrl}payment/`,
           {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
@@ -70,34 +65,17 @@ export function PaymentForm({ setOrder, orderNo, totalPrice, discountCode }) {
             body: JSON.stringify(reqObj)
           })
 
-        setThreeDSMethodData(responseData.threeDSMethodData);
+        const DS_MERCHANT_EMV3DS = EMV3DS(resPayment.protocolVersion, resPayment.threeDSServerTransID);
+        const authObj = { ...reqObj, "DS_MERCHANT_EMV3DS": { ...DS_MERCHANT_EMV3DS } };
 
-        const DS_MERCHANT_EMV3DS = EMV3DS(responseData.protocolVersion, responseData.threeDSServerTransID);
-        const authorizationObj = { ...reqObj, "DS_MERCHANT_EMV3DS": { ...DS_MERCHANT_EMV3DS } };
-
-        if (responseData.threeDSMethodURL) {
-          // alert('threeDSMethodURL: ', threeDSMethodURL)
-          setThreeDSMethodURL(responseData.threeDSMethodURL);
-          setAuthorizationObj(authorizationObj);
+        if (resPayment.threeDSMethodURL) {
+          setThreeDSMethod({
+            threeDSMethodURL: resPayment.threeDSMethodURL,
+            threeDSMethodData: resPayment.threeDSMethodData
+          });
+          setAuthorizationObj(authObj);
         } else {
-          authorization(authorizationObj);
-          // const DS_MERCHANT_EMV3DS = EMV3DS(responseData.protocolVersion, responseData.threeDSServerTransID)
-          // const authorizationObj = { ...reqObj, "DS_MERCHANT_EMV3DS": { ...DS_MERCHANT_EMV3DS } }
-
-          // const res = await fetchData(`${baseUrl}payment/authorization`,
-          //   {
-          //     method: 'POST',
-          //     headers: { "Content-Type": "application/json" },
-          //     credentials: 'include',
-          //     body: JSON.stringify(authorizationObj)
-          //   })
-          // if (res.message === 'Response 0000') {
-          //   navigate('/');
-          //   dispatch(showModal('order'))
-          //   if (discountCode) await deleteDiscountCode(discountCode);
-          //   await deleteCart().unwrap();
-          // }
-          // console.log(`ANSWER from ${baseUrl}payment/authorization`, res);
+          reqAuthorization(authObj);
         }
         // window.removeEventListener("message", receiveMessage);
       }
@@ -106,200 +84,85 @@ export function PaymentForm({ setOrder, orderNo, totalPrice, discountCode }) {
     }
   }
 
-  // useEffect(() => { }, [threeDSMethodData]);
-
-  window.addEventListener("message", receiveMessage);
-
-  //==================================================
-  //==================================================
-
-
-  const handleLoad = () => {
-    // const recieved = new Date();
-    // setRecievedAt(recieved)
-    //====================== Timer - start ============================
-    if (timeoutRef.current && iframePage.current) {
-      const recieved = new Date();
-      setRecievedAt(recieved)
-      clearTimeout(timeoutRef.current);
-    }
-    iframePage.current = true;
-    //====================== Timer - end ============================
-
-    // console.log('++++++++++ start');
-    // console.log('recieved');
-    // console.log(recieved);
-    // console.log('-----------------------');
-    // console.log('sendAt');
-    // console.log(sendAt);
-    // console.log('++++++++++ end');
-
-    // const timeDifference = Math.ceil((recieved - sendAt) / 1000);
-    // if (timeDifference < 10) {
-    //   console.log('timeDifference ==========================================================');
-    //   console.log(timeDifference + ' c');
-    // } else {
-    //   console.log('Time is Out ! ! ! ! !');
-    // }
-
-    // const newPageInIframe = iframeRef.current.contentWindow.location;
-    // console.log('Новая страница загружена в iframe:', newPageInIframe);                 //+++++++++++++++++++++++++++++++++++++++++ end
-  };
-
-  // useEffect(() => {
-  //   if (sendAt && !recievedAt) {
-  //     //====================== Timer - start ============================
-  //     // if (timeoutRef.current) {
-  //     //   clearTimeout(timeoutRef.current);
-  //     // }
-  //     // timeoutRef.current = setTimeout(() => {
-  //     //   console.log('Timeout fired!');
-  //     // }, 1000);
-  //     //====================== Timer - end ============================
-
-  //     const timeDifference = Math.ceil((new Date() - sendAt) / 1000);
-  //     if (timeDifference > 1) {
-  //       console.log('timeDifference ======== from useEffect ======================================');
-  //       console.log(timeDifference);
-  //     }
-  //   } else if (sendAt && recievedAt) {
-  //     if (timeoutRef.current) {
-  //       clearTimeout(timeoutRef.current);
-  //     }
-  //   }
-  // }, [sendAt, recievedAt])
-
-  useEffect(() => {
-    if (sendAt && recievedAt && timeoutRef.current && iframePage.current) {
-      clearTimeout(timeoutRef.current);
-
-      console.log('----------------------- start');
-      // console.log('recieved');
-      // console.log(recievedAt);
-      // console.log('-----------------------');
-      // console.log('sendAt');
-      // console.log(sendAt);
-      // console.log('-----------------------');
-
-      const timeDifference1 = (recievedAt - sendAt) / 1000;
-      // const timeDifference2 = Math.ceil((recievedAt - sendAt) / 1000);
-      console.log(timeDifference1 + ' c');
-      // console.log(timeDifference2 + ' c');
-
-      console.log('-----------------------');
-      console.log('-+-+-+-+ відправка Y +-+-+-+-');
-      console.log('----------------------- end');
-
-      const DS_MERCHANT_EMV3DS = { ...authorizationObj.DS_MERCHANT_EMV3DS, threeDSCompInd: 'Y' };
-      const obj = { ...authorizationObj, "DS_MERCHANT_EMV3DS": DS_MERCHANT_EMV3DS };
-      console.log(obj);
-      authorization({ ...obj });
-    }
-  }, [sendAt, recievedAt, authorization, authorizationObj])
-
-
-  useEffect(() => {
-    if (acsURL && creq) {
-      const form = document.getElementById("creq");
-      form.submit();
-    }
-  }, [acsURL, creq])
-
-  // useEffect(() => {
-  //   const handleMessage = (event) => {
-  //     if (iframeRef && event.source === iframeRef.current?.contentWindow) {
-  //       const send = new Date();
-  //       setSendAt(send)
-  //       // console.log(send);
-
-  //       //====================== Timer - start ============================
-  //       if (timeoutRef.current) {
-  //         clearTimeout(timeoutRef.current);
-  //       }
-  //       timeoutRef.current = setTimeout(() => {
-  //         console.log('-+-+-+-+-+ Timeout fired! +-+-+-+-+-');
-  //         clearTimeout(timeoutRef.current);
-  //       }, 500);
-  //       //====================== Timer - end ============================
-
-  //       console.log('+ + + + + + + + + ' + event.data + ' + + + + + + + + +')
-  //       // console.log('1 - Message from iframe:', event.data);                   //================================================== start
-  //     }
-  //   };
-
-  //   // window.addEventListener("message", receiveMessage);
-
-  //   window.addEventListener('message', handleMessage);
-
-  //   return () => {
-  //     window.removeEventListener('message', handleMessage);
-  //   };
-  // }, []);
-
   const handleMessage = (event) => {
-    window.removeEventListener('message', handleMessage);
     if (iframeRef && event.source === iframeRef.current?.contentWindow) {
-      const send = new Date();
-      setSendAt(send);
-      // console.log(send);
-
       //====================== Timer - start ============================
+      window.removeEventListener('message', handleMessage);
+      const sendAt = new Date();
+      setTimer({ ...timer, sendAt: sendAt });
+      //====================== Timer - start ============================
+      //====================== Timer ============================
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
       timeoutRef.current = setTimeout(() => {
-        console.log('-+-+-+-+-+ Timeout fired! +-+-+-+-+-');
-        console.log('-+-+-+-+ відправка N +-+-+-+-');
+        console.log('-+-+-+- Timeout fired! -+-+-+- відправка N -+-+-+-');
         clearTimeout(timeoutRef.current);
         timeoutRef.current = false;
         iframePage.current = false;
 
         const DS_MERCHANT_EMV3DS = { ...authorizationObj.DS_MERCHANT_EMV3DS, threeDSCompInd: 'N' };
-        const obj = { ...authorizationObj, "DS_MERCHANT_EMV3DS": DS_MERCHANT_EMV3DS };
-        console.log(obj);
-        authorization({ ...obj });
+        const authObj = { ...authorizationObj, "DS_MERCHANT_EMV3DS": DS_MERCHANT_EMV3DS };
+        // console.log(authObj);
+        reqAuthorization(authObj);
       }, 10000);
-      //====================== Timer - end ============================
-
-      console.log('+ + + + + + + + + ' + event.data + ' + + + + + + + + +')
-      // console.log('1 - Message from iframe:', event.data);                   //================================================== start
+      //====================== Timer ============================
     }
   };
 
-  // window.addEventListener("message", receiveMessage);
+  const handleFrameLoad = () => {
+    //====================== Timer - stop ============================
+    if (timeoutRef.current && iframePage.current) {
+      const recieved = new Date();
+      setTimer({ ...timer, recievedAt: recieved });
+      clearTimeout(timeoutRef.current);
+    }
+    iframePage.current = true;
+    //====================== Timer - stop ============================
+  };
 
+  window.addEventListener("message", receiveMessage);
   window.addEventListener('message', handleMessage);
 
+  useEffect(() => {
+    if (timer?.sendAt && timer?.recievedAt && timeoutRef.current && iframePage.current) {
+      //====================== Timer - end in time ============================
+      clearTimeout(timeoutRef.current);
+      // const timeDifference = (timer.recievedAt - timer.sendAt) / 1000;
+      // console.log(timeDifference + ' c');
+      // console.log('-+-+-+- In Time! -+-+-+- відправка Y -+-+-+-');
+      //====================== Timer - end in time ============================
+      const DS_MERCHANT_EMV3DS = { ...authorizationObj.DS_MERCHANT_EMV3DS, threeDSCompInd: 'Y' };
+      const authObj = { ...authorizationObj, "DS_MERCHANT_EMV3DS": DS_MERCHANT_EMV3DS };
+      // console.log(authObj);
+      reqAuthorization(authObj);
+    }
+  }, [timer, reqAuthorization, authorizationObj])
+
   return (
-    <>
-      <div className={styles.form}>
-        <Helmet>
-          <script>{redsysScript(orderNo, totalPrice)}</script>
-        </Helmet>
-        <h3 className={styles.form__title}>Payment form</h3>
-        <div id="card-form" style={{ height: '400px' }} />
+    <div className={styles.form}>
+      <Helmet>
+        <script>{redsysScript(orderNo, totalPrice)}</script>
+      </Helmet>
+      <h3 className={styles.form__title}>Payment form</h3>
+      <div id="card-form" style={{ height: '400px' }} />
 
-        {threeDSMethodURL &&
-          <iframe
-            id='iframe3DS'
-            ref={iframeRef}
-            onLoad={handleLoad}
-            // className={styles.form__iframe}
-            title='3DS'
-            src={`${localUrl}payment3DS/?threeDSMethodURL=${threeDSMethodURL}&threeDSMethodData=${threeDSMethodData}`} />}
-        {/* {threeDSMethodURL && <Payment3DS threeDSMethodData={threeDSMethodData} threeDSMethodURL={threeDSMethodURL} />} */}
+      {threeDSMethod?.threeDSMethodURL && threeDSMethod?.threeDSMethodData &&
+        <iframe
+          id='iframe3DS'
+          ref={iframeRef}
+          onLoad={handleFrameLoad}
+          className={styles.form__iframe}
+          title='iframe3DS'
+          src={`${localUrl}payment3DS/?threeDSMethodURL=${threeDSMethod.threeDSMethodURL}&threeDSMethodData=${threeDSMethod.threeDSMethodData}`} />}
 
-        <form name="datos">
-          <input type="hidden" id="token"></input>
-          <input type="hidden" id="errorCode"></input>
-        </form>
+      <form name="datos">
+        <input type="hidden" id="token"></input>
+        <input type="hidden" id="errorCode"></input>
+      </form>
 
-        {acsURL && creq &&
-          <form id='creq' action={acsURL} method="post">
-            <input type="hidden" name="creq" value={creq} />
-          </form>
-        }
-      </div>
-    </>
+      {creq &&
+        <PaymentAuth acsURL={creq.acsURL} creq={creq.creq} />}
+    </div>
   )
 }
