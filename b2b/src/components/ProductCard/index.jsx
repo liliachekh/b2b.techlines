@@ -149,6 +149,7 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
           productUrl,
           memory,
           color,
+          imageUrls,
       })} />
     </div>
   )

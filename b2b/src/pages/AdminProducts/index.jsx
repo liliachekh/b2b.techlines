@@ -33,10 +33,10 @@ export function AdminProducts() {
     const [delProduct ] = useDeleteProductMutation();
 
     const modalType = useSelector((state) => state.modal.modal);
-    const [openForm, setOpenForm] = useState(false);
+    const [editForm, setEditForm] = useState(false);
     const [productId, setProductId] = useState(null);
     const [product, setProduct] = useState(null);
-    const [addProduct, setAddProduct] = useState(false);
+    const [addForm, setAddForm] = useState(false);
     const [adminParam, setAdminParam] = useState(null);
     const dispatch = useDispatch();
     const [successMsg, setSuccessMsg] = useState(null);
@@ -44,6 +44,7 @@ export function AdminProducts() {
 
     // const { loggedInAdmin } = useAuthAdminContext();
     const { loggedInAdmin } = useContext(AuthAdminContext);
+    console.log(loggedInAdmin);
 
     function handleDelButton(id) {
       // const product = productsList.find((product) => product.itemNo === itemNo);
@@ -65,18 +66,18 @@ export function AdminProducts() {
 
     function handleEditButtonClick(id) {
       setProductId(id);
-      setOpenForm(true);
+      setEditForm(true);
     }
 
     function handleAddButton() {
-      setAddProduct(true)
+      setAddForm(true)
     }
   
     function handleFormClose() {
-      setOpenForm(false);
+      setEditForm(false);
       setProductId(null);
       setProduct(null);
-      setAddProduct(false);
+      setAddForm(false);
       setAdminParam(null);
     }
 
@@ -86,7 +87,7 @@ export function AdminProducts() {
 
     function handleCopyButtonClick(copyProduct) {
       setProduct(copyProduct);
-      setAddProduct(true);
+      setAddForm(true);
     }
 
     const getProduct = useCallback(async () => {
@@ -131,19 +132,19 @@ export function AdminProducts() {
     )}
     <AdminHeader loggedIn={true} />
     <BackToTop />
-    {!openForm && !addProduct && !adminParam && (
+    {!editForm && !addForm && !adminParam && (
       <Filter />
     )}
     <div className={style.admin}>
     <div className={style.admin__container}>
-          {openForm && product
+          {editForm && product
             ? <EditProductForm
               product={product}
               onCloseForm={handleFormClose} 
               refetchProducts={refetchProductsList}
               setSuccessMsg={setSuccessMsg}
               setErrorMsg={setErrorMsg}/>
-            : addProduct
+            : addForm
               ? <AddProductForm productCopy={product} onCloseForm={handleFormClose} refetchProducts={refetchProductsList}/>
             : adminParam
               ? <AdminParams adminParam={adminParam} onCloseForm={handleFormClose} setSuccessMsg={setSuccessMsg} setErrorMsg={setErrorMsg}/>

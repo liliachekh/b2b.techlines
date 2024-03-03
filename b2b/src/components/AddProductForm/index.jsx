@@ -2,7 +2,6 @@ import Input from '../Input';
 import style from './addProductForm.module.scss';
 import { useDispatch } from 'react-redux';
 import { showModal } from '../../store/modalSlice';
-import { baseUrl } from '../../utils/vars';
 import { Formik, Form } from 'formik';
 import { validationSchemaAddProduct } from '../../validation';
 import Select from '../Select';
@@ -21,7 +20,7 @@ export default function AddProductForm({ onCloseForm, isInAccount, refetchProduc
       initialValues={{
         name: productCopy?.name || '',
         enabled: productCopy?.enabled || true,
-        imageUrls: [],
+        // imageUrls: [],
         quantity: productCopy?.quantity || 0,
         brand: productCopy?.brand || '',
         categories: productCopy?.categories || '',
