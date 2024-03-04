@@ -9,7 +9,7 @@ import { useGetAllProductsQuery, useGetProductsQuery, useDeleteProductMutation }
 import Loader from "../../components/Loader";
 import { useCallback, useEffect, useState, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import Filter from "../../components/Filter";
 import { useQueryString } from '../../hooks';
 import { useLocation } from "react-router-dom";
@@ -19,13 +19,11 @@ import { fetchData } from "../../utils";
 import { showModal } from '../../store/modalSlice';
 import { baseUrl } from "../../utils/vars";
 import AuthAdminContext from "../../context/AuthAdminContext";
-// import { useAuthAdminContext } from "../../context/AuthAdminContext";
 
 export function AdminProducts() {
 
     const { search } = useLocation();
     const { params } = useQueryString();
-    const navigate = useNavigate();
     const perPage = params.perPage;
     const page = params.startPage;
     const { data: products = [], error, isLoading, refetch} = useGetAllProductsQuery(search ? search : `?startPage=${page}&perPage=${perPage}`);
@@ -41,14 +39,9 @@ export function AdminProducts() {
     const dispatch = useDispatch();
     const [successMsg, setSuccessMsg] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
-
-    // const { loggedInAdmin } = useAuthAdminContext();
     const { loggedInAdmin } = useContext(AuthAdminContext);
-    console.log(loggedInAdmin);
 
     function handleDelButton(id) {
-      // const product = productsList.find((product) => product.itemNo === itemNo);
-      // setProduct(product);
       setProductId(id);
       dispatch(showModal('deleteProduct'));
     }
@@ -116,10 +109,10 @@ export function AdminProducts() {
 
     if (isLoading) return <Loader />;
 
-    if (error?.status === 400) navigate("/not-found");
+    if (error?.status === 400) return <Navigate to="/not-found" />;
 
-    if (loggedInAdmin === false) navigate("/not-found");
-  
+    if (loggedInAdmin === false) return <Navigate to="/not-found" />;
+
     return (
     <>
     {errorMsg && <div className={style.admin__errorMessage}>{errorMsg}</div>}
