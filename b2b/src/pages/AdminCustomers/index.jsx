@@ -1,15 +1,12 @@
-import EditProductForm from "../../components/EditProductForm";
-import AddProductForm from "../../components/AddProductForm";
 import AdminHeader from "../../components/AdminHeader";
-import AdminParams from "../../components/AdminParams";
 import BackToTop from "../../components/BackToTop"
 import style from "./AdminCustomers.module.scss";
 import { useGetProductsQuery, useDeleteProductMutation } from "../../store/api/products.api";
-import { useGetAllCustomersQuery } from "../../store/api/customers.api";
+import { useGetAllCustomersQuery, useGetCertainCustomerQuery, useGetCustomerQuery } from "../../store/api/customers.api";
 import Loader from "../../components/Loader";
 import { useCallback, useEffect, useState, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Filter from "../../components/Filter";
 import { useQueryString } from '../../hooks';
 import { useLocation } from "react-router-dom";
@@ -21,30 +18,32 @@ import { baseUrl } from "../../utils/vars";
 import AuthAdminContext from "../../context/AuthAdminContext";
 import { useAuthAdminContext } from "../../context/AuthAdminContext";
 import { AdminCustomerCard } from "../../components/AdminCustomerCard";
+import EditCustomerForm from "../../components/EditCustomerForm";
 
 export function AdminCustomers() {
+  const { search } = useLocation();
+  const { params } = useQueryString();
+  const navigate = useNavigate();
+  const perPage = params.perPage;
+  const page = params.startPage;
+  const { data: customers = [], error, isLoading, refetch} = useGetAllCustomersQuery();
+  // const customerId = useParams();
+  // const { data: customer } = useGetCertainCustomerQuery();
+  const { data: productsList = [], refetch: refetchProductsList } = useGetProductsQuery();
+  const [delProduct ] = useDeleteProductMutation();
+  const modalType = useSelector((state) => state.modal.modal);
+  const [openForm, setOpenForm] = useState(false);
+  const [customerId, setCustomerId] = useState(null);
+  const [customer, setCustomer] = useState(null);
+  const [productId, setProductId] = useState(null);
+  const [product, setProduct] = useState(null);
+  const dispatch = useDispatch();
+  const [successMsg, setSuccessMsg] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [activeButton, setActiveButton] = useState('admin');
 
-    const { search } = useLocation();
-    const { params } = useQueryString();
-    const navigate = useNavigate();
-    const perPage = params.perPage;
-    const page = params.startPage;
-    const { data: customers = [], error, isLoading, refetch} = useGetAllCustomersQuery();
-    const { data: productsList = [], refetch: refetchProductsList } = useGetProductsQuery();
-    const [delProduct ] = useDeleteProductMutation();
-    const modalType = useSelector((state) => state.modal.modal);
-    const [openForm, setOpenForm] = useState(false);
-    const [productId, setProductId] = useState(null);
-    const [product, setProduct] = useState(null);
-    const [addProduct, setAddProduct] = useState(false);
-    const [adminParam, setAdminParam] = useState(null);
-    const dispatch = useDispatch();
-    const [successMsg, setSuccessMsg] = useState(null);
-    const [errorMsg, setErrorMsg] = useState(null);
-    const [activeButton, setActiveButton] = useState('');
-
-    // const { loggedInAdmin } = useAuthAdminContext();
-    const { loggedInAdmin } = useContext(AuthAdminContext);
+  // const { loggedInAdmin } = useAuthAdminContext();
+  const { loggedInAdmin } = useContext(AuthAdminContext);
 
     function handleDelButton(id) {
       // const product = productsList.find((product) => product.itemNo === itemNo);
@@ -67,39 +66,26 @@ export function AdminCustomers() {
     }
 
     function handleEditButtonClick(id) {
-      setProductId(id);
+      setCustomerId(id);
+      setCustomer(null); 
       setOpenForm(true);
-    }
-
-    function handleAddButton() {
-      setAddProduct(true)
     }
   
     function handleFormClose() {
       setOpenForm(false);
-      setProductId(null);
-      setProduct(null);
-      setAddProduct(false);
-      setAdminParam(null);
+      setCustomerId(null);
+      setCustomer(null);
     }
 
-    function handleAdminParamsButton(param) {
-      setAdminParam(param);
-    }
-
-    const getProduct = useCallback(async () => {
-    const product = await fetchData(`${baseUrl}products/${productId}`)
-    setProduct(product);
-    // if (!product) return <Loader />;
-  }, [productId]);
+    const getCustomer = useCallback(async () => {
+      const customer = await fetchData(`${baseUrl}customers/${customerId}`, { method: 'GET', credentials: 'include' })
+      setCustomer(customer);
+      // if (!product) return <Loader />;
+    }, [customerId]);
 
     useEffect(() => {
-      productId && getProduct();
-    }, [getProduct, productId]);
-
-    useEffect(() => {
-      refetch();
-    }, [productsList, refetch]);
+      customerId && getCustomer();
+    }, [getCustomer, customerId]);
 
     useEffect(() => {
       if (errorMsg || successMsg) {
@@ -131,25 +117,22 @@ export function AdminCustomers() {
     <BackToTop />
     {/* {!openForm && !addProduct && !adminParam && (
       <Filter />
-    )}   */}
+    )} */}
     <div className={style.admin__nav}>
       <Link to="/admin" className={style.admin__btn}>Products</Link>
       <Link to="/admin/customers" className={activeButton === 'admin/customers' ? `${style.admin__btn}` : `${style.admin__btn_active}`}>Customers</Link>
     </div>
     <div className={style.admin}>
     <div className={style.admin__container}>
-          {openForm && product
-            ? <EditProductForm
-              product={product}
-              onCloseForm={handleFormClose} 
-              refetchProducts={refetchProductsList}
-              setSuccessMsg={setSuccessMsg}
-              setErrorMsg={setErrorMsg}/>
-            : addProduct
-              ? <AddProductForm onCloseForm={handleFormClose} refetchProducts={refetchProductsList}/>
-            : adminParam
-              ? <AdminParams adminParam={adminParam} onCloseForm={handleFormClose} setSuccessMsg={setSuccessMsg} setErrorMsg={setErrorMsg}/>
-              : <>
+    {openForm && customer ? (
+          <EditCustomerForm
+            customer={customer}
+            onCloseForm={handleFormClose} 
+            setSuccessMsg={setSuccessMsg}
+            setErrorMsg={setErrorMsg}
+          />
+        ) : (
+         <> 
                 <div className={style.admin__header}>
                   <h1 className={style.admin__title}>Customers</h1>
                   <div className={style.admin__headerBtns}>
@@ -172,12 +155,15 @@ export function AdminCustomers() {
                   /> */}
                 <div className={style.customers}>
                   {customers.map(customer => (
-                      <AdminCustomerCard {...customer}/>
+                      <AdminCustomerCard key={customer.customerNo}
+                        {...customer}
+                        buttonHandler={() => handleEditButtonClick(customer.customerNo)}
+                      />
                     ))
                   }
                 </div> 
               </>
-          }
+          )}
       </div>
       </div>
     </>

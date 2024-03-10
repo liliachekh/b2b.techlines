@@ -213,3 +213,13 @@ export const validationSchemaAddAdminParams = Yup.object().shape({
   name: Yup.string().required("Required Field!"),
   type: Yup.string().required("Required Field!"),
 });
+
+export const validationSchemaCustomer = Yup.object().shape({
+  enabled: Yup.boolean(),
+  _id: Yup.string().required("Required Field!"),
+  firstName: Yup.string().required("Required Field!"),
+  lastName: Yup.string().required("Required Field!"),
+  customerNo: Yup.string().required("Required Field!"),
+  email: Yup.string().required("Required Field!"),
+  vatNr: Yup.string().required("Required Field!"),
+});
