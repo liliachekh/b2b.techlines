@@ -86,6 +86,7 @@ export function AdminProducts() {
     const getProduct = useCallback(async () => {
     const product = await fetchData(`${baseUrl}products/${productId}`)
     setProduct(product);
+    console.log(product)
     // if (!product) return <Loader />;
   }, [productId]);
 

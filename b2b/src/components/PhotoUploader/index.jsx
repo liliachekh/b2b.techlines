@@ -3,7 +3,6 @@ import style from "./photoUploader.module.scss"
 import { UploadFile } from '../icons'
 import Input from '../Input';
 import { inputFields } from './inputFields';
-import { baseUrl } from '../../utils/vars';
 import { useUploadProductPhotoMutation } from '../../store/api/products.api';
 
 

@@ -8,8 +8,9 @@ import { useUpdateProductMutation } from '../../store/api/products.api';
 // import Loader from '../Loader';
 import Input from "../Input";
 import Select from '../Select';
+import PhotoUploader from '../PhotoUploader/index';
 
-export default function EditProductForm({ product, onCloseForm, refetchProducts, setSuccessMsg, setErrorMsg }) {
+export default function EditProductForm({ product, onCloseForm, refetchProducts, setSuccessMsg, setErrorMsg, isInAccount }) {
   const { data: filtersBD = [] } = useGetFiltersQuery();
   const [updateProduct] = useUpdateProductMutation();
 
@@ -47,6 +48,12 @@ return (
                   value={product[field.name]}
                   {...field} />
               );
+            } else if (field.tagType === 'button') {
+              return (
+                <PhotoUploader
+                  key={field.id}
+                  isInAccount={isInAccount} 
+                  productCopyImageUrls={product?.imageUrls}/>);
             } else if (field.tagType === 'select') {
               return (
                   <Select
