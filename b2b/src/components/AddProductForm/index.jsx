@@ -20,7 +20,6 @@ export default function AddProductForm({ onCloseForm, isInAccount, refetchProduc
       initialValues={{
         name: productCopy?.name || '',
         enabled: productCopy?.enabled || true,
-        // imageUrls: [],
         quantity: productCopy?.quantity || 0,
         brand: productCopy?.brand || '',
         categories: productCopy?.categories || '',
@@ -34,13 +33,6 @@ export default function AddProductForm({ onCloseForm, isInAccount, refetchProduc
       onSubmit={
       async (values, { setSubmitting }) => {
         try {
-          // await fetch(`${baseUrl}products`, {
-          //   method: 'POST',
-          //   headers: {
-          //     'Content-Type': 'application/json',
-          //   },
-          //   body: JSON.stringify(values)
-          // });
           const response = await addProduct(values);
           if (response.data) {
             onCloseForm();
@@ -68,7 +60,8 @@ export default function AddProductForm({ onCloseForm, isInAccount, refetchProduc
             return (
               <PhotoUploader
                 key={field.id}
-                isInAccount={isInAccount} />);
+                isInAccount={isInAccount} 
+                productCopyImageUrls={productCopy?.imageUrls || []}/>);
           }
           else if (field.tagType === 'select') {
             return (

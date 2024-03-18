@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import style from "./photoUploader.module.scss"
 import { UploadFile } from '../icons'
 import Input from '../Input';
@@ -7,7 +7,7 @@ import { baseUrl } from '../../utils/vars';
 import { useUploadProductPhotoMutation } from '../../store/api/products.api';
 
 
-export default function PhotoUploader({ isInAccount = false }) {
+export default function PhotoUploader({ isInAccount = false, productCopyImageUrls }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [uploadPhoto] = useUploadProductPhotoMutation();
@@ -24,15 +24,6 @@ export default function PhotoUploader({ isInAccount = false }) {
       for (let i = 0; i < selectedFiles.length; i++) {
         formData.append('photos', selectedFiles[i], selectedFiles[i].name);
       }
-      // const response = await fetch(`${baseUrl}products/images`,
-      //   {
-      //     method: 'POST',
-      //     body: formData,
-      //     headers: {
-      //       'path' : './static/images'
-      //     },
-      //   }
-      // );
       const response = await uploadPhoto(formData);
       if (response.data) {
         setShowSuccessMessage(true);
@@ -47,6 +38,16 @@ export default function PhotoUploader({ isInAccount = false }) {
       console.error('Error uploading image:', error);
     }
   };
+
+  useEffect(() => {
+    // Якщо productCopyImageUrls переданий та не пустий, встановлюємо selectedFiles
+    if (productCopyImageUrls && productCopyImageUrls.length > 0) {
+      setSelectedFiles(productCopyImageUrls.map(url => {
+        const splittedUrl = url.split('/');
+        return { name: splittedUrl[splittedUrl.length - 1] };
+      }));
+    }
+  }, [productCopyImageUrls]);
 
   return (
     <div className={style.uploader}>
