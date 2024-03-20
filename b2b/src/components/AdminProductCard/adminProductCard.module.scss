@@ -7,38 +7,24 @@
     transition: background-color .3s;
     border: 1px solid #555;
     border-radius: 1rem;
-    // font-family: 'Inter', sans-serif;
     grid-template-columns: auto 4fr 2fr 2fr 2fr 1fr 3fr;
     gap: 10px;
     font-size: 1rem;
     line-height: 1.3rem;
-  
-    // &:hover {
-    //   background-color: #dedfdf;
-    // }
   
     &__icon {
       display: flex;
       align-items: center;
       width: 70px;
       max-height: 110px;
-      // width: 130px;
-      // height: 130px;
-      // border: 5px solid #202025;
       border-radius: 1rem;
       overflow: hidden;
       box-sizing: border-box;
-  
-      // &:hover img {
-      //   scale: 1.1;
-      // }
     }
   
     &__img {
       width: 100%;
       height: 100%;
-      // transition: scale .3s;
-      // object-fit: cover;
       object-fit: contain;
     }
   

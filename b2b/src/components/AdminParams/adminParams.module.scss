@@ -99,11 +99,6 @@ $color-grey-light: #e3e3e3;
       justify-content: space-between;
       margin-top: 10px;
     }
-    // &__list {
-    //   display: flex;
-    //   flex-direction: column;
-    //   gap: 10px;
-    // }
     &__table {
       width: 500px;
       border-collapse: collapse;
@@ -183,12 +178,5 @@ $color-grey-light: #e3e3e3;
   &__editItemsInput {
     font-size: 1.1rem;
   }
-  // &__listItem {
-  //   display: flex;
-  //   align-items: center;
-  //   font-size: 1.1rem;
-  //   font-weight: 700;
-  //   letter-spacing: 1.5px;
-  // }
 
 }
