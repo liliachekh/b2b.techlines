@@ -8,3 +8,4 @@ export * from "./Product";
 export * from "./AboutUs"
 export * from "./NotFound";
 export * from "./CreateNewPassword";
+export * from "./AdminProducts";

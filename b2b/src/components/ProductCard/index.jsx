@@ -7,8 +7,9 @@ import { useEffect, useState } from 'react';
 import { useDeleteFromCartMutation } from '../../store/api/cart.api';
 import { useAmountChange, useInCart, useIncrease, useTierPrice } from '../../hooks';
 import AddToCartBtn from '../AddToCartBtn';
+import { AdminProductCard } from '../AdminProductCard';
 
-function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, brand, enabled, productUrl, displayTable, cartItem, orderQuantity }) {
+function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, brand, enabled, productUrl, itemNo, memory, color, displayTable, cartItem, orderQuantity, buttonHandler, deleteButtonHandler, adminCard = false, copyButtonHandler }) {
   const [deleteFromCart, { isLoading: isDeleting }] = useDeleteFromCartMutation();
   const tierPrice = useTierPrice();
 
@@ -121,6 +122,37 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
       </div>
     </div >
   );
+
+  if (adminCard) return (
+    <div className={`${styles.productCard} ${adminCard ? styles.productRow : ''}`}>
+      <AdminProductCard
+      product={{
+        _id,
+        imageUrls,
+        currentPrice,
+        name,
+        enabled,
+        quantity,
+        brand,
+        productUrl,
+        itemNo,
+      }}
+      buttonHandler={() => buttonHandler(productUrl)}
+      deleteButtonHandler={() => deleteButtonHandler(productUrl)}
+      copyButtonHandler={() => copyButtonHandler({ 
+          quantity, 
+          name, 
+          currentPrice, 
+          categories, 
+          brand, 
+          enabled, 
+          productUrl,
+          memory,
+          color,
+          imageUrls,
+      })} />
+    </div>
+  )
 
   return (
     <div className={`${styles.productCard} ${displayTable ? styles.productRow : ''}`}>
