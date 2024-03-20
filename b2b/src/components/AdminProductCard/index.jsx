@@ -9,10 +9,6 @@ export function AdminProductCard({ product: { imageUrls, name, currentPrice, _id
   return (
     <div className={style.card}>
       <div className={style.card__icon}>
-        {/* <img
-          className={style.card__img}
-          src={imageUrls[0]}
-          alt={name} /> */}
         <LazyLoadImage
         className={style.card__img}
         src={imageUrls[0]}

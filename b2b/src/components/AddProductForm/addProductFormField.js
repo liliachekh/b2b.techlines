@@ -35,17 +35,6 @@ export const addProductFormFields = [
       type: "number",
       placeholder: "Enter quantity",
     },
-    // {
-    //   tagType: 'regular',
-    //   label: "ID",
-    //   labelClass: style.form__label,
-    //   inputClass: style.form__input,
-    //   errorClass: style.form__error,
-    //   id: "_id",
-    //   name: "_id",
-    //   type: "text",
-    //   placeholder: "Enter ID",
-    // },
     {
       tagType: 'regular',
       label: "Name",
@@ -145,15 +134,4 @@ export const addProductFormFields = [
       type: "text",
       placeholder: "Enter EAN",
     },
-    // {
-    //   tagType: 'regular',
-    //   label: "ItemNo",
-    //   labelClass: style.form__label,
-    //   inputClass: style.form__input,
-    //   errorClass: style.form__error,
-    //   id: "itemNo",
-    //   name: "itemNo",
-    //   type: "text",
-    //   placeholder: "Enter itemNo",
-    // },
   ];

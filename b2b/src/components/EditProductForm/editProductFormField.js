@@ -24,18 +24,6 @@ export const editProductFormFields = [
     placeholder: "Enter image URLs",
     multiple: true,
 },
-  // {
-  //   tagType: 'regular',
-  //   label: "Image URLs",
-  //   labelClass: style.form__label,
-  //   inputClass: style.form__input,
-  //   errorClass: style.form__error,
-  //   id: "imageUrls",
-  //   name: "imageUrls",
-  //   type: "text",
-  //   placeholder: "Enter image URLs",
-    
-  // },
   {
     tagType: 'regular',
     label: "Quantity",
@@ -148,13 +136,13 @@ export const editProductFormFields = [
   },
   {
     tagType: 'regular',
-    label: "ItemNo",
+    label: "EAN",
     labelClass: style.form__label,
     inputClass: style.form__input,
     errorClass: style.form__error,
-    id: "itemNo",
-    name: "itemNo",
+    id: "ean",
+    name: "ean",
     type: "text",
-    placeholder: "Enter itemNo",
+    placeholder: "Enter EAN",
   },
 ];

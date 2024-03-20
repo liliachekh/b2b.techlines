@@ -3,8 +3,7 @@ import { useGetFiltersQuery, useDeleteFiltersMutation, useUpdateFilterMutation }
 import { Edit, Check, Close } from "../icons";
 import { useState, useRef, useEffect } from "react";
 import AddAdminParamsForm from "../AddAdminParamsForm";
-// import { useDispatch } from 'react-redux';
-// import { showModal } from '../../store/modalSlice';
+
 
 export default function AdminParams({ adminParam, onCloseForm, setSuccessMsg, setErrorMsg }) {
   const { data: filtersBD = [], refetch } = useGetFiltersQuery();
@@ -182,19 +181,3 @@ export default function AdminParams({ adminParam, onCloseForm, setSuccessMsg, se
     </>
   );
 }
-
-
-
-      //       <ul className={style.adminParams__list}>
-      //   {filtersBD
-      //     .filter((param) => param.type === adminParam)
-      //     .map((param) => (
-      //       <li key={param._id} className={style.adminParams__listItem}>
-      //         <input type="checkbox" />
-      //         <span>{param.name}</span>
-      //         <button onClick={() => handleEditParam(param._id)}>
-      //           <Edit/>
-      //         </button>
-      //       </li>
-      //     ))}
-      // </ul>
