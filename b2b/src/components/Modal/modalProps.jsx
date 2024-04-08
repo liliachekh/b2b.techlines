@@ -45,7 +45,7 @@ export const modalProps = [
   }, {
     type: 'saved',
     header: 'Changes saved',
-    icon: <Success />,
+    icon: <Success size='75px' color='green'/>,
     actions(onClose, onSubmit, className) {
       return (
         <div className={className}>

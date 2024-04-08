@@ -25,7 +25,7 @@ export function MainLayout() {
   return (
     <>
       {modalType && (
-        <Modal {...modalProps.find((modal) => modal.type === modalType)} />
+        <Modal data={modalProps.find((modal) => modal.type === modalType)} />
       )}
       <Header />
       <div id='main'>
