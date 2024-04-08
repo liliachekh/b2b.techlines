@@ -157,3 +157,59 @@ export const validationSchemaProfileShipping = Yup.object({
     .matches(/^\+\d{11,12}$/, "Invalid phone number format")
     .required("Required Field!"),
 })
+
+export const validationSchemaNewPassword = Yup.object({
+  password: Yup.string()
+    .min(7, 'Must contain at least 7 letters')
+    .max(30, 'Can be no more than 30 characters')
+    .matches(/^[a-zA-Z0-9]+$/, 'Must be a-z A-Z 0-9')
+    .trim()
+    .notOneOf([Yup.ref('curPassword'), null], 'New and current passwords must NOT match')
+    .required("Required Field!"),
+  confPassword: Yup.string()
+    .min(7, 'Must contain at least 7 letters')
+    .max(30, 'Can be no more than 30 characters')
+    .matches(/^[a-zA-Z0-9]+$/, 'Must be a-z A-Z 0-9')
+    .trim()
+    .oneOf([Yup.ref('password'), null], 'New and confirm passwords Must match')
+    .required("Required Field!"),
+});
+
+export const validationSchemaProduct = Yup.object().shape({
+  enabled: Yup.boolean(),
+  imageUrls: Yup.array().required("Required Field!"),
+  quantity: Yup.number().integer().positive().required("Required Field!"),
+  _id: Yup.string().required("Required Field!"),
+  name: Yup.string().required("Required Field!"),
+  categories: Yup.string().required("Required Field!"),
+  brand: Yup.string().required("Required Field!"),
+  currentPrice: Yup.number().positive().required("Required Field!"),
+  productUrl: Yup.string().required("Required Field!"),
+  color: Yup.string(),
+  type: Yup.string(),
+  memory: Yup.string(),
+  itemNo: Yup.string().required("Required Field!"),
+  date: Yup.string(),
+  ean: Yup.string(),
+  __v: Yup.number(),
+});
+
+export const validationSchemaAddProduct = Yup.object().shape({
+  enabled: Yup.boolean(),
+  imageUrls: Yup.array().required("Required Field!"),
+  quantity: Yup.number().integer().positive().required("Required Field!"),
+  name: Yup.string().required("Required Field!"),
+  categories: Yup.string().required("Required Field!"),
+  brand: Yup.string().required("Required Field!"),
+  currentPrice: Yup.number().positive().required("Required Field!"),
+  productUrl: Yup.string().required("Required Field!"),
+  color: Yup.string(),
+  type: Yup.string(),
+  memory: Yup.string(),
+  ean: Yup.string().required("Required Field!"),
+});
+
+export const validationSchemaAddAdminParams = Yup.object().shape({
+  name: Yup.string().required("Required Field!"),
+  type: Yup.string().required("Required Field!"),
+});

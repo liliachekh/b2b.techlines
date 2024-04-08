@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { Home, LoginForm, ResetPassword, Cart, Profile, Product, Order, NotFound } from "../pages";
+import { Home, LoginForm, ResetPassword, Cart, Profile, Product, Order, NotFound, CreateNewPassword, AdminProducts } from "../pages";
 import { ProfileSettings } from "../components/ProfileSettings";
 import { ProfileOrders } from "../components/ProfileOrders";
 import { MainLayout } from "../pages/MainLayout";
@@ -40,8 +40,10 @@ export default function Router() {
       </Route>
       <Route path="/login" element={<LoginForm />} />
       <Route path="/password-reset" element={<ResetPassword />} />
+      <Route path="/password-reset/new-password/:token/:id" element={<CreateNewPassword/>} />
       <Route path="/not-found" element={<NotFound />} />
       <Route path="*" element={<NotFound />} />
+      <Route path="/admin" element={<AdminProducts />} />
     </Routes>
   );
 }

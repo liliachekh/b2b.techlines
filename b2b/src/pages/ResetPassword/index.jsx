@@ -1,14 +1,43 @@
 import style from "./ResetPassword.module.scss";
 import ForgotPassword from "../../components/ForgotPassword";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useTitle } from "../../hooks";
+import { validationSchemaRegisteredEmail } from "../../validation";
+import { resetPasswordFormFields } from "./resetPasswordFormFields";
+import { useRequestResetPasswordMutation } from "../../store/api/customers.api";
 
 export function ResetPassword() {
-  useTitle('Reset Password');
+    const [msg, setMsg] = useState(null);
+    const [error, setError] = useState(null);
+    const [requestResetPassword] = useRequestResetPasswordMutation();
+
+    async function onSubmitHandler(values) {
+        try {
+          const response = await requestResetPassword(values);
+          if (response.data) {
+            setMsg(true);
+          } else {
+            setError(response.error.data.message);
+          }
+        } catch (error) {
+          setError(error.data.message);
+        }
+    }
+    useEffect(() => {
+        if (error || msg) {
+          const timer = setTimeout(() => {
+            setError(null);
+            setMsg(null);
+            clearTimeout(timer);
+          }, 2500);
+        }
+      }, [error, msg])
 
     return (
         <div className={style.resetForm}>
             <div className={style.resetForm__container}>
+            {error && <div className={style.resetForm__errorMessage}>{error}</div>}
+            {msg && <div className={style.resetForm__successMessage}>Password reset link sent to your email account.</div>}
                 <main className={style.resetForm__main}>
                     <Link to="/login">
                     <div className={style.resetForm__logo}>
@@ -16,9 +45,15 @@ export function ResetPassword() {
                     </div>
                     </Link>
                     <div className={style.resetForm__wrapper}>
-                        <ForgotPassword
-                        //   callback={onSubmitHandler} 
-                        />
+                    <ForgotPassword
+                        initialValues={{
+                            registeredEmail: '',
+                        }}
+                        validationSchema={validationSchemaRegisteredEmail}
+                        fields={resetPasswordFormFields}
+                        callback={onSubmitHandler}
+                        submitBtn="Get link"
+                    />
                     </div>
                 </main>
                 <footer className={style.resetForm__footer}>

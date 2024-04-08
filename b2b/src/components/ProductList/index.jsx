@@ -8,27 +8,34 @@ import SortByBtn from '../SortByBtn';
 import Pagination from '../Pagination';
 import ProductListStyle from '../ProductListStyle';
 
-function ProductList({ products, productsQuantity }) {
+function ProductList({ products, productsQuantity, customButtonHandler, adminCard = false, deleteButtonHandler, copyButtonHandler }) {
   const [displayTable, setDisplayTable] = useState(false);
   const ref = useRef(null);
 
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
   return (
-    <div ref={ref} className={`${styles.productList} ${displayTable ? styles.productTable : ''}`}>
+    <div ref={ref} className={`${styles.productList} ${displayTable ? styles.productTable : ''} ${adminCard ? styles.productTable : ''}`} >
       <div className={styles.productList__container}>
         <div className={styles.productList__inner}>
-          <div className={styles.productList__wrapper}>
+          {!adminCard && (
+            <div className={styles.productList__wrapper}>
             <SortByBtn />
             {!isMobile &&
               <ProductListStyle
                 style={displayTable}
                 changeStyle={setDisplayTable} />}
           </div>
+          )}
           <div className={styles.productList__list}>
             {products?.length > 0
               ? products?.map((product) => (
-                <ProductCard {...product} displayTable={displayTable} key={product?._id} />
+                <ProductCard {...product} displayTable={displayTable} key={product?._id} 
+                buttonHandler={customButtonHandler}
+                adminCard={adminCard}
+                deleteButtonHandler={deleteButtonHandler}
+                copyButtonHandler={copyButtonHandler}
+                />
               ))
               : <div className={`${styles.productList__empty} ${styles.empty}`}>
                 <h4 className={styles.empty__title}>No Results Found</h4>

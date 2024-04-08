@@ -1,0 +1,57 @@
+.card {
+    display: grid;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    transition: background-color .3s;
+    border: 1px solid #555;
+    border-radius: 1rem;
+    grid-template-columns: auto 4fr 2fr 2fr 2fr 1fr 3fr;
+    gap: 10px;
+    font-size: 1rem;
+    line-height: 1.3rem;
+  
+    &__icon {
+      display: flex;
+      align-items: center;
+      width: 70px;
+      max-height: 110px;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+  
+    &__img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  
+    &__prop {
+      text-align: center;
+  
+      &:first-of-type {
+        text-align: left;
+      }
+  
+      &::first-letter {
+        text-transform: uppercase;
+      }
+    }
+  
+    &__buttons {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+  
+    &__btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+    }
+  }
