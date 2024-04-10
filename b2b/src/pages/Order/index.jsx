@@ -64,8 +64,8 @@ export function Order() {
         dispatch(showModal('order'));
         if (cart?.discountCode) await deleteDiscountCode(cart?.discountCode);
         await deleteCart().unwrap();
-        // window.open('https://storage.techlines.es/invoices/invoice.pdf', '_blank');
-        window.open('http://localhost:4000/invoices/invoice.pdf', '_blank');
+        window.open('https://storage.techlines.es/invoices/invoice.pdf', '_blank');
+        // window.open('http://localhost:4000/invoices/invoice.pdf', '_blank');
       } else {
         setOrder(order);
         // await deleteCart().unwrap();
@@ -77,7 +77,8 @@ export function Order() {
   }
 
   async function cancelOrder(orderId) {
-    window.location.href = 'http://localhost:3000/order'
+    // window.location.href = 'http://localhost:3000/order'
+    window.location.href = 'https://b2b.techlines.es/order'
     await deleteOrder(orderId).unwrap();
     // setOrder(null);
     // setPaymentInfo(null);
