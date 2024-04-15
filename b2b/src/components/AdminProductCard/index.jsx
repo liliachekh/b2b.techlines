@@ -6,7 +6,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useState, useRef, useEffect } from "react";
 import { useUpdateProductPriceMutation } from "../../store/api/products.api";
 
-export function AdminProductCard({ product: { imageUrls, name, currentPrice, _id, itemNo, quantity, brand, enabled, productUrl }, deleteButtonHandler, buttonHandler, copyButtonHandler, refetchProducts, setSuccessMsg, setErrorMsg  }) {
+export function AdminProductCard({ product: { imageUrls, name, currentPrice, _id, itemNo, quantity, brand, enabled, productUrl }, deleteButtonHandler, editButtonHandler, copyButtonHandler, refetchProducts, setSuccessMsg, setErrorMsg  }) {
 
   const [editPriceProdId, setEditPriceProdId] = useState(null);
   const [editPriceValue, setEditPriceValue] = useState('');
@@ -126,7 +126,7 @@ export function AdminProductCard({ product: { imageUrls, name, currentPrice, _id
         </Link>
         <button
           className={style.card__btn}
-          onClick={buttonHandler}
+          onClick={editButtonHandler}
           title="Edit">
           <Edit />
         </button>
