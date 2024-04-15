@@ -163,7 +163,10 @@ export function AdminProducts() {
                   customButtonHandler={handleEditButtonClick}
                   adminCard={true}
                   deleteButtonHandler={handleDelButton}
-                  copyButtonHandler={handleCopyButtonClick} 
+                  copyButtonHandler={handleCopyButtonClick}
+                  refetchProducts={refetchProductsList}
+                  setSuccessMsg={setSuccessMsg}
+                  setErrorMsg={setErrorMsg}
                   />
               </>
           }

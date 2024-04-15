@@ -9,7 +9,7 @@ import { useAmountChange, useInCart, useIncrease, useTierPrice } from '../../hoo
 import AddToCartBtn from '../AddToCartBtn';
 import { AdminProductCard } from '../AdminProductCard';
 
-function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, brand, enabled, productUrl, itemNo, memory, color, displayTable, cartItem, orderQuantity, buttonHandler, deleteButtonHandler, adminCard = false, copyButtonHandler }) {
+function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, brand, enabled, productUrl, itemNo, memory, color, displayTable, cartItem, orderQuantity, buttonHandler, deleteButtonHandler, adminCard = false, copyButtonHandler, refetchProducts, setSuccessMsg, setErrorMsg }) {
   const [deleteFromCart, { isLoading: isDeleting }] = useDeleteFromCartMutation();
   const tierPrice = useTierPrice();
 
@@ -150,7 +150,10 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
           memory,
           color,
           imageUrls,
-      })} />
+      })} 
+      refetchProducts={refetchProducts}
+      setSuccessMsg={setSuccessMsg}
+      setErrorMsg={setErrorMsg}/>
     </div>
   )
 
