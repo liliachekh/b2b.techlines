@@ -160,10 +160,13 @@ export function AdminProducts() {
                 </div>
                 <ProductList
                   {...products}
-                  customButtonHandler={handleEditButtonClick}
+                  editButtonHandler={handleEditButtonClick}
                   adminCard={true}
                   deleteButtonHandler={handleDelButton}
-                  copyButtonHandler={handleCopyButtonClick} 
+                  copyButtonHandler={handleCopyButtonClick}
+                  refetchProducts={refetchProductsList}
+                  setSuccessMsg={setSuccessMsg}
+                  setErrorMsg={setErrorMsg}
                   />
               </>
           }

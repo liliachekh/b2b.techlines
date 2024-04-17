@@ -60,7 +60,15 @@ export const productsApi = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Product', id: 'LIST' }]
     }),
+    updateProductPrice: builder.mutation({
+      query: ({id, body}) => ({
+        url: `products/${id}`,
+        method: 'PATCH',
+        body: body,
+      }),
+      invalidatesTags: [{ type: 'Product', id: 'LIST' }]
+    }),
   })
 })
 
-export const { useGetAllProductsQuery, useGetProductQuery, useGetProductsQuery, useDeleteProductMutation, useUpdateProductMutation, useAddProductMutation, useUploadProductPhotoMutation } = productsApi;
+export const { useGetAllProductsQuery, useGetProductQuery, useGetProductsQuery, useDeleteProductMutation, useUpdateProductMutation, useAddProductMutation, useUploadProductPhotoMutation, useUpdateProductPriceMutation } = productsApi;
