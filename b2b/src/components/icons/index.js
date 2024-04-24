@@ -19,3 +19,4 @@ export * from "./uploadFile.jsx";
 export * from "./check.jsx";
 export * from "./close.jsx";
 export * from "./copy.jsx";
+export * from "./edit-price.jsx";

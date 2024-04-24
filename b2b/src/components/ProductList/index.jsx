@@ -8,7 +8,7 @@ import SortByBtn from '../SortByBtn';
 import Pagination from '../Pagination';
 import ProductListStyle from '../ProductListStyle';
 
-function ProductList({ products, productsQuantity, customButtonHandler, adminCard = false, deleteButtonHandler, copyButtonHandler }) {
+function ProductList({ products, productsQuantity, editButtonHandler, adminCard = false, deleteButtonHandler, copyButtonHandler, refetchProducts, setSuccessMsg, setErrorMsg }) {
   const [displayTable, setDisplayTable] = useState(false);
   const ref = useRef(null);
 
@@ -31,10 +31,13 @@ function ProductList({ products, productsQuantity, customButtonHandler, adminCar
             {products?.length > 0
               ? products?.map((product) => (
                 <ProductCard {...product} displayTable={displayTable} key={product?._id} 
-                buttonHandler={customButtonHandler}
+                editButtonHandler={editButtonHandler}
                 adminCard={adminCard}
                 deleteButtonHandler={deleteButtonHandler}
                 copyButtonHandler={copyButtonHandler}
+                refetchProducts={refetchProducts}
+                setSuccessMsg={setSuccessMsg}
+                setErrorMsg={setErrorMsg}
                 />
               ))
               : <div className={`${styles.productList__empty} ${styles.empty}`}>

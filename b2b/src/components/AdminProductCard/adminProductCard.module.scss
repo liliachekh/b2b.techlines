@@ -39,6 +39,24 @@
         text-transform: uppercase;
       }
     }
+
+    &__price {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+    }
+
+    &__editPrice {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+
+    &__editPriceInput {
+      margin: 0 2px;
+      font-size: 1rem;
+    }
   
     &__buttons {
       display: flex;
