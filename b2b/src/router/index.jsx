@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { Home, LoginForm, ResetPassword, Cart, Profile, Product, Order, NotFound, CreateNewPassword, AdminProducts } from "../pages";
+import { Home, LoginForm, ResetPassword, Cart, Profile, Product, Order, NotFound, CreateNewPassword, Admin } from "../pages";
 import { ProfileSettings } from "../components/ProfileSettings";
 import { ProfileOrders } from "../components/ProfileOrders";
 import { MainLayout } from "../pages/MainLayout";
@@ -11,10 +11,12 @@ import { TermsAndConditions } from "../pages/TermsAndConditions";
 import { CookiePolicy } from "../pages/CookiePolicy";
 import { ProfileShipping } from "../components/ProfileShipping";
 import { Payment3DS } from "../components/Payment3DS";
+import { AdminOrders } from "../components/AdminOrders";
+import { AdminProducts } from "../components/AdminProducts";
 
 export default function Router() {
   return (
-    <Routes>
+    <Routes> 
       <Route path="/payment3DS" element={<Payment3DS />} />
 
       <Route path="/" element={<MainLayout />}>
@@ -43,7 +45,11 @@ export default function Router() {
       <Route path="/password-reset/new-password/:token/:id" element={<CreateNewPassword/>} />
       <Route path="/not-found" element={<NotFound />} />
       <Route path="*" element={<NotFound />} />
-      <Route path="/admin" element={<AdminProducts />} />
+      <Route path="/admin" element={<Admin />}>
+          <Route index element={<AdminProducts />} />
+          <Route path="/admin/orders" element={<AdminOrders />} />
+          {/* <Route path="/admin/customers" element={<Customers />} /> */}
+        </Route>
     </Routes>
   );
 }

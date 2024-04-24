@@ -1,20 +1,20 @@
-import ProductList from "../../components/ProductList";
-import EditProductForm from "../../components/EditProductForm";
-import AddProductForm from "../../components/AddProductForm";
-import AdminHeader from "../../components/AdminHeader";
-import AdminParams from "../../components/AdminParams";
-import BackToTop from "../../components/BackToTop"
+import ProductList from "../ProductList";
+import EditProductForm from "../EditProductForm";
+import AddProductForm from "../AddProductForm";
+// import AdminHeader from "../../components/AdminHeader";
+import AdminParams from "../AdminParams";
+import BackToTop from "../BackToTop"
 import style from "./AdminProducts.module.scss";
 import { useGetAllProductsQuery, useGetProductsQuery, useDeleteProductMutation } from "../../store/api/products.api";
-import Loader from "../../components/Loader";
+import Loader from "../Loader";
 import { useCallback, useEffect, useState, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from "react-router-dom";
-import Filter from "../../components/Filter";
+import Filter from "../Filter";
 import { useQueryString } from '../../hooks';
 import { useLocation } from "react-router-dom";
-import { Modal } from "../../components/Modal";
-import { modalProps } from '../../components/Modal/modalProps';
+import { Modal } from "../Modal";
+import { modalProps } from '../Modal/modalProps';
 import { fetchData } from "../../utils";
 import { showModal } from '../../store/modalSlice';
 import { baseUrl } from "../../utils/vars";
@@ -64,7 +64,7 @@ export function AdminProducts() {
     function handleAddButton() {
       setAddForm(true)
     }
-  
+
     function handleFormClose() {
       setEditForm(false);
       setProductId(null);
@@ -122,10 +122,10 @@ export function AdminProducts() {
       onCloseForm={handleFormClose} 
       />
     )}
-    <AdminHeader loggedIn={true} />
+    {/* <AdminHeader loggedIn={true} /> */}
     <BackToTop />
     {!editForm && !addForm && !adminParam && (
-      <Filter />
+      <Filter admin = {true}/>
     )}
     <div className={style.admin}>
     <div className={style.admin__container}>
@@ -138,11 +138,11 @@ export function AdminProducts() {
               setErrorMsg={setErrorMsg}/>
             : addForm
               ? <AddProductForm productCopy={product} onCloseForm={handleFormClose} refetchProducts={refetchProductsList}/>
-            : adminParam
+           : adminParam
               ? <AdminParams adminParam={adminParam} onCloseForm={handleFormClose} setSuccessMsg={setSuccessMsg} setErrorMsg={setErrorMsg}/>
               : <>
                 <div className={style.admin__header}>
-                  <h1 className={style.admin__title}>Products</h1>
+                  {/* <h1 className={style.admin__title}>Products</h1> */}
                   <div className={style.admin__headerBtns}>
                   <button className={style.admin__btn} type='button' onClick={()=> handleAdminParamsButton('brand')} >Brands</button>
                   <button className={style.admin__btn} type='button' onClick={()=> handleAdminParamsButton('categories')} >Categories</button>

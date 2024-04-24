@@ -151,6 +151,9 @@
     z-index: 1;
     box-sizing: border-box;
   }
+  &.adminFilter {
+    padding: 2rem 0;
+    }
 }
 
 @media (min-width: 768px) {

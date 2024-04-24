@@ -5,14 +5,13 @@ import { useDebounce, useQueryString } from '../../hooks';
 import { useGetFiltersQuery } from "../../store/api/filter.api";
 import { FilterType } from "../FilterType";
 
-function Filter() {
+function Filter({admin = false}) {
   const { data: filtersBD = [] } = useGetFiltersQuery();
   const filters = [...new Set(filtersBD.map((item) => item.type))];
   const { params, setSearchParams } = useQueryString();
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [searchValue, setSearchValue] = useState(params.search || '');
-
   const debouncedValue = useDebounce(searchValue, 1000);
 
   const toggleFilter = () => {
@@ -61,7 +60,7 @@ function Filter() {
   };
 
   return (
-    <div className={styles.filter}>
+    <div className={`${styles.filter} ${admin ? styles.adminFilter : ''}`}>
       <div className={styles.filter__container}>
         <div className={styles.filter__nav}>
           <button type="button" onClick={toggleFilter} className={`${styles.filter__navBtnFilter + ' ' + styles.btnEffect}`}>
