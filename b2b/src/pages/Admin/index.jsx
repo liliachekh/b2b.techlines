@@ -45,7 +45,7 @@ export function Admin() {
               Logout
             </button>
           </div>
-          <div className={`${styles.admin__content} ${window.location.pathname !== '/admin/orders' ? styles.admin__content_account : ''}`}>
+          <div className={`${styles.admin__content} ${styles.admin__content_account}`}>
           {/* <div className={styles.admin__content}> */}
            
             <Outlet />

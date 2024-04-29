@@ -125,7 +125,7 @@ export function AdminProducts() {
     {/* <AdminHeader loggedIn={true} /> */}
     <BackToTop />
     {!editForm && !addForm && !adminParam && (
-      <Filter admin = {true}/>
+      <Filter admin = {true} adminOrders = {false}/>
     )}
     <div className={style.admin}>
     <div className={style.admin__container}>

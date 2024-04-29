@@ -5,7 +5,7 @@ import { useDebounce, useQueryString } from '../../hooks';
 import { useGetFiltersQuery } from "../../store/api/filter.api";
 import { FilterType } from "../FilterType";
 
-function Filter({admin = false}) {
+function Filter({admin = false, adminOrders = false}) {
   const { data: filtersBD = [] } = useGetFiltersQuery();
   const filters = [...new Set(filtersBD.map((item) => item.type))];
   const { params, setSearchParams } = useQueryString();
@@ -58,7 +58,12 @@ function Filter({admin = false}) {
     setSearchParams({});
     setSearchValue('');
   };
-
+  let allowedFilters = [];
+  if (adminOrders) {
+    allowedFilters = ["company name", "status", "payment method"];
+  } else {
+    allowedFilters = ["brand", "categories"];
+  }
   return (
     <div className={`${styles.filter} ${admin ? styles.adminFilter : ''}`}>
       <div className={styles.filter__container}>
@@ -72,14 +77,24 @@ function Filter({admin = false}) {
           </div>
           <div className={`${styles.filter__navContent} ${isFilterOpen && styles.open}`}>
             <div className={styles.filter__dropdownBlock}>
-              {filters?.map((type) => (
-                <FilterType
+            {filters
+                .filter(filter => allowedFilters.includes(filter))
+                .map((type) => (
+                  <FilterType
                   key={type}
                   type={type}
                   items={filtersBD.filter((category) => category.type === type)} />
               ))}
+              {/* {filters?.map((type) => (
+                !adminOrders && type === 'company name' ? null :
+                <FilterType
+                  key={type}
+                  type={type}
+                  items={filtersBD.filter((category) => category.type === type)} />
+              ))} */}
             </div>
-            <div className={styles.filter__search}>
+            { !adminOrders && 
+              <div className={styles.filter__search}>
               <h4 className={styles.filter__dropdownTitle}>Search product</h4>
               <input
                 type="text"
@@ -89,6 +104,8 @@ function Filter({admin = false}) {
                 value={searchValue}
               />
             </div>
+            }
+           
             <div className={styles.filter__navigation}>
               <button
                 type="button"
