@@ -1,5 +1,5 @@
-// export const baseUrl = 'https://storage.techlines.es/api/';
-export const baseUrl = 'http://localhost:4000/api/';
+export const baseUrl = 'https://storage.techlines.es/api/';
+// export const baseUrl = 'http://localhost:4000/api/';
 export const localUrl = 'https://b2b.techlines.es/';
 // export const localUrl = 'http://localhost:3000/';
 
