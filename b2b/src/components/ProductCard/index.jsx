@@ -111,13 +111,13 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
         </Link>
         <div className={styles.productCard__price}>
           <span className={styles.productCard__price_title}>Price for one:</span>
-          {tierPrice(currentPrice)} €
+          {currentPrice} €
         </div>
       </div>
       <div className={`${styles.productCard__purchase} ${styles.purchase}`}>
         <div className={styles.purchase__quantity}>Quantity: {orderQuantity} pc`s</div>
         <div className={`${styles.purchase__price} ${styles.purchase__price_total} `}>
-          Price: {(currentPrice * amount)?.toFixed(2)} €
+          Price: {(currentPrice * orderQuantity)?.toFixed(2)} €
         </div>
       </div>
     </div >
