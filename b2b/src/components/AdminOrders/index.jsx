@@ -4,10 +4,21 @@ import Loader from '../Loader';
 import { useTitle } from '../../hooks';
 import Filter from '../Filter';
 import { formatDate } from '../../utils';
+import { Delete, Edit, View } from '../icons';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 
 export function AdminOrders() {
   useTitle('Orders');
   const { data: orders = [], isLoading: isLoadingOrders } = useGetAllOrdersQuery();
+  const [orderNo, setOrderNo] = useState(null)
+  function editButtonHandler(orderNo) {
+  setOrderNo(orderNo)
+  }
+  function deleteButtonHandler(orderNo) {
+  setOrderNo(orderNo)
+  }
   if (isLoadingOrders) return <Loader />
 
   return (
@@ -20,6 +31,7 @@ export function AdminOrders() {
                   <p className={styles.table__cell}>Payment method</p>
                   <p className={styles.table__cell}>Date</p>
                   <p className={styles.table__cell}>Total Sum</p>
+                  <p className={styles.table__cell}>Actions</p>
                 </div>
       <div className={styles.orders__container} >
       <div className={styles.orders}>
@@ -32,6 +44,27 @@ export function AdminOrders() {
             <div className={styles.order__text}> <span className={styles.order__text_value}>{paymentInfo === "CARD" ? 'Card (+1.7%)' : 'IBAN'}</span></div>
             <div className={styles.order__text}> <span className={styles.order__text_value}>{formatDate(date)}</span></div>
             <div className={styles.order__text}> <span className={styles.order__text_value}>{totalSum} €</span></div>
+            <div className={styles.order__buttons}>
+        <Link
+          to={`/orders/${orderNo}`}
+          className={styles.order__btn}
+          title="View order"
+          target="_blank">
+          <View />
+        </Link>
+        <button
+          className={styles.order__btn}
+          onClick={editButtonHandler}
+          title="Edit">
+          <Edit />
+        </button>
+        <button
+          className={styles.order__btn}
+          onClick={deleteButtonHandler}
+          title="Delete">
+          <Delete />
+        </button>
+      </div>
           </div>
         
         </div>))}
