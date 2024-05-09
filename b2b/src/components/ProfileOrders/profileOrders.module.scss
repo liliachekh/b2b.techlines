@@ -45,4 +45,10 @@ $color-grey-light: #e3e3e3;
       text-transform: capitalize;
     }
   }
+
+   &__mainLink {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 }

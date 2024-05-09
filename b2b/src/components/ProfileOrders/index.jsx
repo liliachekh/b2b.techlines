@@ -4,6 +4,7 @@ import ProductCard from '../ProductCard';
 import Loader from '../Loader';
 import { useTitle } from '../../hooks';
 import { formatDate } from '../../utils';
+import { Link } from 'react-router-dom';
 
 export function ProfileOrders() {
   useTitle('Profile | Orders');
@@ -17,6 +18,10 @@ export function ProfileOrders() {
           <div className={styles.order} key={orderNo}>
           {products?.map(({ product, cartQuantity }) => (
             <ProductCard {...product} displayTable={true} key={product?._id} orderQuantity={cartQuantity} />))}
+            <div> <Link to={`/orders/${orderNo}`} 
+            title={"View order details"}
+            target="_blank"
+            className={styles.order__mainLink}>
           <div className={styles.order__info}>
             <div className={styles.order__text}>Order №: <span className={styles.order__text_value}>{orderNo}</span></div>
             <div className={styles.order__text}>Order date: <span className={styles.order__text_value}>{formatDate(date)}</span></div>
@@ -28,6 +33,8 @@ export function ProfileOrders() {
           </div>
           <div className={styles.order__info}>
             <div className={`${styles.order__text} ${styles.order__text_total}`}>Total Sum: <span className={styles.order__text_value}>{totalSum} €</span></div>
+          </div>
+          </Link>
           </div>
         </div>
       ))}
