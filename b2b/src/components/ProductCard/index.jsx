@@ -31,7 +31,9 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
 
   if (cartItem) return (
     <div className={`${styles.productCard} ${styles.cart}`}>
-      <Link to={`/product/${productUrl}`} className={styles.productCard__mainLink}>
+      <Link to={`/product/${productUrl}`} className={styles.productCard__mainLink}
+      title={`${name}`}
+      target="_blank">
         <LazyLoadImage
           className={styles.productCard__img}
           src={imageUrls[0]}
@@ -89,7 +91,9 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
 
   if (orderQuantity) return (
     <div className={`${styles.productCard} ${displayTable ? styles.productRow : ''} ${styles.order}`}>
-      <Link to={`/product/${productUrl}`} className={styles.productCard__mainLink}>
+      <Link to={`/product/${productUrl}`} className={styles.productCard__mainLink}
+      title={`${name}`}
+      target="_blank">
         <LazyLoadImage
           className={styles.productCard__img}
           src={imageUrls[0]}
@@ -159,7 +163,9 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
 
   return (
     <div className={`${styles.productCard} ${displayTable ? styles.productRow : ''}`}>
-      <Link to={`/product/${productUrl}`} className={styles.productCard__mainLink}>
+      <Link to={`/product/${productUrl}`} className={styles.productCard__mainLink}
+      title={`${name}`}
+      target="_blank">
         <LazyLoadImage
           className={styles.productCard__img}
           src={imageUrls[0]}
