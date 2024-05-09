@@ -4,7 +4,7 @@ import ProductsSlider from '../ProductSlider';
 import { useAmountChange, useInCart, useIncrease, useTierPrice, useTitle } from '../../hooks';
 import AddToCartBtn from '../AddToCartBtn';
 
-export default function ProductDetails({ _id, name, currentPrice, brand, itemNo, quantity, imageUrls, enabled }) {
+export default function ProductDetails({ _id, name, currentPrice, brand, ean, quantity, imageUrls, enabled }) {
   useTitle(name);
   const tierPrice = useTierPrice();
 
@@ -30,7 +30,7 @@ export default function ProductDetails({ _id, name, currentPrice, brand, itemNo,
         </div>
         <div className={styles.product__item}>
           <p className={styles.product__item_info}>Brand: {brand}</p>
-          <p className={styles.product__item_info}>Product EAN: {itemNo}</p>
+          <p className={styles.product__item_info}>Product EAN: {ean}</p>
         </div>
         <div className={styles.product__details}>
           <h3 className={styles.product__details_title}>Price:</h3>
