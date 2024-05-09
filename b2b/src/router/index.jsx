@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { Home, LoginForm, ResetPassword, Cart, Profile, Product, Order, NotFound, CreateNewPassword, Admin } from "../pages";
+import { Home, LoginForm, ResetPassword, Cart, Profile, Product, Order, NotFound, CreateNewPassword, Admin, OrderPage } from "../pages";
 import { ProfileSettings } from "../components/ProfileSettings";
 import { ProfileOrders } from "../components/ProfileOrders";
 import { MainLayout } from "../pages/MainLayout";
@@ -13,7 +13,6 @@ import { ProfileShipping } from "../components/ProfileShipping";
 import { Payment3DS } from "../components/Payment3DS";
 import { AdminOrders } from "../components/AdminOrders";
 import { AdminProducts } from "../components/AdminProducts";
-import { OrderPage } from "../components/OrderPage";
 
 export default function Router() {
   return (

@@ -1,0 +1,45 @@
+$color-light: #f7fbfa;
+$color-dark: #202025;
+$color-grey: #5d5d5d;
+$color-grey-light: #e3e3e3;
+
+.order {
+  position: relative;
+  padding: 7rem 1.5rem 2rem;
+  border-radius: 1rem;
+  background-color: $color-grey-light;
+  color: $color-dark;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+
+  &__info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__text {
+    font-size: 1rem;
+
+    &_total {
+      padding: 1rem;
+      border-radius: 1rem;
+      background-color: $color-light;
+      color: $color-dark;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+      margin: 0 auto;
+    }
+
+    &_value {
+      font-size: 1.3rem;
+      font-weight: 700;
+      text-transform: capitalize;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+html:has(.orderDetails),
+body:has(.orderDetails) {
+  height: 100%;
+}
+
+.orderDetails {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  
+  &__container {
+    min-width: 320px;
+    max-width: 1470px;
+    padding: 7rem 15px 4rem;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+}

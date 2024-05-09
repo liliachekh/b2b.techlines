@@ -3,6 +3,7 @@ import { useGetOrdersQuery } from '../../store/api/order.api';
 import ProductCard from '../ProductCard';
 import Loader from '../Loader';
 import { useTitle } from '../../hooks';
+import { Link } from 'react-router-dom';
 
 export function ProfileOrders() {
   useTitle('Profile | Orders');
@@ -13,7 +14,10 @@ export function ProfileOrders() {
   return (
     <>
       {orders && orders?.map(({ products, orderNo, totalSum, status, paymentInfo, discount, deliveryPrice }) => (
-        <div className={styles.order} key={orderNo}>
+        <Link to={`/orders/${orderNo}`}
+        title="View order"
+        target="_blank">
+          <div className={styles.order} key={orderNo}>
           {products?.map(({ product, cartQuantity }) => (
             <ProductCard {...product} displayTable={true} key={product?._id} orderQuantity={cartQuantity} />))}
           <div className={styles.order__info}>
@@ -27,7 +31,8 @@ export function ProfileOrders() {
           <div className={styles.order__info}>
             <div className={`${styles.order__text} ${styles.order__text_total}`}>Total Sum: <span className={styles.order__text_value}>{totalSum} €</span></div>
           </div>
-        </div>))}
+        </div>
+        </Link>))}
     </>
   )
 }

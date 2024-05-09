@@ -10,3 +10,4 @@ export * from "./NotFound";
 export * from "./CreateNewPassword";
 export * from "../components/AdminProducts";
 export * from "./Admin";
+export * from "./OrderPage"
