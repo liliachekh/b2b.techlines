@@ -58,9 +58,10 @@ function Filter({admin = false, adminOrders = false}) {
     setSearchParams({});
     setSearchValue('');
   };
+
   let allowedFilters = [];
   if (adminOrders) {
-    allowedFilters = ["company name", "status", "payment method"];
+    allowedFilters = ["companyName", "status", "paymentInfo"];
   } else {
     allowedFilters = ["brand", "categories"];
   }

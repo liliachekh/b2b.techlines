@@ -1,28 +1,39 @@
 import styles from './adminOrders.module.scss';
-import { useGetAllOrdersQuery } from '../../store/api/order.api';
+import { useGetAllOrdersQuery, useGetFilteredOrdersQuery } from '../../store/api/order.api';
 import Loader from '../Loader';
 import { useTitle } from '../../hooks';
 import Filter from '../Filter';
 import { formatDate } from '../../utils';
 import { Delete, Edit, View } from '../icons';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useDeleteOrderMutation } from '../../store/api/order.api';
 import { useDispatch, useSelector } from 'react-redux';
 import { showModal } from '../../store/modalSlice';
 import { Modal } from "../Modal";
 import { modalProps } from '../Modal/modalProps';
+import { useQueryString } from '../../hooks';
+import { useLocation } from "react-router-dom";
+import PerPageBtn from '../PerPageBtn';
+import Pagination from '../Pagination';
 
 
 export function AdminOrders() {
   useTitle('Orders');
-  const { data: orders = [], isLoading: isLoadingOrders } = useGetAllOrdersQuery();
+  const { search } = useLocation();
+  const { params } = useQueryString();
+  const perPage = params.perPage;
+  const page = params.startPage;
+  // const { data: orders = [], isLoading: isLoadingOrders } = useGetAllOrdersQuery();
+  const { data: orders = [], isLoading: isLoadingOrders } = useGetFilteredOrdersQuery(search ? search : `?startPage=${page}&perPage=${perPage}`);
   const [orderNo, setOrderNo] = useState(null)
   const [deleteOrder] = useDeleteOrderMutation();
   const dispatch = useDispatch();
+  const ref = useRef(null);
   const modalType = useSelector((state) => state.modal.modal);
 
-
+console.log(orders)
+console.log(orders.ordersQuantity)
   function editButtonHandler(orderNo) {
   setOrderNo(orderNo)
   }
@@ -65,8 +76,8 @@ export function AdminOrders() {
                   <p className={styles.table__cell}>Actions</p>
                 </div>
       <div className={styles.orders__container} >
-      <div className={styles.orders}>
-      {orders && orders?.map(({ orderNo, totalSum, status, paymentInfo, customerId, date, _id }) => (
+      <div className={styles.orders} ref={ref} >
+      {orders && orders.orders?.map(({ orderNo, totalSum, status, paymentInfo, customerId, date, _id }) => (
         <div className={styles.order} key={orderNo}>
           <div className={styles.order__info}>
           <div className={styles.order__text}> <span className={styles.order__text_value}>{customerId.companyName}</span></div>
@@ -99,6 +110,14 @@ export function AdminOrders() {
           </div>
         
         </div>))}
+        <div className={styles.orders__pagination}>
+            <PerPageBtn scrollTo={ref} />
+            {orders.ordersQuantity > 0 &&
+              <Pagination
+                scrollTo={ref}
+                productsLength={orders.orders?.length}
+                productsQuantity={orders.ordersQuantity} />}
+          </div>
         </div>
         </div>
     </>
