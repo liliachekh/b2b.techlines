@@ -5,7 +5,6 @@ import { useTitle } from '../../hooks';
 import Filter from '../Filter';
 import { formatDate } from '../../utils';
 import { Delete, Edit, View } from '../icons';
-// import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useDeleteOrderMutation } from '../../store/api/order.api';
 import { useDispatch, useSelector } from 'react-redux';
