@@ -1,3 +1,4 @@
+
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { hideModal } from '../../store/modalSlice';
@@ -6,20 +7,24 @@ import style from './modal.module.scss';
 import { motion, AnimatePresence } from 'framer-motion';
 import { animateModal } from '../../animation';
 
-export function Modal(props) {
+export function Modal({ data, onDelete, onCloseForm }) {
   const dispatch = useDispatch();
-  const { type, header, text, actions, icon } = props;
-  // const error = useSelector((state) => state.error.error)
+  const { type, header, text, actions, icon } = data;
 
   async function onCloseModal() {
+    if (onCloseForm && typeof onCloseForm === 'function') {
+      onCloseForm();
+    }
     dispatch(hideModal(null));
-    // dispatch(setErrorAction(null));
   }
+
 
   function onSubmitModal() {
+    if (onDelete && typeof onDelete === 'function') {
+      onDelete();
+    }
     onCloseModal();
   }
-
   return (
     <AnimatePresence>
       <>

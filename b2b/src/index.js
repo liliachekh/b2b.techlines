@@ -5,6 +5,7 @@ import store from './store';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { AuthContextProvider } from './context/AuthContext';
+import { AuthAdminContextProvider } from './context/AuthAdminContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,7 +14,9 @@ root.render(
     <BrowserRouter>
       <Provider store={store}>
         <AuthContextProvider>
-          <App />
+          <AuthAdminContextProvider>
+            <App />
+          </AuthAdminContextProvider>
         </AuthContextProvider>
       </Provider>
     </BrowserRouter>

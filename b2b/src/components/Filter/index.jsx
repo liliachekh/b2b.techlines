@@ -5,14 +5,13 @@ import { useDebounce, useQueryString } from '../../hooks';
 import { useGetFiltersQuery } from "../../store/api/filter.api";
 import { FilterType } from "../FilterType";
 
-function Filter() {
+function Filter({admin = false, adminOrders = false}) {
   const { data: filtersBD = [] } = useGetFiltersQuery();
   const filters = [...new Set(filtersBD.map((item) => item.type))];
   const { params, setSearchParams } = useQueryString();
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [searchValue, setSearchValue] = useState(params.search || '');
-
   const debouncedValue = useDebounce(searchValue, 1000);
 
   const toggleFilter = () => {
@@ -60,8 +59,14 @@ function Filter() {
     setSearchValue('');
   };
 
+  let allowedFilters = [];
+  if (adminOrders) {
+    allowedFilters = ["companyName", "status", "paymentInfo"];
+  } else {
+    allowedFilters = ["brand", "categories"];
+  }
   return (
-    <div className={styles.filter}>
+    <div className={`${styles.filter} ${admin ? styles.adminFilter : ''}`}>
       <div className={styles.filter__container}>
         <div className={styles.filter__nav}>
           <button type="button" onClick={toggleFilter} className={`${styles.filter__navBtnFilter + ' ' + styles.btnEffect}`}>
@@ -73,14 +78,24 @@ function Filter() {
           </div>
           <div className={`${styles.filter__navContent} ${isFilterOpen && styles.open}`}>
             <div className={styles.filter__dropdownBlock}>
-              {filters?.map((type) => (
-                <FilterType
+            {filters
+                .filter(filter => allowedFilters.includes(filter))
+                .map((type) => (
+                  <FilterType
                   key={type}
                   type={type}
                   items={filtersBD.filter((category) => category.type === type)} />
               ))}
+              {/* {filters?.map((type) => (
+                !adminOrders && type === 'company name' ? null :
+                <FilterType
+                  key={type}
+                  type={type}
+                  items={filtersBD.filter((category) => category.type === type)} />
+              ))} */}
             </div>
-            <div className={styles.filter__search}>
+            { !adminOrders && 
+              <div className={styles.filter__search}>
               <h4 className={styles.filter__dropdownTitle}>Search product</h4>
               <input
                 type="text"
@@ -90,6 +105,8 @@ function Filter() {
                 value={searchValue}
               />
             </div>
+            }
+           
             <div className={styles.filter__navigation}>
               <button
                 type="button"

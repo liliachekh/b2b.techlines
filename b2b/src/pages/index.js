@@ -8,3 +8,6 @@ export * from "./Product";
 export * from "./AboutUs"
 export * from "./NotFound";
 export * from "./CreateNewPassword";
+export * from "../components/AdminProducts";
+export * from "./Admin";
+export * from "./OrderPage"

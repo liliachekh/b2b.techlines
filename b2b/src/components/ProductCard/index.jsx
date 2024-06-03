@@ -7,8 +7,9 @@ import { useEffect, useState } from 'react';
 import { useDeleteFromCartMutation } from '../../store/api/cart.api';
 import { useAmountChange, useInCart, useIncrease, useTierPrice } from '../../hooks';
 import AddToCartBtn from '../AddToCartBtn';
+import { AdminProductCard } from '../AdminProductCard';
 
-function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, brand, enabled, productUrl, displayTable, cartItem, orderQuantity }) {
+function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories, brand, enabled, productUrl, itemNo, memory, color, displayTable, cartItem, orderQuantity, editButtonHandler, deleteButtonHandler, adminCard = false, copyButtonHandler, refetchProducts, setSuccessMsg, setErrorMsg }) {
   const [deleteFromCart, { isLoading: isDeleting }] = useDeleteFromCartMutation();
   const tierPrice = useTierPrice();
 
@@ -30,7 +31,9 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
 
   if (cartItem) return (
     <div className={`${styles.productCard} ${styles.cart}`}>
-      <Link to={`/product/${productUrl}`} className={styles.productCard__mainLink}>
+      <Link to={`/product/${productUrl}`} className={styles.productCard__mainLink}
+      title={`${name}`}
+      target="_blank">
         <LazyLoadImage
           className={styles.productCard__img}
           src={imageUrls[0]}
@@ -88,7 +91,9 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
 
   if (orderQuantity) return (
     <div className={`${styles.productCard} ${displayTable ? styles.productRow : ''} ${styles.order}`}>
-      <Link to={`/product/${productUrl}`} className={styles.productCard__mainLink}>
+      <Link to={`/product/${productUrl}`} className={styles.productCard__mainLink}
+      title={`${name}`}
+      target="_blank">
         <LazyLoadImage
           className={styles.productCard__img}
           src={imageUrls[0]}
@@ -110,21 +115,57 @@ function ProductCard({ _id, imageUrls, quantity, name, currentPrice, categories,
         </Link>
         <div className={styles.productCard__price}>
           <span className={styles.productCard__price_title}>Price for one:</span>
-          {tierPrice(currentPrice)} €
+          {currentPrice} €
         </div>
       </div>
       <div className={`${styles.productCard__purchase} ${styles.purchase}`}>
         <div className={styles.purchase__quantity}>Quantity: {orderQuantity} pc`s</div>
         <div className={`${styles.purchase__price} ${styles.purchase__price_total} `}>
-          Price: {(currentPrice * amount)?.toFixed(2)} €
+          Price: {(currentPrice * orderQuantity)?.toFixed(2)} €
         </div>
       </div>
     </div >
   );
 
+  if (adminCard) return (
+    <div className={`${styles.productCard} ${adminCard ? styles.productRow : ''}`}>
+      <AdminProductCard
+      product={{
+        _id,
+        imageUrls,
+        currentPrice,
+        name,
+        enabled,
+        quantity,
+        brand,
+        productUrl,
+        itemNo,
+      }}
+      editButtonHandler={() => editButtonHandler(productUrl)}
+      deleteButtonHandler={() => deleteButtonHandler(productUrl)}
+      copyButtonHandler={() => copyButtonHandler({ 
+          quantity, 
+          name, 
+          currentPrice, 
+          categories, 
+          brand, 
+          enabled, 
+          productUrl,
+          memory,
+          color,
+          imageUrls,
+      })} 
+      refetchProducts={refetchProducts}
+      setSuccessMsg={setSuccessMsg}
+      setErrorMsg={setErrorMsg}/>
+    </div>
+  )
+
   return (
     <div className={`${styles.productCard} ${displayTable ? styles.productRow : ''}`}>
-      <Link to={`/product/${productUrl}`} className={styles.productCard__mainLink}>
+      <Link to={`/product/${productUrl}`} className={styles.productCard__mainLink}
+      title={`${name}`}
+      target="_blank">
         <LazyLoadImage
           className={styles.productCard__img}
           src={imageUrls[0]}
