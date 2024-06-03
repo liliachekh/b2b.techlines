@@ -9,7 +9,7 @@ $color-grey-light: #e3e3e3;
 
 .orders {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   gap: 1rem;
   border-radius: 1rem;
   background-color:$color-grey-light;

@@ -16,7 +16,7 @@ import { AdminProducts } from "../components/AdminProducts";
 export default function Router() {
   return (
     <Routes> 
-      <Route path="/payment3DS" element={<Payment3DS />} />
+      {/* <Route path="/payment3DS" element={<Payment3DS />} /> */}
 
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
