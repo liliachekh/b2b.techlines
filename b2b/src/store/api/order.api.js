@@ -54,8 +54,18 @@ export const orderApi = api.injectEndpoints({
         body: body,
       }),
       invalidatesTags: [{ type: 'Orders', id: 'LIST' }]
-    })
+    }),
+    getFilteredOrders: builder.query({
+      query: (queryString) => `orders/filter${queryString}`,
+      providesTags: (result) =>
+        result
+          ? [
+            ...result.orders.map(({ id }) => ({ type: 'Orders', id })),
+            { type: 'Orders', id: 'LIST' },
+          ]
+          : [{ type: 'Orders', id: 'LIST' }],
+    }),
   })
 })
 
-export const { useGetOrdersQuery, useSetOrderMutation, useDeleteOrderMutation, useGetAllOrdersQuery, useGetOrderQuery, useUpdateOrderMutation } = orderApi;
+export const { useGetOrdersQuery, useSetOrderMutation, useDeleteOrderMutation, useGetAllOrdersQuery, useGetOrderQuery, useGetFilteredOrdersQuery, useUpdateOrderMutation } = orderApi;
