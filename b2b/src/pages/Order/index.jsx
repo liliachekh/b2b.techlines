@@ -100,7 +100,7 @@ export function Order() {
               {deliveryPrice > 0 &&
                 <div className={styles.aside__item}>
                   <p className={styles.aside__text}>
-                    For orders with a total value of more than €2.500, ALC ZOOM will assume the shipping costs.
+                    For orders with a total value of more than €2.500, TECHLINES B2B will assume the shipping costs.
                   </p>
                   <p className={`${styles.aside__text} ${styles.aside__text_name}`}>
                     Delivery: <span className={styles.aside__text_amount}>35 €</span>

@@ -11,7 +11,7 @@ export const privacyPolicyData = [
     ),
     text: (
       <p className={style.privacyPolicy__paragraph}>
-        ALC ZOOM S.L. aware of the importance of guaranteeing the fundamental
+        TECHLINES B2B S.L. aware of the importance of guaranteeing the fundamental
         right to the protection of personal data of users and, in this sense, in
         compliance with the provisions of Regulation (EU) 2016/679 of the
         European Parliament and of the Council, of April 27, 2016, regarding the
@@ -39,9 +39,8 @@ export const privacyPolicyData = [
     text: (
       <p className={style.privacyPolicy__paragraph}>
         The person responsible for the processing of personal data collected
-        through the Website is ALC ZOOM S.L. (here in after, ALC ZOOM), with
-        N.I.F. ESB-72884349 and registered office at Calle Baladre 6, 396 CP:
-        03570, Villajoyosa. For any question related to data protection, the
+        through the Website is TECHLINES B2B S.L. (here in after, TECHLINES B2B), with
+        N.I.F. B55413538 and registered office at c. Arquimedes 43, 28946, Fuenlabrada, Madrid, Spain. For any question related to data protection, the
         user can contact the entity through the following email address:
         <a href="mailto:atylnyi@techlines.es">atylnyi@techlines.es</a>
       </p>
@@ -58,9 +57,9 @@ export const privacyPolicyData = [
       <>
         {" "}
         <div className={style.privacyPolicy__paragraph}>
-          ALC ZOOM may collect the following personal information from users
+          TECHLINES B2B may collect the following personal information from users
           through the forms enabled on the Website or the communication channels
-          enabled by ALC ZOOM:
+          enabled by TECHLINES B2B:
           <ol className={style.privacyPolicy__list}>
             <li key={1}>
               <strong>Form for registering users on the Website:</strong> name,
@@ -92,7 +91,7 @@ export const privacyPolicyData = [
               surname, email, telephone, company, address.
             </li>
           </ol>
-          In addition, ALC ZOOM collects all information related to browsing the
+          In addition, TECHLINES B2B collects all information related to browsing the
           web, as reported in our cookies and bank details policy.
         </div>
       </>
@@ -189,7 +188,7 @@ export const privacyPolicyData = [
               <td>
                 Execution of the contractual relationship between the parties,
                 in the terms provided in article 6.1.b of the RGPD. Legitimate
-                interest of ALC ZOOM in simplifying the purchase process through
+                interest of TECHLINES B2B in simplifying the purchase process through
                 the automatic inclusion of customer data in the purchase form,
                 in the terms provided in article 6.1.f of the RGPD
               </td>
@@ -240,13 +239,12 @@ export const privacyPolicyData = [
                 electronically (email).
               </td>
               <td>
-                In the case of users who have signed a contract with ALC ZOOM,
-                the legitimizing basis will be the legitimate interest of ALC
-                ZOOM to carry out promotional activities through the sending of
+                In the case of users who have signed a contract with TECHLINES B2B,
+                the legitimizing basis will be the legitimate interest of TECHLINES B2B to carry out promotional activities through the sending of
                 its own commercial communications related to products and
                 services aimed at its customers, as recognized in article 21.2
                 of the LSSI. In the event that the user has not signed a
-                contract with ALC ZOOM, the latter may process their data for
+                contract with TECHLINES B2B, the latter may process their data for
                 this purpose provided that the user has given their consent
                 (article 6.1 a of the RGPD). In any case, you can request the
                 cancellation of the receipt of commercial communications at any
@@ -276,7 +274,7 @@ export const privacyPolicyData = [
                 accounting, tax, consumption, etc. regulations. In these cases,
                 your refusal to provide us with personal data that is legally
                 mandatory will imply the impossibility for you to contract
-                products or services with ALC ZOOM, since doing so would entail
+                products or services with TECHLINES B2B, since doing so would entail
                 a breach of the regulations to which we are subject.
               </td>
               <td>
@@ -304,7 +302,7 @@ export const privacyPolicyData = [
         these purposes, the user guarantees the authenticity of all data
         provided as a result of completing the corresponding forms and / or
         requests. In any case, the user will be solely responsible for any false
-        or inaccurate statements made, and for the damages caused to ALC ZOOM,
+        or inaccurate statements made, and for the damages caused to TECHLINES B2B,
         or to third parties, for the information provided.
       </p>
     ),
@@ -325,7 +323,7 @@ export const privacyPolicyData = [
           <ul>
             <li key={"ul1"}>
               Trust service providers that can access personal information in
-              the development of the services they may provide to ALC ZOOM under
+              the development of the services they may provide to TECHLINES B2B under
               their control and to the extent strictly necessary for the
               provision of the services contracted with them (for example,
               courier companies, computer scientists in charge of hosting and /
@@ -381,14 +379,13 @@ export const privacyPolicyData = [
         collected. In certain circumstances and for reasons related to their
         particular situation, the user may object to the processing of their
         data (for example and in particular, to the sending of commercial
-        communications). In this case, ALC ZOOM will stop processing the data,
+        communications). In this case, TECHLINES B2B will stop processing the data,
         except for legitimate reasons (such as the exercise or defense against
         possible claims). Finally, we inform you about your right to restriction
         of processing and portability provided for in the GDPR. To make these
         rights effective, the user can send an email to the email address{" "}
         <a href="mailto:atylnyi@techlines.es">atylnyi@techlines.es</a> or send a
-        letter to the following address: Calle Baladre 6, 396 CP: 03570,
-        Villajoyosa. In the event that the User does not see his right satisfied
+        letter to the following address: c. Arquimedes 43, 28946, Fuenlabrada, Madrid, Spain. In the event that the User does not see his right satisfied
         or considers that the data processing does not comply with the
         applicable regulations, he can file a claim with the control authority,
         in this case the Spanish Agency for Data Protection (
@@ -404,12 +401,12 @@ export const privacyPolicyData = [
     title: <h2 className={style.privacyPolicy__subtitle}>Social Network</h2>,
     text: (
       <p className={style.privacyPolicy__paragraph}>
-        ALC ZOOM has a profile in some of the main social networks on the
+        TECHLINES B2B has a profile in some of the main social networks on the
         Internet (Facebook, LinkedIn). Therefore, in the event that users have a
-        profile on any of these social networks and contact ALC ZOOM by this
-        means or in any other way interact with ALC ZOOM in this way, the
+        profile on any of these social networks and contact TECHLINES B2B by this
+        means or in any other way interact with TECHLINES B2B in this way, the
         personal data provided by the user, and those that are visible as a user
-        of the corresponding social network, will be treated by ALC ZOOM, in the
+        of the corresponding social network, will be treated by TECHLINES B2B, in the
         social network itself, to respond to such requests through the channels
         of the corresponding social network, applying this privacy policy for
         these purposes. In particular, the personal data that, where
@@ -423,7 +420,7 @@ export const privacyPolicyData = [
         privacy policy. However, the exercise of these rights will be defined by
         the functionalities of the corresponding social network, and these
         rights may be exercised only in relation to that information that is
-        under the control of ALC ZOOM.  In no case will ALC ZOOM extract data
+        under the control of TECHLINES B2B.  In no case will TECHLINES B2B extract data
         from social networks, unless the user's consent is obtained punctually
         and expressly for it.
       </p>
@@ -438,9 +435,9 @@ export const privacyPolicyData = [
     ),
     text: (
       <p className={style.privacyPolicy__paragraph}>
-        ALC ZOOM reserves the right to modify this Privacy Policy to adapt it to
+        TECHLINES B2B reserves the right to modify this Privacy Policy to adapt it to
         new legislation or jurisprudence, as well as industry and/or sector
-        practices. In such cases, ALC ZOOM will announce on this page the
+        practices. In such cases, TECHLINES B2B will announce on this page the
         changes introduced with reasonable anticipation.
       </p>
     ),

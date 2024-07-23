@@ -12,8 +12,7 @@ export function CookiePolicy() {
           <div className={style.cookiePolicy__text}>
             <div className={style.cookiePolicy__content}>
             <p className={style.cookiePolicy__paragraph}>
-        We inform you that this website (the "Website") is the property of ALC
-        ZOOM S.L.(hereinafter, the "Entity" or "ALC ZOOM ").This Website uses
+        We inform you that this website (the "Website") is the property of TECHLINES B2B S.L.(hereinafter, the "Entity" or "TECHLINES B2B ").This Website uses
         its own and third-party cookies that store and retrieve information from
         users when they browse through it for the purposes indicated in the
         section "Cookies used through the website".However, in compliance with

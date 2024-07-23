@@ -13,23 +13,23 @@ export const termsAndConditionsData = [
     text: (
       <p className={style.termsAndConditions__paragraph}>
         The purpose of these terms and conditions is to regulate the use of the
-        electronic sales services of different products offered by ALC ZOOM S.L.
-        (ALC ZOOM), is a Spanish company operating through its website
+        electronic sales services of different products offered by TECHLINES B2B S.L.
+        (TECHLINES B2B), is a Spanish company operating through its website
         <Link to={"https://techlines.es"}> https://techlines.es</Link> and
         telephone
         <a href="tel:+34627575578"> +34 627 575 578</a>, selling to its
         customers, technological products, electronics, telephones, smartphones,
         multimedia systems, audio and video players, etc., for subsequent resale
-        to third parties (“End Customers”). ALC ZOOM can provide drop-shipping
+        to third parties (“End Customers”). TECHLINES B2B can provide drop-shipping
         services to its customers. Once the sale of the product to the client
         has taken place, and following communication by the latter of the
         necessary details of the End Client, the service consists of the
-        management of the transport and delivery of the products by ALC ZOOM to
-        the client at the facilities of its End Customers. ALC ZOOM is a company
+        management of the transport and delivery of the products by TECHLINES B2B to
+        the client at the facilities of its End Customers. TECHLINES B2B is a company
         registered in the Commercial Register of Alicante in volume 4525, folio
-        134, Sheet A-1882745 with Tax Identification Number (NIF) B-72884349. By
+        134, Sheet A-1882745 with Tax Identification Number (NIF) B55413538. By
         placing an order, the customer accepts these terms and conditions of
-        sale, which are available to view in the ALC ZOOM online shop at all
+        sale, which are available to view in the TECHLINES B2B online shop at all
         times. Please read these terms and conditions carefully.
       </p>
     ),
@@ -43,15 +43,15 @@ export const termsAndConditionsData = [
     ),
     text: (
       <p className={style.termsAndConditions__paragraph}>
-        The products available at ALC ZOOM are those shown in the catalogue on
+        The products available at TECHLINES B2B are those shown in the catalogue on
         the website. Products, stock and prices are updated regularly. Orders
-        are placed on-line through the ALC ZOOM website, indicating the products
+        are placed on-line through the TECHLINES B2B website, indicating the products
         and the quantity requested, as well as the recipient of the goods at the
         destination (the client or the End Customer) of the products and the
-        point of delivery of the same. The ALC ZOOM team undertakes to process
+        point of delivery of the same. The TECHLINES B2B team undertakes to process
         all orders as soon as possible during opening hours. Once an order has
         been processed, you will receive an email with the order confirmation.
-        Please always check the document received. ALC ZOOM reserves the right
+        Please always check the document received. TECHLINES B2B reserves the right
         to adjust the shipping cost according to our shipping policy.
       </p>
     ),
@@ -71,14 +71,14 @@ export const termsAndConditionsData = [
         applied to domestic customers who present the corresponding Reseller
         Certificate for exempt product categories, in accordance with Article 84
         of the VAT Act. Once an order has been placed, the confirmed prices
-        cannot be changed under any circumstances. ALC ZOOM reserves the right
+        cannot be changed under any circumstances. TECHLINES B2B reserves the right
         to cancel the order, in the event that, due to an error, a wrong price
         is published with a difference of more than 10% of the correct price,
         informing the customer within 24 hours of placing the order or,
         alternatively, informing the customer of the correct price within this
         period, in which case, confirmation by the customer will be necessary.
         If an item ordered is not in stock at the time of ordering, we will
-        contact you by telephone or email to arrange how to proceed. ALC ZOOM
+        contact you by telephone or email to arrange how to proceed. TECHLINES B2B
         only accepts payments by: <br /> a) Bank transfer, in which case it can
         be in advance, on delivery or up to 60 days without any interest; *{" "}
         <br /> b) Debit or credit card;
@@ -86,7 +86,7 @@ export const termsAndConditionsData = [
         international level with a minimum of €10. In national territory payment
         in cash up to €999,99 and by cheque up to €2,499.99. Other payments in
         cash up to €1,999.99 (for cheque payments please consult the policy of
-        each country). ALC ZOOM reserves the right to sell only to companies
+        each country). TECHLINES B2B reserves the right to sell only to companies
         with a Spanish Tax Identification Number or with an active VIES
         (Europe).The documents are to be provided at the time of registration as
         a customer and will be updated on an annual basis.
@@ -103,7 +103,7 @@ export const termsAndConditionsData = [
     ),
     text: (
       <p className={style.termsAndConditions__paragraph}>
-        ALC ZOOM encrypts all your card details using the SSL (Secure Socket
+        TECHLINES B2B encrypts all your card details using the SSL (Secure Socket
         Layer) protocol, so no unauthorised person can read your card number or
         other information during a transaction.
       </p>
@@ -116,7 +116,7 @@ export const termsAndConditionsData = [
     ),
     text: (
       <p className={style.termsAndConditions__paragraph}>
-        You can order online at any time of the day. ALC ZOOM staff process
+        You can order online at any time of the day. TECHLINES B2B staff process
         orders on working days (Monday to Friday from 9:30 am to 17:30 pm).
         Orders placed outside these hours will be processed on the next working
         day
@@ -137,7 +137,7 @@ export const termsAndConditionsData = [
           </li>
           <li key={"ul_2"}>
             At the customer's facilities contracted with a storage and/or
-            logistics service. In this case, the Client must provide ALC ZOOM
+            logistics service. In this case, the Client must provide TECHLINES B2B
             with the necessary details of the location of these warehouses, as
             well as any documentation that justifies the existence of an
             agreement regulating this logistics service between these facilities
@@ -145,17 +145,16 @@ export const termsAndConditionsData = [
           </li>
           <li key={"ul_3"}>
             At the facilities of the End Customers, provided that these
-            facilities are located within the European Union, in which case ALC
-            ZOOM will take care of the neutral packaging, transport and delivery
+            facilities are located within the European Union, in which case TECHLINES B2B will take care of the neutral packaging, transport and delivery
             of the products to the client at the facilities of the End Customer
             (drop-shipping). In this case, the client must obtain the necessary
             data from the End Customer, as well as the corresponding
-            authorisation for the transfer of the same to ALC ZOOM in order to
+            authorisation for the transfer of the same to TECHLINES B2B in order to
             manage the transport and delivery of the products to the End
             Customer. For this purpose, such access to personal data of End
             Customers, owned by the client, shall be regulated in accordance
             with thedata protection regulations applicable at any given time.
-            ALC ZOOM manages the delivery through the following courier
+            TECHLINES B2B manages the delivery through the following courier
             companies: UPS, DHL, MRW, CORREOS EXPRESS, TSB and SCHENKER. Once
             the client has chosen between express or standard service, the type
             of transport will be selected for their order at their convenience,
@@ -163,7 +162,7 @@ export const termsAndConditionsData = [
             quality of the service. If you have any special transport
             requirements, please indicate them before confirming your order. We
             insure all deliveries against damage and loss while in transit from
-            ALC ZOOM to the recipient's address. As soon as the delivery has
+            TECHLINES B2B to the recipient's address. As soon as the delivery has
             been received at the agreed address and the delivery note has been
             signed, the goods will no longer be covered by our insurance. <br />{" "}
             For the correct processing of possible incidents, you must request a
@@ -173,7 +172,7 @@ export const termsAndConditionsData = [
             packaging), then you will have to contact your sales consultant or
             you can use the email: sat@ribamundotecnologia.es, indicating what
             happened and in case of theft or loss of product you must give us
-            the IMEI or SERIAL NUMBER of the product. ALC ZOOM cannot be held
+            the IMEI or SERIAL NUMBER of the product. TECHLINES B2B cannot be held
             responsible for delays in deliveries due to problems with logistics
             companies or their carriers, both national and international. If you
             have any further questions, please do not hesitate to contact us.
@@ -202,7 +201,7 @@ export const termsAndConditionsData = [
     ),
     text: (
       <p className={style.termsAndConditions__paragraph}>
-        The customer has the right to cancel any purchase made in the ALC ZOOM
+        The customer has the right to cancel any purchase made in the TECHLINES B2B
         online shop before the shipment of the order, otherwise the customer
         will have to pay the shipping costs. Orders placed specifically at the
         express request of the customer may not be cancelled..In order to
@@ -237,11 +236,11 @@ export const termsAndConditionsData = [
         For this purpose, the return address is as follows:
         <br />
         <br />
-        ALC ZOOM, S.L.
+        TECHLINES B2B, S.L.
         <br />
-        Calle Baladre 6, 396
+        c. Arquimedes 43, 28946, 
         <br />
-        03570 Villajoyosa
+        Fuenlabrada, Madrid, Spain
         <br />
         A/A of: Returns/SAT
         <br />
@@ -249,7 +248,7 @@ export const termsAndConditionsData = [
         Once the product has been checked and approved by the corresponding
         department, we will proceed to make the refund using the same means of
         payment used, within a maximum period of thirty (30) working days after
-        receiving the goodsthat you wish to return to the ALC ZOOM S.L.
+        receiving the goodsthat you wish to return to the TECHLINES B2B S.L.
         facilities.
       </p>
     ),
@@ -259,7 +258,7 @@ export const termsAndConditionsData = [
     title: <h2 className={style.termsAndConditions__subtitle}>GUARANTEE</h2>,
     text: (
       <p className={style.termsAndConditions__paragraph}>
-        All products sold by ALC ZOOM are covered by a 30-day guarantee managed
+        All products sold by TECHLINES B2B are covered by a 30-day guarantee managed
         directly with us from the moment of sale to the end customer. This
         guarantee is valid for twelve (12) months from the moment of purchase of
         the article, once it has been invoiced. Independently, the products are
@@ -312,9 +311,9 @@ export const termsAndConditionsData = [
     text: (
       <p className={style.termsAndConditions__paragraph}>
         PROTECTION OF PERSONAL DATA - The personal data you provide will be
-        processed by ALC ZOOM S.A., with registered office at ALC ZOOM,
-        S.L.Calle Baladre 6, 396, 03570 Villajoyosa A/A of: Returns/SAT and CIF
-        B-72884349, with the aim of managing the contractual relationship in
+        processed by TECHLINES B2B S.A., with registered office at TECHLINES B2B,
+        S.L. c. Arquimedes 43, 28946, Fuenlabrada, Madrid, Spain A/A of: Returns/SAT and CIF
+        B55413538, with the aim of managing the contractual relationship in
         force between the parties
         <br />
         <br />
@@ -340,7 +339,7 @@ export const termsAndConditionsData = [
         personal data, as well as the right not to be subject to a decision
         based solely on automated processing (including profiling), in
         accordance with the General Data Protection Regulation, by writing to
-        ALC ZOOM, at the postal address indicated in this contract In
+        TECHLINES B2B, at the postal address indicated in this contract In
         particular, you are informed of your right to file a complaint with the
         Spanish Data Protection Agency (www.aepd.es) if you consider that the
         processing does not comply with the regulations in force or if you have
@@ -358,10 +357,10 @@ export const termsAndConditionsData = [
     text: (
       <p className={style.termsAndConditions__paragraph}>
         The rapid development of the internet may make it necessary to make
-        changes to our terms and conditions. Therefore, ALC ZOOM reserves the
+        changes to our terms and conditions. Therefore, TECHLINES B2B reserves the
         right to update and modify the terms and conditions. In doing so, we
         will also change the "last modified" date at the end of the document.
-        Significant changes will be published on the ALC ZOOM website.
+        Significant changes will be published on the TECHLINES B2B website.
       </p>
     ),
   },

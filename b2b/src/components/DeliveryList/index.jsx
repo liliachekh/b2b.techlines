@@ -5,13 +5,13 @@ export function DeliveryList () {
     <ol className={style.list} >
               <li className={style.listItem}><strong>For orders where each product weighs less than 1 kg:</strong>
                 <ul className={style.sublist}>
-                  <li>For National customers, ALC ZOOM will assume the shipping costs.</li>
+                  <li>For National customers, TECHLINES B2B will assume the shipping costs.</li>
                   <li>For European customers:
                     <ul className={style.deliveryList}>
                       <li>Standard delivery:
                         <ul className={style.deliverySubList}>
                         <li className={style.ulListItem}>For orders with a total value of 0 to €2,500, the shipping cost will be €35;</li>
-                        <li className={style.ulListItem}>For orders with a total value of more than €2.500, ALC ZOOM will assume the shipping costs.</li>
+                        <li className={style.ulListItem}>For orders with a total value of more than €2.500, TECHLINES B2B will assume the shipping costs.</li>
                         </ul>
                       </li>
                       <li> Express delivery:
@@ -22,7 +22,7 @@ export function DeliveryList () {
                         <li className={style.ulListItem}>For orders with a total value of €10,000 to €20,000, the shipping cost will be 0.4% of the order amount;</li>
                         <li className={style.ulListItem}>For orders with a total value of €20,000 to €35,000, the shipping cost will be 0.3% of the order amount;</li>
                         <li className={style.ulListItem}>For orders with a total value of €35,000 to €50,000, the shipping cost will be 0.2% of the order amount;</li>
-                        <li className={style.ulListItem}>For orders with a total value of more than €50,000, ALC ZOOM will assume the shipping costs.</li>
+                        <li className={style.ulListItem}>For orders with a total value of more than €50,000, TECHLINES B2B will assume the shipping costs.</li>
                         </ul>
                       </li>
                     </ul>

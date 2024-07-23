@@ -37,7 +37,7 @@ export function Cart() {
               </motion.div>
               <div className={`${styles.cart__aside} ${styles.aside}`}>
                 <h3 className={styles.aside__title}>Summary</h3>
-                <p className={styles.aside__text}>For orders with a total value of more than €2.500, ALC ZOOM will assume the shipping costs.</p>
+                <p className={styles.aside__text}>For orders with a total value of more than €2.500, TECHLINES B2B will assume the shipping costs.</p>
 
                 <DiscountField discount={cart?.discount} />
 

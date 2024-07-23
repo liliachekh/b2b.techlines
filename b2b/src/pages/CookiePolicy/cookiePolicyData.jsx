@@ -48,7 +48,7 @@ export const cookiePolicyData = [
         </ul>
         <br />
         In the event that cookies are sent from a computer or domain managed by
-        ALC ZOOM , but the information collected through them is managed by a
+        TECHLINES B2B , but the information collected through them is managed by a
         third party, they will not be considered as own cookies if the third
         party uses them for its own purposes (for example, the improvement of
         the services it provides or the provision of advertising services in
@@ -84,7 +84,7 @@ export const cookiePolicyData = [
             Technical cookies (necessary): are those that allow the user to
             navigate through an application or website and the use of the
             different options or services that exist in them, including those
-            that ALC ZOOM uses to allow the management and operation of the
+            that TECHLINES B2B uses to allow the management and operation of the
             website and enable its functions and services, such as, for example,
             controlling traffic and data communication, identify the session,
             access restricted access parts, remember the elements that make up
@@ -100,21 +100,21 @@ export const cookiePolicyData = [
             belonging to this category, due to their technical nature, are those
             cookies that allow the management, in the most efficient way
             possible, of the advertising spaces that, as another element of
-            design or "layout" of the service offered to the user, ALC ZOOM has
+            design or "layout" of the service offered to the user, TECHLINES B2B has
             included in the Website based on criteria such as the edited
             content, without the collection of information from users for
             different purposes, such as personalizing that advertising content
             or other content.
           </li>
           <li>
-            Analysis or measurement cookies: are those that allow ALC ZOOM to
+            Analysis or measurement cookies: are those that allow TECHLINES B2B to
             monitor and analyze the behavior of users who visit the Website,
             including the quantification of the impacts of advertisements. The
             information collected through this type of cookies is used in the
             measurement of the activity of the Website, in order to introduce
             improvements based on the analysis of the usage data made by the
             users of the service.In accordance with the above and taking into
-            account the different types of existing cookies, ALC ZOOM informs
+            account the different types of existing cookies, TECHLINES B2B informs
             that this Website does not use cookies to collect information from
             users without previously providing them with the necessary legal
             information and obtaining their express consent for the installation
@@ -142,13 +142,13 @@ export const cookiePolicyData = [
         <br />
         <ul className={style.cookiePolicy__list}>
           <b>
-            Own cookies created or managed by ALC ZOOM and third-party cookies
-            managed and managed by service providers contracted by ALC ZOOM :
+            Own cookies created or managed by TECHLINES B2B and third-party cookies
+            managed and managed by service providers contracted by TECHLINES B2B :
           </b>
           <li>
             Technical cookies (necessary). <br /> They are those that allow you
             to browse the Website and use the different options or services it
-            has. With them, ALC ZOOM can, for example, control traffic and data
+            has. With them, TECHLINES B2B can, for example, control traffic and data
             communication, identify users during the session and use security
             elements during users navigation. The technical cookies incorporated
             in this Website are exempt from the obligation to obtain the
@@ -171,26 +171,26 @@ export const cookiePolicyData = [
         <br />
         <b>
           Third-party cookies created, managed and controlled by third parties
-          ALC ZOOM :
+          TECHLINES B2B :
         </b>{" "}
         <br />
         It is possible that logos or functions of third-party websites outside
-        ALC ZOOM (for example, social networks) may be integrated into the
+        TECHLINES B2B (for example, social networks) may be integrated into the
         Website. <br />
         Sometimes, these features come with scripts or other elements that have
         the ability to read, and sometimes save, cookies on users' browser
         and/or device. These cookies can be of different types (technical or
         necessary that do not require the consent of the users or behavioral
-        advertising, in which case, and although ALC ZOOM does not have control
+        advertising, in which case, and although TECHLINES B2B does not have control
         over them, the consent of the users is previously required before their
         installation). <br />
-        Although ALC ZOOM previously requests users' consent to install this
+        Although TECHLINES B2B previously requests users' consent to install this
         type of cookies, we inform you that the owner of the same is the one who
         manages their purposes and their own privacy practices. In this regard,
         users should refer to them to obtain more information about the use of
         these cookies and, where appropriate, about the processing of their
         personal data. By way of illustration, but not limitation, so that you
-        have more information about it, ALC ZOOM shows below a list of possible
+        have more information about it, TECHLINES B2B shows below a list of possible
         third parties that may incorporate this type of cookies in the devices
         and / or browsers of the users of the Website, along with the links to
         their cookies policies and privacy policies so that users consult all
@@ -212,7 +212,7 @@ export const cookiePolicyData = [
     key: "ol4",
     title: (
       <h2 className={style.cookiePolicy__subtitle}>
-        DETAIL OF THE COOKIES USED BY ALC ZOOM THROUGH THE WEBSITE
+        DETAIL OF THE COOKIES USED BY TECHLINES B2B THROUGH THE WEBSITE
       </h2>
     ),
     text: (
@@ -305,16 +305,15 @@ export const cookiePolicyData = [
     text: (
       <div className={style.cookiePolicy__paragraph}>
         If you have allowed the installation of cookies through the cookie
-        management and configuration system used by ALC ZOOM , you can
+        management and configuration system used by TECHLINES B2B , you can
         subsequently, at any time, delete or change your settings through the
         link "Change your Consent (link to the settings panel)" which is
-        included in the previous section "Detail of the cookies used by ALC ZOOM
+        included in the previous section "Detail of the cookies used by TECHLINES B2B
         through the Website" or use the tools provided by the browser that the
         user has used to access and navigate this Website. If the user decides
         to use the tools provided by his browser, he must bear in mind that,
         depending on the type of browser, the procedure for changing the
-        configuration or deleting cookies may vary. By way of illustration, ALC
-        ZOOM provides the direct links of the main existing browsers through
+        configuration or deleting cookies may vary. By way of illustration, TECHLINES B2B provides the direct links of the main existing browsers through
         which the user may, at any time, change the configuration or delete the
         cookies on which he has previously given his express consent:
         <ul className={style.cookiePolicy__list}>
@@ -332,7 +331,7 @@ export const cookiePolicyData = [
         some services of the same. <br /> However, if the user wishes more
         information on how to revoke the consent given or on the procedure to
         disable cookies, as well as ask any questions about the Cookies Policy
-        of the Website, you can contact ALC ZOOM through the following address
+        of the Website, you can contact TECHLINES B2B through the following address
         <a href="mailto:atylnyi@techlines.es"> atylnyi@techlines.es</a>
       </div>
     ),
@@ -350,7 +349,7 @@ export const cookiePolicyData = [
         <div className={style.cookiePolicy__paragraph}>
           When technical (necessary) cookies are installed on your device or
           when users expressly consent to the installation of any other type of
-          cookies on their devices, ALC ZOOM may collect a series of data,
+          cookies on their devices, TECHLINES B2B may collect a series of data,
           including the following:
           <ul className={style.cookiePolicy__list}>
             <li>
@@ -388,11 +387,10 @@ export const cookiePolicyData = [
     text: (
       <p className={style.cookiePolicy__paragraph}>
         Controller <br /> <br />
-        The controller is ALC ZOOM S.L. (hereinafter, also called «ALC ZOOM»).{" "}
+        The controller is TECHLINES B2B S.L. (hereinafter, also called «TECHLINES B2B»).{" "}
         <br />
-        Calle Baladre 6, 396, 03570 Villajoyosa <br /> <br />
-        To guarantee the proper management in the processing of your data, ALC
-        ZOOM may contact the electronic address{" "}
+        c. Arquimedes 43, 28946, Fuenlabrada, Madrid, Spain <br /> <br />
+        To guarantee the proper management in the processing of your data, TECHLINES B2B may contact the electronic address{" "}
         <a href="mailto:atylnyi@techlines.es">
           {" "}
           atylnyi@techlines.es
@@ -400,7 +398,7 @@ export const cookiePolicyData = [
         Purposes of the processing and legal basis <br />
         The purposes of the treatment are indicated in "General characteristics
         of the cookies used through the Website" and in "Detail of the cookies
-        used by ALC ZOOM through the Website". The legal basis of the treatment
+        used by TECHLINES B2B through the Website". The legal basis of the treatment
         is the informed consent expressly given by the users, who at any time
         can manage and revoke it as described in "Ways to change the settings or
         revoke the consent given for the installation of cookies".
@@ -414,16 +412,16 @@ export const cookiePolicyData = [
     ),
     text: (
       <div className={style.cookiePolicy__paragraph}>
-        ALC ZOOM may share the information collected with:
+        TECHLINES B2B may share the information collected with:
         <ul className={style.cookiePolicy__list}>
           <li>
             If necessary with the competent authorities and public bodies,
             Judges, Courts and Public Prosecutor's Office for the fulfillment of
-            the legal obligations that are applicable to ALC ZOOM in accordance
+            the legal obligations that are applicable to TECHLINES B2B in accordance
             with European Union Law and / or applicable domestic legal regime.
           </li>
           <li>
-            Service providers acting on behalf of and on behalf of ALC ZOOM as
+            Service providers acting on behalf of and on behalf of TECHLINES B2B as
             data processors, following their instructions at all times. By way
             of illustration, these providers may offer analysis and measurement
             services, advertising personalization, technical services for the
@@ -431,8 +429,8 @@ export const cookiePolicyData = [
             consent, etc.
           </li>
           <li>
-            Third parties outside ALC ZOOM that install cookies from their own
-            domains or from the domains of ALC ZOOM when it is said third
+            Third parties outside TECHLINES B2B that install cookies from their own
+            domains or from the domains of TECHLINES B2B when it is said third
             parties who administer and manage the purposes of said cookies and
             the information they collect as a result. These third parties may
             be, among others, the owners of the main social networks (Twitter,
@@ -454,7 +452,7 @@ export const cookiePolicyData = [
         The processing of the data is carried out, in general, within the
         European Economic Area or in countries that have been declared with an
         adequate level of protection. <br /> Notwithstanding the foregoing, the
-        Website has third-party cookies that provide services to ALC ZOOM and
+        Website has third-party cookies that provide services to TECHLINES B2B and
         that can store and access the information they collect even outside the
         EEA:
         <br />
@@ -464,7 +462,7 @@ export const cookiePolicyData = [
         Inc., a Delaware company whose main office is at 1600 Amphitheatre
         Parkway, Mountain View (California), CA 94043, United States ("Google"),
         which use cookies. These services include:
-        <br /> Google Analytics, an analysis tool that allows RALC ZOOM to
+        <br /> Google Analytics, an analysis tool that allows RTECHLINES B2B to
         understand how users who visit its website interact, offering them
         statistics on the use of the Website without users necessarily having to
         be identified (anonymized IP). Users can consult all the information on
@@ -491,8 +489,7 @@ export const cookiePolicyData = [
         by the users remain in force. Next, and in accordance with the data
         protection regulations, these data will be kept duly blocked (during the
         limitation period of the actions derived from said authorization) for
-        the sole purpose of complying with the legal obligations required of ALC
-        ZOOM and for the formulation, exercise or defense of claims.
+        the sole purpose of complying with the legal obligations required of TECHLINES B2B and for the formulation, exercise or defense of claims.
       </p>
     ),
   },
@@ -509,11 +506,11 @@ export const cookiePolicyData = [
         rectification, deletion, opposition, limitation, portability, withdraw
         their consent and not be subject to automated individual decisions,
         including the elaboration of profiles, by sending their request in
-        writing to the Data Protection Officer of ALC ZOOM to the following
+        writing to the Data Protection Officer of TECHLINES B2B to the following
         addresses:
         <ul className={style.cookiePolicy__list}>
           <li>
-            Postal mail: C / Baladre 6, 396 – Villajoyosa, Alicante, 03570
+            Postal mail: c. Arquimedes 43, 28946, Fuenlabrada, Madrid, Spain
           </li>
           <li>
             Email:{" "}
@@ -541,7 +538,7 @@ export const cookiePolicyData = [
         This Cookies Policy may vary depending on the cookies used by this
         Website.
         <br />
-        ALC ZOOM recommends that users review this Policy each time they access
+        TECHLINES B2B recommends that users review this Policy each time they access
         the Website in order to be adequately informed about how and why we use
         cookies so that they can be aware of any changes that occur on the type
         of data that is collected and the purpose for which they are collected,

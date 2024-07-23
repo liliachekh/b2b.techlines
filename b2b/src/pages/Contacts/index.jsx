@@ -13,7 +13,7 @@ export function Contacts () {
           <h3 className={style.contacts__infoTitle}>{contacts.subtitle}</h3>
           <p className={style.contacts__infoText}>{contacts.info.text1}</p>
           <p className={style.contacts__infoText}>{contacts.info.text2}</p>
-          <p className={style.contacts__infoText}>{contacts.info.text3}</p>
+          {/* <p className={style.contacts__infoText}>{contacts.info.text3}</p> */}
           <p className={style.contacts__infoText}>{contacts.info.text4}</p>
           <p className={style.contacts__infoText}>{contacts.info.text5}</p>
         </div>
